@@ -20,6 +20,15 @@ $ make run
 
 上記の `make run` か、もしくは `make up` でコンテナを裏側で立ち上げ続けることができる。VSCode 互換のエディタであれば、`Attach to Running Container...` で `/llm2025compet-app-1` を選ぶことで、コンテナ内で作業することができる。
 
+## パッケージを追加する時
+
+必ず、コンテナ内で uv を実行するようにする。
+
+```bash
+$ make run
+$ uv add numpy
+```
+
 ## License
 
 TBD
