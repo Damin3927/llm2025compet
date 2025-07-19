@@ -6,7 +6,19 @@
 
 ## 環境構築
 
-それぞれのディレクトリの README.md をご覧ください。
+```bash
+$ make build
+```
+
+## 開発環境
+
+以下のコマンドで、コンテナの中に入ることができる。コンテナの中で、uv や python3 等のコマンドを実行することができる。
+
+```bash
+$ make run
+```
+
+上記の `make run` か、もしくは `make up` でコンテナを裏側で立ち上げ続けることができる。VSCode 互換のエディタであれば、`Attach to Running Container...` で `/llm2025compet-app-1` を選ぶことで、コンテナ内で作業することができる。
 
 ## License
 
