@@ -87,7 +87,7 @@ ARG VLLM_VERSION
 # Install vllm
 RUN if [ "$BASE_IMAGE_TYPE" = "gpu" ]; then \
         echo "Installing vllm for GPU support..."; \
-        uv pip install vllm==${VLLM_VERSION} --torch-backend=auto; \
+        source /home/${USERNAME}/.venv/bin/activate && uv pip install vllm==${VLLM_VERSION} --torch-backend=auto; \
     else \
         echo "Installing vllm for CPU support..."; \
         echo "VLLM_VERSION: ${VLLM_VERSION}"; \
