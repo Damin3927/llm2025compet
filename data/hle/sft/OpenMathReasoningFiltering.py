@@ -15,9 +15,8 @@ process:
 #%%
 import os
 import datasets
-import pandas as pd
-import json
 import torch
+import json
 from tqdm import tqdm
 from vllm import LLM, SamplingParams
 
@@ -29,16 +28,17 @@ run_index = 1 # we want to run the script multiple times, so we need to save the
 
 inference_model = "Qwen/Qwen3-8B" # TODO: change to a model you want to use to answer the questions
 inference_temperature = 0.3 # lower temperature means more deterministic
-inference_max_tokens = 1024 # max tokens to generate
+inference_max_tokens = 10240 # max tokens to generate
 inference_batch_size = 4
 inference_tp, inference_pp, inference_dp = 1, 1, 1 # tensor parallel, pipeline parallel, data parallel
 save_per_batch = 1 # save per `save_per_batch` batches
 
 judgement_model = "Qwen/Qwen3-8B" # TODO: change to a model you want to use to judge the answers
 judgement_temperature = 0. # lower temperature means more deterministic
-judgement_max_tokens = 1024
+judgement_max_tokens = 50
 judgement_batch_size = 4
 judgement_tp, judgement_pp, judgement_dp = 1, 1, 1 # tensor parallel, pipeline parallel, data parallel
+judge_only_by_answer = True # if True, only judge the answers, if False, judge the reasoning and the answer
 
 # hard coding the dataset size
 cot_dataset_size = 3.3e9
@@ -74,32 +74,36 @@ inference_genselect_prompt = (
     "Please respond with only your analysis and the final answer. The final answer must be one of the provided candidate solutions. Do not include any extraneous text."
 )
 
+judgement_prompt = "Reply with only 'yes' if both are correct, or 'no' if either is incorrect. Do not include any other text.\n"
+if judge_only_by_answer:
+    judgement_prompt = "Reply with only 'yes' if the answer is correct, or 'no' if it is incorrect. Do not include any other text.\n"
+
 judgement_cot_prompt = (
     "You are a mathematics expert tasked with evaluating a user's solution.\n"
     "You will be given a question, the correct answer, and the user's solution (including their reasoning and final answer).\n"
     "Determine if BOTH the reasoning and the final answer in the user's solution are correct.\n"
-    "Reply with only 'yes' if both are correct, or 'no' if either is incorrect. Do not include any other text.\n"
+    "{judgement_prompt_1}"
     "Question:\n"
     "{question}\n"
     "Correct answer:\n"
     "{correct_answer}\n"
     "User's solution:\n"
     "{solution}\n"
-    "Reply with only 'yes' if both are correct, or 'no' if either is incorrect. Do not include any other text.\n"
+    "{judgement_prompt_2}"
 )
 
 judgement_genselect_prompt = (
     "You are a mathematics expert tasked with evaluating a user's solution.\n"
     "You will be given a question with candidate solutions, the correct answer, and the user's analysis and final answer.\n"
     "Determine if BOTH the reasoning and the final answer in the user's solution are correct.\n"
-    "Reply with only 'yes' if both are correct, or 'no' if either is incorrect. Do not include any other text.\n"
+    "{judgement_prompt_1}"
     "Question and candidate solutions:\n"
     "{question}\n"
     "Correct answer:\n"
     "{correct_answer}\n"
     "User's solution:\n"
     "{solution}\n"
-    "Reply with only 'yes' if both are correct, or 'no' if either is incorrect. Do not include any other text."
+    "{judgement_prompt_2}"
 )
 
 #%%
@@ -194,7 +198,7 @@ def judgement(jud_model, judgement_batch_size, judgement_temperature, judgement_
             question = [item['problem'] for item in batch]
             correct_answer = [item['generated_solution'] for item in batch]
             solution = [item['inference'] for item in batch]
-            judgement_prompts = [judgement_prompt.format(question=q, correct_answer=ca, solution=s) for q, ca, s in zip(question, correct_answer, solution)]
+            judgement_prompts = [judgement_prompt.format(judgement_prompt_1=judgement_prompt, judgement_prompt_2=judgement_prompt, question=q, correct_answer=ca, solution=s) for q, ca, s in zip(question, correct_answer, solution)]
             judgement_results = vllm_judgement(jud_model, judgement_prompts, judgement_temperature, judgement_max_tokens)
             for i, item in enumerate(batch):
                 item['judgement'] = judgement_results[i]
@@ -204,23 +208,23 @@ def judgement(jud_model, judgement_batch_size, judgement_temperature, judgement_
         
 
 #%%
-# # inferece the questions
-# # load inference model to use vllm
-# llm = LLM(model=inference_model, tensor_parallel_size=inference_tp, pipeline_parallel_size=inference_pp, gpu_memory_utilization=0.95)
+# inferece the questions
+# load inference model to use vllm
+llm = LLM(model=inference_model, tensor_parallel_size=inference_tp, pipeline_parallel_size=inference_pp, gpu_memory_utilization=0.95)
 
-# cot_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='cot', streaming=True)
-# inference(cot_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_cot_prompt, inference_dir + "/cot", cot_dataset_size)
-# # release the cot dataset
-# del cot_dataset
+cot_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='cot', streaming=True)
+inference(cot_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_cot_prompt, inference_dir + "/cot", cot_dataset_size)
+# release the cot dataset
+del cot_dataset
 
-# genselect_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='genselect', streaming=True)
-# inference(genselect_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_genselect_prompt, inference_dir + "/genselect", genselect_dataset_size)
-# # release the genselect dataset
-# del genselect_dataset
+genselect_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='genselect', streaming=True)
+inference(genselect_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_genselect_prompt, inference_dir + "/genselect", genselect_dataset_size)
+# release the genselect dataset
+del genselect_dataset
 
-# # clear the inference model
-# del llm
-# torch.cuda.empty_cache()
+# clear the inference model
+del llm
+torch.cuda.empty_cache()
 
 #%%
 llm = LLM(model=judgement_model, tensor_parallel_size=judgement_tp, pipeline_parallel_size=judgement_pp, gpu_memory_utilization=0.95)

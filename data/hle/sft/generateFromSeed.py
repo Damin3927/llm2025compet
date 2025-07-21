@@ -137,14 +137,15 @@ if __name__ == "__main__":
     seed_answer = "The ratio is 1:2. In a 30-60-90 triangle, if the shortest side (opposite to 30°) is x, then the hypotenuse (opposite to 90°) is 2x, and the remaining side is x√3."
     
     # Initialize the LLM
-    llm = setup_llm("Qwen/Qwen3-8B", max_model_len=2048)
+    llm = setup_llm("Qwen/Qwen3-8B", max_model_len=10240)
     
     # Generate new QA pairs
     generated_pairs = generate_qa_pairs(
         llm=llm,
         seed_question=seed_question,
         seed_answer=seed_answer,
-        num_pairs=3
+        num_pairs=1,
+        max_tokens=10240
     )
     
     # Save the generated pairs
