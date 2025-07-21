@@ -1,4 +1,4 @@
-# Team 本田（仮） 2025 LLM Competition
+# Team Neko 2025 LLM Competition
 
 ## ドキュメント
 
