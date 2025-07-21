@@ -28,7 +28,7 @@ run_index = 1 # we want to run the script multiple times, so we need to save the
 
 inference_model = "Qwen/Qwen3-8B" # TODO: change to a model you want to use to answer the questions
 inference_temperature = 0.3 # lower temperature means more deterministic
-inference_max_tokens = 10240 # max tokens to generate
+inference_max_tokens = 4096 # max tokens to generate
 inference_batch_size = 4
 inference_tp, inference_pp, inference_dp = 1, 1, 1 # tensor parallel, pipeline parallel, data parallel
 save_per_batch = 1 # save per `save_per_batch` batches
