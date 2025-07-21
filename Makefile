@@ -21,7 +21,6 @@ run: up ## Execute bash in the running container
 .PHONY: down
 down: ## Stop and remove the Docker container
 	docker compose down
-	
 
 .PHONY: help
 help:
