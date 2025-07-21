@@ -29,6 +29,15 @@ $ make run
 $ uv add numpy
 ```
 
+## Team 間の IO インターフェース
+
+それぞれ HuggingFace を経由することを想定しています。
+
+- データ(HLE/DNA) <-> 学習: HuggingFace Datasets
+  - データチームが push した Dataset を、学習チームが pull して学習に使用する
+- 学習 <-> 推論: HuggingFace Models
+  - 学習チームが push したモデルを、推論チームが pull して推論に使用する
+
 ## License
 
 TBD
