@@ -1,6 +1,5 @@
 ARG nvidia_cuda_version=12.8.1-devel-ubuntu24.04
 ARG BASE_IMAGE_TYPE=gpu
-ARG VLLM_VERSION=0.9.2
 
 # Choose base image based on GPU availability
 FROM nvidia/cuda:${nvidia_cuda_version} AS gpu-base
@@ -81,27 +80,6 @@ RUN uv python install 3.12 && \
 # Setup uv for the user - use container-specific venv location
 COPY --chown=${USER_ID}:${GROUP_ID} ./pyproject.toml uv.lock .python-version /app/
 RUN uv sync
-
-ARG VLLM_VERSION
-
-# Install vllm
-RUN if [ "$BASE_IMAGE_TYPE" = "gpu" ]; then \
-        echo "Installing vllm for GPU support..."; \
-        source /home/${USERNAME}/.venv/bin/activate && uv pip install vllm==${VLLM_VERSION} --torch-backend=auto; \
-    else \
-        echo "Installing vllm for CPU support..."; \
-        echo "VLLM_VERSION: ${VLLM_VERSION}"; \
-        git clone https://github.com/vllm-project/vllm.git /home/${USERNAME}/vllm && \
-        cd /home/${USERNAME}/vllm && \
-        git checkout v${VLLM_VERSION} && \
-        uv pip install -r requirements/cpu.txt --index-strategy unsafe-best-match && \
-        export VLLM_TARGET_DEVICE=cpu && \
-        export CMAKE_ARGS="-DVLLM_CPU_ONLY=ON" && \
-        export MAX_JOBS=2 && \
-        VLLM_TARGET_DEVICE=cpu MAX_JOBS=2 uv pip install -e . --index-strategy unsafe-best-match && \
-        echo 'export PYTHONPATH="/home/'${USERNAME}'/vllm:${PYTHONPATH}"' >> ~/.bashrc; \
-        echo 'export VLLM_CPU_OMP_THREADS_BIND=all' >> ~/.bashrc; \
-    fi
 
 RUN echo "source /home/${USERNAME}/.venv/bin/activate" >> ~/.bashrc
 
