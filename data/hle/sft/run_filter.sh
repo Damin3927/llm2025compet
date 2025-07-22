@@ -9,6 +9,7 @@
 #SBATCH --output=%x-%j.out
 #SBATCH --error=%x-%j.err
 
+#/home/Competition2025/P02/shareP02/scripts/scancel.sh
 # Activate the correct conda environment
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate hf
