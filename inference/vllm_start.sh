@@ -10,7 +10,7 @@ set -euo pipefail  # Exit on errors, undefined vars, and pipe failures
 # Configuration Variables
 # =============================================================================
 
-readonly MODEL_PATH="deepseek-ai/DeepSeek-R1-0528"
+readonly MODEL_PATH="Qwen/Qwen3-235B-A22B"
 readonly VLLM_TAG="v0.9.2"
 readonly SINGULARITY_IMAGE_DIR="${HOME}/.singularity"
 readonly TARGET_HF_HOME="/var/tmp/hf_home"
