@@ -24,7 +24,7 @@ python3 evaluation/dna/inference.py
 
 DNA評価スクリプトの実行
 ```bash
-python3 evaluation.py \
+python3 evaluation/dna/eval.py \
   --dataset do_not_answer_response \
   --judge gpt-4.1-mini-2025-04-14
 ```
