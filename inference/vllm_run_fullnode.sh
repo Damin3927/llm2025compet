@@ -5,5 +5,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=02:00:00
 #SBATCH --partition=P02
+#SBATCH --output=%x-%j.out
+#SBATCH --error=%x-%j.err
 
 srun --ntasks=2 --gres=gpu:8 --exclusive ./vllm_start.sh
