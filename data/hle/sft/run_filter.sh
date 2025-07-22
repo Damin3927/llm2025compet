@@ -6,11 +6,11 @@
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1 # GPUが必要な場合
 #SBATCH --time=01:00:00 # 実行に時間がかかる可能性を考慮して設定
-#SBATCH --output=~/logs/%x-%j.out
-#SBATCH --error=~/logs/%x-%j.err
+#SBATCH --output=/home/Competition2025/P02/P02U007/logs/%x-%j.out
+#SBATCH --error=/home/Competition2025/P02/P02U007/logs/%x-%j.err
 
 # bash /home/Competition2025/P02/shareP02/scripts/scancel.sh <job_id>
-# scp comp:~/logs/filter-281941.err ~/Desktop
+# scp comp:/home/Competition2025/P02/P02U007/logs/filter-281941.err ~/Desktop
 # Activate the correct conda environment
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate hf
