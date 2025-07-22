@@ -26,14 +26,14 @@ os.environ["GLOO_SOCKET_IFNAME"] = "lo"
 
 run_index = 1 # we want to run the script multiple times, so we need to save the results with a run_index
 
-inference_model = "Qwen/Qwen3-8B" # TODO: change to a model you want to use to answer the questions
+inference_model = "Qwen/Qwen3-32B" # TODO: change to a model you want to use to answer the questions
 inference_temperature = 0.3 # lower temperature means more deterministic
 inference_max_tokens = 4096 # max tokens to generate
 inference_batch_size = 4
 inference_tp, inference_pp, inference_dp = 1, 1, 1 # tensor parallel, pipeline parallel, data parallel
 save_per_batch = 1000 # save per `save_per_batch` batches
 
-judgement_model = "Qwen/Qwen3-8B" # TODO: change to a model you want to use to judge the answers
+judgement_model = "Qwen/Qwen3-32B" # TODO: change to a model you want to use to judge the answers
 judgement_temperature = 0. # lower temperature means more deterministic
 judgement_max_tokens = 50
 judgement_batch_size = 4

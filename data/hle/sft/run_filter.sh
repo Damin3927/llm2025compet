@@ -11,4 +11,7 @@
 
 # Activate the correct conda environment
 source ~/miniconda3/etc/profile.d/conda.sh
-conda activate myenv
+conda activate hf
+pip install transformers datasets huggingface-hub tqdm vllm
+
+python OpenMathReasoningFiltering.py
