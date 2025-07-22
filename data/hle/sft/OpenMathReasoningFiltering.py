@@ -19,33 +19,86 @@ import torch
 import json
 from tqdm import tqdm
 from vllm import LLM, SamplingParams
+import argparse
 
 os.environ["MASTER_ADDR"] = "localhost"
 os.environ["MASTER_PORT"] = "29500"
 os.environ["GLOO_SOCKET_IFNAME"] = "lo"
 
-run_index = 1 # we want to run the script multiple times, so we need to save the results with a run_index
-
-inference_model = "Qwen/Qwen3-32B" # TODO: change to a model you want to use to answer the questions
-inference_temperature = 0.3 # lower temperature means more deterministic
-inference_max_tokens = 4096 # max tokens to generate
-inference_batch_size = 4
-inference_tp, inference_pp, inference_dp = 1, 1, 1 # tensor parallel, pipeline parallel, data parallel
-save_per_batch = 1000 # save per `save_per_batch` batches
-
-judgement_model = "Qwen/Qwen3-32B" # TODO: change to a model you want to use to judge the answers
-judgement_temperature = 0. # lower temperature means more deterministic
-judgement_max_tokens = 50
-judgement_batch_size = 4
-judgement_tp, judgement_pp, judgement_dp = 1, 1, 1 # tensor parallel, pipeline parallel, data parallel
-judge_only_by_answer = True # if True, only judge the answers, if False, judge the reasoning and the answer
-
 # hard coding the dataset size
 cot_dataset_size = 3.3e6
 genselect_dataset_size = 5.66e5
-# start from percentage
-start_from_percentage = 0 # start from the percentage (0.5 = 50%) of the dataset, so we can run the script separately
-end_at_percentage = 1.0 # end at the percentage (1.0 = 100%) of the dataset, so we can run the script separately
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='OpenMathReasoning Filtering Script')
+    
+    # Run configuration
+    parser.add_argument('--run-index', type=int, default=1,
+                      help='Run index for multiple script executions')
+    
+    # Inference model parameters
+    parser.add_argument('--inference-model', type=str, default="Qwen/Qwen3-8B",
+                      help='Model to use for answering questions')
+    parser.add_argument('--inference-temperature', type=float, default=0.3,
+                      help='Temperature for inference sampling')
+    parser.add_argument('--inference-max-tokens', type=int, default=4096,
+                      help='Maximum tokens to generate during inference')
+    parser.add_argument('--inference-batch-size', type=int, default=4,
+                      help='Batch size for inference')
+    parser.add_argument('--inference-tp', type=int, default=1,
+                      help='Tensor parallel size for inference')
+    parser.add_argument('--inference-pp', type=int, default=1,
+                      help='Pipeline parallel size for inference')
+    parser.add_argument('--inference-dp', type=int, default=1,
+                      help='Data parallel size for inference')
+    parser.add_argument('--save-per-batch', type=int, default=1000,
+                      help='Save results every N batches')
+    
+    # Judgment model parameters
+    parser.add_argument('--judgement-model', type=str, default="Qwen/Qwen3-8B",
+                      help='Model to use for judging answers')
+    parser.add_argument('--judgement-temperature', type=float, default=0.0,
+                      help='Temperature for judgment sampling')
+    parser.add_argument('--judgement-max-tokens', type=int, default=50,
+                      help='Maximum tokens to generate during judgment')
+    parser.add_argument('--judgement-batch-size', type=int, default=4,
+                      help='Batch size for judgment')
+    parser.add_argument('--judgement-tp', type=int, default=1,
+                      help='Tensor parallel size for judgment')
+    parser.add_argument('--judgement-pp', type=int, default=1,
+                      help='Pipeline parallel size for judgment')
+    parser.add_argument('--judgement-dp', type=int, default=1,
+                      help='Data parallel size for judgment')
+    parser.add_argument('--judge-only-by-answer', action='store_true',
+                      help='If set, only judge the answers without reasoning')
+    # start from percentage
+    parser.add_argument('--start-from-percentage', type=float, default=0,
+                      help='Start from the percentage (0.5 = 50%) of the dataset, so we can run the script separately')
+    parser.add_argument('--end-at-percentage', type=float, default=1.0,
+                      help='End at the percentage (1.0 = 100%) of the dataset, so we can run the script separately')
+    
+    return parser.parse_args()
+
+# Parse command line arguments
+args = parse_args()
+print(args)
+
+# Assign parameters from command line arguments
+run_index = args.run_index
+
+inference_model = args.inference_model
+inference_temperature = args.inference_temperature
+inference_max_tokens = args.inference_max_tokens
+inference_batch_size = args.inference_batch_size
+inference_tp, inference_pp, inference_dp = args.inference_tp, args.inference_pp, args.inference_dp
+save_per_batch = args.save_per_batch
+
+judgement_model = args.judgement_model
+judgement_temperature = args.judgement_temperature
+judgement_max_tokens = args.judgement_max_tokens
+judgement_batch_size = args.judgement_batch_size
+judgement_tp, judgement_pp, judgement_dp = args.judgement_tp, args.judgement_pp, args.judgement_dp
+judge_only_by_answer = args.judge_only_by_answer
 
 
 # create the output directory
@@ -147,8 +200,8 @@ def inference(inf_dataset, inference_batch_size, save_per_batch, inference_tempe
         os.makedirs(inference_dir)
 
     inference_collection = []
-    start_from_batch_index = int(dataset_size * start_from_percentage // inference_batch_size)
-    end_at_batch_index = int(dataset_size * end_at_percentage // inference_batch_size)
+    start_from_batch_index = int(dataset_size * args.start_from_percentage // inference_batch_size)
+    end_at_batch_index = int(dataset_size * args.end_at_percentage // inference_batch_size)
     print(f"Inferencing from batch {start_from_batch_index} to batch {end_at_batch_index}")
 
     # filter the inf_dataset by the problem_type column to be has_answer_extracted
