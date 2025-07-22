@@ -31,7 +31,7 @@ inference_temperature = 0.3 # lower temperature means more deterministic
 inference_max_tokens = 4096 # max tokens to generate
 inference_batch_size = 4
 inference_tp, inference_pp, inference_dp = 1, 1, 1 # tensor parallel, pipeline parallel, data parallel
-save_per_batch = 1 # save per `save_per_batch` batches
+save_per_batch = 1000 # save per `save_per_batch` batches
 
 judgement_model = "Qwen/Qwen3-8B" # TODO: change to a model you want to use to judge the answers
 judgement_temperature = 0. # lower temperature means more deterministic
@@ -41,7 +41,7 @@ judgement_tp, judgement_pp, judgement_dp = 1, 1, 1 # tensor parallel, pipeline p
 judge_only_by_answer = True # if True, only judge the answers, if False, judge the reasoning and the answer
 
 # hard coding the dataset size
-cot_dataset_size = 3.3e9
+cot_dataset_size = 3.3e6
 genselect_dataset_size = 5.66e5
 # start from percentage
 start_from_percentage = 0 # start from the percentage (0.5 = 50%) of the dataset, so we can run the script separately
@@ -149,11 +149,14 @@ def inference(inf_dataset, inference_batch_size, save_per_batch, inference_tempe
     inference_collection = []
     start_from_batch_index = int(dataset_size * start_from_percentage // inference_batch_size)
     end_at_batch_index = int(dataset_size * end_at_percentage // inference_batch_size)
+    print(f"Inferencing from batch {start_from_batch_index} to batch {end_at_batch_index}")
 
     # filter the inf_dataset by the problem_type column to be has_answer_extracted
     inf_dataset = inf_dataset.filter(lambda x: x['problem_type'] == 'has_answer_extracted')
     i = 1
     for data_batch in tqdm(inf_dataset.iter(batch_size=inference_batch_size), desc="Inferencing"):
+        if i % 1000 == 0:
+            print(f"Inferencing {i} batches")
         if i < start_from_batch_index:
             i += 1
             continue
