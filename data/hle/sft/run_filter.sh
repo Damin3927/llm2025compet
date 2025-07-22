@@ -15,4 +15,11 @@ source ~/miniconda3/etc/profile.d/conda.sh
 conda activate hf
 pip install transformers datasets huggingface-hub tqdm vllm
 
-python OpenMathReasoningFiltering.py
+CUDA_VISIBLE_DEVICES=0 python OpenMathReasoningFiltering.py --start-from-percentage 0.0 --end-at-percentage 0.5
+# CUDA_VISIBLE_DEVICES=1 python OpenMathReasoningFiltering.py --start-from-percentage 0.5 --end-at-percentage 1.0
+# CUDA_VISIBLE_DEVICES=2 python OpenMathReasoningFiltering.py --run-index 2 --start-from-percentage 0.0 --end-at-percentage 0.5
+# CUDA_VISIBLE_DEVICES=3 python OpenMathReasoningFiltering.py --run-index 2 --start-from-percentage 0.5 --end-at-percentage 1.0
+# CUDA_VISIBLE_DEVICES=4 python OpenMathReasoningFiltering.py --run-index 3 --start-from-percentage 0.0 --end-at-percentage 0.5
+# CUDA_VISIBLE_DEVICES=5 python OpenMathReasoningFiltering.py --run-index 3 --start-from-percentage 0.5 --end-at-percentage 1.0
+# CUDA_VISIBLE_DEVICES=6 python OpenMathReasoningFiltering.py --run-index 4 --start-from-percentage 0.0 --end-at-percentage 0.5
+# CUDA_VISIBLE_DEVICES=7 python OpenMathReasoningFiltering.py --run-index 4 --start-from-percentage 0.5 --end-at-percentage 1.0
