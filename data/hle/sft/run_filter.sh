@@ -6,14 +6,15 @@
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1 # GPUが必要な場合
 #SBATCH --time=01:00:00 # 実行に時間がかかる可能性を考慮して設定
-#SBATCH --output=%x-%j.out
-#SBATCH --error=%x-%j.err
+#SBATCH --output=~/logs/%x-%j.out
+#SBATCH --error=~/logs/%x-%j.err
 
-#/home/Competition2025/P02/shareP02/scripts/scancel.sh
+# bash /home/Competition2025/P02/shareP02/scripts/scancel.sh <job_id>
+# scp comp:~/logs/filter-281941.err ~/Desktop
 # Activate the correct conda environment
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate hf
-pip install transformers datasets huggingface-hub tqdm vllm
+pip install transformers datasets huggingface-hub tqdm vllm torch datasets
 
 CUDA_VISIBLE_DEVICES=0 python OpenMathReasoningFiltering.py --start-from-percentage 0.0 --end-at-percentage 0.5
 # CUDA_VISIBLE_DEVICES=1 python OpenMathReasoningFiltering.py --start-from-percentage 0.5 --end-at-percentage 1.0
