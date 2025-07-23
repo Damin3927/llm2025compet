@@ -17,7 +17,7 @@ module load cuda/12.4
 source /home/Competition2025/P02/P02U007/llm2025compet/data/hle/sft/hfenv/bin/activate
 
 # pip install torch transformers datasets huggingface-hub tqdm
-pip install vllm --extra-index-url https://download.pytorch.org/whl/cu124
+# pip install vllm --extra-index-url https://download.pytorch.org/whl/cu124
 
 nvidia-smi
 
