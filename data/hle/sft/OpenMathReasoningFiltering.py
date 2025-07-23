@@ -266,7 +266,7 @@ def judgement(jud_model, judgement_batch_size, judgement_temperature, judgement_
 #%%
 # inferece the questions
 # load inference model to use vllm
-llm = LLM(model=inference_model, tensor_parallel_size=inference_tp, pipeline_parallel_size=inference_pp, gpu_memory_utilization=0.95)
+llm = LLM(model=inference_model, tensor_parallel_size=inference_tp, pipeline_parallel_size=inference_pp, gpu_memory_utilization=0.95, trust_remote_code=True)
 
 cot_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='cot', streaming=True)
 inference(cot_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_cot_prompt, inference_dir + "/cot", cot_dataset_size)
@@ -283,7 +283,7 @@ del llm
 torch.cuda.empty_cache()
 
 #%%
-llm = LLM(model=judgement_model, tensor_parallel_size=judgement_tp, pipeline_parallel_size=judgement_pp, gpu_memory_utilization=0.95)
+llm = LLM(model=judgement_model, tensor_parallel_size=judgement_tp, pipeline_parallel_size=judgement_pp, gpu_memory_utilization=0.95, trust_remote_code=True)
 
 judgement(llm, judgement_batch_size, judgement_temperature, judgement_max_tokens, judgement_cot_prompt, inference_dir + "/cot", judgement_dir + "/cot")
 judgement(llm, judgement_batch_size, judgement_temperature, judgement_max_tokens, judgement_genselect_prompt, inference_dir + "/genselect", judgement_dir + "/genselect")
