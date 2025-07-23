@@ -3,51 +3,55 @@
 # Training Arguments: https://huggingface.co/docs/transformers/v4.53.1/en/main_classes/trainer#transformers.TrainingArguments
 # SFT Config: https://huggingface.co/docs/trl/v0.19.1/en/sft_trainer#trl.SFTConfig
 
-# Config for 1 node of 8 x H100s (80GB)
 # Model arguments
 model_name_or_path: Qwen/Qwen2.5-0.5B-Instruct # テスト用のため0.5bにしている
 model_revision: main
-torch_dtype: bfloat16
+torch_dtype: bfloat16 # bf16を使う
 # attn_implementation: flash_attention_2 # flash-attnention_2は使えなかった。
 
 # Data training arguments
 chat_template: "{%- if tools %}\n    {{- '<|im_start|>system\\n' }}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- messages[0]['content'] }}\n    {%- else %}\n        {{- 'You are Open-R1, a language model trained by Hugging Face to help users. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracing, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think> Thought section </think> Solution section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion. Now, try to solve the following question through the above guidelines.' }}\n    {%- endif %}\n    {{- \"\\n\\n# Tools\\n\\nYou may call one or more functions to assist with the user query.\\n\\nYou are provided with function signatures within <tools></tools> XML tags:\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\\n\\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\\n<tool_call>\\n{\\\"name\\\": <function-name>, \\\"arguments\\\": <args-json-object>}\\n</tool_call><|im_end|>\\n\" }}\n{%- else %}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- '<|im_start|>system\\n' + messages[0]['content'] + '<|im_end|>\\n' }}\n    {%- else %}\n        {{- '<|im_start|>system\\nYou are Open-R1, a language model trained by Hugging Face to help users. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracing, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think> Thought section </think> Solution section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion. Now, try to solve the following question through the above guidelines.<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- for message in messages %}\n    {%- if (message.role == \"user\") or (message.role == \"system\" and not loop.first) or (message.role == \"assistant\" and not message.tool_calls) %}\n        {{- '<|im_start|>' + message.role + '\\n' + message.content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {{- '<|im_start|>' + message.role }}\n        {%- if message.content %}\n            {{- '\\n' + message.content }}\n        {%- endif %}\n        {%- for tool_call in message.tool_calls %}\n            {%- if tool_call.function is defined %}\n                {%- set tool_call = tool_call.function %}\n            {%- endif %}\n            {{- '\\n<tool_call>\\n{\"name\": \"' }}\n            {{- tool_call.name }}\n            {{- '\", \"arguments\": ' }}\n            {{- tool_call.arguments | tojson }}\n            {{- '}\\n</tool_call>' }}\n        {%- endfor %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != \"tool\") %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- message.content }}\n        {{- '\\n</tool_response>' }}\n        {%- if loop.last or (messages[loop.index0 + 1].role != \"tool\") %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n{%- endif %}\n"
-dataset_name: open-r1/Mixture-of-Thoughts
-dataset_config: math
-dataset_num_proc: 12
-eos_token: <|im_end|>
+dataset_name: openai/gsm8k # データセット名
+dataset_config: main # データセットのサブセット
+dataset_num_proc: 12 # データセットの前処理に使うプロセス(CPUコア)数
+dataset_text_field: answer # データセットのテキストフィールド名
+eos_token: <|im_end|> # シーケンスの終端トークン
 
 # SFT trainer config
-bf16: true
-do_eval: false
-eval_strategy: 'no' # 'no' or 'steps' or 'epoch'
-gradient_accumulation_steps: 8
-gradient_checkpointing: true
+use_cpu: false # CPUを使うかどうか (GPUがない場合はtrueにする)
+data_seed: 42 # データセットの乱数シード
+bf16: true # bf16を使う
+do_eval: false # 評価を行うかどうか
+eval_strategy: 'no' # 評価を行うタイミング ('no' or 'steps' or 'epoch')
+gradient_accumulation_steps: 8 # 勾配蓄積のステップ数
+gradient_checkpointing: true # 勾配チェックポイントを使うかどうか
 gradient_checkpointing_kwargs:
   use_reentrant: false
-hub_model_id: Qwen2.5-0.5B-Distill-test
-hub_strategy: every_save
-learning_rate: 4.0e-05
-log_level: info
-logging_steps: 1
-logging_strategy: steps
-lr_scheduler_type: cosine_with_min_lr
+hub_model_id: Qwen2.5-0.5B-Distill-test # モデルをHuggingFace Hubにpushする際のモデルID
+hub_strategy: every_save # モデルをHuggingFace Hubにpushするタイミング (every_save: 保存する時毎回, end: 最後の保存時)
+learning_rate: 4.0e-05 # 学習率
+log_level: info # ログレベル(ログの詳細度)
+logging_steps: 1 # ログを出力するステップ数
+logging_strategy: steps # ログを出力するタイミング ('no' or 'steps' or 'epoch')
+lr_scheduler_type: cosine_with_min_lr # 学習率スケジューラのタイプ 
 lr_scheduler_kwargs:
   min_lr_rate: 0.1
 packing: false
 max_grad_norm: 0.2
-max_length: 32768
+max_length: 32768 # 最大シーケンス長
 max_steps: -1
-num_train_epochs: 5
-output_dir: data/Qwen2.5-0.5B-Distill-test
+num_train_epochs: 5 # 学習エポック数
+output_dir: data/Qwen2.5-0.5B-Distill-test # 結果の出力ディレクトリ
+optim: adamw_torch # オプティマイザの種類  何があるかはhttps://github.com/huggingface/transformers/blob/main/src/transformers/training_args.pyを参照
 overwrite_output_dir: true
 per_device_eval_batch_size: 1
 per_device_train_batch_size: 2
 push_to_hub: false # trueにするとHuggingFace Hubにモデルをpushする ログインしている必要がある
 # report_to: # wandbにログインしているならこれをオンにするとwandbにログが送られる
 # - wandb
-save_strategy: epoch
+save_strategy: steps # モデルをローカルに保存するタイミング ('no' or 'steps' or 'epoch')
+save_steps: 500 # モデルをローカルに保存するステップ数(間隔)
 save_total_limit: 1
-seed: 42
+seed: 42 # 乱数シード
 use_liger_kernel: false # エラーが出たので一旦無効化
 warmup_ratio: 0.03
