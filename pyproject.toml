@@ -17,14 +17,6 @@ dependencies = [
   "wandb>=0.21.0",
 ]
 
-[project.optional-dependencies]
-learn = [
-  "trl[vllm]>=0.19.1",
-  "deepspeed>=0.16.8",
-  "accelerate>=1.4.0",
-  "peft>=0.14.0",
-]
-
 [tool.uv.sources]
 torch = [
   { index = "pytorch-cpu", marker = "sys_platform != 'linux' or platform_machine == 'aarch64'" },
