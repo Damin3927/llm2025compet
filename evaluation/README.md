@@ -6,8 +6,9 @@
 
 プロジェクトルートに .env を作成し、以下を記入：
 ```dotenv
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-HUGGINGFACEHUB_API_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_API_KEY = 'sk-xxxx'
+HF_TOKEN = 'hf_xxxx'
+WANDB_API_KEY = 'xxxx' # 未使用
 ```
 
 ## 実行方法
@@ -33,7 +34,6 @@ python3 evaluation/dna/eval.py \
 ```plaintext
 dna/
 ├── inference.py # DNA評価スクリプトで評価するためのテストデータ生成（一時的に使用）
-├── eval.py      # DNA評価スクリプト
-└── datasets/    # Huggin Faceでデータセットをやり取りするまで一時的に使用
+└── eval.py      # DNA評価スクリプト
 ```
 

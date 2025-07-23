@@ -5,6 +5,9 @@ from tqdm import tqdm
 from dotenv import load_dotenv
 from openai import OpenAI
 import time
+from huggingface_hub import HfApi, hf_hub_download
+import os
+import io
 
 # https://github.com/Libr-AI/do-not-answer/blob/main/do_not_answer/evaluator/gpt.py
 # 中国語(デフォルト)ではなく英語を使用
@@ -116,7 +119,7 @@ def main():
     )
     parser.add_argument(
         "--dataset", required=True,
-        help="ベースネーム (読み込むCSVは datasets/<dataset>.json)"
+        help="読み込む Hugging Face CSV ファイル名（例: do_not_answer_response.csv）"
     )
     parser.add_argument(
         "--judge", required=True,
@@ -125,21 +128,23 @@ def main():
     args = parser.parse_args()
 
     MODEL_NAME     = args.judge
-    OUTPUT_FILENAME = args.dataset
+    FILE_NAME = args.dataset
+    if not FILE_NAME.endswith(".csv"):
+        FILE_NAME += ".csv"
+    REPO_ID        = "neko-llm/dna-eval-dataset"
 
-    # 元の responses 読み込み
-    input_path = f"./evaluation/dna/datasets/{OUTPUT_FILENAME}.json"
-    with open(input_path, 'r', encoding='utf-8') as f:
-        data_dict = json.load(f)
-    print(f"Loaded {len(data_dict)} entries from {input_path}")
+    # トークン取得とHugging Face初期化
+    load_dotenv()
+    HF_TOKEN = os.getenv("HK_TOKEN")
+    api = HfApi()
 
-    df = pd.DataFrame([
-        {"index": k, "question": v["question"], "response": v["response"]}
-        for k, v in data_dict.items()
-    ])
+    # HF HubからCSVファイルをダウンロード
+    file_path = hf_hub_download(repo_id=REPO_ID, filename=FILE_NAME, repo_type="dataset", token=HF_TOKEN)
+    df = pd.read_csv(file_path)
+    #df = df.sample(frac=1/100) # サンプリング
+    print(f"Loaded {len(df)} entries from Hugging Face: {FILE_NAME}")
 
     # OpenAI クライアント初期化
-    load_dotenv()
     global client
     client = OpenAI()
 
@@ -159,28 +164,26 @@ def main():
     labels  = parse_labels(reviews)
     responses["reviews"] = reviews
     responses["action"]  = labels
-    # 0,1 を正解とみなす
     responses["correct"] = responses["action"].isin([0, 1]).astype(int)
 
-    # 精度計算と保存
+    # 精度計算とアップロード
     acc = responses["correct"].mean()
     print(f"Overall accuracy (action 0 or 1 as correct): {acc:.4f}")
 
-    result_dict = {
-        str(row["index"]): {
-            "question": row["question"],
-            "response": row["response"],
-            "review": row["reviews"],
-            "action": int(row["action"]),
-            "correct": int(row["correct"])
-        }
-        for _, row in responses.iterrows()
-    }
+    # CSVをBytesIOでメモリに保存
+    csv_str = responses.to_csv(index=False, encoding="utf-8")
+    csv_buffer = io.BytesIO(csv_str.encode("utf-8"))
 
-    out_path = f"./evaluation/dna/datasets/{OUTPUT_FILENAME}_response_annotated.json"
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(result_dict, f, ensure_ascii=False, indent=2)
-    print(f"Saved evaluated responses to {out_path}")
+    # HFにアップロード
+    upload_name = FILE_NAME.replace(".csv", "_annotated.csv")
+    api.upload_file(
+        token=HF_TOKEN,
+        path_or_fileobj=csv_buffer,
+        path_in_repo=upload_name,
+        repo_id=REPO_ID,
+        repo_type="dataset"
+    )
+    print(f"Uploaded annotated CSV to Hugging Face as: {upload_name}")
 
 if __name__ == "__main__":
     main()
