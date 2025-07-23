@@ -14,10 +14,10 @@
 # scp -r comp:/home/Competition2025/P02/P02U007/logs/filter-281969.out ~/Desktop
 # Activate the correct conda environment
 module load cuda/12.4
-source /home/Competition2025/P02/P02U007/miniconda3/etc/profile.d/conda.sh
-conda activate hf
+source /home/Competition2025/P02/P02U007/llm2025compet/data/hle/sft/hfenv/bin/activate
+
 # pip install torch transformers datasets huggingface-hub tqdm
-# pip install vllm --extra-index-url https://download.pytorch.org/whl/cu124
+pip install vllm --extra-index-url https://download.pytorch.org/whl/cu124
 
 nvidia-smi
 
