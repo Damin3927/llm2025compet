@@ -13,6 +13,7 @@
 # bash /home/Competition2025/P02/shareP02/scripts/scancel.sh <job_id>
 # scp -r comp:/home/Competition2025/P02/P02U007/logs/filter-281969.out ~/Desktop
 # Activate the correct conda environment
+module load cuda/12.4
 source /home/Competition2025/P02/P02U007/miniconda3/etc/profile.d/conda.sh
 conda activate hf
 # pip install torch transformers datasets huggingface-hub tqdm
