@@ -10,13 +10,15 @@
 #SBATCH --error=/home/Competition2025/P02/P02U007/logs/%x-%j.err
 
 # bash /home/Competition2025/P02/shareP02/scripts/scancel.sh <job_id>
-# scp -r comp:/home/Competition2025/P02/P02U007/logs/filter-281969.* ~/Desktop
+# scp -r comp:/home/Competition2025/P02/P02U007/logs/filter-281969.out ~/Desktop
 # Activate the correct conda environment
 source ~/miniconda3/etc/profile.d/conda.sh
 conda init
-conda activate base
-pip install torch transformers datasets huggingface-hub tqdm
-pip install vllm --extra-index-url https://download.pytorch.org/whl/cu124
+conda activate hf
+# pip install torch transformers datasets huggingface-hub tqdm
+# pip install vllm --extra-index-url https://download.pytorch.org/whl/cu124
+
+nvidia-smi
 
 CUDA_VISIBLE_DEVICES=0 python OpenMathReasoningFiltering.py --start-from-percentage 0.0 --end-at-percentage 0.5
 # CUDA_VISIBLE_DEVICES=1 python OpenMathReasoningFiltering.py --start-from-percentage 0.5 --end-at-percentage 1.0
