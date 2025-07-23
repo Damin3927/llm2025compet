@@ -23,7 +23,7 @@ nvidia-smi
 
 cd /home/Competition2025/P02/P02U007/llm2025compet/data/hle/sft
 
-CUDA_VISIBLE_DEVICES=0 python OpenMathReasoningFiltering.py --start-from-percentage 0.0 --end-at-percentage 0.5
+CUDA_VISIBLE_DEVICES=0 python OpenMathReasoningFiltering.py --inference-model Qwen/Qwen3-32B --judgement-model Qwen/Qwen3-32B --start-from-percentage 0.0 --end-at-percentage 0.5
 # CUDA_VISIBLE_DEVICES=1 python OpenMathReasoningFiltering.py --start-from-percentage 0.5 --end-at-percentage 1.0
 # CUDA_VISIBLE_DEVICES=2 python OpenMathReasoningFiltering.py --run-index 2 --start-from-percentage 0.0 --end-at-percentage 0.5
 # CUDA_VISIBLE_DEVICES=3 python OpenMathReasoningFiltering.py --run-index 2 --start-from-percentage 0.5 --end-at-percentage 1.0
