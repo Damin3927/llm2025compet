@@ -43,6 +43,8 @@ def parse_args():
                       help='Temperature for inference sampling')
     parser.add_argument('--inference-max-tokens', type=int, default=4096,
                       help='Maximum tokens to generate during inference')
+    parser.add_argument('--inference-max-model-len', type=int, default=8192,
+                      help='Maximum model input length for inference')
     parser.add_argument('--inference-batch-size', type=int, default=4,
                       help='Batch size for inference')
     parser.add_argument('--inference-tp', type=int, default=1,
@@ -61,6 +63,8 @@ def parse_args():
                       help='Temperature for judgment sampling')
     parser.add_argument('--judgement-max-tokens', type=int, default=50,
                       help='Maximum tokens to generate during judgment')
+    parser.add_argument('--judgement-max-model-len', type=int, default=8192,
+                      help='Maximum model input length for judgment')
     parser.add_argument('--judgement-batch-size', type=int, default=4,
                       help='Batch size for judgment')
     parser.add_argument('--judgement-tp', type=int, default=1,
@@ -266,7 +270,15 @@ def judgement(jud_model, judgement_batch_size, judgement_temperature, judgement_
 #%%
 # inferece the questions
 # load inference model to use vllm
-llm = LLM(model=inference_model, tensor_parallel_size=inference_tp, pipeline_parallel_size=inference_pp, gpu_memory_utilization=0.95, trust_remote_code=True)
+llm = LLM(
+    model=inference_model,
+    tensor_parallel_size=inference_tp,
+    pipeline_parallel_size=inference_pp,
+    gpu_memory_utilization=0.95,
+    trust_remote_code=True,
+    max_model_len=8192,  # Reduced from default 40960 to fit in GPU memory
+    dtype="float16",  # Use half precision to save memory
+)
 
 cot_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='cot', streaming=True)
 inference(cot_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_cot_prompt, inference_dir + "/cot", cot_dataset_size)
@@ -283,7 +295,15 @@ del llm
 torch.cuda.empty_cache()
 
 #%%
-llm = LLM(model=judgement_model, tensor_parallel_size=judgement_tp, pipeline_parallel_size=judgement_pp, gpu_memory_utilization=0.95, trust_remote_code=True)
+llm = LLM(
+    model=judgement_model,
+    tensor_parallel_size=judgement_tp,
+    pipeline_parallel_size=judgement_pp,
+    gpu_memory_utilization=0.95,
+    trust_remote_code=True,
+    max_model_len=8192,  # Reduced from default 40960 to fit in GPU memory
+    dtype="float16",  # Use half precision to save memory
+)
 
 judgement(llm, judgement_batch_size, judgement_temperature, judgement_max_tokens, judgement_cot_prompt, inference_dir + "/cot", judgement_dir + "/cot")
 judgement(llm, judgement_batch_size, judgement_temperature, judgement_max_tokens, judgement_genselect_prompt, inference_dir + "/genselect", judgement_dir + "/genselect")
