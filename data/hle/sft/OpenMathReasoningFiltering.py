@@ -14,6 +14,7 @@ process:
 
 #%%
 import os
+import 
 import datasets
 import torch
 import json
@@ -291,14 +292,14 @@ llm = LLM(
 
 cot_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='cot', streaming=True)
 # filter the inf_dataset by the problem_type column to be has_answer_extracted
-cot_dataset = cot_dataset.filter(lambda x: x['problem_type'] == 'has_answer_extracted' and float(x['pass_rate_72b_tir']) < args.filter_by_pass_rate)
+cot_dataset = cot_dataset.filter(lambda x: x['problem_type'] == 'has_answer_extracted' and x['pass_rate_72b_tir'].isnumeric() and float(x['pass_rate_72b_tir']) < args.filter_by_pass_rate)
 inference(llm, cot_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_cot_prompt, inference_dir + "/cot", cot_dataset_size)
 # release the cot dataset
 del cot_dataset
 
 genselect_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='genselect', streaming=True)
 # filter the inf_dataset by the problem_type column to be has_answer_extracted
-genselect_dataset = genselect_dataset.filter(lambda x: x['problem_type'] == 'has_answer_extracted' and x['pass_rate_72b_tir'] < args.filter_by_pass_rate)
+genselect_dataset = genselect_dataset.filter(lambda x: x['problem_type'] == 'has_answer_extracted' and x['pass_rate_72b_tir'].isnumeric() and float(x['pass_rate_72b_tir']) < args.filter_by_pass_rate)
 inference(llm, genselect_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_genselect_prompt, inference_dir + "/genselect", genselect_dataset_size)
 # release the genselect dataset
 del genselect_dataset
