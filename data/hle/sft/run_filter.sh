@@ -4,7 +4,7 @@
 #SBATCH --job-name=filter
 #SBATCH --partition=P02
 #SBATCH --nodes=1
-#SBATCH --nodelist=osk-gpu56
+#SBATCH --nodelist=osk-gpu54
 #SBATCH --gres=gpu:1 # GPUが必要な場合
 #SBATCH --time=5:00:00 # 実行に時間がかかる可能性を考慮して設定
 #SBATCH --output=/home/Competition2025/P02/P02U007/logs/%x-%j.out
