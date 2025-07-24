@@ -35,6 +35,8 @@ def parse_args():
     # Run configuration
     parser.add_argument('--run-index', type=int, default=1,
                       help='Run index for multiple script executions')
+    parser.add_argument('--filter-by-pass-rate', type=float, default=0.3,
+                      help='pass rate threshold for filtering the dataset')
     
     # Inference model parameters
     parser.add_argument('--inference-model', type=str, default="Qwen/Qwen3-8B",
@@ -51,8 +53,6 @@ def parse_args():
                       help='Tensor parallel size for inference')
     parser.add_argument('--inference-pp', type=int, default=1,
                       help='Pipeline parallel size for inference')
-    parser.add_argument('--inference-dp', type=int, default=1,
-                      help='Data parallel size for inference')
     parser.add_argument('--save-per-batch', type=int, default=100,
                       help='Save results every N batches')
     
@@ -71,8 +71,6 @@ def parse_args():
                       help='Tensor parallel size for judgment')
     parser.add_argument('--judgement-pp', type=int, default=1,
                       help='Pipeline parallel size for judgment')
-    parser.add_argument('--judgement-dp', type=int, default=1,
-                      help='Data parallel size for judgment')
     parser.add_argument('--judge-only-by-answer', action='store_true',
                       help='If set, only judge the answers without reasoning')
     # start from percentage
@@ -94,14 +92,14 @@ inference_model = args.inference_model
 inference_temperature = args.inference_temperature
 inference_max_tokens = args.inference_max_tokens
 inference_batch_size = args.inference_batch_size
-inference_tp, inference_pp, inference_dp = args.inference_tp, args.inference_pp, args.inference_dp
+inference_tp, inference_pp = args.inference_tp, args.inference_pp
 save_per_batch = args.save_per_batch
 
 judgement_model = args.judgement_model
 judgement_temperature = args.judgement_temperature
 judgement_max_tokens = args.judgement_max_tokens
 judgement_batch_size = args.judgement_batch_size
-judgement_tp, judgement_pp, judgement_dp = args.judgement_tp, args.judgement_pp, args.judgement_dp
+judgement_tp, judgement_pp = args.judgement_tp, args.judgement_pp
 judge_only_by_answer = args.judge_only_by_answer
 
 
@@ -208,8 +206,6 @@ def inference(llm, inf_dataset, inference_batch_size, save_per_batch, inference_
     end_at_batch_index = int(dataset_size * args.end_at_percentage // inference_batch_size)
     print(f"Inferencing from batch {start_from_batch_index} to batch {end_at_batch_index}")
 
-    # filter the inf_dataset by the problem_type column to be has_answer_extracted
-    inf_dataset = inf_dataset.filter(lambda x: x['problem_type'] == 'has_answer_extracted')
     i = 1
     for data_batch in tqdm(inf_dataset.iter(batch_size=inference_batch_size), desc="Inferencing"):
         if i < start_from_batch_index:
@@ -294,11 +290,15 @@ llm = LLM(
 )
 
 cot_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='cot', streaming=True)
+# filter the inf_dataset by the problem_type column to be has_answer_extracted
+cot_dataset = cot_dataset.filter(lambda x: x['problem_type'] == 'has_answer_extracted' and float(x['pass_rate_72b_tir']) < args.filter_by_pass_rate)
 inference(llm, cot_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_cot_prompt, inference_dir + "/cot", cot_dataset_size)
 # release the cot dataset
 del cot_dataset
 
 genselect_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='genselect', streaming=True)
+# filter the inf_dataset by the problem_type column to be has_answer_extracted
+genselect_dataset = genselect_dataset.filter(lambda x: x['problem_type'] == 'has_answer_extracted' and x['pass_rate_72b_tir'] < args.filter_by_pass_rate)
 inference(llm, genselect_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_genselect_prompt, inference_dir + "/genselect", genselect_dataset_size)
 # release the genselect dataset
 del genselect_dataset
