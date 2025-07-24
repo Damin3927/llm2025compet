@@ -199,7 +199,7 @@ def vllm_judgement(llm, prompts, temperature=0.1, max_tokens=1024):
     return results
 
 # inference the whole dataset
-def inference(inf_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_prompt, inference_dir, dataset_size):
+def inference(llm, inf_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_prompt, inference_dir, dataset_size):
     if not os.path.exists(inference_dir):
         os.makedirs(inference_dir)
 
@@ -212,13 +212,14 @@ def inference(inf_dataset, inference_batch_size, save_per_batch, inference_tempe
     inf_dataset = inf_dataset.filter(lambda x: x['problem_type'] == 'has_answer_extracted')
     i = 1
     for data_batch in tqdm(inf_dataset.iter(batch_size=inference_batch_size), desc="Inferencing"):
-        if i % 100 == 0:
-            print(f"Inferencing {i} batches")
         if i < start_from_batch_index:
             i += 1
             continue
         if i >= end_at_batch_index:
             break
+
+        if i % 100 == 0:
+            print(f"Inferencing {i} batches")
         
         if i % (save_per_batch) == 0 and os.path.exists(f"{inference_dir}/inference_{i}.json"):
             print(f"Inference {i} batches already exists, skipping")
@@ -230,17 +231,24 @@ def inference(inf_dataset, inference_batch_size, save_per_batch, inference_tempe
         # add the inference results to data_batch, make a new column called 'inference'
         data_batch['inference'] = inference_results
         # data_batch is a dictionary, convert it to a list of dictionaries
-        data_batch = [{k: v[j] for k, v in data_batch.items()} for j in range(inference_batch_size)]
+        actual_batch_size = len(data_batch['problem'])  # Get actual size of current batch
+        data_batch = [{k: v[j] for k, v in data_batch.items()} for j in range(actual_batch_size)]
         inference_collection.extend(data_batch)
 
         # save the temporary inference results
-        if i % (save_per_batch) == 0:
+        if i % (save_per_batch) == 0 and inference_collection:  # Only save if we have data to save
             # save as pandas dataframe
             with open(f"{inference_dir}/inference_{i}.json", "w") as f:
                 json.dump(inference_collection, f)
             inference_collection = []
             print(f"Saved inference {i} batches")
         i += 1
+
+    # Save any remaining batches at the end
+    if inference_collection:
+        with open(f"{inference_dir}/inference_{i}.json", "w") as f:
+            json.dump(inference_collection, f)
+        print(f"Saved final inference batch {i}")
 
 def judgement(jud_model, judgement_batch_size, judgement_temperature, judgement_max_tokens, judgement_prompt, inference_dir, judgement_dir):
     if not os.path.exists(judgement_dir):
@@ -281,17 +289,17 @@ llm = LLM(
     pipeline_parallel_size=inference_pp,
     gpu_memory_utilization=0.95,
     trust_remote_code=True,
-    max_model_len=8192,  # Reduced from default 40960 to fit in GPU memory
+    max_model_len=args.inference_max_model_len,  # Reduced from default 40960 to fit in GPU memory
     dtype="float16",  # Use half precision to save memory
 )
 
 cot_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='cot', streaming=True)
-inference(cot_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_cot_prompt, inference_dir + "/cot", cot_dataset_size)
+inference(llm, cot_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_cot_prompt, inference_dir + "/cot", cot_dataset_size)
 # release the cot dataset
 del cot_dataset
 
 genselect_dataset = datasets.load_dataset("nvidia/OpenMathReasoning", split='genselect', streaming=True)
-inference(genselect_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_genselect_prompt, inference_dir + "/genselect", genselect_dataset_size)
+inference(llm, genselect_dataset, inference_batch_size, save_per_batch, inference_temperature, inference_max_tokens, inference_genselect_prompt, inference_dir + "/genselect", genselect_dataset_size)
 # release the genselect dataset
 del genselect_dataset
 
@@ -306,7 +314,7 @@ llm = LLM(
     pipeline_parallel_size=judgement_pp,
     gpu_memory_utilization=0.95,
     trust_remote_code=True,
-    max_model_len=8192,  # Reduced from default 40960 to fit in GPU memory
+    max_model_len=args.judgement_max_model_len,  # Reduced from default 40960 to fit in GPU memory
     dtype="float16",  # Use half precision to save memory
 )
 
