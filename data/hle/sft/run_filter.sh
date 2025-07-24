@@ -42,8 +42,8 @@ cd /home/Competition2025/P02/P02U007/llm2025compet/data/hle/sft
 #     --end-at-percentage 0.5
 
 # Commented out parallel runs
-CUDA_VISIBLE_DEVICES=0,1 python OpenMathReasoningFiltering.py --inference-model Qwen/Qwen3-32B --inference-tp 2 --inference-batch-size 8 --judgement-model Qwen/Qwen3-32B --judgement-tp 2 --judgement-batch-size 8 --start-from-percentage 0.0 --end-at-percentage 0.5 --save-per-batch 5 # &
-# CUDA_VISIBLE_DEVICES=1 python OpenMathReasoningFiltering.py --inference-model Qwen/Qwen3-32B --inference-tp 2 --inference-batch-size 8 --judgement-model Qwen/Qwen3-32B --judgement-tp 2 --judgement-batch-size 8 --start-from-percentage 0.5 --end-at-percentage 1.0 --save-per-batch 5 #&
+CUDA_VISIBLE_DEVICES=0,1 python OpenMathReasoningFiltering.py --inference-model Qwen/Qwen3-32B --inference-tp 2 --inference-batch-size 1 --judgement-model Qwen/Qwen3-32B --judgement-tp 2 --judgement-batch-size 1 --start-from-percentage 0.0 --end-at-percentage 0.5 # &
+# CUDA_VISIBLE_DEVICES=1 python OpenMathReasoningFiltering.py --inference-model Qwen/Qwen3-32B --inference-tp 2 --inference-batch-size 8 --judgement-model Qwen/Qwen3-32B --judgement-tp 2 --judgement-batch-size 8 --start-from-percentage 0.5 --end-at-percentage 1.0 #&
 # CUDA_VISIBLE_DEVICES=2 python OpenMathReasoningFiltering.py --inference-model Qwen/Qwen3-32B --inference-tp 2 --inference-batch-size 8 --judgement-model Qwen/Qwen3-32B --judgement-tp 2 --judgement-batch-size 8 --run-index 2 --start-from-percentage 0.0 --end-at-percentage 0.5 &
 # CUDA_VISIBLE_DEVICES=3 python OpenMathReasoningFiltering.py --inference-model Qwen/Qwen3-32B --inference-tp 2 --inference-batch-size 8 --judgement-model Qwen/Qwen3-32B --judgement-tp 2 --judgement-batch-size 8 --run-index 2 --start-from-percentage 0.5 --end-at-percentage 1.0 &
 # CUDA_VISIBLE_DEVICES=4 python OpenMathReasoningFiltering.py --inference-model Qwen/Qwen3-32B --inference-tp 2 --inference-batch-size 8 --judgement-model Qwen/Qwen3-32B --judgement-tp 2 --judgement-batch-size 8 --run-index 3 --start-from-percentage 0.0 --end-at-percentage 0.5 &

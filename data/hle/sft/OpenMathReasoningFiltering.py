@@ -53,7 +53,7 @@ def parse_args():
                       help='Pipeline parallel size for inference')
     parser.add_argument('--inference-dp', type=int, default=1,
                       help='Data parallel size for inference')
-    parser.add_argument('--save-per-batch', type=int, default=1000,
+    parser.add_argument('--save-per-batch', type=int, default=100,
                       help='Save results every N batches')
     
     # Judgment model parameters
