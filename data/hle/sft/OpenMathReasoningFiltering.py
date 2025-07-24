@@ -192,7 +192,7 @@ def vllm_judgement(llm, prompts, temperature=0.1, max_tokens=1024):
     # Batched inference
     results = []
     outputs = llm.generate(prompts, sampling_params)
-    import pdb; pdb.set_trace()
+
     for output in outputs:
         # output.outputs[0].text contains the generated text
         results.append(output.outputs[0].text)
@@ -212,7 +212,7 @@ def inference(inf_dataset, inference_batch_size, save_per_batch, inference_tempe
     inf_dataset = inf_dataset.filter(lambda x: x['problem_type'] == 'has_answer_extracted')
     i = 1
     for data_batch in tqdm(inf_dataset.iter(batch_size=inference_batch_size), desc="Inferencing"):
-        if i % 1000 == 0:
+        if i % 100 == 0:
             print(f"Inferencing {i} batches")
         if i < start_from_batch_index:
             i += 1
@@ -221,6 +221,7 @@ def inference(inf_dataset, inference_batch_size, save_per_batch, inference_tempe
             break
         
         if i % (save_per_batch) == 0 and os.path.exists(f"{inference_dir}/inference_{i}.json"):
+            print(f"Inference {i} batches already exists, skipping")
             i += 1
             continue
 
@@ -237,23 +238,26 @@ def inference(inf_dataset, inference_batch_size, save_per_batch, inference_tempe
             # save as pandas dataframe
             with open(f"{inference_dir}/inference_{i}.json", "w") as f:
                 json.dump(inference_collection, f)
-            inference_collection.clear()
+            inference_collection = []
+            print(f"Saved inference {i} batches")
         i += 1
 
 def judgement(jud_model, judgement_batch_size, judgement_temperature, judgement_max_tokens, judgement_prompt, inference_dir, judgement_dir):
     if not os.path.exists(judgement_dir):
         os.makedirs(judgement_dir)
 
-    for inf_filename in tqdm(os.listdir(inference_dir)):
+    for inf_filename in tqdm(os.listdir(inference_dir), desc="Judging"):
         judgement_filename = inf_filename.replace("inference", "judgement")
         if os.path.exists(f"{judgement_dir}/{judgement_filename}"):
+            print(f"Judgement {inf_filename} already exists, skipping")
             continue
+        print(f"Judging {inf_filename}")
 
         judgement_collection = []
         with open(f"{inference_dir}/{inf_filename}", "r") as f:
             inf_results = json.load(f)
         num_rows = len(inf_results)
-        for index in tqdm(range(0, num_rows, judgement_batch_size), desc="Judging"):
+        for index in range(0, num_rows, judgement_batch_size):
             batch = inf_results[index:index+judgement_batch_size]
             question = [item['problem'] for item in batch]
             correct_answer = [item['generated_solution'] for item in batch]
@@ -265,6 +269,7 @@ def judgement(jud_model, judgement_batch_size, judgement_temperature, judgement_
             judgement_collection.extend(batch)
         with open(f"{judgement_dir}/{judgement_filename}", "w") as f:
             json.dump(judgement_collection, f)
+            print(f"Saved judgement {inf_filename}")
         
 
 #%%
