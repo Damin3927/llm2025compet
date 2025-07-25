@@ -40,7 +40,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='OpenMathReasoning Filtering Script by label')
     
     # Run configuration
-    parser.add_argument('--filter-by-pass-rate', type=float, default=0.2,
+    parser.add_argument('--filter-by-pass-rate', type=float, default=0.1,
                       help='pass rate threshold for filtering the dataset')
     parser.add_argument('--save-per-iteration', type=int, default=10000,
                       help='save the dataset every N iterations')
