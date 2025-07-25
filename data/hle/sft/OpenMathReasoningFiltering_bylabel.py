@@ -36,10 +36,6 @@ import json
 from tqdm import tqdm
 import argparse
 
-# hard coding the dataset size
-cot_dataset_size = 3.3e6
-genselect_dataset_size = 5.66e5
-
 def parse_args():
     parser = argparse.ArgumentParser(description='OpenMathReasoning Filtering Script by label')
     
