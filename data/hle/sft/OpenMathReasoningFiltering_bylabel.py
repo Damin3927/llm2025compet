@@ -11,7 +11,7 @@ The filtering process includes:
    - Lower pass rates indicate harder problems
    - Uses pre-computed 'pass_rate_72b_tir' from 72B model evaluation
    
-3. Complexity Ranking: Sort by generated_solution length (descending order)
+3. Complexity Ranking: Sort by pass_rate_72b_tir in ascending order, and then by the length of generated_solution in descending order
    - Longer solutions typically indicate more complex mathematical reasoning
    - Helps prioritize challenging problems for training
 
