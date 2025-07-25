@@ -1,9 +1,8 @@
 #!/bin/bash
 
 # --- Slurm ジョブ設定 ---
-#SBATCH --job-name=filter
+#SBATCH --job-name=filter_by_label
 #SBATCH --partition=P02
-#SBATCH --nodes=1
 #SBATCH --time=5:00:00 # 実行に時間がかかる可能性を考慮して設定
 #SBATCH --output=/home/Competition2025/P02/P02U007/logs/%x-%j.out
 #SBATCH --error=/home/Competition2025/P02/P02U007/logs/%x-%j.err
