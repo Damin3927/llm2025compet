@@ -11,5 +11,7 @@ uv pip install vllm==0.8.5.post1
 # flash-attnのインストール
 uv pip install setuptools && uv pip install flash-attn --no-build-isolation 
 
+uv pip install peft
+
 # open-r1及び、他のライブラリのインストール
 GIT_LFS_SKIP_SMUDGE=1 uv pip install -e "llm2025compet/training/open-r1[dev]" 

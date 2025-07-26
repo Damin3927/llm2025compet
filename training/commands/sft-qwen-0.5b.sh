@@ -15,7 +15,7 @@ module load cuda/12.8           # nvccを使うためにCUDAをロード
 
 source openr1/bin/activate      # venvを有効化
 
-cd llm2025compet/training/open-r1/src 2>/dev/null || true # open-r1のソースコードディレクトリに移動 (注意)
+cd llm2025compet/training/open-r1/src || exit 1
 
 accelerate launch \
     --config_file ../recipes/accelerate_configs/zero2.yaml \
