@@ -185,29 +185,29 @@ def create_dataset_card(dataset_path, splits, repo_id):
 
     if not original_readme:
         original_readme = f"""
-## Dataset Description
+## データセットの説明
 
-This dataset contains processed data organized into the following splits:
+このデータセットは、以下の分割（split）ごとに整理された処理済みデータを含みます。
 
 {chr(10).join(split_info)}
 
-## Dataset Structure
+## データセット構成
 
-Each split is available in both JSON and Parquet formats:
-- **JSON files**: Original format in respective subfolders (`{split}/`)
-- **Parquet files**: Optimized format with split prefixes (`data/{split}_*.parquet`)
+各 split は JSON 形式と Parquet 形式の両方で利用可能です:
+- **JSONファイル**: 各 split 用サブフォルダ内の元データ（`{split}/`）
+- **Parquetファイル**: split名をプレフィックスとした最適化データ（`data/{split}_*.parquet`）
 
-Each JSON file has a corresponding Parquet file with split name as prefix for efficient processing of large datasets.
+各 JSON ファイルには、同名の split プレフィックス付き Parquet ファイルが対応しており、大規模データセットの効率的な処理が可能です。
 
-## Usage
+## 使い方
 
 ```python
 from datasets import load_dataset
 
-# Load specific split configurations
+# 特定の split を読み込む
 {chr(10).join([f'{split}_data = load_dataset("{repo_id}", "{split}")' for split in splits])}
 
-# Or specify data_files manually for custom loading
+# または、data_files を手動で指定して読み込む
 dataset = load_dataset(
     "parquet",
     data_files={{
@@ -215,7 +215,7 @@ dataset = load_dataset(
     }}
 )
 
-# Load individual files if needed
+# 個別のファイルを読み込む
 import pandas as pd
 df = pd.read_parquet("data/{splits[0] if splits else 'split'}_filename.parquet")
 
@@ -227,7 +227,7 @@ for file in split_files:
     # Process df...
 ```
 
-## File Structure
+## ファイル構成
 
 ```
 {repo_id.split('/')[-1]}/
@@ -242,17 +242,6 @@ for file in split_files:
 │       └── ...
 └── README.md
 ```
-
-## Data Format
-
-Each example contains structured data as dictionaries with various fields depending on the specific dataset content.
-
-## Benefits
-
-- **Memory Efficient**: Individual Parquet files allow selective loading
-- **Fast Processing**: Parquet format optimized for analytical workloads
-- **Flexibility**: Can load entire splits or individual files as needed
-- **Compatibility**: Original JSON files preserved alongside Parquet versions
 """
 
     dataset_card_content = f"{yaml_metadata}# {repo_id.split('/')[-1]}\n{original_readme}"
