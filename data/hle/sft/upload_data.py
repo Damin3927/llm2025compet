@@ -94,6 +94,14 @@ def convert_json_to_parquet_with_prefix(json_file_path, output_dir, split_name):
     """
     Convert a single JSON file to Parquet format with split name as prefix.
     """
+    # Create output filename with split prefix (e.g., "train_file1.parquet")
+    json_filename = Path(json_file_path).stem
+    parquet_filename = f"{split_name}_{json_filename}.parquet"
+    parquet_file = os.path.join(output_dir, parquet_filename)
+    if os.path.exists(parquet_file):
+        logger.info(f"Skipping {json_file_path}: {parquet_file} already exists")
+        return True
+
     try:
         with open(json_file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -108,11 +116,6 @@ def convert_json_to_parquet_with_prefix(json_file_path, output_dir, split_name):
         
         # Convert to DataFrame
         df = pd.DataFrame(data)
-        
-        # Create output filename with split prefix (e.g., "train_file1.parquet")
-        json_filename = Path(json_file_path).stem
-        parquet_filename = f"{split_name}_{json_filename}.parquet"
-        parquet_file = os.path.join(output_dir, parquet_filename)
         
         # Save as Parquet
         df.to_parquet(parquet_file, index=False)
