@@ -31,46 +31,12 @@ logger = logging.getLogger(__name__)
 
 
 
-def convert_json_to_parquet(json_file_path, output_dir):
-    """
-    Convert a single JSON file to Parquet format.
-    """
-    try:
-        with open(json_file_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        
-        if not isinstance(data, list):
-            logger.warning(f"Skipping {json_file_path}: not a list format")
-            return False
-        
-        if not data:
-            logger.warning(f"Skipping {json_file_path}: empty file")
-            return False
-        
-        # Convert to DataFrame
-        df = pd.DataFrame(data)
-        
-        # Create output filename (replace .json with .parquet)
-        json_filename = Path(json_file_path).stem
-        parquet_file = os.path.join(output_dir, f"{json_filename}.parquet")
-        
-        # Save as Parquet
-        df.to_parquet(parquet_file, index=False)
-        
-        logger.info(f"Converted {json_file_path} -> {parquet_file} ({len(df)} examples)")
-        return True
-        
-    except json.JSONDecodeError as e:
-        logger.error(f"Failed to parse JSON file {json_file_path}: {e}")
-        return False
-    except Exception as e:
-        logger.error(f"Failed to convert {json_file_path} to Parquet: {e}")
-        return False
+
 
 def process_dataset_folder(dataset_path):
     """
     Process the dataset folder to convert JSON files to Parquet format.
-    Each JSON file gets its own corresponding Parquet file.
+    Each JSON file gets its own Parquet file with split name as prefix.
     Each subfolder becomes a dataset split.
     """
     dataset_path = Path(dataset_path)
@@ -96,10 +62,6 @@ def process_dataset_folder(dataset_path):
         split_name = subfolder.name
         logger.info(f"Processing split: {split_name}")
         
-        # Create corresponding data subfolder for this split
-        split_data_folder = data_folder / split_name
-        split_data_folder.mkdir(exist_ok=True)
-        
         # Get all JSON files in this subfolder
         json_files = list(subfolder.glob("*.json"))
         
@@ -109,10 +71,10 @@ def process_dataset_folder(dataset_path):
         
         logger.info(f"Found {len(json_files)} JSON files in {split_name}")
         
-        # Convert each JSON file to Parquet individually
+        # Convert each JSON file to Parquet individually with split prefix
         successful_conversions = 0
         for json_file in tqdm(json_files, desc=f"Converting {split_name} files"):
-            success = convert_json_to_parquet(json_file, split_data_folder)
+            success = convert_json_to_parquet_with_prefix(json_file, data_folder, split_name)
             if success:
                 successful_conversions += 1
         
@@ -127,6 +89,43 @@ def process_dataset_folder(dataset_path):
     
     logger.info(f"Successfully processed splits: {processed_splits}")
     return processed_splits
+
+def convert_json_to_parquet_with_prefix(json_file_path, output_dir, split_name):
+    """
+    Convert a single JSON file to Parquet format with split name as prefix.
+    """
+    try:
+        with open(json_file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        if not isinstance(data, list):
+            logger.warning(f"Skipping {json_file_path}: not a list format")
+            return False
+        
+        if not data:
+            logger.warning(f"Skipping {json_file_path}: empty file")
+            return False
+        
+        # Convert to DataFrame
+        df = pd.DataFrame(data)
+        
+        # Create output filename with split prefix (e.g., "train_file1.parquet")
+        json_filename = Path(json_file_path).stem
+        parquet_filename = f"{split_name}_{json_filename}.parquet"
+        parquet_file = os.path.join(output_dir, parquet_filename)
+        
+        # Save as Parquet
+        df.to_parquet(parquet_file, index=False)
+        
+        logger.info(f"Converted {json_file_path} -> {parquet_file} ({len(df)} examples)")
+        return True
+        
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse JSON file {json_file_path}: {e}")
+        return False
+    except Exception as e:
+        logger.error(f"Failed to convert {json_file_path} to Parquet: {e}")
+        return False
 
 def create_dataset_card(dataset_path, splits, repo_id):
     """
@@ -144,10 +143,10 @@ def create_dataset_card(dataset_path, splits, repo_id):
     
     for split in splits:
         json_folder = dataset_path / split
-        parquet_folder = data_folder / split
+        parquet_files = list(data_folder.glob(f"{split}_*.parquet"))
         
         json_count = len(list(json_folder.glob("*.json"))) if json_folder.exists() else 0
-        parquet_count = len(list(parquet_folder.glob("*.parquet"))) if parquet_folder.exists() else 0
+        parquet_count = len(parquet_files)
         
         split_info.append(f"- **{split}**: {json_count} JSON files, {parquet_count} Parquet files")
     
