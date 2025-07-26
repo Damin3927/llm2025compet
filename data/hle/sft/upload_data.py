@@ -184,7 +184,7 @@ def create_dataset_card(dataset_path, splits, repo_id):
 
 
     if not original_readme:
-        original_readme = """
+        original_readme = f"""
 ## Dataset Description
 
 This dataset contains processed data organized into the following splits:
