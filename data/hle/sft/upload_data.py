@@ -36,20 +36,15 @@ logger = logging.getLogger(__name__)
 def process_dataset_folder(dataset_path):
     """
     Process the dataset folder to convert JSON files to Parquet format.
-    Each JSON file gets its own Parquet file with split name as prefix.
-    Each subfolder becomes a dataset split.
+    Creates separate folders with _pq suffix for parquet files that Hugging Face can recognize.
     """
     dataset_path = Path(dataset_path)
     
     if not dataset_path.exists():
         raise FileNotFoundError(f"Dataset path does not exist: {dataset_path}")
     
-    # Create data subfolder for Parquet files
-    data_folder = dataset_path / "data"
-    data_folder.mkdir(exist_ok=True)
-    
-    # Get all subfolders (potential splits)
-    subfolders = [f for f in dataset_path.iterdir() if f.is_dir() and f.name != "data"]
+    # Get all subfolders (potential splits), excluding _pq folders
+    subfolders = [f for f in dataset_path.iterdir() if f.is_dir() and not f.name.endswith('_pq')]
     
     if not subfolders:
         raise ValueError(f"No subfolders found in {dataset_path}")
@@ -62,6 +57,10 @@ def process_dataset_folder(dataset_path):
         split_name = subfolder.name
         logger.info(f"Processing split: {split_name}")
         
+        # Create corresponding _pq folder for parquet files
+        parquet_folder = dataset_path / f"{split_name}_pq"
+        parquet_folder.mkdir(exist_ok=True)
+        
         # Get all JSON files in this subfolder
         json_files = list(subfolder.glob("*.json"))
         
@@ -71,10 +70,10 @@ def process_dataset_folder(dataset_path):
         
         logger.info(f"Found {len(json_files)} JSON files in {split_name}")
         
-        # Convert each JSON file to Parquet individually with split prefix
+        # Convert each JSON file to Parquet individually
         successful_conversions = 0
         for json_file in tqdm(json_files, desc=f"Converting {split_name} files"):
-            success = convert_json_to_parquet_with_prefix(json_file, data_folder, split_name)
+            success = convert_json_to_parquet(json_file, parquet_folder, split_name)
             if success:
                 successful_conversions += 1
         
@@ -90,19 +89,20 @@ def process_dataset_folder(dataset_path):
     logger.info(f"Successfully processed splits: {processed_splits}")
     return processed_splits
 
-def convert_json_to_parquet_with_prefix(json_file_path, output_dir, split_name):
+def convert_json_to_parquet(json_file_path, output_dir, split_name):
     """
-    Convert a single JSON file to Parquet format with split name as prefix.
+    Convert a single JSON file to Parquet format in the _pq split folder.
     """
-    # Create output filename with split prefix (e.g., "train_file1.parquet")
-    json_filename = Path(json_file_path).stem
-    parquet_filename = f"{split_name}_{json_filename}.parquet"
-    parquet_file = os.path.join(output_dir, parquet_filename)
-    if os.path.exists(parquet_file):
-        logger.info(f"Skipping {json_file_path}: {parquet_file} already exists")
-        return True
-
     try:
+        # Create output filename (replace .json with .parquet)
+        json_filename = Path(json_file_path).stem
+        parquet_file = output_dir / f"{json_filename}.parquet"
+        
+        # Skip if parquet file already exists
+        if parquet_file.exists():
+            logger.info(f"Skipping {json_file_path}: {parquet_file} already exists")
+            return True
+        
         with open(json_file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
         
@@ -141,15 +141,14 @@ def create_dataset_card(dataset_path, splits, repo_id):
         return
     
     # Count files for each split
-    data_folder = dataset_path / "data"
     split_info = []
     
     for split in splits:
         json_folder = dataset_path / split
-        parquet_files = list(data_folder.glob(f"{split}_*.parquet"))
+        parquet_folder = dataset_path / f"{split}_pq"
         
         json_count = len(list(json_folder.glob("*.json"))) if json_folder.exists() else 0
-        parquet_count = len(parquet_files)
+        parquet_count = len(list(parquet_folder.glob("*.parquet"))) if parquet_folder.exists() else 0
         
         split_info.append(f"- **{split}**: {json_count} JSON files, {parquet_count} Parquet files")
     
@@ -165,7 +164,7 @@ This dataset contains processed data organized into the following splits:
 
 Each split is available in both JSON and Parquet formats:
 - **JSON files**: Original format in respective subfolders (`{split}/`)
-- **Parquet files**: Optimized format in data subfolders (`data/{split}/`)
+- **Parquet files**: Converted format in `_pq` suffix folders (`{split}_pq/`)
 
 Each JSON file has a corresponding Parquet file with the same base name for efficient processing of large datasets.
 
@@ -200,11 +199,16 @@ for file in split_files:
 │   ├── file1.json
 │   ├── file2.json
 │   └── ...
-├── data/
-│   └── {splits[0] if splits else 'split'}/
-│       ├── file1.parquet
-│       ├── file2.parquet
-│       └── ...
+├── {splits[0] if splits else 'split'}_pq/
+│   ├── file1.parquet
+│   ├── file2.parquet
+│   └── ...
+├── validation/
+│   ├── file1.json
+│   └── ...
+├── validation_pq/
+│   ├── file1.parquet
+│   └── ...
 └── README.md
 ```
 
