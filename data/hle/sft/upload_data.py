@@ -6,7 +6,7 @@ import json
 from huggingface_hub import HfApi
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--dataset_path", type=str, default="./data/filtered_dataset")
+parser.add_argument("--dataset_path", type=str, default="./results/filtered_dataset")
 parser.add_argument("--repo_id", type=str, default="neko-llm/SFT_OpenMathReasoning")
 args = parser.parse_args()
 
