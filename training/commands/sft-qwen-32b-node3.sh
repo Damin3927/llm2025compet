@@ -3,7 +3,7 @@
 #SBATCH --ntasks-per-node=1    # 1ノードあたりのタスク数
 #SBATCH --nodes=3              # 利用するノード数
 #SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
-#SBATCH --nodelist osk-gpu[56,91] # 利用するノードのリスト
+#SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
 #SBATCH --job-name sft-32b     # ジョブの名前
 #SBATCH --time 0:30:00         # ジョブの最大実行時間
 #SBATCH --output sft-32b.out   # 標準出力ファイル
@@ -29,6 +29,10 @@ module load cuda/12.8           # nvccを使うためにCUDAをロード
 source openr1/bin/activate      # venvを有効化
 
 cd llm2025compet/training/open-r1/src || exit 1
+
+# GPUのメモリ使用状況をログに記録するためのコマンド
+# srun --ntasks=$SLURM_NNODES --ntasks-per-node=1 bash -c \
+#   'nvidia-smi dmon -s m -o DT -f vram_log_${SLURM_JOB_ID}_$(hostname).log' &
 
 accelerate launch \
     --config_file ../recipes/accelerate_configs/zero3.yaml \
