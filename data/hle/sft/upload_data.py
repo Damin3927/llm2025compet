@@ -166,23 +166,19 @@ def create_dataset_card(dataset_path, splits, repo_id):
             file_paths = [f"data/{f.name}" for f in split_files]
             data_files_config[split] = file_paths
     
-    # Create YAML front matter with correct format
-    yaml_metadata = f"""---
-configs:
-- config_name: default
-  data_files:
-"""
+    # Create YAML front matter with separate config for each split
+    yaml_metadata = "---\nconfigs:\n"
     
-    # Add each split as a separate line in YAML format
     for split, files in data_files_config.items():
+        yaml_metadata += f"- config_name: {split}\n"
         if len(files) == 1:
             # Single file: use string format
-            yaml_metadata += f"    {split}: \"{files[0]}\"\n"
+            yaml_metadata += f"  data_files: \"{files[0]}\"\n"
         else:
             # Multiple files: use array format
-            yaml_metadata += f"    {split}:\n"
+            yaml_metadata += f"  data_files:\n"
             for file_path in files:
-                yaml_metadata += f"      - \"{file_path}\"\n"
+                yaml_metadata += f"    - \"{file_path}\"\n"
     
     yaml_metadata += "---\n\n"
 
@@ -208,11 +204,8 @@ Each JSON file has a corresponding Parquet file with split name as prefix for ef
 ```python
 from datasets import load_dataset
 
-# Load the dataset with custom split configuration
-dataset = load_dataset("{repo_id}")
-
-# Access specific splits
-{chr(10).join([f"{split}_data = dataset['{split}']" for split in splits])}
+# Load specific split configurations
+{chr(10).join([f'{split}_data = load_dataset("{repo_id}", "{split}")' for split in splits])}
 
 # Or specify data_files manually for custom loading
 dataset = load_dataset(
