@@ -166,20 +166,25 @@ def create_dataset_card(dataset_path, splits, repo_id):
             file_paths = [f"data/{f.name}" for f in split_files]
             data_files_config[split] = file_paths
     
-    # Create YAML front matter
+    # Create YAML front matter with correct format
     yaml_metadata = f"""---
 configs:
 - config_name: default
-  data_files:"""
-    
-    for split, files in data_files_config.items():
-        yaml_metadata += f"""
-    {split}: {files}"""
-    
-    yaml_metadata += """
----
-
+  data_files:
 """
+    
+    # Add each split as a separate line in YAML format
+    for split, files in data_files_config.items():
+        if len(files) == 1:
+            # Single file: use string format
+            yaml_metadata += f"    {split}: \"{files[0]}\"\n"
+        else:
+            # Multiple files: use array format
+            yaml_metadata += f"    {split}:\n"
+            for file_path in files:
+                yaml_metadata += f"      - \"{file_path}\"\n"
+    
+    yaml_metadata += "---\n\n"
 
 
     if not original_readme:
