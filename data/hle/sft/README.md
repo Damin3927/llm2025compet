@@ -142,16 +142,13 @@ python generateFromSeed.py \
 **目的:** JSONファイルをParquetに変換してHugging Face Hubにアップロード
 
 ```bash
-# 自動Parquet変換による基本アップロード
+# 基本アップロード（データセットカード自動生成）
 python upload_data.py \
     --dataset_path ./results/filtered_dataset \
     --repo_id your-username/dataset-name
 
-# データセットカード生成付き
-python upload_data.py \
-    --dataset_path ./results/filtered_dataset \
-    --repo_id your-username/dataset-name \
-    --create_dataset_card
+# 既存のREADMEがある場合はoriginal_README.logから読み込み
+# データセットカードは常に生成される
 ```
 
 **期待される入力構造:**
@@ -175,17 +172,57 @@ dataset_path/
 ├── validation/ (元のJSONファイル)  
 ├── test/ (元のJSONファイル)
 ├── data/
-│   ├── train/ (変換されたParquetファイル)
-│   ├── validation/ (変換されたParquetファイル)
-│   └── test/ (変換されたParquetファイル)
-└── README.md (オプション)
+│   ├── train_file1.parquet    # splitプレフィックス付き
+│   ├── train_file2.parquet    # splitプレフィックス付き
+│   ├── validation_file1.parquet
+│   └── test_file1.parquet
+└── README.md (YAML メタデータ付き)
 ```
 
 **機能:**
 - 各JSONファイルを個別のParquetファイルに変換（メモリ効率的）
+- splitプレフィックス付きファイル名で区別可能
 - 互換性のため元のJSONファイルを保持
-- フォルダ構造に基づいてデータセット分割を自動作成
-- ファイル統計付きデータセットカードを生成
+- YAML メタデータで各splitの設定を自動生成
+- プライベートデータセット対応
+- 既存ファイルのスキップ機能
+
+**YAML メタデータ例:**
+```yaml
+---
+configs:
+- config_name: train
+  data_files:
+    - "data/train_file1.parquet"
+    - "data/train_file2.parquet"
+- config_name: validation
+  data_files: "data/validation_file1.parquet"
+- config_name: test
+  data_files: "data/test_file1.parquet"
+---
+```
+
+**データセットの読み込み方法:**
+```python
+from datasets import load_dataset
+
+# 特定のsplitを読み込む
+train_data = load_dataset("your-username/dataset-name", "train")
+val_data = load_dataset("your-username/dataset-name", "validation")
+
+# または手動でdata_filesを指定
+dataset = load_dataset(
+    "parquet",
+    data_files={
+        "train": "data/train_*.parquet",
+        "validation": "data/validation_*.parquet",
+    }
+)
+
+# 個別ファイルの読み込み
+import pandas as pd
+df = pd.read_parquet("data/train_file1.parquet")
+```
 
 ---
 
@@ -246,6 +283,12 @@ sbatch run_filter_dart_math.sh
 - データセットをチャンクで処理
 - 利用可能なRAMに基づいて適切なバッチサイズを設定
 
+### アップロード用
+- プライベートリポジトリではYAMLメタデータを使用
+- `original_README.log`で既存READMEを保持
+- 既存Parquetファイルは自動スキップされる
+- splitプレフィックスでファイルを整理
+
 ## 🐛 トラブルシューティング
 
 ### 一般的な問題
@@ -288,8 +331,7 @@ python OpenMathReasoningFiltering_bylabel.py \
 # 2. Hugging Faceに変換してアップロード
 python upload_data.py \
     --dataset_path ./results/filtered_dataset \
-    --repo_id your-username/openmath-filtered \
-    --create_dataset_card
+    --repo_id your-username/openmath-filtered
 
 # 3. 追加ソリューション生成（オプション）
 python generateFromSeed.py \
