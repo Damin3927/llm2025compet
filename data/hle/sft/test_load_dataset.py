@@ -4,7 +4,7 @@ import json
 with open("keys.json", "r") as f:
     keys = json.load(f)
 
-hf_token = keys["HF_TOKEN"]
+hf_token = keys["llm"]
 
 # This will now work correctly with your prefix structure
 dataset = load_dataset("neko-llm/SFT_OpenMathReasoning", token=hf_token)
