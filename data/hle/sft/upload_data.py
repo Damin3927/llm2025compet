@@ -229,37 +229,6 @@ Each example contains structured data as dictionaries with various fields depend
     
     logger.info(f"Created dataset card at {readme_path}")
 
-def create_dataset_config(dataset_path, splits):
-    """
-    Create a dataset configuration file to tell Hugging Face how to split the files.
-    """
-    config_file = dataset_path / "dataset_info.json"
-    
-    # Create configuration for each split
-    config = {
-        "builder_name": "parquet",
-        "config_name": "default",
-        "version": {"version_str": "0.0.0"},
-        "data_files": {}
-    }
-    
-    for split in splits:
-        # Find all parquet files for this split
-        data_folder = dataset_path / "data"
-        split_files = list(data_folder.glob(f"{split}_*.parquet"))
-        
-        if split_files:
-            # Convert to relative paths for Hugging Face
-            file_paths = [str(f.relative_to(dataset_path)) for f in split_files]
-            config["data_files"][split] = file_paths
-    
-    # Save configuration
-    with open(config_file, 'w', encoding='utf-8') as f:
-        json.dump(config, f, indent=2)
-    
-    logger.info(f"Created dataset configuration at {config_file}")
-    return config
-
 def upload_to_huggingface(dataset_path, repo_id, hf_token):
     """
     Upload the dataset folder to Hugging Face Hub.
@@ -343,9 +312,6 @@ def main():
         # Create dataset card if requested
         if args.create_dataset_card:
             create_dataset_card(dataset_path, processed_splits, args.repo_id)
-        
-        # Create dataset configuration
-        create_dataset_config(dataset_path, processed_splits)
 
         # Upload to Hugging Face
         upload_to_huggingface(dataset_path, args.repo_id, hf_token)
