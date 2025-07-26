@@ -345,9 +345,8 @@ def main():
         logger.info("Starting dataset processing...")
         processed_splits = process_dataset_folder(dataset_path)
         
-        # Create dataset card if requested
-        if args.create_dataset_card:
-            create_dataset_card(dataset_path, processed_splits, args.repo_id)
+        # Create dataset card
+        create_dataset_card(dataset_path, processed_splits, args.repo_id)
 
         # Upload to Hugging Face
         upload_to_huggingface(dataset_path, args.repo_id, hf_token)
