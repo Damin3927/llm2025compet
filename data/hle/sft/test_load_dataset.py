@@ -9,11 +9,9 @@ hf_token = keys["llm"]
 # This will now work correctly with your prefix structure
 dataset = load_dataset("neko-llm/SFT_OpenMathReasoning", token=hf_token)
 
-# Access splits
-train_data = dataset["train"]      # ✅ Works
-val_data = dataset["validation"]   # ✅ Works
-test_data = dataset["test"]        # ✅ Works
+# show splits
+print(dataset.keys())
 
-print(f"Train: {len(train_data)} examples")
-print(f"Validation: {len(val_data)} examples")
-print(f"Test: {len(test_data)} examples")
+# print the datasize of each split
+for split in dataset.keys():
+    print(f"{split}: {len(dataset[split])} examples")
