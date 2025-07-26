@@ -18,9 +18,15 @@ from pathlib import Path
 from huggingface_hub import HfApi
 from tqdm import tqdm
 import logging
+import sys
 
-# Setup logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# Setup logging to ensure output goes to terminal
+logging.basicConfig(
+    level=logging.INFO, 
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    force=True,
+    stream=sys.stdout
+)
 logger = logging.getLogger(__name__)
 
 
@@ -262,11 +268,20 @@ def main():
     
     args = parser.parse_args()
     
+    # Add verbose logging at startup
+    logger.info("="*50)
+    logger.info("Starting upload_data.py script")
+    logger.info(f"Dataset path: {args.dataset_path}")
+    logger.info(f"Repository ID: {args.repo_id}")
+    logger.info(f"Create dataset card: {args.create_dataset_card}")
+    logger.info("="*50)
+    
     # Load Hugging Face token
     try:
         with open("keys.json", "r") as f:
             keys = json.load(f)
         hf_token = keys["llm"]
+        logger.info("Successfully loaded Hugging Face token")
     except FileNotFoundError:
         logger.error("keys.json file not found. Please create it with your HF token.")
         raise
