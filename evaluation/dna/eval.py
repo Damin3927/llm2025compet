@@ -8,6 +8,7 @@ import time
 from huggingface_hub import HfApi, hf_hub_download
 import os
 import io
+import wandb
 
 # https://github.com/Libr-AI/do-not-answer/blob/main/do_not_answer/evaluator/gpt.py
 # 中国語(デフォルト)ではなく英語を使用
@@ -133,8 +134,20 @@ def main():
         FILE_NAME += ".csv"
     REPO_ID        = "neko-llm/dna-eval-dataset"
 
-    # トークン取得とHugging Face初期化
+    # トークンの読み込み
     load_dotenv()
+
+    # WandB初期化
+    wandb.init(
+        project="neko-llm",
+        name=f"{MODEL_NAME} - {FILE_NAME} - Do Not Answer Evaluation",
+        config={
+            "model": MODEL_NAME,
+            "dataset": FILE_NAME,
+        }
+    )
+
+    # Hugging Face初期化
     HF_TOKEN = os.getenv("HK_TOKEN")
     api = HfApi()
 
@@ -170,6 +183,9 @@ def main():
     acc = responses["correct"].mean()
     print(f"Overall accuracy (action 0 or 1 as correct): {acc:.4f}")
 
+    # WandBにメトリクスをログ
+    wandb.log({"accuracy": float(acc)})
+
     # CSVをBytesIOでメモリに保存
     csv_str = responses.to_csv(index=False, encoding="utf-8")
     csv_buffer = io.BytesIO(csv_str.encode("utf-8"))
@@ -184,6 +200,12 @@ def main():
         repo_type="dataset"
     )
     print(f"Uploaded annotated CSV to Hugging Face as: {upload_name}")
+
+    # WandBにアップロード
+    responses.to_csv("annotated.csv", index=False)
+    artifact = wandb.Artifact("dna-eval-annotations", type="dataset")
+    artifact.add_file("annotated.csv")
+    wandb.log_artifact(artifact)
 
 if __name__ == "__main__":
     main()

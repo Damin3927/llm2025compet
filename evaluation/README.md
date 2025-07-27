@@ -8,7 +8,7 @@
 ```dotenv
 OPENAI_API_KEY = 'sk-xxxx'
 HF_TOKEN = 'hf_xxxx'
-WANDB_API_KEY = 'xxxx' # 未使用
+WANDB_API_KEY = 'xxxx'
 ```
 
 ## 実行方法
