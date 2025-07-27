@@ -13,31 +13,12 @@ set -euo pipefail
 readonly MODEL_PATH="Qwen/Qwen3-32B"
 readonly RAY_HEAD_PORT="6379"
 readonly VLLM_API_KEY="token-abc123"
+readonly HF_HUB_CACHE="/home/Competition2025/P02/shareP02/.cache/huggingface/hub"
+readonly VLLM_CACHE_ROOT="/home/Competition2025/P02/shareP02/.cache/vllm"
 
 # =============================================================================
 # Functions
 # =============================================================================
-
-download_model() {
-    local model_path="${1:-$MODEL_PATH}"
-    echo "Downloading model..."
-    huggingface-cli download "$model_path"
-    echo "Model downloaded to $(huggingface-cli info "$model_path" | grep 'Local path' | awk '{print $3}')"
-}
-
-validate_model() {
-    local model_path="$1"
-    echo "Validating model path..."
-    if command -v huggingface-cli >/dev/null 2>&1; then
-        if huggingface-cli info "$model_path" >/dev/null 2>&1; then
-            echo "Model $model_path validated successfully"
-        else
-            echo "Warning: Model $model_path not found locally. It will be downloaded during startup."
-        fi
-    else
-        echo "Warning: huggingface-cli not found. Skipping model validation."
-    fi
-}
 
 check_gpu_availability() {
     echo "Checking GPU availability..."
@@ -171,7 +152,6 @@ show_usage() {
 Usage: $0 [OPTIONS]
 
 Options:
-    --download-model        Download the model and exit
     --nnodes <number>       Number of nodes for distributed inference (required)
     --ngpus <number>        Number of GPUs per node (required)
     --model <path>          Model path to serve (default: $MODEL_PATH)
@@ -179,10 +159,6 @@ Options:
     --help                  Show this help message
 
 Examples:
-    # Download model and image
-    $0 --download-model
-    $0 --download-image
-    
     # Run single-node inference with 2 GPUs
     $0 --nnodes 1 --ngpus 2
     
@@ -202,15 +178,10 @@ main() {
     # Initialize variables from defaults
     local model_path="$MODEL_PATH"
     local api_key="$VLLM_API_KEY"
-    local download_model_flag=false
     
     # Parse command line arguments
     while [[ $# -gt 0 ]]; do
         case "${1}" in
-            "--download-model")
-                download_model_flag=true
-                shift
-                ;;
             "--help"|"-h")
                 show_usage
                 exit 0
@@ -263,12 +234,6 @@ main() {
         esac
     done
     
-    # Handle download model flag
-    if [[ "$download_model_flag" == true ]]; then
-        download_model "$model_path"
-        exit 0
-    fi
-    
     # Check if required arguments are set
     if [[ -z "${NNODES:-}" ]]; then
         echo "Error: --nnodes argument is required" >&2
@@ -284,8 +249,6 @@ main() {
     
     # Setup environment and cluster
     setup_environment
-    echo "Validating configuration..."
-    validate_model "$model_path"
     check_gpu_availability
     echo "Getting cluster info..."
     get_cluster_info

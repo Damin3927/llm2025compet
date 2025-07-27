@@ -14,7 +14,7 @@
 
 ```bash
 # ノードを2つ、GPU をそれぞれ 4 つずつ使い、Qwen3-235B-A22B の推論サーバーを立ち上げる
-./vllm_sbatch.sh --model "Qwen/Qwen3-235B-A22B" --nodes 2 --gpus 3 --nodelist osk-gpu54,osk-gpu91 --timeout 01:00:00
+./vllm_sbatch.sh --model "Qwen/Qwen3-235B-A22B" --nodes 2 --gpus 4 --nodelist osk-gpu[54,91] --timeout 01:00:00
 
 # ヘルプを表示
 ./vllm_sbatch.sh --help
