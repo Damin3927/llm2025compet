@@ -90,6 +90,29 @@ def format_reward(completions, **kwargs):
     return [1.0 if match else 0.0 for match in matches]
 
 
+def gated_verification_reward(format_scores, verification_scores):
+    """
+    Adds verification reward only if the format condition is satisfied.
+    If format is correct (==1.0), verification score is added.
+    Otherwise, reward is 0.0.
+    """
+    return [
+        f + v if f == 1.0 and v is not None
+        else f if f == 1.0
+        else 0.0
+        for f, v in zip(format_scores, verification_scores)
+    ]
+
+
+def gated_accuracy_reward(completions, solution, **kwargs):
+    """
+    Composite reward: adds accuracy only if format condition is met.
+    """
+    format_scores = format_reward(completions, **kwargs)
+    verification_scores = accuracy_reward(completions, solution, **kwargs)
+    return gated_verification_reward(format_scores, verification_scores)
+
+
 def tag_count_reward(completions, **kwargs) -> list[float]:
     """Reward function that checks if we produce the desired number of think and answer tags associated with `format_reward()`.
 
@@ -700,6 +723,7 @@ def get_reward_funcs(script_args) -> list[Callable]:
             max_completion_len=script_args.max_completion_len,
             soft_punish_cache=script_args.soft_punish_cache,
         ),
+        "gated_accuracy": gated_accuracy_reward,
     }
     reward_funcs = [REWARD_FUNCS_REGISTRY[func] for func in script_args.reward_funcs]
 
