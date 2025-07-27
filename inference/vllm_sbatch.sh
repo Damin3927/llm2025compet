@@ -57,10 +57,7 @@ download_model() {
         --partition="$DEFAULT_PARTITION" \
         --time=01:00:00 \
         --mem=32G \
-        --pty bash -c "
-            echo 'Running on node: \$(hostname)';
-            HF_HUB_CACHE=$HF_HUB_CACHE huggingface-cli download \"$model_path\"
-        "
+        --pty bash -c "HF_HUB_CACHE=$HF_HUB_CACHE huggingface-cli download \"$model_path\""
 }
 
 generate_job_name() {
@@ -237,6 +234,15 @@ main() {
         echo "Job submitted successfully!"
         echo "Monitor with: squeue -u \$USER"
         echo "Cancel with: scancel <job_id>"
+        echo "==================================="
+        local head_node=$(scontrol show hostnames "${nodelist}")
+        local head_node_ip=$(getent hosts "${head_node}gw" | awk '{print $1}')
+        echo "Head node's IP: $head_node_ip"
+        echo "You can connect to the server using OpenAI API Schema at http://$head_node_ip:8000/v1 after the server is up."
+        echo "Check logs in the logs/vllm-<job_id>.out file to monitor the server status. (After seeing 'Starting vLLM API server on http://0.0.0.0:8000' in the logs, you can start sending requests.)"
+        echo "===================================="
+        echo "To view job logs, use: tail -f logs/<job_name>-<job_id>.out"
+        echo "To view job errors, use: tail -f logs/<job_name>-<job_id>.err"
     else
         echo "Error: Failed to submit job" >&2
         exit 1

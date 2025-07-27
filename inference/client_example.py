@@ -15,7 +15,7 @@ def main():
     ]
 
     completion = client.chat.completions.create(
-        model="Qwen/Qwen3-235B-A22B", # 使用するモデル名
+        model="deepseek-ai/DeepSeek-R1-0528", # 使用するモデル名
         messages=messages,
         temperature=0.7,
     )

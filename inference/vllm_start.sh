@@ -13,8 +13,9 @@ set -euo pipefail
 readonly MODEL_PATH="Qwen/Qwen3-32B"
 readonly RAY_HEAD_PORT="6379"
 readonly VLLM_API_KEY="token-abc123"
-readonly HF_HUB_CACHE="/home/Competition2025/P02/shareP02/.cache/huggingface/hub"
-readonly VLLM_CACHE_ROOT="/home/Competition2025/P02/shareP02/.cache/vllm"
+
+export HF_HUB_CACHE="/home/Competition2025/P02/shareP02/.cache/huggingface/hub"
+export VLLM_CACHE_ROOT="/home/Competition2025/P02/shareP02/.cache/vllm"
 
 # =============================================================================
 # Functions
@@ -67,6 +68,8 @@ setup_environment() {
 
     # Disable Ray usage stats collection for privacy and faster startup
     export RAY_DISABLE_USAGE_STATS=1
+
+    # export VLLM_TRACE_FUNCTION=1
     
     # Optimize PyTorch performance
     # export OMP_NUM_THREADS=1
@@ -91,19 +94,16 @@ get_cluster_info() {
     export VLLM_HOST_IP=$(ip -4 -o addr show bond0 | awk '{print $4}' | cut -d/ -f1)
 
     # Get SLURM cluster information
-    JOB_NODELIST_RAW=$(scontrol show job "$SLURM_JOBID" | grep NodeList=osk | cut -d'=' -f2)
-    NODELIST=$(scontrol show hostnames "$JOB_NODELIST_RAW")
-    echo nodelist $NODELIST
+    NODELIST=$(scontrol show hostnames "$SLURM_JOB_NODELIST")
+    echo nodelist: $NODELIST
     NODE_RANK="$SLURM_NODEID"
-    echo node_rank $NODE_RANK
+    echo node_rank: $NODE_RANK
 
-    if [ "$NODE_RANK" == "0" ]; then
-        echo "rank 0 node"
-    else
-	HEAD_NODE_HOSTNAME=$(echo "$NODELIST" | head -n 1 | awk '{print $1}')
-	echo head_node $HEAD_NODE_HOSTNAME
-	NODE0_IP=$(getent hosts "$HEAD_NODE_HOSTNAME" | awk '{print $1}' | grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$' | head -n 1)
-	echo node0-ip $NODE0_IP
+    if ! [ "$NODE_RANK" == "0" ]; then
+        HEAD_NODE_HOSTNAME=$(echo "$NODELIST" | head -n 1 | awk '{print $1}')
+        echo head_node: $HEAD_NODE_HOSTNAME
+        NODE0_IP=$(getent hosts "${HEAD_NODE_HOSTNAME}gw" | awk '{print $1}')
+        echo node0-ip: $NODE0_IP
     fi
 }
 
@@ -124,7 +124,7 @@ run_ray_command() {
         echo "Ray cluster ready!"
     else
         echo "RANK: $NODE_RANK. Connecting to Ray head node"
-        ray start --disable-usage-stats --block --address="10.255.255.54:${RAY_HEAD_PORT}" --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK
+        ray start --disable-usage-stats --block --address="${NODE0_IP}:${RAY_HEAD_PORT}" --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK
         echo "Ray worker node connected to head node"
     fi
 }
