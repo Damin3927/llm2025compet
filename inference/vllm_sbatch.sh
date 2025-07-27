@@ -86,6 +86,7 @@ generate_sbatch_script() {
 #SBATCH --partition=$partition
 #SBATCH --output=%x-%j.out
 #SBATCH --error=%x-%j.err
+#SBATCH --mem=0
 
 srun --ntasks=$nodes --gres=gpu:$gpus --exclusive ./vllm_start.sh $vllm_args
 EOF
