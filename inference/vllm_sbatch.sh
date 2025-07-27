@@ -75,6 +75,7 @@ generate_sbatch_script() {
     fi
     
     # Generate the SBATCH script content
+    # NOTE: cpus-per-task がシビア。2*2 gpus の場合は 32 でうまくいったが、他の構成は未検証
     cat << EOF
 #!/bin/bash
 #SBATCH --job-name=$job_name
@@ -87,6 +88,7 @@ generate_sbatch_script() {
 #SBATCH --output=%x-%j.out
 #SBATCH --error=%x-%j.err
 #SBATCH --mem=0
+#SBATCH --cpus-per-task=32
 
 srun --ntasks=$nodes --gres=gpu:$gpus --exclusive ./vllm_start.sh $vllm_args
 EOF

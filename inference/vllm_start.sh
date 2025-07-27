@@ -76,7 +76,6 @@ setup_environment() {
     export GPU_MAX_HW_QUEUES=2
     export TORCH_NCCL_HIGH_PRIORITY=1
     export NCCL_CHECKS_DISABLE=1
-    # export NCCL_IB_HCA=rdma0,rdma1,rdma2,rdma3,rdma4,rdma5,rdma6,rdma7
     export NCCL_IB_HCA=mlx5_0,mlx5_1,mlx5_2,mlx5_3,mlx5_4,mlx5_5,mlx5_8,mlx5_9
     export NCCL_IB_GID_INDEX=3
     export NCCL_CROSS_NIC=0
@@ -88,16 +87,11 @@ setup_environment() {
     # Disable Ray usage stats collection for privacy and faster startup
     export RAY_DISABLE_USAGE_STATS=1
     
-    # Set CUDA architecture list to optimize compilation (common architectures for H100/A100)
-    # export TORCH_CUDA_ARCH_LIST="8.0;8.6;8.9;9.0"
-    
     # Optimize PyTorch performance
     # export OMP_NUM_THREADS=1
     # export TOKENIZERS_PARALLELISM=true
 
     export VLLM_LOGGING_LEVEL=DEBUG
-    # export CUDA_LAUNCH_BLOCKING=1
-    export VLLM_TRACE_FUNCTION=1
 
     export NCCL_SOCKET_IFNAME=enp25s0np0
     export NVTE_FUSED_ATTN=0
@@ -106,11 +100,15 @@ setup_environment() {
     export CUDA_DEVICE_MAX_CONNECTIONS=1
     #export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
     #export HIP_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
-    # export NUMEXPR_MAX_THREADS=$SLURM_CPUS_PER_TASK
+    export NUMEXPR_MAX_THREADS=$SLURM_CPUS_PER_TASK
     unset ROCR_VISIBLE_DEVICES
+
+    ulimit -v unlimited
 }
 
 get_cluster_info() {
+    export VLLM_HOST_IP=$(ip -4 -o addr show bond0 | awk '{print $4}' | cut -d/ -f1)
+
     # Get SLURM cluster information
     JOB_NODELIST_RAW=$(scontrol show job "$SLURM_JOBID" | grep NodeList=osk | cut -d'=' -f2)
     NODELIST=$(scontrol show hostnames "$JOB_NODELIST_RAW")
@@ -131,30 +129,37 @@ get_cluster_info() {
 run_ray_command() {
     local model_path="$1"
     local api_key="$2"
-    local total_gpus=$((NGPUS * NNODES))
+    export TOTAL_GPUS=$((NGPUS * NNODES))
+    echo "cpus_per_task: $SLURM_CPUS_PER_TASK"
     
     if [ "$NODE_RANK" == "0" ]; then
         echo "RANK: $NODE_RANK. Starting Ray head node..."
-        ray start --disable-usage-stats --head --port=$RAY_HEAD_PORT
+        ray start --disable-usage-stats --head --port=$RAY_HEAD_PORT --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK
         echo "Ray head node started, waiting for worker nodes to connect..."
-        sleep 30
+        sleep 10
         echo "Checking Ray cluster status..."
         ray status
-        echo "Expected: ${NNODES} nodes with ${NGPUS} GPUs each (total: $total_gpus GPUs)"
+        echo "Expected: ${NNODES} nodes with ${NGPUS} GPUs each (total: $TOTAL_GPUS GPUs)"
         echo "Ray cluster ready!"
     else
         echo "RANK: $NODE_RANK. Connecting to Ray head node"
-        ray start --disable-usage-stats --block --address="10.255.255.54:${RAY_HEAD_PORT}"
+        ray start --disable-usage-stats --block --address="10.255.255.54:${RAY_HEAD_PORT}" --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK
         echo "Ray worker node connected to head node"
     fi
 }
 
 run_vllm() {
+    local model_path="$1"
+
+    echo "Starting VLLM server with model: $model_path"
+
     vllm serve --dtype auto --api-key "$VLLM_API_KEY" \
-        --tensor-parallel-size "$NGPUS" \
-        --pipeline-parallel-size "$NNODES" \
+        --tensor-parallel-size $NGPUS \
+        --pipeline-parallel-size $NNODES \
         --enable-prefix-caching \
-        "$MODEL_PATH"
+        --distributed-executor-backend ray \
+        --trust-remote-code \
+        "${model_path}"
 }
 
 # =============================================================================
@@ -290,7 +295,7 @@ main() {
     
     if [[ "$NODE_RANK" == "0" ]]; then
         echo "RANK: 0. Starting VLLM server..."
-        run_vllm
+        run_vllm "$model_path"
     fi
 }
 
