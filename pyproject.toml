@@ -62,15 +62,10 @@ dependencies = [
   "optree>=0.13.0",
   "grpcio>=1.62.1",
   "flashinfer-python==0.2.2.post1",
-  "transformer-engine",
-  "megatron-core",
-  "torch-memory-saver>=0.0.8",
-  "flash-attn>=2.8.2",
-]
-
-[tool.uv]
-override-dependencies = [
-  "nvidia-cudnn-cu12==9.8.0.87",
+  "transformer-engine; sys_platform == 'linux' and platform_machine == 'x86_64'",
+  "megatron-core; sys_platform == 'linux' and platform_machine == 'x86_64'",
+  "torch-memory-saver>=0.0.8; sys_platform == 'linux' and platform_machine == 'x86_64'",
+  "flash-attn>=2.8.2; sys_platform == 'linux' and platform_machine == 'x86_64'",
 ]
 
 [tool.uv.sources]
@@ -81,8 +76,8 @@ torch = [
 flashinfer-python = [
   { index = "flashinfer-python-cu124", marker = "sys_platform == 'linux' and platform_machine == 'x86_64'" },
 ]
-transformer-engine = { git = "https://github.com/NVIDIA/TransformerEngine.git", rev = "v2.2.1" }
-megatron-core = { git = "https://github.com/NVIDIA/Megatron-LM.git", rev = "core_v0.12.2" }
+transformer-engine = { git = "https://github.com/NVIDIA/TransformerEngine.git", rev = "v2.2.1", marker = "sys_platform == 'linux' and platform_machine == 'x86_64'" }
+megatron-core = { git = "https://github.com/NVIDIA/Megatron-LM.git", rev = "core_v0.12.2", marker = "sys_platform == 'linux' and platform_machine == 'x86_64'" }
 
 
 [[tool.uv.index]]
