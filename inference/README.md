@@ -1,55 +1,55 @@
 # vLLM 推論サーバー
 
-このディレクトリには、SLURMクラスター上でvLLM推論サーバーを起動するためのスクリプトが含まれています。
+SLURM 上で vLLM 推論サーバーを起動するためのスクリプト
 
-## ファイル構成
+## Usage
 
-- `vllm_sbatch.sh` - SLURMジョブを投入するメインスクリプト
-- `vllm_start.sh` - vLLMサーバーを起動する実行スクリプト (直接実行はしません)
-- `client_example.py` - APIクライアントのサンプル
-
-## vllm_sbatch.sh の使用方法
-
-### 基本的な使用方法
+以下をログインノードで実行：
 
 ```bash
-# ノードを2つ、GPU をそれぞれ 4 つずつ使い、Qwen3-235B-A22B の推論サーバーを立ち上げる
-./vllm_sbatch.sh --model "Qwen/Qwen3-235B-A22B" --nodes 2 --gpus 4 --nodelist osk-gpu[54,91] --timeout 01:00:00
-
-# ヘルプを表示
-./vllm_sbatch.sh --help
+# ノードを2つ、GPU をそれぞれ 8 つずつ使い、DeepSeek-R1-0528 の推論サーバーを立ち上げる
+# 立ち上がるのに、最大約 10 分ほどかかると思われます
+./vllm_sbatch.sh --model "deepseek-ai/DeepSeek-R1-0528" --nodes 2 --gpus 8 --nodelist osk-gpu[54,56] --timeout 01:00:00
 ```
 
-### ジョブ名の自動生成
+上記の後、計算ノードでサーバーが立ち上がり始めますので、`logs` に生成されたログを見ながら気長に待ってください。もしくは、スクリプトで API が通常通り動き始めるまでリクエストを送ってみて待つ処理を入れてください。
 
-スクリプトは以下の形式でジョブ名を自動生成します：
+### Python で待つ場合
 
+```python
+import requests
+import time
+from openai import OpenAI
+
+# ./vllm_batch.sh で最後に表示された IP に変える
+SERVER_URL = "http://10.255.255.xx:8000"
+# もしくは、ヘッドノード名（e.g. osk-gpu54）を用いても良い
+SERVER_URL = "http://osk-gpuxx:8000"
+
+def wait_until_vllm_up():
+    ping_url = f"{SERVER_URL}/ping"
+    while True:
+        try:
+            response = requests.get(ping_url, timeout=60)
+            if response.status_code == 200:
+                # The PONG response from vllm is just the integer 200
+                break
+        except requests.exceptions.RequestException as e:
+            # Handle connection errors, timeouts, etc.
+            time.sleep(10)
+
+    print("vLLM Server is now up")
+
+
+if __name__ == "__main__":
+    wait_until_vllm_up()
+
+    client = OpenAI(
+        base_url=f"{SERVER_URL}/v1",
+        api_key="token-abc123",
+    )
+    ...
 ```
-vllm-{モデル名}-n{ノード数}-g{GPU数}
-```
 
-例：
-- `vllm-Qwen3-32B-n1-g2`
-
-### 出力ファイル
-
-ジョブの出力は以下のファイルに保存されます：
-
-- `{ジョブ名}-{ジョブID}.out` - 標準出力
-- `{ジョブ名}-{ジョブID}.err` - エラー出力
-
-### ジョブの監視と管理
-
-```bash
-# 実行中のジョブを確認
-squeue -u $USER
-
-# ジョブの詳細を確認
-scontrol show job <ジョブID>
-
-# ジョブをキャンセル
-scancel <ジョブID>
-
-# ジョブの出力をリアルタイムで確認
-tail -f <ジョブ名>-<ジョブID>.out
-```
+### ログを見て待つ場合
+`Starting vLLM API server on http://0.0.0.0:8000` の表示が確認されると、API リクエストを送れるようになります。
