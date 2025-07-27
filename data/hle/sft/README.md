@@ -1,4 +1,4 @@
-# OpenMathReasoning SFT パイプライン
+# SFT パイプライン
 
 このフォルダには、OpenMathReasoningデータセットを教師ありファインチューニング（SFT）用に処理するためのスクリプトとツールが含まれています。パイプラインには、フィルタリング、処理、Hugging Faceへのデータセットアップロードが含まれます。
 
@@ -6,17 +6,15 @@
 
 ```
 data/hle/sft/
-├── OpenMathReasoningFiltering.py          # メインLLMベースフィルタリングスクリプト
+├── OpenMathReasoningFiltering.py          # LLMベースフィルタリングスクリプト
 ├── OpenMathReasoningFiltering_bylabel.py  # ラベルベースフィルタリング（高速）
 ├── generateFromSeed.py                    # シード問題からソリューション生成
-├── upload_data.py                         # データセットをParquetに変換してHFにアップロード
+├── upload_data.py                         # データセットをParquetに変換し、jsonとParquetをHFにアップロード
 ├── run_filter.sh                          # LLMフィルタリング用SLURMスクリプト
 ├── run_label_filter.sh                    # ラベルフィルタリング用SLURMスクリプト
-├── run_filter_dart_math.sh               # DART-Math用SLURMスクリプト
 ├── keys.json                              # APIキー設定
 ├── keys.json.example                      # APIキーテンプレート
 ├── results/                               # 処理済みデータの出力ディレクトリ
-└── Mixture-of-Thoughts/                   # MoT処理スクリプト
 ```
 
 ## 🚀 クイックスタート
@@ -76,10 +74,11 @@ python OpenMathReasoningFiltering_bylabel.py \
 
 ---
 
-### 🤖 LLMベースフィルタリング
+### 🤖 LLMベースフィルタリング（少量データの高精度フィルタリング）
 
 **スクリプト:** `OpenMathReasoningFiltering.py`  
-**目的:** カスタムフィルタリング基準のためのLLM推論使用
+**目的:** カスタムフィルタリング基準のためのLLM推論使用   
+**注意:**　推論速度がかなり遅い（Qwen3-32Bで５０s/件）から大量データ（＞５０００件）では使えない
 
 ```bash
 # Qwenモデルでの基本LLMフィルタリング
@@ -115,16 +114,19 @@ python OpenMathReasoningFiltering.py \
 ### 🌱 シード問題からの生成
 
 **スクリプト:** `generateFromSeed.py`  
-**目的:** シード数学問題から新しいソリューションを生成
+**目的:** シード問題から新しいソリューションを生成
+**注意:** 
+1. 生成の質とフォーマットを確保するため、Qwen3-32Bなど大規模モデルがおすすめ。小さいモデル（Qwen3-8B）でエラーが出る報告がある
+2. 推論速度がかなり遅い（Qwen3-32Bで５０s/件）から大量データ生成（＞５０００件）では使えない
 
 ```bash
 # Qwenモデルを使用したソリューション生成
 python generateFromSeed.py \
-    --model Qwen/Qwen3-8B \
+    --model Qwen/Qwen3-32B \
     --input_file seed_problems.json \
     --output_file generated_solutions.json \
-    --max_tokens 1024 \
-    --temperature 0.7
+    --max_tokens 4096 \
+    --temperature 0.3
 ```
 
 **主要パラメータ:**
@@ -138,8 +140,17 @@ python generateFromSeed.py \
 
 ### 📤 Hugging Faceへのアップロード
 
-**スクリプト:** `upload_data.py`  
-**目的:** JSONファイルをParquetに変換してHugging Face Hubにアップロード
+**スクリプト:** `upload_data.py`
+**目的:** JSONファイルをParquetに変換し、JSONとParquet両方をHugging Face Hubにアップロード  
+**説明:** Parquet形式が`datasets.load_dataset()`で直接使える。JSON/JSONLファイルが大規模トレーニングする時に使いやすい。  
+**機能:**
+- 各JSONファイルを個別のParquetファイルに変換（メモリ効率的）
+- splitプレフィックス付きファイル名で区別可能
+- 互換性のため元のJSONファイルを保持
+- YAML メタデータで各splitの設定を自動生成
+- プライベートデータセット対応
+- 既存ファイルのスキップ機能
+
 
 ```bash
 # 基本アップロード（データセットカード自動生成）
@@ -154,15 +165,16 @@ python upload_data.py \
 **期待される入力構造:**
 ```
 dataset_path/
-├── train/
+├── split_1(ネームは自由)/
 │   ├── file1.json
 │   ├── file2.json
 │   └── ...
-├── validation/
+├── split_2/
 │   ├── file1.json
 │   └── ...
-└── test/
-    └── file1.json
+└── split_3/
+│   └── file1.json
+└── original_readme.log (任意, md形式でhuggingfaceで使いたいreadmeを中に、このファイルがないとreadmeを自動生成)
 ```
 
 **出力構造:**
@@ -179,15 +191,7 @@ dataset_path/
 └── README.md (YAML メタデータ付き)
 ```
 
-**機能:**
-- 各JSONファイルを個別のParquetファイルに変換（メモリ効率的）
-- splitプレフィックス付きファイル名で区別可能
-- 互換性のため元のJSONファイルを保持
-- YAML メタデータで各splitの設定を自動生成
-- プライベートデータセット対応
-- 既存ファイルのスキップ機能
-
-**YAML メタデータ例:**
+**自動生成するYAML メタデータ例:**
 ```yaml
 ---
 configs:
@@ -240,11 +244,6 @@ sbatch run_label_filter.sh
 sbatch run_filter.sh
 ```
 
-**DART-Mathフィルタリング:**
-```bash
-sbatch run_filter_dart_math.sh
-```
-
 各スクリプトには以下が含まれます:
 - GPUリソース割り当て
 - 環境セットアップ
@@ -253,7 +252,7 @@ sbatch run_filter_dart_math.sh
 
 ## 📊 データスキーマ
 
-処理されたデータセットは以下のスキーマに従います:
+処理されたデータセットは以下のスキーマに従います (OpenMathを例に):
 
 ```json
 {
@@ -377,3 +376,4 @@ python upload_data.py \
 2. `--help`でスクリプトパラメータを確認
 3. 処理中のリソース使用量を監視
 4. 適切な環境設定を確認
+5. Slackで`@Junyu Liu`に連絡
