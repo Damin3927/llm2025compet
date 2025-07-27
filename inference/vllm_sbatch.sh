@@ -15,6 +15,7 @@ readonly DEFAULT_GPUS=2
 readonly DEFAULT_NODELIST="osk-gpu54"
 readonly DEFAULT_TIMEOUT="02:00:00"
 readonly DEFAULT_PARTITION="P02"
+readonly HF_HUB_CACHE="/home/Competition2025/P02/shareP02/.cache/huggingface/hub"
 
 # =============================================================================
 # Functions
@@ -41,6 +42,25 @@ Examples:
     # Custom configuration
     $0 --model "Qwen/Qwen3-32B" --nodes 2 --gpus 4 --timeout "04:00:00" --nodelist "osk-gpu54,osk-gpu55"
 EOF
+}
+
+download_model() {
+    local model_path="${1:-$MODEL_PATH}"
+    echo "Downloading model using srun on compute node..."
+
+    srun \
+        --job-name=download_model \
+        --nodes=1 \
+        --ntasks=1 \
+        --cpus-per-task=32 \
+        --nodelist="$DEFAULT_NODELIST" \
+        --partition="$DEFAULT_PARTITION" \
+        --time=01:00:00 \
+        --mem=32G \
+        --pty bash -c "
+            echo 'Running on node: \$(hostname)';
+            HF_HUB_CACHE=$HF_HUB_CACHE huggingface-cli download \"$model_path\"
+        "
 }
 
 generate_job_name() {
@@ -85,8 +105,8 @@ generate_sbatch_script() {
 #SBATCH --nodelist=$nodelist
 #SBATCH --time=$timeout
 #SBATCH --partition=$partition
-#SBATCH --output=%x-%j.out
-#SBATCH --error=%x-%j.err
+#SBATCH --output=logs/%x-%j.out
+#SBATCH --error=logs/%x-%j.err
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=32
 
@@ -202,6 +222,8 @@ main() {
     fi
     echo "Job name: $(generate_job_name "$model" "$nodes" "$gpus")"
     echo
+
+    download_model "$model"
     
     # Generate and submit the job
     echo "Generating SBATCH script..."
