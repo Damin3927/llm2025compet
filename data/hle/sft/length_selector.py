@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Fast data selector based on answer length with Gaussian-like distribution.
-Selects more long answers, fewer short answers for SFT training.
+Fast data selector based on solution length with Gaussian-like distribution.
+Selects more long solutions, fewer short solutions for SFT training.
 Supports streaming data processing for large datasets.
 """
 
@@ -68,11 +68,13 @@ def calculate_length_distribution(lengths, total_samples, min_length_samples=10)
 
 
 class StreamingLengthSelector:
-    """Streaming data selector using reservoir sampling with length-based weighting."""
+    """Streaming data selector using reservoir sampling with solution length-based weighting."""
     
-    def __init__(self, target_samples, answer_field, sample_size_for_stats=1000, num_bins=6, curve_sharpness=2.0):
+    def __init__(self, target_samples, answer_field, sample_size_for_stats=1000, num_bins=6, curve_sharpness=2.0, question_field="question", solution_field="solution"):
         self.target_samples = target_samples
         self.answer_field = answer_field
+        self.question_field = question_field
+        self.solution_field = solution_field
         self.sample_size_for_stats = sample_size_for_stats
         self.num_bins = num_bins
         self.curve_sharpness = curve_sharpness
@@ -303,13 +305,29 @@ class StreamingLengthSelector:
     
     def process_item(self, item, item_idx):
         """Process a single item from the stream."""
+        # Check if all required fields are present
+        missing_fields = []
         if self.answer_field not in item:
+            missing_fields.append(self.answer_field)
+        if self.question_field not in item:
+            missing_fields.append(self.question_field)
+        if self.solution_field not in item:
+            missing_fields.append(self.solution_field)
+        
+        if missing_fields:
             if item_idx < 10:  # Debug first few items
-                print(f"Item {item_idx}: Missing field '{self.answer_field}', available: {list(item.keys())}", file=sys.stderr)
+                print(f"Item {item_idx}: Missing fields {missing_fields}, available: {list(item.keys())}", file=sys.stderr)
             return
         
-        answer = str(item[self.answer_field])
-        length = len(answer)
+        # Create a cleaned item with only the necessary fields
+        cleaned_item = {
+            self.question_field: item[self.question_field],
+            self.answer_field: item[self.answer_field],
+            self.solution_field: item[self.solution_field]
+        }
+        
+        solution = str(item[self.solution_field])
+        length = len(solution)
         
         # Collect samples for statistics (first N items)
         if not self.stats_collected and len(self.length_samples) < self.sample_size_for_stats:
@@ -344,8 +362,8 @@ class StreamingLengthSelector:
         bucket_items = self.buckets[bucket]
         
         if len(bucket_items) < target_size:
-            # Bucket not full, add item
-            bucket_items.append(item)
+            # Bucket not full, add cleaned item
+            bucket_items.append(cleaned_item)
             # if item_idx < self.sample_size_for_stats + 20:
             #     print(f"Item {item_idx}: Added to bucket {bucket} (now {len(bucket_items)}/{target_size})", file=sys.stderr)
         else:
@@ -357,7 +375,7 @@ class StreamingLengthSelector:
                 replace_prob = target_size / items_seen_for_bucket
                 if random.random() < replace_prob:
                     replace_idx = random.randint(0, target_size - 1)
-                    bucket_items[replace_idx] = item
+                    bucket_items[replace_idx] = cleaned_item
                     if item_idx < self.sample_size_for_stats + 20:
                         print(f"Item {item_idx}: Replaced item in bucket {bucket} at index {replace_idx}", file=sys.stderr)
     
@@ -394,7 +412,7 @@ class StreamingLengthSelector:
         print(f"========================", file=sys.stderr)
 
 
-def select_data_hf_streaming(dataset_name, dataset_config, split, answer_field, total_samples, token=None, shuffle=False, sample_size_for_stats=1000, num_bins=6, curve_sharpness=2.0):
+def select_data_hf_streaming(dataset_name, dataset_config, split, answer_field, total_samples, token=None, shuffle=False, sample_size_for_stats=1000, num_bins=6, curve_sharpness=2.0, question_field="question", solution_field="solution"):
     """Select data from Hugging Face dataset using streaming."""
     print(f"Loading dataset: {dataset_name}", file=sys.stderr)
     
@@ -410,7 +428,7 @@ def select_data_hf_streaming(dataset_name, dataset_config, split, answer_field, 
         dataset = dataset.shuffle(seed=42, buffer_size=10000)
     
     # Initialize streaming selector
-    selector = StreamingLengthSelector(total_samples, answer_field, sample_size_for_stats, num_bins, curve_sharpness)
+    selector = StreamingLengthSelector(total_samples, answer_field, sample_size_for_stats, num_bins, curve_sharpness, question_field, solution_field)
     
     iteration_mode = "random" if shuffle else "sequential"
     print(f"Processing streaming data ({iteration_mode} order)...", file=sys.stderr)
@@ -443,7 +461,7 @@ def select_data_hf_streaming(dataset_name, dataset_config, split, answer_field, 
     return selected_items
 
 
-def select_data_json(file_path, answer_field, total_samples):
+def select_data_json(file_path, answer_field, total_samples, question_field="question", solution_field="solution"):
     """Select data from JSON file."""
     print(f"Loading JSON file: {file_path}", file=sys.stderr)
     
@@ -459,17 +477,28 @@ def select_data_json(file_path, answer_field, total_samples):
     else:
         items = [data]
     
-    # Calculate lengths
+    # Calculate lengths and validate all required fields
     lengths = []
     valid_items = []
     
     for item in items:
-        if answer_field not in item:
+        # Check if all required fields are present
+        if (answer_field not in item or 
+            question_field not in item or 
+            solution_field not in item):
             continue
-        answer = str(item[answer_field])
-        length = len(answer)
+        
+        # Create cleaned item with only necessary fields
+        cleaned_item = {
+            question_field: item[question_field],
+            answer_field: item[answer_field],
+            solution_field: item[solution_field]
+        }
+        
+        solution = str(item[solution_field])
+        length = len(solution)
         lengths.append(length)
-        valid_items.append(item)
+        valid_items.append(cleaned_item)
     
     print(f"Found {len(valid_items)} items", file=sys.stderr)
     print(f"Length range: {min(lengths)} - {max(lengths)}", file=sys.stderr)
@@ -490,9 +519,9 @@ def select_data_json(file_path, answer_field, total_samples):
     return selected_items
 
 
-def print_length_stats(items, answer_field):
+def print_length_stats(items, solution_field):
     """Print statistics about selected data lengths."""
-    lengths = [len(str(item[answer_field])) for item in items]
+    lengths = [len(str(item[solution_field])) for item in items]
     
     print(f"\nSelected data statistics:", file=sys.stderr)
     print(f"Total items: {len(items)}", file=sys.stderr)
@@ -527,11 +556,17 @@ def print_length_stats(items, answer_field):
 
 
 def main(hf_token):
-    parser = argparse.ArgumentParser(description="Select data by answer length with Gaussian-like distribution")
+    parser = argparse.ArgumentParser(description="Select data by solution length with Gaussian-like distribution")
     parser.add_argument("--input", required=True,
                         help="Input: HF dataset name or JSON file path")
+    parser.add_argument("--id_header", default="id",
+                        help="when creating new id, use this header + '_' + index")
     parser.add_argument("--output", required=True,
                         help="Output JSON file path")
+    parser.add_argument("--question_field", default="question",
+                        help="Field name for question (default: question)")
+    parser.add_argument("--solution_field", default="solution",
+                        help="Field name for solution - used for length-based selection (default: solution)")
     parser.add_argument("--answer_field", default="answer",
                         help="Field name for answer (default: answer)")
     parser.add_argument("--total_samples", type=int, default=1000,
@@ -556,24 +591,50 @@ def main(hf_token):
     # Determine input type and select data
     if os.path.exists(args.input):
         # JSON file
-        selected_items = select_data_json(args.input, args.answer_field, args.total_samples)
+        selected_items = select_data_json(
+            args.input, args.answer_field, args.total_samples, 
+            args.question_field, args.solution_field
+        )
     else:
         # HF dataset - use streaming version
         selected_items = select_data_hf_streaming(
             args.input, args.dataset_config, args.split, 
             args.answer_field, args.total_samples, hf_token, args.shuffle,
-            args.sample_size_for_stats, args.num_bins, args.curve_sharpness
+            args.sample_size_for_stats, args.num_bins, args.curve_sharpness,
+            args.question_field, args.solution_field
         )
     
     # Print statistics
-    print_length_stats(selected_items, args.answer_field)
+    print_length_stats(selected_items, args.solution_field)
+    
+    # Transform selected items to required output format
+    formatted_items = []
+    for i, item in enumerate(selected_items, 1):
+        formatted_item = {
+            "id": f"{args.id_header}_{i}",
+            "question": item[args.question_field],
+            "output": item[args.solution_field],
+            "answer": item[args.answer_field]
+        }
+        formatted_items.append(formatted_item)
     
     # Save results
     os.makedirs(os.path.dirname(args.output), exist_ok=True)
     with open(args.output, 'w', encoding='utf-8') as f:
-        json.dump(selected_items, f, ensure_ascii=False, indent=2)
+        json.dump(formatted_items, f, ensure_ascii=False, indent=2)
     
-    print(f"\nSaved {len(selected_items)} selected items to {args.output}", file=sys.stderr)
+    print(f"\nSaved {len(formatted_items)} selected items to {args.output}", file=sys.stderr)
+    
+    # Print sample of saved data structure
+    if formatted_items:
+        print(f"Sample output structure:", file=sys.stderr)
+        sample_item = formatted_items[0]
+        print(f"  Fields: {list(sample_item.keys())}", file=sys.stderr)
+        for field in ["id", "question", "output", "answer"]:
+            if field in sample_item:
+                field_content = str(sample_item[field])
+                preview = field_content[:50] + "..." if len(field_content) > 50 else field_content
+                print(f"  {field}: {preview}", file=sys.stderr)
 
 
 if __name__ == "__main__":

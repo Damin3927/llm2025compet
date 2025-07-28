@@ -343,6 +343,7 @@ sbatch run_length_selector.sh
 - `--num_bins`: ビン数（デフォルト: 6）
 - `--sample_size_for_stats`: ビン作成用サンプル数（デフォルト: 1000）
 - `--shuffle`: データセットをランダム順で処理
+- `--id_header`: ID作成時の接頭辞（デフォルト: "id"、出力形式: {id_header}_{番号}）
 
 **分布例（6ビン）:**
 ```
@@ -354,6 +355,38 @@ Bin 4: 500 samples (50%)
 Bin 5 (longest): 600 samples (60%)    ← 最多
 ```
 
+**出力形式:**
+```json
+[
+  {
+    "id": "id_1",
+    "question": "What is 1+1?",
+    "output": "<think>Okay, I need to calculate the sum of 1 and 1.</think>2",
+    "answer": "2"
+  },
+  {
+    "id": "id_2",
+    "question": "Solve for x: 2x + 5 = 15",
+    "output": "Subtract 5 from both sides: 2x = 10. Divide by 2: x = 5.",
+    "answer": "5"
+  }
+]
+```
+
+**フィールド説明:**
+- `id`: 連番ID（{id_header}_{番号}形式、デフォルトは"id_1", "id_2"...）
+- `question`: 問題文（question_fieldの内容）
+- `output`: 解答プロセス（solution_fieldの内容、長さ基準で選択）
+- `answer`: 最終回答（answer_fieldの内容）
+
+**ID例（--id_header "problem"の場合）:**
+```json
+[
+  {"id": "problem_1", "question": "...", "output": "...", "answer": "..."},
+  {"id": "problem_2", "question": "...", "output": "...", "answer": "..."}
+]
+```
+
 ---
 
 ### 📤 Hugging Faceへのアップロード
@@ -361,6 +394,7 @@ Bin 5 (longest): 600 samples (60%)    ← 最多
 **スクリプト:** `upload_data.py`
 **目的:** JSONファイルをParquetに変換し、JSONとParquet両方をHugging Face Hubにアップロード  
 **説明:** Parquet形式が`datasets.load_dataset()`で直接使える。JSON/JSONLファイルが大規模トレーニングする時に使いやすい。  
+
 **機能:**
 - 各JSONファイルを個別のParquetファイルに変換（メモリ効率的）
 - splitプレフィックス付きファイル名で区別可能
@@ -369,16 +403,32 @@ Bin 5 (longest): 600 samples (60%)    ← 最多
 - プライベートデータセット対応
 - 既存ファイルのスキップ機能
 
+#### 📋 使用方法
 
+**基本的な使用:**
 ```bash
-# 基本アップロード（データセットカード自動生成）
+# 直接実行
 python upload_data.py \
     --dataset_path ./results/filtered_dataset \
-    --repo_id your-username/dataset-name
+    --repo_id your-username/dataset-name \
+    --create_dataset_card
 
-# 既存のREADMEがある場合はoriginal_README.logから読み込み
-# データセットカードは常に生成される
+# SLURMスクリプト（設定を編集してから実行）
+sbatch run_upload_data.sh
+
+# ユニバーサルスクリプト（ローカル/SLURM両対応）
+./universal_upload_data.sh "./results/data" "user/dataset-name" true
+
+# 動的SLURM投入
+./submit_upload_data.sh "./results/data" "user/dataset-name" true
 ```
+
+**主要パラメータ:**
+- `--dataset_path`: データフォルダのパス（JSON分割フォルダを含む）
+- `--repo_id`: HuggingFace リポジトリID（username/dataset-name形式）
+- `--create_dataset_card`: データセットカード自動生成（推奨）
+
+#### 🗂️ データ構造
 
 **期待される入力構造:**
 ```
@@ -472,11 +522,20 @@ sbatch run_length_selector.sh
 ./universal_length_selector.sh "dataset-name" 5000
 ```
 
+**データアップロード:**
+```bash
+sbatch run_upload_data.sh
+# または
+./universal_upload_data.sh "./results/data" "user/dataset-name" true
+# または
+./submit_upload_data.sh "./results/data" "user/dataset-name" true
+```
+
 各スクリプトには以下が含まれます:
-- GPUリソース割り当て
+- GPUリソース割り当て（必要に応じて）
 - 環境セットアップ
-- CUDA設定
-- メモリ最適化設定
+- データ検証とエラーハンドリング
+- 詳細なログ出力
 
 ## 📊 データスキーマ
 

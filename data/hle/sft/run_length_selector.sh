@@ -8,13 +8,16 @@
 #SBATCH --partition=cpu
 
 # Configuration - Edit these variables as needed
-DATASET_NAME="neko-llm/SFT_OpenMathReasoning"
-DATASET_CONFIG="cot"
-SPLIT="train"
-ANSWER_FIELD="generated_solution"
+DATASET_NAME="nvidia/OpenMathReasoning"
+DATASET_CONFIG="default"
+SPLIT="genselect"
+ID_HEADER="OpenMathReasoning_genselect"  # Prefix for generated IDs (e.g., "problem_1", "problem_2", etc.)
+QUESTION_FIELD="problem"
+SOLUTION_FIELD="generated_solution"
+ANSWER_FIELD="expected_answer"
 TOTAL_SAMPLES=5000
-OUTPUT_DIR="./results/selected_data"
-OUTPUT_FILE="${OUTPUT_DIR}/selected_${TOTAL_SAMPLES}_samples.json"
+OUTPUT_DIR="./results/selected_data/${ID_HEADER}"
+OUTPUT_FILE="${OUTPUT_DIR}/${ID_HEADER}_${TOTAL_SAMPLES}_samples.json"
 USE_SHUFFLE=true  # Set to false for sequential processing
 
 # Dynamic binning parameters
@@ -47,6 +50,8 @@ echo "Started at: $(date)"
 echo "Dataset: $DATASET_NAME"
 echo "Config: $DATASET_CONFIG"
 echo "Split: $SPLIT"
+echo "Question field: $QUESTION_FIELD"
+echo "Solution field: $SOLUTION_FIELD"
 echo "Answer field: $ANSWER_FIELD"
 echo "Target samples: $TOTAL_SAMPLES"
 echo "Output: $OUTPUT_FILE"
@@ -54,6 +59,7 @@ echo "Shuffle: $USE_SHUFFLE"
 echo "Sample size for stats: $SAMPLE_SIZE_FOR_STATS"
 echo "Number of bins: $NUM_BINS"
 echo "Curve sharpness: $CURVE_SHARPNESS"
+echo "ID header: $ID_HEADER"
 echo "=========================================="
 
 # Activate conda environment (adjust as needed)
@@ -86,6 +92,9 @@ fi
 CMD="${CMD} --sample_size_for_stats ${SAMPLE_SIZE_FOR_STATS}"
 CMD="${CMD} --num_bins ${NUM_BINS}"
 CMD="${CMD} --curve_sharpness ${CURVE_SHARPNESS}"
+CMD="${CMD} --question_field ${QUESTION_FIELD}"
+CMD="${CMD} --solution_field ${SOLUTION_FIELD}"
+CMD="${CMD} --id_header ${ID_HEADER}"
 
 echo "Command to execute:"
 echo "$CMD"
