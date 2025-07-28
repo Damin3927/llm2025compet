@@ -62,6 +62,133 @@ devcontainerでも同様に、CUDAのバージョンによってエラーが出�
 - 学習 <-> 推論: HuggingFace Models
   - 学習チームが push したモデルを、推論チームが pull して推論に使用する
 
+## データ処理ツール
+
+### Difficulty Scorer
+
+質問回答データの難易度を複数の指標で評価し、スコア化するツールです。
+
+**場所**: `data/hle/sft/difficulty_scorer.py`
+
+**機能**:
+- 複数の小型LLMを使用した難易度評価
+- 3つの指標による総合スコア:
+  1. 金回答の平均対数確率
+  2. アンサンブル正解率
+  3. IRT難易度パラメータ β
+- ストリーミング処理でメモリ効率的
+- GPU/CPU両対応、OOM対策済み
+
+**使用例**:
+```bash
+# 基本的な使用
+python difficulty_scorer.py \
+  --input "dataset-name" \
+  --output "difficulty_scores.json" \
+  --max_samples 10000
+
+# HuggingFaceプライベートデータセット
+python difficulty_scorer.py \
+  --input "private/dataset" \
+  --dataset_spec "config:split" \
+  --question_field "problem" \
+  --answer_field "solution" \
+  --hf_token $HF_TOKEN \
+  --max_sequence_length 1024 \
+  --use_float32 \
+  --output "scores.json"
+
+# SLURMでの実行
+sbatch run_difficulty_scorer.sh
+```
+
+**出力形式**:
+```json
+[
+  {
+    "id": "item_1",
+    "avg_logprob": -2.1,
+    "ensemble_acc": 0.75,
+    "irt_beta": 0.3,
+    "difficulty_z": 1.2
+  }
+]
+```
+
+### Length Selector
+
+回答長に基づいてデータを選択するツールです。半ガウシアン分布で最長回答を最も多く、最短回答を最も少なく選択します。
+
+**場所**: `data/hle/sft/length_selector.py`
+
+**機能**:
+- 動的ビン作成（データ分布に基づく）
+- 半ガウシアン分布による重み付け
+- オープンエンド方式（最短・最長の外れ値も含む）
+- ストリーミング処理対応
+- リザーバーサンプリング
+
+**使用例**:
+```bash
+# 基本的な使用
+python length_selector.py \
+  --input "dataset-name" \
+  --total_samples 5000 \
+  --output "selected_data.json"
+
+# 詳細設定
+python length_selector.py \
+  --input "neko-llm/SFT_OpenMathReasoning" \
+  --dataset_spec "cot" \
+  --answer_field "generated_solution" \
+  --total_samples 10000 \
+  --num_bins 8 \
+  --curve_sharpness 3.0 \
+  --sample_size_for_stats 2000 \
+  --shuffle \
+  --output "math_selected.json"
+
+# SLURMでの実行
+sbatch run_length_selector.sh
+# または
+./universal_length_selector.sh "dataset-name" 5000
+```
+
+**パラメータ**:
+- `--curve_sharpness`: 分布の鋭さ（高いほど長い回答に集中）
+  - 1.0: 緩やかな分布
+  - 2.0: 標準（デフォルト）
+  - 4.0: 鋭い分布
+- `--num_bins`: ビン数（デフォルト: 6）
+- `--sample_size_for_stats`: ビン作成用サンプル数（デフォルト: 1000）
+
+**分布例**:
+```
+Bin 0 (shortest): 100 samples (10%)   ← 最少
+Bin 1: 200 samples (20%)
+Bin 2: 300 samples (30%)
+Bin 3: 400 samples (40%)
+Bin 4: 500 samples (50%)
+Bin 5 (longest): 600 samples (60%)    ← 最多
+```
+
+### 実行スクリプト
+
+両ツールには複数の実行スクリプトが用意されています：
+
+**基本スクリプト**: `run_*.sh`
+- 設定をスクリプト内で編集
+- シンプルな実行方法
+
+**ユニバーサルスクリプト**: `universal_*.sh`
+- コマンドライン引数対応
+- ローカル/SLURM自動検出
+- タイムスタンプ付きログ
+
+**動的投入スクリプト**: `submit_*.sh`
+- パラメータ指定で動的にジョブ作成
+- 一時ファイル自動管理
+
 ## License
 
 TBD

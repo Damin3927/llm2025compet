@@ -10,9 +10,12 @@ data/hle/sft/
 ├── OpenMathReasoningFiltering_bylabel.py  # ラベルベースフィルタリング（高速）
 ├── generateFromSeed.py                    # シード問題からソリューション生成
 ├── upload_data.py                         # データセットをParquetに変換し、jsonとParquetをHFにアップロード
+├── difficulty_scorer.py                   # 多指標難易度評価ツール
+├── length_selector.py                     # 回答長ベース半ガウシアン分布データ選択ツール
 ├── run_filter.sh                          # LLMフィルタリング用SLURMスクリプト
 ├── run_label_filter.sh                    # ラベルフィルタリング用SLURMスクリプト
-├── keys.json                              # APIキー設定
+├── run_length_selector.sh                 # データ選択用SLURMスクリプト
+├── universal_length_selector.sh           # ユニバーサルデータ選択スクリプト
 ├── keys.json.example                      # APIキーテンプレート
 ├── results/                               # 処理済みデータの出力ディレクトリ
 ```
@@ -44,6 +47,105 @@ cp keys.json.example keys.json
   "llm": "your_huggingface_token_here"
 }
 ```
+
+## 🔄 SFTデータ処理パイプライン
+
+SFTパイプラインは以下の段階的なワークフローに従います：
+
+### ステップ1: データ選択・フィルタリング
+**目的**: 品質の高いシードデータを選択して、効果的な学習データセットを構築
+
+**オプション A: 高速データ選択（推奨）**
+```bash
+# 回答長ベースでの高速選択
+python length_selector.py \
+    --input "dataset-name" \
+    --total_samples 10000 \
+    --output "selected_seeds.json"
+```
+- ✅ 高速処理（大規模データセット対応）
+- ✅ 半ガウシアン分布で長い回答を優先選択
+- ✅ ストリーミング処理対応
+
+**オプション B: 高精度難易度ベース選択**
+```bash
+# 多指標難易度評価による精密選択
+python difficulty_scorer.py \
+    --input "dataset-name" \
+    --output "difficulty_scores.json" \
+    --max_samples 50000
+```
+- ✅ 複数LLMによる総合難易度評価
+- ✅ 対数確率・正解率・IRT分析
+- ⚠️ 処理時間が長い（小〜中規模データ向け）
+
+**オプション C: ラベルベース高速フィルタリング**
+```bash
+# 事前計算ラベルによる超高速フィルタリング
+python OpenMathReasoningFiltering_bylabel.py \
+    --filter-by-pass-rate 0.1 \
+    --save-per-iteration 10000
+```
+- ✅ 最高速（LLM推論不要）
+- ✅ 大規模データセット対応
+- ⚠️ 事前ラベルが必要
+
+### ステップ2: データ拡張（オプション）
+**目的**: 選択されたシードデータから新しい学習例を生成
+
+```bash
+# シード問題から新規ソリューション生成
+python generateFromSeed.py \
+    --model Qwen/Qwen3-32B \
+    --input_file selected_seeds.json \
+    --output_file expanded_solutions.json \
+    --max_tokens 4096
+```
+- 📝 多様なソリューションパターン生成
+- 🎯 学習データの多様性向上
+- ⚠️ 大規模モデル推奨（品質確保のため）
+
+### ステップ3: データセットアップロード
+**目的**: 処理済みデータをHugging Face Hubにアップロードして共有
+
+```bash
+# JSON→Parquet変換 & HFアップロード
+python upload_data.py \
+    --dataset_path ./results/processed_dataset \
+    --repo_id your-username/sft-dataset-name
+```
+- 🔄 JSON→Parquet自動変換
+- 📤 データセット設定ファイル自動生成
+- 🔒 プライベート/パブリックリポジトリ対応
+
+### 推奨ワークフロー例
+
+**小規模・高品質データセット（<10K件）**
+```bash
+# 1. 難易度ベース精密選択
+python difficulty_scorer.py --input "dataset" --max_samples 5000
+# 2. データ拡張
+python generateFromSeed.py --input_file scored_data.json
+# 3. アップロード
+python upload_data.py --dataset_path ./results
+```
+
+**大規模・効率重視データセット（>100K件）**
+```bash
+# 1. 長さベース高速選択
+python length_selector.py --input "dataset" --total_samples 50000
+# 2. 直接アップロード（拡張スキップ）
+python upload_data.py --dataset_path ./results
+```
+
+**超大規模・ラベル利用可能（>1M件）**
+```bash
+# 1. ラベルベース超高速フィルタリング
+python OpenMathReasoningFiltering_bylabel.py --filter-by-pass-rate 0.05
+# 2. アップロード
+python upload_data.py --dataset_path ./results
+```
+
 
 ## 📋 スクリプト使用ガイド
 
@@ -138,6 +240,121 @@ python generateFromSeed.py \
 
 ---
 
+### 🎯 難易度評価ツール
+
+**スクリプト:** `difficulty_scorer.py`  
+**目的:** 質問回答データの難易度を複数の指標で評価し、スコア化
+
+**機能:**
+- 複数の小型LLM（≤8B）による評価
+- 3つの指標を使用:
+  1. 金回答の平均対数確率
+  2. アンサンブル正解率  
+  3. IRT難易度パラメータ β
+- ストリーミング処理でメモリ効率的
+- GPU/CPU両対応、OOM対策済み
+- プライベートデータセット対応
+
+```bash
+# 基本的な使用
+python difficulty_scorer.py \
+    --input "dataset-name" \
+    --output "difficulty_scores.json" \
+    --max_samples 10000
+
+# HuggingFaceプライベートデータセット
+python difficulty_scorer.py \
+    --input "neko-llm/SFT_OpenMathReasoning" \
+    --dataset_spec "cot" \
+    --question_field "problem" \
+    --answer_field "generated_solution" \
+    --max_samples 50000 \
+    --max_sequence_length 1024 \
+    --use_float32 \
+    --disable_flash_attention \
+    --output "math_difficulty_scores.json"
+
+# SLURMでの実行
+sbatch run_difficulty_scorer.sh
+```
+
+**主要パラメータ:**
+- `--primary_model`: ログ確率計算用メインモデル（デフォルト: microsoft/Phi-4-mini-reasoning）
+- `--ensemble_models`: 追加評価モデルリスト
+- `--max_sequence_length`: 入力シーケンス最大長（OOM対策）
+- `--max_input_length`: 生成時入力最大長（OOM対策）
+- `--disable_flash_attention`: Flash Attentionエラー対策
+
+**出力形式:**
+```json
+[
+  {
+    "id": "item_1",
+    "avg_logprob": -2.1,
+    "ensemble_acc": 0.75,
+    "irt_beta": 0.3,
+    "difficulty_z": 1.2
+  }
+]
+```
+
+---
+
+### 📊 データ選択ツール（長さベース）
+
+**スクリプト:** `length_selector.py`  
+**目的:** 快速にSFT用のデータをフィルタリング  
+**機能:**
+- 回答長に基づく半ガウシアン分布データ選択（最長回答最多、最短回答最少）
+- 動的ビン作成（実データ分布に基づく）
+- 半ガウシアン分布による重み付け
+- オープンエンド方式（外れ値も含む）
+- ストリーミング処理対応
+- リザーバーサンプリング
+
+```bash
+# 基本的な使用
+python length_selector.py \
+    --input "dataset-name" \
+    --total_samples 5000 \
+    --output "selected_data.json"
+
+# 詳細設定
+python length_selector.py \
+    --input "neko-llm/SFT_OpenMathReasoning" \
+    --dataset_spec "cot" \
+    --answer_field "generated_solution" \
+    --total_samples 10000 \
+    --num_bins 8 \
+    --curve_sharpness 3.0 \
+    --sample_size_for_stats 2000 \
+    --shuffle \
+    --output "math_selected.json"
+
+# SLURMでの実行
+sbatch run_length_selector.sh
+# または
+./universal_length_selector.sh "dataset-name" 5000
+```
+
+**主要パラメータ:**
+- `--curve_sharpness`: 分布の鋭さ（1.0=緩やか、2.0=標準、4.0=鋭い）
+- `--num_bins`: ビン数（デフォルト: 6）
+- `--sample_size_for_stats`: ビン作成用サンプル数（デフォルト: 1000）
+- `--shuffle`: データセットをランダム順で処理
+
+**分布例（6ビン）:**
+```
+Bin 0 (shortest): 100 samples (10%)   ← 最少
+Bin 1: 200 samples (20%)
+Bin 2: 300 samples (30%)
+Bin 3: 400 samples (40%)
+Bin 4: 500 samples (50%)
+Bin 5 (longest): 600 samples (60%)    ← 最多
+```
+
+---
+
 ### 📤 Hugging Faceへのアップロード
 
 **スクリプト:** `upload_data.py`
@@ -195,14 +412,12 @@ dataset_path/
 ```yaml
 ---
 configs:
-- config_name: train
+- config_name: cot
   data_files:
-    - "data/train_file1.parquet"
-    - "data/train_file2.parquet"
-- config_name: validation
-  data_files: "data/validation_file1.parquet"
-- config_name: test
-  data_files: "data/test_file1.parquet"
+    - "data/cot_file1.parquet"
+    - "data/cot_file2.parquet"
+- config_name: genselect
+  data_files: "data/genselect_file1.parquet"
 ---
 ```
 
@@ -211,8 +426,8 @@ configs:
 from datasets import load_dataset
 
 # 特定のsplitを読み込む
-train_data = load_dataset("your-username/dataset-name", "train")
-val_data = load_dataset("your-username/dataset-name", "validation")
+train_data = load_dataset("your-username/dataset-name", "cot", "split"="train")
+val_data = load_dataset("your-username/dataset-name", "genselect", "split"="train")
 
 # または手動でdata_filesを指定
 dataset = load_dataset(
@@ -242,6 +457,18 @@ sbatch run_label_filter.sh
 **LLMベースフィルタリング:**
 ```bash
 sbatch run_filter.sh
+```
+
+**難易度評価:**
+```bash
+sbatch run_difficulty_scorer.sh
+```
+
+**データ選択:**
+```bash
+sbatch run_length_selector.sh
+# または
+./universal_length_selector.sh "dataset-name" 5000
 ```
 
 各スクリプトには以下が含まれます:
