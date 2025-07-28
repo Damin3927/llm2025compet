@@ -8,9 +8,10 @@
 #SBATCH --time 0:30:00         # ジョブの最大実行時間
 #SBATCH --output sft-32b.out   # 標準出力ファイル
 #SBATCH --error sft-32b.err    # 標準エラーファイル
-#SBATCH --mem=512G             # メモリの割り当て  --mem=0 # 無制限にする場合は0を指定
+#SBATCH --mem=0            # 各ノードのメモリサイズ
+#SBATCH --cpus-per-task=160         # number of cores per tasks
 
-export WANDB_DISABLED="true"   # WANDBを一旦無効化
+# export WANDB_DISABLED="true"   # WANDBを一旦無効化
 
 # Slurmで確保したノードリストの先頭をマスターノードのアドレスとして設定
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
@@ -28,20 +29,22 @@ module load cuda/12.8           # nvccを使うためにCUDAをロード
 
 source openr1/bin/activate      # venvを有効化
 
+ulimit -v unlimited
+ulimit -m unlimited
+
 cd llm2025compet/training/open-r1/src || exit 1
 
-# GPUのメモリ使用状況をログに記録するためのコマンド
-# srun --ntasks=$SLURM_NNODES --ntasks-per-node=1 bash -c \
-#   'nvidia-smi dmon -s m -o DT -f vram_log_${SLURM_JOB_ID}_$(hostname).log' &
-
-accelerate launch \
-    --config_file ../recipes/accelerate_configs/zero3.yaml \
-    --num_machines 3 \
-    --num_processes 24 \
-    --main_process_ip "$MASTER_ADDR" \
-    --main_process_port "$MASTER_PORT" \
-    open_r1/sft.py \
-    --config ../../configs/Qwen3-32b/sft/config_distill.yaml
+srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
+    "accelerate launch \
+        --config_file ../recipes/accelerate_configs/zero3.yaml \
+        --num_machines 3 \
+        --num_processes 24 \
+        --main_process_ip \"$MASTER_ADDR\" \
+        --main_process_port \"$MASTER_PORT\" \
+        --rdzv_backend c10d \
+        open_r1/sft.py \
+        --config ../../configs/Qwen3-32b/sft/config_distill.yaml"
+# --machine_rank \"\$SLURM_PROCID\" \
 
 # 実行方法
 # HOMEで以下を実行する。自動でopen-r1のソースコードディレクトリに移動することに注意

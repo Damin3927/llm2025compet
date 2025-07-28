@@ -12,7 +12,7 @@ torch_dtype: bfloat16 # bf16を使う
 # attn_implementation: flash_attention_2 # flash-attnention_2は使えなかった。
 
 # LoRA arguments https://github.com/huggingface/trl/blob/v0.19.1/trl/trainer/model_config.py#L19
-use_peft: true # PEFT (Lora) を使うかどうか
+use_peft: false # PEFT (Lora) を使うかどうか
 lora_r: 16 # LoRAのr値
 lora_alpha: 32 # LoRAのalpha値
 lora_dropout: 0.05 # LoRAのドロップアウト率
@@ -57,8 +57,8 @@ overwrite_output_dir: true
 per_device_eval_batch_size: 1 # 評価時の1GPUあたりのバッチサイズ
 per_device_train_batch_size: 1 # 学習時の1GPUあたりのバッチサイズ
 push_to_hub: false # trueにするとHuggingFace Hubにモデルをpushする ログインしている必要がある
-# report_to: # wandbにログインしているならこれをオンにするとwandbにログが送られる
-# - wandb
+report_to: # wandbにログインしているならこれをオンにするとwandbにログが送られる
+- none
 save_strategy: steps # モデルをローカルに保存するタイミング ('no' or 'steps' or 'epoch')
 save_steps: 500 # モデルをローカルに保存するステップ数(間隔)
 save_total_limit: 1
