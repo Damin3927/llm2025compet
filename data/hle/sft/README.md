@@ -106,7 +106,8 @@ python generateFromSeed.py \
 - ⚠️ 大規模モデル推奨（品質確保のため）
 
 ### ステップ3: データセットアップロード
-**目的**: 処理済みデータをHugging Face Hubにアップロードして共有
+**目的**: 処理済みデータをHugging Face Hubにアップロードして共有  
+**準備**: 違うsplitに入れる予定のデータを別々のフォルダに入れる
 
 ```bash
 # JSON→Parquet変換 & HFアップロード
