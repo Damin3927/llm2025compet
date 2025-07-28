@@ -106,7 +106,7 @@ def gated_verification_reward(format_scores, verification_scores):
 
 def gated_accuracy_reward(completions, solution, **kwargs):
     """
-    Composite reward: adds accuracy only if format condition is met.
+    Composite reward: adds accuracy only if format condition is met, inspired by Open Instruct's GRPO design (https://allenai.github.io/open-instruct/algorithms/grpo/#grpo_fastpy)
     """
     format_scores = format_reward(completions, **kwargs)
     verification_scores = accuracy_reward(completions, solution, **kwargs)
