@@ -74,7 +74,9 @@ save_total_limit: 1
 output_dir: data/Qwen3-32B-Open-R1-GRPO
 overwrite_output_dir: true
 
-push_to_hub: true
+push_to_hub: false
+# report_to:
+# - wandb
 hub_model_id: Qwen3-32B-Open-R1-GRPO
 hub_strategy: every_save
 
