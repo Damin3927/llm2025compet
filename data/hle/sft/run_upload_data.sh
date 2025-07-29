@@ -8,8 +8,8 @@
 #SBATCH --partition=cpu
 
 # Configuration - Edit these variables as needed
-DATASET_PATH="./results/selected_data/OpenMathReasoning"  # Path to folder containing data subfolders
-REPO_ID="neko-llm/SFT_OpenMathReasoninge"  # HuggingFace repository ID
+DATASET_PATH="./MixtureOfThoughts/processed_mot_data"  # Path to folder containing data subfolders
+REPO_ID="neko-llm/CoT_MixtureOfThoughts"  # HuggingFace repository ID
 CREATE_DATASET_CARD=true  # Set to false to skip dataset card creation
 
 # Script directory
