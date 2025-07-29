@@ -93,13 +93,17 @@ def format_reward(completions, **kwargs):
 def gated_verification_reward(format_scores, verification_scores):
     """
     Adds verification reward only if the format condition is satisfied.
-    If format is correct (==1.0), verification score is added.
-    Otherwise, reward is 0.0.
+    If format is correct (==1.0) and verification is available, reward = 1.0 + v.
+    If format is correct but verification is unavailable (None), reward = 1.0.
+    If format is wrong:
+        ─ verification available → 0.0 
+        ─ verification None      → None
     """
     return [
         f + v if f == 1.0 and v is not None
         else f if f == 1.0
-        else 0.0
+        else 0.0 if v is not None
+        else None
         for f, v in zip(format_scores, verification_scores)
     ]
 
