@@ -1,0 +1,79 @@
+# ==========================================================
+#  Qwen/Qwen3-32B  ── GRPO + vLLM-server + ZeRO-3 (accelerate)
+#  ＊   train ノード：2 台 × 8 GPU (=16 GPU)
+#  ＊   vLLM ノード：1 台 × 8 GPU
+# ==========================================================
+
+# ----------------------------------------------------------
+# Model / Tokenizer
+# ----------------------------------------------------------
+model_name_or_path: Qwen/Qwen3-32B
+model_revision: main
+torch_dtype: bfloat16
+attn_implementation: flash_attention_2
+trust_remote_code: true          # tokenizer.chat_template を正しく取得
+
+# ----------------------------------------------------------
+# Data
+# ----------------------------------------------------------
+dataset_name: open-r1/OpenR1-Math-220k
+dataset_prompt_column: problem
+
+system_prompt: |
+  You are a helpful AI Assistant that provides well-reasoned and detailed responses.
+  First think in <think>…</think>, then answer in <answer>…</answer>.
+
+# Qwen 既定の chat_template を使用（上書き不要）
+# chat_template: null
+
+max_prompt_length: 512
+max_completion_length: 1024      # vLLM サーバ側 --max-model-len=4096 内
+
+# ----------------------------------------------------------
+# GRPO Trainer
+# ----------------------------------------------------------
+# GPU 80 GB × 16 / ZeRO-3: バッチサイズ実効 ≈ 256〜512 を狙う
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 64   # → 1×16×64 = 1024
+per_device_eval_batch_size: 2
+
+bf16: true
+gradient_checkpointing: true
+gradient_checkpointing_kwargs:
+  use_reentrant: false
+
+# vLLM 連携
+use_vllm: true
+vllm_mode: server                 # train_grpo.py 側引数が override
+# vllm_server_host/port はシェルスクリプトから CLI 引数で渡すのでここには書かない
+
+# 学習ハイパーパラメータ
+learning_rate: 1.0e-5            # 大規模モデルなので LR を下げる
+warmup_ratio: 0.05
+lr_scheduler_type: cosine
+num_train_epochs: 1              # 例：1 epoch（ステップ指定なら max_steps へ）
+max_steps: -1
+
+# 報酬関数
+reward_funcs: [accuracy, format, tag_count]
+reward_weights: [1.0, 1.0, 1.0]
+
+# ----------------------------------------------------------
+# ロギング & 保存
+# ----------------------------------------------------------
+log_completions: true
+log_level: info
+logging_first_step: true
+logging_steps: 1
+logging_strategy: steps
+
+save_strategy: epoch
+save_total_limit: 1
+output_dir: data/Qwen3-32B-Open-R1-GRPO
+overwrite_output_dir: true
+
+push_to_hub: true
+hub_model_id: Qwen3-32B-Open-R1-GRPO
+hub_strategy: every_save
+
+seed: 42
