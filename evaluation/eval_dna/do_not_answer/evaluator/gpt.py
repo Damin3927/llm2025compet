@@ -7,8 +7,8 @@ sys.path.append('./../')
 from ..utils import info_data, save_json, gpt
 
 
-openai.api_key = info_data["OpenAI"]
-openai.api_key = "openai_key"  # put your openai_key
+# openai.api_key = info_data["OpenAI"]
+# openai.api_key = "openai_key"  # put your openai_key
 
 prompt_detail_eval = {
     "sys_prompt": "你是能够精准评估大模型输出的好助手。", 

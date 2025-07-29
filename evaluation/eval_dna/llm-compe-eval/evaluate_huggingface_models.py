@@ -936,12 +936,14 @@ def main():
     )
     parser.add_argument(
         "--dataset_path",
-        default="../datasets/Instruction/do_not_answer_en.csv",
+        #default="../datasets/Instruction/do_not_answer_en.csv",
+        default="./evaluation/eval_dna/datasets/Instruction/do_not_answer_en.csv",
         help="Path to Do-Not-Answer dataset CSV file"
     )
     parser.add_argument(
         "--output_dir",
-        default="./evaluation_results",
+        #default="./evaluation_results",
+        default="./evaluation/eval_dna/evaluation_results",
         help="Directory to save evaluation results"
     )
     parser.add_argument(
