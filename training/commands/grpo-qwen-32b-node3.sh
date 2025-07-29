@@ -44,7 +44,8 @@ srun --nodes=1 --ntasks=1 --nodelist="$VLLM_NODE" \
        CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 \
        trl vllm-serve \
          --model Qwen/Qwen3-32B \
-         --tensor_parallel_size 8 \
+         --tensor_parallel_size 2 \
+         --vllm_gpu_memory_utilization 0.90 \
          --host 0.0.0.0 \
          --port 8000 \
          --max-model-len 4096
@@ -71,7 +72,6 @@ srun --nodes=2 --ntasks=2 --nodelist="$TRAIN_NODES" \
          --vllm_mode server \
          --server_ip $VLLM_NODE \
          --server_port 8000 \
-         --vllm_gpu_memory_utilization 1.10
      "
 
 ################### 終了待ち ###################
