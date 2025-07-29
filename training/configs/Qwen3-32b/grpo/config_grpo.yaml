@@ -27,15 +27,16 @@ system_prompt: |
 # chat_template: null
 
 max_prompt_length: 512
-max_completion_length: 1024      # vLLM サーバ側 --max-model-len=4096 内
+max_completion_length: 512      # vLLM サーバ側 --max-model-len=4096 内
 
 # ----------------------------------------------------------
 # GRPO Trainer
 # ----------------------------------------------------------
-# GPU 80 GB × 16 / ZeRO-3: バッチサイズ実効 ≈ 256〜512 を狙う
-per_device_train_batch_size: 1
-gradient_accumulation_steps: 64   # → 1×16×64 = 1024
-per_device_eval_batch_size: 2
+# GPU 80 GB × 16 / ZeRO-3: 
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 32
+per_device_eval_batch_size: 4
+num_generations: 8
 
 bf16: true
 gradient_checkpointing: true
@@ -43,6 +44,7 @@ gradient_checkpointing_kwargs:
   use_reentrant: false
 
 disable_dropout: true
+mask_truncated_completions: true
 
 # vLLM 連携
 use_vllm: true
