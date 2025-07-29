@@ -42,6 +42,8 @@ gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: false
 
+disable_dropout: true
+
 # vLLM 連携
 use_vllm: true
 vllm_mode: server                 # train_grpo.py 側引数が override
