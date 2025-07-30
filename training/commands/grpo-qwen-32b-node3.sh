@@ -7,8 +7,8 @@
 #SBATCH --nodelist=osk-gpu[54,56,91]
 #SBATCH --job-name=grpo-qwen32b
 #SBATCH --time=4:00:00
-#SBATCH --output=grpo-qwen32b.%j.out
-#SBATCH --error=grpo-qwen32b.%j.err
+#SBATCH --output=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen32b.%j.out
+#SBATCH --error=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen32b.%j.err
 #SBATCH --mem=0
 
 ################### 環境 ###################
