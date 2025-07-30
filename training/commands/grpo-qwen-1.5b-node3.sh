@@ -54,7 +54,7 @@ srun --nodes=2 --ntasks=2 --nodelist="$TRAIN_NODES" \
          --main_process_ip ${MAIN_IP} \
          --main_process_port 29500 \
          --machine_rank \$SLURM_PROCID \
-         train_grpo.py \
+         /home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src/open_r1/grpo.py \
          --config /home/Competition2025/P02/P02U017/llm2025compet/training/configs/Qwen3-32b/grpo/config_grpo_1.5b.yaml \
          --use_vllm true \
          --vllm_mode server \

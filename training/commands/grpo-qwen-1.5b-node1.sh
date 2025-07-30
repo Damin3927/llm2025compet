@@ -24,7 +24,7 @@ accelerate launch \
     --config_file ../recipes/accelerate_configs/zero2.yaml \
     --num_machines 1 \
     --num_processes 1 \
-    open_r1/grpo.py \
+    /home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src/open_r1/grpo.py \
     --config ../recipes/Qwen2.5-1.5B-Instruct/grpo/config_grpo_math_gated.yaml
 
 ################### 参考 – 実行方法 ###################
