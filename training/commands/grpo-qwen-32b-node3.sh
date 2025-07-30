@@ -14,7 +14,10 @@
 ################### 環境変数 / モジュール ###################
 export WANDB_DISABLED="true"
 module load cuda/12.8
-source ~/openr1/bin/activate      
+source ~/openr1/bin/activate
+
+ulimit -v unlimited
+ulimit -m unlimited
 
 ################### 共通パス ###################
 REPO_DIR=/home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src
