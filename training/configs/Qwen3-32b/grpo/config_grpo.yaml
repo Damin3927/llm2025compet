@@ -10,7 +10,7 @@
 model_name_or_path: Qwen/Qwen3-32B
 model_revision: main
 torch_dtype: bfloat16
-attn_implementation: flash_attention_2
+attn_implementation: eager
 trust_remote_code: true          # tokenizer.chat_template を正しく取得
 
 # ----------------------------------------------------------
