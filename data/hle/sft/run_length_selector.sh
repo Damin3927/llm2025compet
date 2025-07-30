@@ -8,15 +8,15 @@
 #SBATCH --partition=cpu
 
 # Configuration - Edit these variables as needed
-DATASET_NAME="nvidia/OpenMathReasoning"
-DATASET_CONFIG="default"
-SPLIT="genselect"
-ID_HEADER="OpenMathReasoning_genselect"  # Prefix for generated IDs (e.g., "problem_1", "problem_2", etc.)
-QUESTION_FIELD="problem"
-SOLUTION_FIELD="generated_solution"
-ANSWER_FIELD="expected_answer"
-TOTAL_SAMPLES=5000
-OUTPUT_DIR="./results/selected_data/${ID_HEADER}"
+DATASET_NAME="neko-llm/CoT_MixtureOfThoughts"
+DATASET_CONFIG="science"
+SPLIT="train"
+ID_HEADER="MoT_${DATASET_CONFIG}"  # Prefix for generated IDs (e.g., "problem_1", "problem_2", etc.)
+QUESTION_FIELD="question"
+SOLUTION_FIELD="output"
+ANSWER_FIELD="answer"
+TOTAL_SAMPLES=500
+OUTPUT_DIR="./MixtureOfThoughts/results/selected_data/${ID_HEADER}"
 OUTPUT_FILE="${OUTPUT_DIR}/${ID_HEADER}_${TOTAL_SAMPLES}_samples.json"
 USE_SHUFFLE=true  # Set to false for sequential processing
 
