@@ -1,0 +1,55 @@
+{
+  "name": "LLM Competition Environment",
+  // Docker Composeファイルへのパスを指定します。
+  // Dockerfileを直接ビルドする設定
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "args": {
+      // --- ビルド環境の選択 ---
+      // GPUを利用する場合: "gpu"
+      // CPUのみの場合:  "cpu"
+      "BASE_IMAGE_TYPE": "gpu"
+
+      // GPU利用時に使うCUDAバージョンを設定
+      //"nvidia_cuda_version": "12.6.1-devel-ubuntu24.04"
+    }
+  },
+  "runArgs": ["--gpus=all"],
+
+  // コンテナ内のワークスペース（作業フォルダ）を指定します。
+  // DockerfileのWORKDIRと一致させます。
+  "workspaceFolder": "/app",
+
+  // VS Codeのカスタマイズ設定
+  "customizations": {
+    "vscode": {
+      // VS Codeエディタのデフォルト設定
+      "settings": {
+        // PythonインタープリタのパスをDockerfileで作成した仮想環境に設定
+        "python.defaultInterpreterPath": "/home/user/.venv/bin/python",
+        // ターミナルで自動的に仮想環境を有効化
+        "python.terminal.activateEnvironment": true,
+        // ターミナルのデフォルトプロファイルをbashに設定
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      // 推奨するVS Code拡張機能のリスト
+      "extensions": [
+        "ms-python.python", // Python言語サポート
+        "ms-python.vscode-pylance", // Python linter
+        "ms-python.black-formatter", // Pythonコードフォーマッター
+        "ms-azuretools.vscode-docker", // Dockerサポート
+        "tamasfe.even-better-toml", // TOML
+        "mhutchie.git-graph", // Gitグラフ表示
+        "njpwerner.autodocstring", // Python docstring
+        "ms-toolsai.jupyter", // Jupyterサポート
+        "codezombiech.gitignore", // .gitignoreファイルのサポート
+        "shd101wyy.markdown-preview-enhanced", // markdownプレビュー
+        "corschenzi.mermaid-graphical-editor" // Mermaidグラフエディタ
+      ]
+    }
+  },
+
+  // コンテナ内で操作するユーザーをDockerfileで作成した非rootユーザーに指定します。
+  "remoteUser": "user"
+}
