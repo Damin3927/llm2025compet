@@ -61,7 +61,7 @@ max_steps: -1
 
 # Parameters that control the training
 loss_type: bnpo
-beta: 0.1
+# beta: 0.1 KL divergence coefficient
 epsilon: 0.2 
 epsilon_high: 0.28
 mask_truncated_completions: true
