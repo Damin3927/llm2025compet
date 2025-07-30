@@ -1,4 +1,6 @@
 results/
+logs/
 *.json
 *.pkl
 *.parquet
+test*.sh
