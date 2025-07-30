@@ -1,4 +1,4 @@
-from datasets import load_dataset
+from datasets import load_dataset, Dataset
 import pandas as pd
 
 def filter_datasets(datasets):
@@ -31,6 +31,12 @@ df = df[
     ["id","question","acceptedAnswer","rejectedAnswer"]
 ]
 
+hf_dataset = Dataset.from_pandas(df)
+
+repo_id = "neko-llm/DPO-hh-rlhf"
+hf_dataset.push_to_hub(repo_id)
+
+"""
 # 学習用のjsonl
 output_filename = "hh-rfhf_for_dpo.jsonl"
 df.to_json(
@@ -48,3 +54,4 @@ df.to_json(
     indent=2,
     force_ascii=False
 )
+"""
