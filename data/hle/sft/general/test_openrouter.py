@@ -111,7 +111,7 @@ def main():
     args = parser.parse_args()
     
     # Get API key
-    with open("../api_keys.json", "r") as f:
+    with open("../keys.json", "r") as f:
         api_key = json.load(f)["openrouter"]
     if not api_key:
         logger.error("Please provide OpenRouter API key via --api-key or OPENROUTER_API_KEY env var")
