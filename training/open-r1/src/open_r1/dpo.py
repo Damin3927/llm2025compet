@@ -19,25 +19,21 @@ grpo.py をベースに必要に応じて DPO の処理に書き換える形で�
 import logging
 import os
 import sys
+from dataclasses import dataclass, field
 
 import datasets
 import transformers
 from transformers import set_seed
 from transformers.trainer_utils import get_last_checkpoint
 
-from open_r1.configs import GRPOConfig, GRPOScriptArguments
-from open_r1.rewards import get_reward_funcs
 from open_r1.utils import get_dataset, get_model, get_tokenizer
 from open_r1.utils.callbacks import get_callbacks
 from open_r1.utils.wandb_logging import init_wandb_training
 
 # TRL の DPO 用ライブラリ
-from trl.commands.cli_utils import DPOScriptArguments
-from trl import DPOTrainer, DPOConfig, ModelConfig, TrlParser, get_peft_config
-
+from trl import DPOTrainer, DPOConfig, ModelConfig, TrlParser, ScriptArguments, get_peft_config
 
 logger = logging.getLogger(__name__)
-
 
 def main(script_args, training_args, model_args):
     # Set seed for reproducibility
@@ -191,6 +187,6 @@ def main(script_args, training_args, model_args):
 
 
 if __name__ == "__main__":
-    parser = TrlParser((DPOScriptArguments, DPOConfig, ModelConfig))
+    parser = TrlParser((ScriptArguments, DPOConfig, ModelConfig))
     script_args, training_args, model_args = parser.parse_args_and_config()
     main(script_args, training_args, model_args)
