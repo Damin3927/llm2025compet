@@ -1,0 +1,55 @@
+# === DPOScriptArguments ===
+dataset_name: argilla/ultrafeedback-binarized-preferences # HF上のデータセット名
+dataset_config: main                                      # サブセット名
+dataset_num_proc: 12                                      # 前処理に使う CPU プロセス数
+dataset_train_split: train                                # 学習用スプリット名
+dataset_test_split: test                                  # 評価用スプリット名
+dataset_prompt_column: question                           # 入力部分のカラム名
+dataset_chosen_colmun: preferred_output                   # 正例のカラム名
+dataset_rejected_column: non_preferred_output             # 負例のカラム名
+
+# === ModelConfig ===
+model_name_or_path: Qwen3/Qwen3-4B                        # モデル名
+model_revision: main                                      
+torch_dtype: bfloat16                                     # 数値の型
+
+# === LoRA/PEFT (get_peft_config) ===
+use_peft: true                                            # PEFT(LoRA) を使うかどうか
+lora_r: 16                                                # LoRA の rank
+lora_alpha: 32                                            # LoRA の alpha
+lora_dropout: 0.05                                        # LoRA のドロップアウト率
+use_rslora: false                                         # Rank-Stabilized LoRA
+use_dora                                                  # Decomposed LoRA
+
+# === DPOConfig ===
+bf16: true                                                # bf16 演算を有効にするかどうか
+do_eval: false                                            # 学習中の評価を行うかどうか
+eval_strategy: no                                         # 評価タイミング (no, steps, epoch)
+per_device_train_batch_size: 1                            # 1GPUあたりの学習バッチサイズ
+per_device_eval_batch_size: 1                             # 1GPUあたりの評価バッチサイズ
+gradient_accumulation_steps: 8                            # 勾配累積のステップ数
+gradient_checkpointing: false                             # 勾配累積チェックポイント
+learning_rate: 4.0e-05                                    # 学習率
+max_grad_norm: 0.2                                        # 勾配クリッピングの閾値
+num_epoch_train: 1                                        # エポック数
+warmup_ratio: 0.03                                        # ウォームアップ比率
+seed: 42                                                  # 乱数シード値
+dpo_beta: 0.1                                             # DPO の beta パラメータ
+
+# === Save and Log ===
+output_dir: data/Qwen3-4B-DPO-test                        # 出力ディレクトリ
+overwrite_output_dir: true                                # 上書き可能かどうか
+save_strategy: steps                                      # 保存タイミング (no, steps, epoch)
+save_steps: 500                                           # 保存間隔
+save_total_limit: 1                                       # 保存ファイル保持上限数
+logging_steps: 1                                          # ログ出力間隔
+logging_strategy: steps                                   # ログの出力タイミング
+log_level: info                                           # ログレベル
+
+# === HF Hub ===
+push_to_hub: false                                        # HF Hub へ push するかどうか
+hub_model_id: Qwen3-4B-DPO-test                           # 登録するモデルID
+hub_strategy: every_save                                  # 保存時に毎回 push
+
+# === Other ===
+max_length: 32768                                         # トークンの最大系列長
