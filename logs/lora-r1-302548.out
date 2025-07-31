@@ -1,0 +1,311 @@
+===== ジョブ開始: Tue Jul 29 03:28:02 PM JST 2025 =====
+cwd  = /home/Competition2025/P02/P02U006/ColossalAI
+host = osk-gpu54
+JOB  = 302548
+NODES= osk-gpu[54,56,91]
+FLASH_ATTENTION_DISABLE=1
+HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
+=== CUDA環境 ===
+CUDA_HOME=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/nvcc
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Tue_May_27_02:21:03_PDT_2025
+Cuda compilation tools, release 12.9, V12.9.86
+Build cuda_12.9.r12.9/compiler.36037853_0
+=== Pythonライブラリのバージョン ===
+python 3.10.18 (main, Jun  5 2025, 13:14:17) [GCC 11.2.0]
+torch 2.4.1+cu124
+torchvision 0.19.1+cu124
+torchaudio 2.4.1+cu124
+numpy 1.26.4
+please install Colossal-AI from https://www.colossalai.org/download or from source
+colossalai 0.0.0
+transformers 4.46.3
+PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+LD_LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+CPATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/nvidia/cublas/include:
+LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+MASTER_ADDR=osk-gpu54  MASTER_PORT=14548
+on master: osk-gpu54
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/colossalai
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from sourceplease install Colossal-AI from https://www.colossalai.org/download or from source
+
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from sourceplease install Colossal-AI from https://www.colossalai.org/download or from source
+
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from sourceplease install Colossal-AI from https://www.colossalai.org/download or from source
+
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+==== ColossalAI SFT script: train() Start ====
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+==== ColossalAI SFT script: train() Start ====
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=True  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+[DEBUG] Creating tensorboard dir: /home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] Tensorboard SummaryWriter created
+[DEBUG] Saving config to training_config.json
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ======== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ======== ColossalAI SFT script: train() Start ====
+
+
+==== ColossalAI SFT script: train() Start ====
+[07/29/25 15:29:10] INFO     colossalai - colossalai - INFO:                    
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/initialize.py:75 launch                       
+                    INFO     colossalai - colossalai - INFO: Distributed        
+                             environment is initialized, world size: 24         
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+Training Info:
+Config file: training_config.json 
+Tensorboard logs: /home/Competition2025/P02/P02U006/ColossalAI/logs/tb 
+Model checkpoint: /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora
+Load dataset: /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+Max device memory after data loader: 0.00 MB
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.053589820861816406 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 1.852186918258667 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.310288906097412 seconds[extension] Time taken to load cpu_adam_x86 op: 1.3102912902832031 seconds
+
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 1.6057403087615967 seconds
+[extension] Time taken to load cpu_adam_x86 op: 0.10420989990234375 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 1.7581965923309326 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.6071553230285645 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.9065258502960205 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.08954572677612305 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10348677635192871 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.606626272201538 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.07518982887268066 seconds
+[extension] Time taken to load fused_optim_cuda op: 2.0098607540130615 seconds
+[extension] Time taken to load fused_optim_cuda op: 2.0063729286193848 seconds
+[extension] Time taken to load fused_optim_cuda op: 2.005425453186035 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.4058058261871338 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.08542847633361816 seconds
+[extension] Time taken to load cpu_adam_x86 op: 3.1077444553375244 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.10538649559021 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 1.0050370693206787 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.3068692684173584 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.0734701156616211 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10367059707641602 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10326385498046875 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10359907150268555 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.2069995403289795 seconds
+[extension] Time taken to load cpu_adam_x86 op: 0.4044911861419678 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 3.30863094329834 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.07736587524414062 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.1028895378112793 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10328507423400879 seconds
+[07/29/25 15:33:01] WARNING  colossalai - colossalai - WARNING:                 
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/booster/plugin/hybrid_parallel_plugin.py:1518 
+                             enable_lora                                        
+                    WARNING  colossalai - colossalai - WARNING: You have enabled
+                             LoRa training. Please check the hyperparameters    
+                             such as lr                                         
+Gradient checkpointing enabled successfully
+Model params: 674.33 B
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.26473450660705566 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 2.6433522701263428 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.134624719619751 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.46782517433166504 seconds
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.1882801055908203 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.4724159240722656 seconds
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.19428014755249023 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.4041738510131836 seconds
+[extension] Time taken to load cpu_adam_x86 op: 0.2112724781036377 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.4538400173187256 seconds
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.1807413101196289 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.44081830978393555 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.7303156852722168 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.4715132713317871 seconds
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.17964506149291992 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.46038317680358887 seconds
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+==== for epoch in range(0, 2) Start ====
+Error: failed to run torchrun --nproc_per_node=8 --nnodes=3 --node_rank=2 --master_addr=osk-gpu54 --master_port=14548 /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl --plugin moe --pp 3 --ep 8 --batch_size 8 --lr 2e-5 --max_length 256 --lora_rank 8 --lora_alpha 16 --num_epochs 2 --warmup_steps 8 --mixed_precision bf16 --use_grad_checkpoint --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/tb --save_dir /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora on osk-gpu91, is localhost: False, exception: Encountered a bad command exit code!
+
+Command: 'cd /home/Competition2025/P02/P02U006/ColossalAI && export SHELL="/bin/bash" SLURM_GPUS_PER_NODE="8" GCC_RANLIB="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-gcc-ranlib" SLURM_STEP_NUM_TASKS="1" SLURM_JOB_USER="P02U006" SLURM_TASKS_PER_NODE="1" SLURM_JOB_UID="11034" SLURM_STEP_GPUS="0,1,2,3,4,5,6,7" HISTCONTROL="ignoredups" SLURM_TASK_PID="350847" CONDA_EXE="/home/Competition2025/P02/P02U006/miniconda3/bin/conda" SLURM_JOB_GPUS="0,1,2,3,4,5,6,7" PMIX_HOSTNAME="osk-gpu54" SLURM_LOCALID="0" build_alias="x86_64-conda-linux-gnu" SLURM_SUBMIT_DIR="/home/Competition2025/P02/P02U006/ColossalAI" CMAKE_ARGS="-DCMAKE_AR=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ar -DCMAKE_RANLIB=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ranlib -DCMAKE_LINKER=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ld -DCMAKE_STRIP=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-strip -DCMAKE_BUILD_TYPE=Release" HISTSIZE="1000" HOSTNAME="osk-gpu54" SLURMD_NODENAME="osk-gpu54" FLASH_ATTENTION_DISABLE="1" PMIX_SECURITY_MODE="munge,native" MASTER_PORT="14548" GPROF="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-gprof" _CONDA_PYTHON_SYSCONFIGDATA_NAME="_sysconfigdata_x86_64_conda_cos7_linux_gnu" SLURM_STEP_NODELIST="osk-gpu54" STRINGS="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-strings" CPP="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-cpp" NCCL_NET_PLUGIN="none" SLURM_NODE_ALIASES="(null)" SLURM_CLUSTER_NAME="osk-cluster" SLURM_CPUS_ON_NODE="2" SLURM_UMASK="0022" SLURM_JOB_CPUS_PER_NODE="2(x3)" NCCL_SOCKET_IFNAME="enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0" PMIX_GDS_MODULE="ds21,ds12,hash" SLURM_GPUS_ON_NODE="8" PWD="/home/Competition2025/P02/P02U006/ColossalAI" SLURM_GTIDS="0" GSETTINGS_SCHEMA_DIR="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/share/glib-2.0/schemas" LOGNAME="P02U006" UCX_NET_DEVICES="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1" XDG_SESSION_TYPE="tty" CONDA_PREFIX="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310" SLURM_JOB_PARTITION="P02" MODULESHOME="/usr/share/Modules" MANPATH="/usr/share/man:" ROCR_VISIBLE_DEVICES="0,1,2,3,4,5,6,7" NCCL_DEBUG="INFO" SLURM_JOB_NUM_NODES="3" CXX="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++" CXXFLAGS="-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include  -I/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include" SRUN_DEBUG="3" PMIX_SYSTEM_TMPDIR="/tmp" SLURM_STEPID="0" SLURM_JOBID="302548" GLOO_SOCKET_IFNAME="mlx5" NCCL_IB_HCA="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1" DEBUG_CXXFLAGS="-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include" SLURM_LAUNCH_NODE_IPADDR="192.168.11.54" SLURM_JOB_QOS="normal" PMIX_BFROP_BUFFER_TYPE="PMIX_BFROP_BUFFER_NON_DESC" MOTD_SHOWN="pam" PMIX_PTL_MODULE="tcp,usock" LDFLAGS="-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,-rpath,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -Wl,-rpath-link,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -L/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib  -L/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib -L/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib/stubs" __MODULES_SHARE_MANPATH=":1" HOME="/home/Competition2025/P02/P02U006" LANG="en_US.UTF-8" PMIX_DSTORE_21_BASE_PATH="/var/spool/slurm/d/pmix.302548.0//pmix_dstor_ds21_350838" DEBUG_CFLAGS="-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include" LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=01;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=01;36:*.au=01;36:*.flac=01;36:*.m4a=01;36:*.mid=01;36:*.midi=01;36:*.mka=01;36:*.mp3=01;36:*.mpc=01;36:*.ogg=01;36:*.ra=01;36:*.wav=01;36:*.oga=01;36:*.opus=01;36:*.spx=01;36:*.xspf=01;36:" NVCC_PREPEND_FLAGS=" -ccbin=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++ -ccbin=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++" SLURM_PROCID="0" PMIX_VERSION="3.2.3" CXX_FOR_BUILD="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++" HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2="1" ELFEDIT="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-elfedit" CONDA_PROMPT_MODIFIER="(deepseeksft310) " TMPDIR="/tmp" CMAKE_PREFIX_PATH="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/x86_64-conda-linux-gnu/sysroot/usr" CUDACXX="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/nvcc" CPPFLAGS="-DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include  -I/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include" SLURM_NTASKS="1" LD="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ld" SLURM_TOPOLOGY_ADDR="osk-gpu54" SSH_CONNECTION="100.113.255.14 60706 10.255.255.101 22" SLURM_PMIX_MAPPING_SERV="(vector,(0,1,1))" PMIX_RANK="0" PMIX_SERVER_URI2="pmix-server.350838;tcp4://127.0.0.1:34779" PMIX_SERVER_URI3="pmix-server.350838;tcp4://127.0.0.1:34779" SLURM_DISTRIBUTION="cyclic" READELF="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-readelf" ZE_AFFINITY_MASK="0,1,2,3,4,5,6,7" GXX="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-g++" MASTER_ADDR="osk-gpu54" CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7" SLURM_TOPOLOGY_ADDR_PATTERN="node" GCC_AR="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-gcc-ar" SLURM_SRUN_COMM_HOST="192.168.11.54" SLURM_PMIXP_ABORT_AGENT_PORT="43791" ADDR2LINE="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-addr2line" XDG_SESSION_CLASS="user" SLURM_WORKING_CLUSTER="osk-cluster:10.255.255.100:6817:9728:109" PYTHONPATH="/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat:/home/Competition2025/P02/P02U006/ColossalAI:" PMIX_SERVER_URI21="pmix-server.350838;tcp4://127.0.0.1:34779" TERM="xterm-256color" NCCL_ASYNC_ERROR_HANDLING="1" GCC_NM="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-gcc-nm" SIZE="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-size" TORCH_NCCL_ASYNC_ERROR_HANDLING="1" HOST="x86_64-conda-linux-gnu" LESSOPEN="||/usr/bin/lesspipe.sh %s" CC_FOR_BUILD="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-cc" PMIX_DSTORE_ESH_BASE_PATH="/var/spool/slurm/d/pmix.302548.0//pmix_dstor_ds12_350838" USER="P02U006" LIBRARY_PATH="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:" SLURM_NODELIST="osk-gpu[54,56,91]" ENVIRONMENT="BATCH" GPU_DEVICE_ORDINAL="0,1,2,3,4,5,6,7" CONDA_SHLVL="1" SLURM_SRUN_COMM_PORT="35527" MODULES_RUN_QUARANTINE="LD_LIBRARY_PATH LD_PRELOAD" AR="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ar" AS="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-as" DEBUG_CPPFLAGS="-D_DEBUG -D_FORTIFY_SOURCE=2 -Og -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include" SLURM_STEP_ID="0" SLURM_PRIO_PROCESS="0" host_alias="x86_64-conda-linux-gnu" SLURM_NPROCS="1" SHLVL="2" SLURM_NNODES="1" NM="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-nm" GCC="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-gcc" PMIX_MCA_gds="^ds12" XDG_SESSION_ID="25074" SLURM_SUBMIT_HOST="osk-cpu01" PMIX_SERVER_TMPDIR="/var/spool/slurm/d/pmix.302548.0/" LD_GOLD="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ld.gold" CONDA_PYTHON_EXE="/home/Competition2025/P02/P02U006/miniconda3/bin/python" LD_LIBRARY_PATH="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:" SLURM_JOB_CPUS_PER_NODE_PACK_GROUP_0="2(x3)" XDG_RUNTIME_DIR="/run/user/11034" SLURM_JOB_ID="302548" UCX_MAX_RNDV_RAILS="8" SLURM_NODEID="0" SLURM_STEP_NUM_NODES="1" SSH_CLIENT="100.113.255.14 60706 22" CONDA_DEFAULT_ENV="deepseeksft310" __MODULES_LMINIT="module use --append /home/appli/modulefiles:module use --append /usr/share/Modules/modulefiles:module use --append /etc/modulefiles:module use --append /usr/share/modulefiles" OBJCOPY="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-objcopy" OMPI_MCA_coll_hcoll_enable="0" PMIX_NAMESPACE="slurm.pmix.302548.0" which_declare="declare -f" SLURM_STEP_TASKS_PER_NODE="1" STRIP="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-strip" CUDA_HOME="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310" SLURM_MPI_TYPE="pmix_v3" NVCC_PREPEND_FLAGS_BACKUP=" -ccbin=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++" XDG_DATA_DIRS="/home/Competition2025/P02/P02U006/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share" OBJDUMP="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-objdump" SLURM_CONF="/etc/slurm/slurm.conf" PATH="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin" SLURM_JOB_NAME="lora-r1" MODULEPATH="/etc/scl/modulefiles:/etc/scl/modulefiles:/home/appli/modulefiles:/usr/share/Modules/modulefiles:/etc/modulefiles:/usr/share/modulefiles" CC="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-cc" SLURM_NTASKS_PER_NODE="1" CFLAGS="-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include  -I/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include" CXXFILT="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++filt" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/11034/bus" BUILD="x86_64-conda-linux-gnu" MAIL="/var/spool/mail/P02U006" SSH_TTY="/dev/pts/77" SLURM_STEP_LAUNCHER_PORT="35527" SLURM_JOB_GID="11034" CPATH="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/nvidia/cublas/include:" RANLIB="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ranlib" CONDA_BUILD_SYSROOT="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/x86_64-conda-linux-gnu/sysroot" UCX_MAX_EAGER_RAILS="8" OLDPWD="/home/Competition2025/P02/P02U006" SLURM_JOB_NODELIST="osk-gpu[54,56,91]" MODULES_CMD="/usr/share/Modules/libexec/modulecmd.tcl" _="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/colossalai" CUDA_DEVICE_MAX_CONNECTIONS="1" && torchrun --nproc_per_node=8 --nnodes=3 --node_rank=2 --master_addr=osk-gpu54 --master_port=14548 /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl --plugin moe --pp 3 --ep 8 --batch_size 8 --lr 2e-5 --max_length 256 --lora_rank 8 --lora_alpha 16 --num_epochs 2 --warmup_steps 8 --mixed_precision bf16 --use_grad_checkpoint --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/tb --save_dir /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora'
+
+Exit code: 1
+
+Stdout: already printed
+
+Stderr: already printed
+
+
+Error: failed to run torchrun --nproc_per_node=8 --nnodes=3 --node_rank=1 --master_addr=osk-gpu54 --master_port=14548 /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl --plugin moe --pp 3 --ep 8 --batch_size 8 --lr 2e-5 --max_length 256 --lora_rank 8 --lora_alpha 16 --num_epochs 2 --warmup_steps 8 --mixed_precision bf16 --use_grad_checkpoint --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/tb --save_dir /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora on osk-gpu56, is localhost: False, exception: Encountered a bad command exit code!
+
+Command: 'cd /home/Competition2025/P02/P02U006/ColossalAI && export SHELL="/bin/bash" SLURM_GPUS_PER_NODE="8" GCC_RANLIB="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-gcc-ranlib" SLURM_STEP_NUM_TASKS="1" SLURM_JOB_USER="P02U006" SLURM_TASKS_PER_NODE="1" SLURM_JOB_UID="11034" SLURM_STEP_GPUS="0,1,2,3,4,5,6,7" HISTCONTROL="ignoredups" SLURM_TASK_PID="350847" CONDA_EXE="/home/Competition2025/P02/P02U006/miniconda3/bin/conda" SLURM_JOB_GPUS="0,1,2,3,4,5,6,7" PMIX_HOSTNAME="osk-gpu54" SLURM_LOCALID="0" build_alias="x86_64-conda-linux-gnu" SLURM_SUBMIT_DIR="/home/Competition2025/P02/P02U006/ColossalAI" CMAKE_ARGS="-DCMAKE_AR=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ar -DCMAKE_RANLIB=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ranlib -DCMAKE_LINKER=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ld -DCMAKE_STRIP=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-strip -DCMAKE_BUILD_TYPE=Release" HISTSIZE="1000" HOSTNAME="osk-gpu54" SLURMD_NODENAME="osk-gpu54" FLASH_ATTENTION_DISABLE="1" PMIX_SECURITY_MODE="munge,native" MASTER_PORT="14548" GPROF="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-gprof" _CONDA_PYTHON_SYSCONFIGDATA_NAME="_sysconfigdata_x86_64_conda_cos7_linux_gnu" SLURM_STEP_NODELIST="osk-gpu54" STRINGS="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-strings" CPP="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-cpp" NCCL_NET_PLUGIN="none" SLURM_NODE_ALIASES="(null)" SLURM_CLUSTER_NAME="osk-cluster" SLURM_CPUS_ON_NODE="2" SLURM_UMASK="0022" SLURM_JOB_CPUS_PER_NODE="2(x3)" NCCL_SOCKET_IFNAME="enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0" PMIX_GDS_MODULE="ds21,ds12,hash" SLURM_GPUS_ON_NODE="8" PWD="/home/Competition2025/P02/P02U006/ColossalAI" SLURM_GTIDS="0" GSETTINGS_SCHEMA_DIR="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/share/glib-2.0/schemas" LOGNAME="P02U006" UCX_NET_DEVICES="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1" XDG_SESSION_TYPE="tty" CONDA_PREFIX="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310" SLURM_JOB_PARTITION="P02" MODULESHOME="/usr/share/Modules" MANPATH="/usr/share/man:" ROCR_VISIBLE_DEVICES="0,1,2,3,4,5,6,7" NCCL_DEBUG="INFO" SLURM_JOB_NUM_NODES="3" CXX="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++" CXXFLAGS="-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include  -I/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include" SRUN_DEBUG="3" PMIX_SYSTEM_TMPDIR="/tmp" SLURM_STEPID="0" SLURM_JOBID="302548" GLOO_SOCKET_IFNAME="mlx5" NCCL_IB_HCA="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1" DEBUG_CXXFLAGS="-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include" SLURM_LAUNCH_NODE_IPADDR="192.168.11.54" SLURM_JOB_QOS="normal" PMIX_BFROP_BUFFER_TYPE="PMIX_BFROP_BUFFER_NON_DESC" MOTD_SHOWN="pam" PMIX_PTL_MODULE="tcp,usock" LDFLAGS="-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,-rpath,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -Wl,-rpath-link,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -L/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib  -L/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib -L/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib/stubs" __MODULES_SHARE_MANPATH=":1" HOME="/home/Competition2025/P02/P02U006" LANG="en_US.UTF-8" PMIX_DSTORE_21_BASE_PATH="/var/spool/slurm/d/pmix.302548.0//pmix_dstor_ds21_350838" DEBUG_CFLAGS="-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include" LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=01;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=01;36:*.au=01;36:*.flac=01;36:*.m4a=01;36:*.mid=01;36:*.midi=01;36:*.mka=01;36:*.mp3=01;36:*.mpc=01;36:*.ogg=01;36:*.ra=01;36:*.wav=01;36:*.oga=01;36:*.opus=01;36:*.spx=01;36:*.xspf=01;36:" NVCC_PREPEND_FLAGS=" -ccbin=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++ -ccbin=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++" SLURM_PROCID="0" PMIX_VERSION="3.2.3" CXX_FOR_BUILD="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++" HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2="1" ELFEDIT="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-elfedit" CONDA_PROMPT_MODIFIER="(deepseeksft310) " TMPDIR="/tmp" CMAKE_PREFIX_PATH="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/x86_64-conda-linux-gnu/sysroot/usr" CUDACXX="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/nvcc" CPPFLAGS="-DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include  -I/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include" SLURM_NTASKS="1" LD="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ld" SLURM_TOPOLOGY_ADDR="osk-gpu54" SSH_CONNECTION="100.113.255.14 60706 10.255.255.101 22" SLURM_PMIX_MAPPING_SERV="(vector,(0,1,1))" PMIX_RANK="0" PMIX_SERVER_URI2="pmix-server.350838;tcp4://127.0.0.1:34779" PMIX_SERVER_URI3="pmix-server.350838;tcp4://127.0.0.1:34779" SLURM_DISTRIBUTION="cyclic" READELF="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-readelf" ZE_AFFINITY_MASK="0,1,2,3,4,5,6,7" GXX="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-g++" MASTER_ADDR="osk-gpu54" CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7" SLURM_TOPOLOGY_ADDR_PATTERN="node" GCC_AR="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-gcc-ar" SLURM_SRUN_COMM_HOST="192.168.11.54" SLURM_PMIXP_ABORT_AGENT_PORT="43791" ADDR2LINE="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-addr2line" XDG_SESSION_CLASS="user" SLURM_WORKING_CLUSTER="osk-cluster:10.255.255.100:6817:9728:109" PYTHONPATH="/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat:/home/Competition2025/P02/P02U006/ColossalAI:" PMIX_SERVER_URI21="pmix-server.350838;tcp4://127.0.0.1:34779" TERM="xterm-256color" NCCL_ASYNC_ERROR_HANDLING="1" GCC_NM="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-gcc-nm" SIZE="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-size" TORCH_NCCL_ASYNC_ERROR_HANDLING="1" HOST="x86_64-conda-linux-gnu" LESSOPEN="||/usr/bin/lesspipe.sh %s" CC_FOR_BUILD="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-cc" PMIX_DSTORE_ESH_BASE_PATH="/var/spool/slurm/d/pmix.302548.0//pmix_dstor_ds12_350838" USER="P02U006" LIBRARY_PATH="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:" SLURM_NODELIST="osk-gpu[54,56,91]" ENVIRONMENT="BATCH" GPU_DEVICE_ORDINAL="0,1,2,3,4,5,6,7" CONDA_SHLVL="1" SLURM_SRUN_COMM_PORT="35527" MODULES_RUN_QUARANTINE="LD_LIBRARY_PATH LD_PRELOAD" AR="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ar" AS="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-as" DEBUG_CPPFLAGS="-D_DEBUG -D_FORTIFY_SOURCE=2 -Og -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include" SLURM_STEP_ID="0" SLURM_PRIO_PROCESS="0" host_alias="x86_64-conda-linux-gnu" SLURM_NPROCS="1" SHLVL="2" SLURM_NNODES="1" NM="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-nm" GCC="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-gcc" PMIX_MCA_gds="^ds12" XDG_SESSION_ID="25074" SLURM_SUBMIT_HOST="osk-cpu01" PMIX_SERVER_TMPDIR="/var/spool/slurm/d/pmix.302548.0/" LD_GOLD="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ld.gold" CONDA_PYTHON_EXE="/home/Competition2025/P02/P02U006/miniconda3/bin/python" LD_LIBRARY_PATH="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:" SLURM_JOB_CPUS_PER_NODE_PACK_GROUP_0="2(x3)" XDG_RUNTIME_DIR="/run/user/11034" SLURM_JOB_ID="302548" UCX_MAX_RNDV_RAILS="8" SLURM_NODEID="0" SLURM_STEP_NUM_NODES="1" SSH_CLIENT="100.113.255.14 60706 22" CONDA_DEFAULT_ENV="deepseeksft310" __MODULES_LMINIT="module use --append /home/appli/modulefiles:module use --append /usr/share/Modules/modulefiles:module use --append /etc/modulefiles:module use --append /usr/share/modulefiles" OBJCOPY="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-objcopy" OMPI_MCA_coll_hcoll_enable="0" PMIX_NAMESPACE="slurm.pmix.302548.0" which_declare="declare -f" SLURM_STEP_TASKS_PER_NODE="1" STRIP="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-strip" CUDA_HOME="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310" SLURM_MPI_TYPE="pmix_v3" NVCC_PREPEND_FLAGS_BACKUP=" -ccbin=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++" XDG_DATA_DIRS="/home/Competition2025/P02/P02U006/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share" OBJDUMP="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-objdump" SLURM_CONF="/etc/slurm/slurm.conf" PATH="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin" SLURM_JOB_NAME="lora-r1" MODULEPATH="/etc/scl/modulefiles:/etc/scl/modulefiles:/home/appli/modulefiles:/usr/share/Modules/modulefiles:/etc/modulefiles:/usr/share/modulefiles" CC="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-cc" SLURM_NTASKS_PER_NODE="1" CFLAGS="-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include  -I/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include" CXXFILT="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++filt" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/11034/bus" BUILD="x86_64-conda-linux-gnu" MAIL="/var/spool/mail/P02U006" SSH_TTY="/dev/pts/77" SLURM_STEP_LAUNCHER_PORT="35527" SLURM_JOB_GID="11034" CPATH="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/nvidia/cublas/include:" RANLIB="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-ranlib" CONDA_BUILD_SYSROOT="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/x86_64-conda-linux-gnu/sysroot" UCX_MAX_EAGER_RAILS="8" OLDPWD="/home/Competition2025/P02/P02U006" SLURM_JOB_NODELIST="osk-gpu[54,56,91]" MODULES_CMD="/usr/share/Modules/libexec/modulecmd.tcl" _="/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/colossalai" CUDA_DEVICE_MAX_CONNECTIONS="1" && torchrun --nproc_per_node=8 --nnodes=3 --node_rank=1 --master_addr=osk-gpu54 --master_port=14548 /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl --plugin moe --pp 3 --ep 8 --batch_size 8 --lr 2e-5 --max_length 256 --lora_rank 8 --lora_alpha 16 --num_epochs 2 --warmup_steps 8 --mixed_precision bf16 --use_grad_checkpoint --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/tb --save_dir /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora'
+
+Exit code: 1
+
+Stdout: already printed
+
+Stderr: already printed
+
+

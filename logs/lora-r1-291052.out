@@ -1,0 +1,10 @@
+===== ジョブ開始: Sat Jul 26 10:52:57 AM JST 2025 =====
+cwd  = /home/Competition2025/P02/P02U006/ColossalAI
+host = osk-gpu54
+JOB  = 291052
+NODES= osk-gpu[54,56,91]
+FLASH_ATTENTION_DISABLE=1
+HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
+please install Colossal-AI from https://www.colossalai.org/download or from source
+Error: failed to run torchrun --nproc_per_node=8 --nnodes=3 --node_rank=1 --master_addr=osk-gpu54 --master_port=23052 /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl --plugin moe --pp 3 --ep 8 --batch_size 8 --lr 2e-5 --max_length 256 --lora_rank 8 --lora_alpha 16 --num_epochs 2 --warmup_steps 8 --mixed_precision bf16 --use_grad_checkpoint --tensorboard_dir logs/tb --save_dir DeepSeek-R1-0528-lora on osk-gpu56, is localhost: False, exception: No authentication methods available
+Error: failed to run torchrun --nproc_per_node=8 --nnodes=3 --node_rank=2 --master_addr=osk-gpu54 --master_port=23052 /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl --plugin moe --pp 3 --ep 8 --batch_size 8 --lr 2e-5 --max_length 256 --lora_rank 8 --lora_alpha 16 --num_epochs 2 --warmup_steps 8 --mixed_precision bf16 --use_grad_checkpoint --tensorboard_dir logs/tb --save_dir DeepSeek-R1-0528-lora on osk-gpu91, is localhost: False, exception: No authentication methods available

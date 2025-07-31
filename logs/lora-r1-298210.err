@@ -1,0 +1,813 @@
+++ date
++ echo '===== ジョブ開始: Mon Jul 28 10:44:10 AM JST 2025 ====='
+++ pwd
++ echo 'cwd  = /home/Competition2025/P02/P02U006/ColossalAI'
+++ hostname
++ echo 'host = osk-gpu54'
++ echo 'JOB  = 298210'
++ echo 'NODES= osk-gpu[54,56,91]'
++ mkdir -p logs logs/tb
++ source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ '[' -z x ']'
++ conda activate deepseeksft310
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate deepseeksft310
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate deepseeksft310
+++ '[' -n '' ']'
+++ /home/Competition2025/P02/P02U006/miniconda3/bin/conda shell.posix activate deepseeksft310
++ ask_conda='unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
++ eval 'unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
+++ unset _CE_M
+++ unset _CE_CONDA
+++ PS1='(deepseeksft310) '
+++ export PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ export CONDA_SHLVL=1
+++ CONDA_SHLVL=1
+++ export 'CONDA_PROMPT_MODIFIER=(deepseeksft310) '
+++ CONDA_PROMPT_MODIFIER='(deepseeksft310) '
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ export FLASH_ATTENTION_DISABLE=1
++ FLASH_ATTENTION_DISABLE=1
++ export HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
++ HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
++ echo FLASH_ATTENTION_DISABLE=1
++ echo HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
+++ head -n1 /home/Competition2025/P02/P02U006/ColossalAI/hostfile
++ export MASTER_ADDR=osk-gpu54
++ MASTER_ADDR=osk-gpu54
++ export MASTER_PORT=30210
++ MASTER_PORT=30210
++ echo 'MASTER_ADDR=osk-gpu54  MASTER_PORT=30210'
++ export NCCL_DEBUG=INFO
++ NCCL_DEBUG=INFO
++ export NCCL_ASYNC_ERROR_HANDLING=1
++ NCCL_ASYNC_ERROR_HANDLING=1
++ srun -N1 -w osk-gpu54 --ntasks=1 bash -lc '
+  set -e
+  source ~/miniconda3/etc/profile.d/conda.sh
+  conda activate deepseeksft310
+  echo '\''on master:'\'' $(hostname)
+  which colossalai || true
+  which python || true
+  which torchrun || trye
+
+  colossalai run 	--hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile 	--master_addr osk-gpu54         --master_port 30210         --nproc_per_node 8         /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py             --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16             --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl             --plugin moe             --pp 3 --ep 8             --batch_size 8             --lr 2e-5             --max_length 256             --lora_rank 8 --lora_alpha 16             --num_epochs 2 --warmup_steps 8             --mixed_precision bf16             --use_grad_checkpoint             --tensorboard_dir logs/tb             --save_dir DeepSeek-R1-0528-lora
+'
+W0728 10:44:18.272000 22874445517888 torch/distributed/run.py:779] 
+W0728 10:44:18.272000 22874445517888 torch/distributed/run.py:779] *****************************************
+W0728 10:44:18.272000 22874445517888 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0728 10:44:18.272000 22874445517888 torch/distributed/run.py:779] *****************************************
+W0728 10:44:23.047000 22743863850048 torch/distributed/run.py:779] 
+W0728 10:44:23.047000 22743863850048 torch/distributed/run.py:779] *****************************************
+W0728 10:44:23.047000 22743863850048 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0728 10:44:23.047000 22743863850048 torch/distributed/run.py:779] *****************************************
+W0728 10:44:23.067000 23329314522176 torch/distributed/run.py:779] 
+W0728 10:44:23.067000 23329314522176 torch/distributed/run.py:779] *****************************************
+W0728 10:44:23.067000 23329314522176 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0728 10:44:23.067000 23329314522176 torch/distributed/run.py:779] *****************************************
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+[W728 10:44:37.443951455 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:44:37.443952681 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:44:37.445582190 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:44:37.448535423 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:44:37.448551490 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:44:37.451321429 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+[W728 10:44:37.492521782 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:44:37.612465965 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+[W728 10:44:37.996771310 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:44:37.004347403 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:44:37.043660213 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+[W728 10:44:37.249516651 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+[W728 10:44:37.350660785 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+[W728 10:44:37.376669470 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:44:37.414244536 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:44:37.449219497 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+[W728 10:45:00.727410206 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:45:00.727492028 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:45:00.727879548 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:45:00.735730944 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:45:00.737302199 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:45:00.774080553 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:45:00.775796365 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W728 10:45:00.782586711 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+[rank21]: Traceback (most recent call last):
+[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank21]:     train(args)
+[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank21]:     optimizer = HybridAdam(
+[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank21]:     super().__init__(
+[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank21]:     cpu_adam = CPUAdamLoader().load()
+[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank21]:     ext.assert_compatible()
+[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank21]:     super().assert_compatible()
+[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank21]:     raise AssertionError(
+[rank21]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank22]: Traceback (most recent call last):
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank22]:     train(args)
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank22]:     optimizer = HybridAdam(
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank22]:     super().__init__(
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank22]:     cpu_adam = CPUAdamLoader().load()
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank22]:     ext.assert_compatible()
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank22]:     super().assert_compatible()
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank22]:     raise AssertionError(
+[rank22]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank11]: Traceback (most recent call last):
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank11]:     train(args)
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank11]:     optimizer = HybridAdam(
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank11]:     super().__init__(
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank11]:     cpu_adam = CPUAdamLoader().load()
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank11]:     ext.assert_compatible()
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank11]:     super().assert_compatible()
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank11]:     raise AssertionError(
+[rank11]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank19]: Traceback (most recent call last):
+[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank19]:     train(args)
+[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank19]:     optimizer = HybridAdam(
+[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank19]:     super().__init__(
+[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank19]:     cpu_adam = CPUAdamLoader().load()
+[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank19]:     ext.assert_compatible()
+[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank19]:     super().assert_compatible()
+[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank19]:     raise AssertionError(
+[rank19]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank10]: Traceback (most recent call last):
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank10]:     train(args)
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank10]:     optimizer = HybridAdam(
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank10]:     super().__init__(
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank10]:     cpu_adam = CPUAdamLoader().load()
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank10]:     ext.assert_compatible()
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank10]:     super().assert_compatible()
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank10]:     raise AssertionError(
+[rank10]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank14]: Traceback (most recent call last):
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank14]:     train(args)
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank14]:     optimizer = HybridAdam(
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank14]:     super().__init__(
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank14]:     cpu_adam = CPUAdamLoader().load()
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank14]:     ext.assert_compatible()
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank14]:     super().assert_compatible()
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank14]:     raise AssertionError(
+[rank14]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank23]: Traceback (most recent call last):
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank23]:     train(args)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank23]:     optimizer = HybridAdam(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank23]:     super().__init__(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank23]:     cpu_adam = CPUAdamLoader().load()
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank23]:     ext.assert_compatible()
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank23]:     super().assert_compatible()
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank23]:     raise AssertionError(
+[rank23]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank12]: Traceback (most recent call last):
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank12]:     train(args)
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank12]:     optimizer = HybridAdam(
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank12]:     super().__init__(
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank12]:     cpu_adam = CPUAdamLoader().load()
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank12]:     ext.assert_compatible()
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank12]:     super().assert_compatible()
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank12]:     raise AssertionError(
+[rank12]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank17]: Traceback (most recent call last):
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank17]:     train(args)
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank17]:     optimizer = HybridAdam(
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank17]:     super().__init__(
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank17]:     cpu_adam = CPUAdamLoader().load()
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank17]:     ext.assert_compatible()
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank17]:     super().assert_compatible()
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank17]:     raise AssertionError(
+[rank17]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank8]: Traceback (most recent call last):
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank8]:     train(args)
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank8]:     optimizer = HybridAdam(
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank8]:     super().__init__(
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank8]:     cpu_adam = CPUAdamLoader().load()
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank8]:     ext.assert_compatible()
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank8]:     super().assert_compatible()
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank8]:     raise AssertionError(
+[rank8]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank13]: Traceback (most recent call last):
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank13]:     train(args)
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank13]:     optimizer = HybridAdam(
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank13]:     super().__init__(
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank13]:     cpu_adam = CPUAdamLoader().load()
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank13]:     ext.assert_compatible()
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank13]:     super().assert_compatible()
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank13]:     raise AssertionError(
+[rank13]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank9]: Traceback (most recent call last):
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank9]:     train(args)
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank9]:     optimizer = HybridAdam(
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank9]:     super().__init__(
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank9]:     cpu_adam = CPUAdamLoader().load()
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank9]:     ext.assert_compatible()
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_[rank16]: Traceback (most recent call last):
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank16]:     train(args)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank16]:     optimizer = HybridAdam(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank16]:     super().__init__(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank16]:     cpu_adam = CPUAdamLoader().load()
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank16]:     ext.assert_compatible()
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank16]:     super().assert_compatible()
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank16]:     raise AssertionError(
+[rank16]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+adam_x86.py", line 19, in assert_compatible
+[rank9]:     super().assert_compatible()
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank9]:     raise AssertionError(
+[rank9]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank20]: Traceback (most recent call last):
+[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank20]:     train(args)
+[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank20]:     optimizer = HybridAdam(
+[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank20]:     super().__init__(
+[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank20]:     cpu_adam = CPUAdamLoader().load()
+[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank20]:     ext.assert_compatible()
+[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank20]:     super().assert_compatible()
+[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank20]:     raise AssertionError(
+[rank20]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank15]: Traceback (most recent call last):
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank15]:     train(args)
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank15]:     optimizer = HybridAdam(
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank15]:     super().__init__(
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank15]:     cpu_adam = CPUAdamLoader().load()
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank15]:     ext.assert_compatible()
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank15]:     super().assert_compatible()
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank15]:     raise AssertionError(
+[rank15]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank18]: Traceback (most recent call last):
+[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank18]:     train(args)
+[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank18]:     optimizer = HybridAdam(
+[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank18]:     super().__init__(
+[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank18]:     cpu_adam = CPUAdamLoader().load()
+[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank18]:     ext.assert_compatible()
+[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank18]:     super().assert_compatible()
+[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank18]:     raise AssertionError(
+[rank18]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+W0728 10:47:34.639000 23329314522176 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1284317 closing signal SIGTERM
+W0728 10:47:34.641000 23329314522176 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1284318 closing signal SIGTERM
+W0728 10:47:34.644000 23329314522176 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1284319 closing signal SIGTERM
+W0728 10:47:34.646000 23329314522176 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1284320 closing signal SIGTERM
+W0728 10:47:34.649000 23329314522176 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1284321 closing signal SIGTERM
+W0728 10:47:34.651000 23329314522176 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1284323 closing signal SIGTERM
+W0728 10:47:34.653000 23329314522176 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1284324 closing signal SIGTERM
+W0728 10:47:34.933000 22743863850048 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3857384 closing signal SIGTERM
+W0728 10:47:34.936000 22743863850048 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3857385 closing signal SIGTERM
+W0728 10:47:34.939000 22743863850048 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3857386 closing signal SIGTERM
+W0728 10:47:34.942000 22743863850048 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3857388 closing signal SIGTERM
+W0728 10:47:34.944000 22743863850048 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3857389 closing signal SIGTERM
+W0728 10:47:34.947000 22743863850048 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3857390 closing signal SIGTERM
+W0728 10:47:34.951000 22743863850048 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3857391 closing signal SIGTERM
+E0728 10:47:35.048000 23329314522176 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 5 (pid: 1284322) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-28_10:47:34
+  host      : osk-gpu91
+  rank      : 21 (local_rank: 5)
+  exitcode  : 1 (pid: 1284322)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+E0728 10:47:35.220000 22743863850048 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 3 (pid: 3857387) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-28_10:47:34
+  host      : osk-gpu56
+  rank      : 11 (local_rank: 3)
+  exitcode  : 1 (pid: 3857387)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank5]:     train(args)
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank5]:     optimizer = HybridAdam(
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank5]:     super().__init__(
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank5]:     cpu_adam = CPUAdamLoader().load()
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank5]:     ext.assert_compatible()
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank5]:     super().assert_compatible()
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank5]:     raise AssertionError(
+[rank5]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank7]:     train(args)
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank7]:     optimizer = HybridAdam(
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank7]:     super().__init__(
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank7]:     cpu_adam = CPUAdamLoader().load()
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank7]:     ext.assert_compatible()
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank7]:     super().assert_compatible()
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank7]:     raise AssertionError(
+[rank7]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank3]:     train(args)
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank3]:     optimizer = HybridAdam(
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank3]:     super().__init__(
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank3]:     cpu_adam = CPUAdamLoader().load()
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank3]:     ext.assert_compatible()
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank3]:     super().assert_compatible()
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank3]:     raise AssertionError(
+[rank3]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank4]:     train(args)
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank4]:     optimizer = HybridAdam(
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank4]:     super().__init__(
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank4]:     cpu_adam = CPUAdamLoader().load()
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank4]:     ext.assert_compatible()
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank4]:     super().assert_compatible()
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank4]:     raise AssertionError(
+[rank4]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank6]:     train(args)
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank6]:     optimizer = HybridAdam(
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank6]:     super().__init__(
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank6]:     cpu_adam = CPUAdamLoader().load()
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank6]:     ext.assert_compatible()
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank6]:     super().assert_compatible()
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank6]:     raise AssertionError(
+[rank6]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank1]:     train(args)
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank1]:     optimizer = HybridAdam(
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank1]:     super().__init__(
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank1]:     cpu_adam = CPUAdamLoader().load()
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank1]:     ext.assert_compatible()
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank1]:     super().assert_compatible()
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank1]:     raise AssertionError(
+[rank1]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank2]:     train(args)
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank2]:     optimizer = HybridAdam(
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank2]:     super().__init__(
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank2]:     cpu_adam = CPUAdamLoader().load()
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank2]:     ext.assert_compatible()
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank2]:     super().assert_compatible()
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank2]:     raise AssertionError(
+[rank2]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank0]:     train(args)
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 245, in train
+[rank0]:     optimizer = HybridAdam(
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/hybrid_adam.py", line 76, in __init__
+[rank0]:     super().__init__(
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/nn/optimizer/cpu_adam.py", line 80, in __init__
+[rank0]:     cpu_adam = CPUAdamLoader().load()
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/kernel_loader.py", line 72, in load
+[rank0]:     ext.assert_compatible()
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/pybind/cpu_adam/cpu_adam_x86.py", line 19, in assert_compatible
+[rank0]:     super().assert_compatible()
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/cuda_extension.py", line 42, in assert_compatible
+[rank0]:     raise AssertionError(
+[rank0]: AssertionError: [extension] CUDA_HOME is not found. You need to export CUDA_HOME environment variable or install CUDA Toolkit first in order to build/load CUDA extensions
+W0728 11:05:31.655000 22874445517888 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 104744 closing signal SIGTERM
+W0728 11:05:31.656000 22874445517888 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 104745 closing signal SIGTERM
+W0728 11:05:31.656000 22874445517888 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 104746 closing signal SIGTERM
+W0728 11:05:31.656000 22874445517888 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 104747 closing signal SIGTERM
+W0728 11:05:31.656000 22874445517888 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 104748 closing signal SIGTERM
+W0728 11:05:31.656000 22874445517888 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 104750 closing signal SIGTERM
+W0728 11:05:31.656000 22874445517888 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 104751 closing signal SIGTERM
+E0728 11:05:32.699000 22874445517888 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 5 (pid: 104749) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-28_11:05:31
+  host      : osk-gpu54
+  rank      : 5 (local_rank: 5)
+  exitcode  : 1 (pid: 104749)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: osk-gpu54: task 0: Exited with exit code 1

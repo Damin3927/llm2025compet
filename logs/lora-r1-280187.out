@@ -1,0 +1,35 @@
+===== ジョブ開始: Tue Jul 22 01:17:49 PM JST 2025 =====
+cwd = /home/Competition2025/P02/P02U006/ColossalAI
+host = osk-gpu54
+JOB  = 280187
+NODES= osk-gpu[54-56]
+PATH = /home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+hostfile:
+osk-gpu54
+osk-gpu55
+osk-gpu56
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+Error: invalid Python file --launcher. Did you use a wrong option? Try colossalai run --help
+===== ジョブ終了: Tue Jul 22 01:17:59 PM JST 2025 =====

@@ -1,0 +1,391 @@
+++ date
++ echo '===== ジョブ開始: Fri Jul 25 06:46:16 PM JST 2025 ====='
+++ pwd
++ echo 'cwd  = /home/Competition2025/P02/P02U006/ColossalAI'
+++ hostname
++ echo 'host = osk-gpu54'
++ echo 'JOB  = 289241'
++ echo 'NODES= osk-gpu[54,56,91]'
++ source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ '[' -z x ']'
++ conda activate deepseeksft310
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate deepseeksft310
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate deepseeksft310
+++ '[' -n '' ']'
+++ /home/Competition2025/P02/P02U006/miniconda3/bin/conda shell.posix activate deepseeksft310
++ ask_conda='unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
++ eval 'unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
+++ unset _CE_M
+++ unset _CE_CONDA
+++ PS1='(deepseeksft310) '
+++ export PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ export CONDA_SHLVL=1
+++ CONDA_SHLVL=1
+++ export 'CONDA_PROMPT_MODIFIER=(deepseeksft310) '
+++ CONDA_PROMPT_MODIFIER='(deepseeksft310) '
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ export FLASH_ATTENTION_DISABLE=1
++ FLASH_ATTENTION_DISABLE=1
++ export HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
++ HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
++ echo FLASH_ATTENTION_DISABLE=1
++ echo HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
++ export MASTER_PORT=21241
++ MASTER_PORT=21241
++ srun colossalai run --master_port 21241 --nproc_per_node 8 /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 --dataset /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_sft_data.jsonl --plugin zero2 --pp 3 --ep 8 --batch_size 24 --lr 2e-5 --max_length 256 --lora_rank 8 --lora_alpha 16 --num_epochs 2 --warmup_steps 100 --mixed_precision bf16 --use_grad_checkpoint --tensorboard_dir logs/tb --save_dir DeepSeek-R1-0528-lora
+W0725 18:46:21.924000 23254510285888 torch/distributed/run.py:779] 
+W0725 18:46:21.924000 23254510285888 torch/distributed/run.py:779] *****************************************
+W0725 18:46:21.924000 23254510285888 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0725 18:46:21.924000 23254510285888 torch/distributed/run.py:779] *****************************************
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+W0725 18:46:22.012000 22937664615488 torch/distributed/run.py:779] 
+W0725 18:46:22.012000 22937664615488 torch/distributed/run.py:779] *****************************************
+W0725 18:46:22.012000 22937664615488 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0725 18:46:22.012000 22937664615488 torch/distributed/run.py:779] *****************************************
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+E0725 18:46:22.101000 23254510285888 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 785129) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu91
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 785130)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu91
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 785131)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu91
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 785132)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[4]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu91
+  rank      : 4 (local_rank: 4)
+  exitcode  : 1 (pid: 785133)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[5]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu91
+  rank      : 5 (local_rank: 5)
+  exitcode  : 1 (pid: 785134)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[6]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu91
+  rank      : 6 (local_rank: 6)
+  exitcode  : 1 (pid: 785135)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[7]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu91
+  rank      : 7 (local_rank: 7)
+  exitcode  : 1 (pid: 785136)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu91
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 785129)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+E0725 18:46:22.190000 22937664615488 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 3373218) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu56
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 3373219)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu56
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 3373220)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu56
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 3373221)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[4]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu56
+  rank      : 4 (local_rank: 4)
+  exitcode  : 1 (pid: 3373222)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[5]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu56
+  rank      : 5 (local_rank: 5)
+  exitcode  : 1 (pid: 3373223)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[6]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu56
+  rank      : 6 (local_rank: 6)
+  exitcode  : 1 (pid: 3373224)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[7]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu56
+  rank      : 7 (local_rank: 7)
+  exitcode  : 1 (pid: 3373225)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-25_18:46:22
+  host      : osk-gpu56
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3373218)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: osk-gpu91: task 2: Exited with exit code 1
+srun: error: osk-gpu56: task 1: Exited with exit code 1
+W0725 18:46:26.553000 22716813304896 torch/distributed/run.py:779] 
+W0725 18:46:26.553000 22716813304896 torch/distributed/run.py:779] *****************************************
+W0725 18:46:26.553000 22716813304896 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0725 18:46:26.553000 22716813304896 torch/distributed/run.py:779] *****************************************
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 147
+    print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+TabError: inconsistent use of tabs and spaces in indentation
+E0725 18:46:26.729000 22716813304896 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 3608032) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-07-25_18:46:26
+  host      : osk-gpu54
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 3608033)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-07-25_18:46:26
+  host      : osk-gpu54
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 3608034)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-07-25_18:46:26
+  host      : osk-gpu54
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 3608035)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[4]:
+  time      : 2025-07-25_18:46:26
+  host      : osk-gpu54
+  rank      : 4 (local_rank: 4)
+  exitcode  : 1 (pid: 3608036)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[5]:
+  time      : 2025-07-25_18:46:26
+  host      : osk-gpu54
+  rank      : 5 (local_rank: 5)
+  exitcode  : 1 (pid: 3608037)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[6]:
+  time      : 2025-07-25_18:46:26
+  host      : osk-gpu54
+  rank      : 6 (local_rank: 6)
+  exitcode  : 1 (pid: 3608039)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[7]:
+  time      : 2025-07-25_18:46:26
+  host      : osk-gpu54
+  rank      : 7 (local_rank: 7)
+  exitcode  : 1 (pid: 3608040)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-25_18:46:26
+  host      : osk-gpu54
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3608032)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: osk-gpu54: task 0: Exited with exit code 1

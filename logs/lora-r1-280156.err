@@ -1,0 +1,1357 @@
+++ date
++ echo '===== ジョブ開始: Tue Jul 22 01:05:27 PM JST 2025 ====='
+++ pwd
++ echo '現在ディレクトリ: /home/Competition2025/P02/P02U006/ColossalAI'
+++ hostname
++ echo 'ホスト名: osk-gpu54'
++ echo 'SLURM_JOB_ID: 280156'
++ echo 'SLURM_NODELIST: osk-gpu[54-56]'
++ echo 'PATH: /home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'
++ echo 'CUDA_VISIBLE_DEVICES: 0,1,2,3,4,5,6,7'
++ mkdir -p logs
++ echo '[INFO] conda activate deepseek310'
++ source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ '[' -z '' ']'
+++ export CONDA_SHLVL=0
+++ CONDA_SHLVL=0
+++ '[' -n '' ']'
+++++ dirname /home/Competition2025/P02/P02U006/miniconda3/bin/conda
++++ dirname /home/Competition2025/P02/P02U006/miniconda3/bin
+++ PATH=/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ export PATH
+++ '[' -z '' ']'
+++ PS1=
++ conda activate deepseek310
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate deepseek310
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate deepseek310
+++ '[' -n '' ']'
+++ /home/Competition2025/P02/P02U006/miniconda3/bin/conda shell.posix activate deepseek310
++ ask_conda='unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseek310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_PREFIX='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''deepseek310'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseek310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
++ eval 'unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseek310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_PREFIX='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''deepseek310'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseek310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
+++ unset _CE_M
+++ unset _CE_CONDA
+++ PS1='(deepseek310) '
+++ export PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ export CONDA_PREFIX=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310
+++ CONDA_PREFIX=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310
+++ export CONDA_SHLVL=1
+++ CONDA_SHLVL=1
+++ export CONDA_DEFAULT_ENV=deepseek310
+++ CONDA_DEFAULT_ENV=deepseek310
+++ export 'CONDA_PROMPT_MODIFIER=(deepseek310) '
+++ CONDA_PROMPT_MODIFIER='(deepseek310) '
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ echo '[INFO] ホストファイル作成'
++ scontrol show hostname 'osk-gpu[54-56]'
++ cat hostfile
+++ date
++ echo '[INFO] colossalai run 実行開始: Tue Jul 22 01:05:28 PM JST 2025'
++ srun colossalai run --hostfile ./hostfile --nproc_per_node 8 /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 --dataset /home/Competition2025/P02/shareP02/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_sft_data.jsonl --plugin gemini --ep 8 --pp 3 --batch_size 24 --lr 2e-5 --max_length 256 --lora_rank 8 --lora_alpha 16 --num_epochs 2 --warmup_steps 100 --mixed_precision bf16 --use_grad_checkpoint --tensorboard_dir logs/tb --save_dir DeepSeek-R1-0528-lora
+Exception (client): Error reading SSH protocol banner
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2369, in _check_banner
+    buf = self.packetizer.readline(timeout)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2185, in run
+    self._check_banner()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2373, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+Exception (client): Error reading SSH protocol banner
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2369, in _check_banner
+    buf = self.packetizer.readline(timeout)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2185, in run
+    self._check_banner()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2373, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+Exception (client): Error reading SSH protocol banner
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2369, in _check_banner
+    buf = self.packetizer.readline(timeout)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2185, in run
+    self._check_banner()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2373, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+Exception (client): Error reading SSH protocol banner
+Exception (client): Error reading SSH protocol banner
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2369, in _check_banner
+    buf = self.packetizer.readline(timeout)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2185, in run
+    self._check_banner()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2373, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2369, in _check_banner
+    buf = self.packetizer.readline(timeout)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2185, in run
+    self._check_banner()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/paramiko/transport.py", line 2373, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+W0722 13:05:34.824000 23401703064640 torch/distributed/run.py:779] 
+W0722 13:05:34.824000 23401703064640 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.824000 23401703064640 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.824000 23401703064640 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.844000 23187115582528 torch/distributed/run.py:779] 
+W0722 13:05:34.844000 23187115582528 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.844000 23187115582528 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.844000 23187115582528 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.844000 22411296060480 torch/distributed/run.py:779] 
+W0722 13:05:34.844000 22411296060480 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.844000 22411296060480 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.844000 22411296060480 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.847000 22390276006976 torch/distributed/run.py:779] 
+W0722 13:05:34.847000 22390276006976 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.847000 22390276006976 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.847000 22390276006976 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.849000 23284513502272 torch/distributed/run.py:779] 
+W0722 13:05:34.849000 23284513502272 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.849000 23284513502272 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.849000 23284513502272 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.860000 23390046532672 torch/distributed/run.py:779] 
+W0722 13:05:34.860000 23390046532672 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.860000 23390046532672 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.860000 23390046532672 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.864000 23273635853376 torch/distributed/run.py:779] 
+W0722 13:05:34.864000 23273635853376 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.864000 23273635853376 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.864000 23273635853376 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.871000 22644086834240 torch/distributed/run.py:779] 
+W0722 13:05:34.871000 22644086834240 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.871000 22644086834240 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.871000 22644086834240 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.874000 23213514507328 torch/distributed/run.py:779] 
+W0722 13:05:34.874000 23213514507328 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.874000 23213514507328 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.874000 23213514507328 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.875000 22382104806464 torch/distributed/run.py:779] 
+W0722 13:05:34.875000 22382104806464 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.875000 22382104806464 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.875000 22382104806464 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.878000 23121264849984 torch/distributed/run.py:779] 
+W0722 13:05:34.878000 23121264849984 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.878000 23121264849984 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.878000 23121264849984 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.880000 23127226786880 torch/distributed/run.py:779] 
+W0722 13:05:34.880000 23127226786880 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.880000 23127226786880 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.880000 23127226786880 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.881000 22574058193984 torch/distributed/run.py:779] 
+W0722 13:05:34.881000 22574058193984 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.881000 22574058193984 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.881000 22574058193984 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.881000 23145649464384 torch/distributed/run.py:779] 
+W0722 13:05:34.881000 23145649464384 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.881000 23145649464384 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.881000 23145649464384 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.890000 23033242485824 torch/distributed/run.py:779] 
+W0722 13:05:34.890000 23033242485824 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.890000 23033242485824 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.890000 23033242485824 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.899000 22839057155136 torch/distributed/run.py:779] 
+W0722 13:05:34.899000 22839057155136 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.899000 22839057155136 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.899000 22839057155136 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.910000 22594684482624 torch/distributed/run.py:779] 
+W0722 13:05:34.910000 22594684482624 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.910000 22594684482624 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.910000 22594684482624 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.913000 23180487754816 torch/distributed/run.py:779] 
+W0722 13:05:34.913000 23180487754816 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.913000 23180487754816 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.913000 23180487754816 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.916000 22963476722752 torch/distributed/run.py:779] 
+W0722 13:05:34.916000 22963476722752 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.916000 22963476722752 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.916000 22963476722752 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.918000 22369636541504 torch/distributed/run.py:779] 
+W0722 13:05:34.918000 22369636541504 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.918000 22369636541504 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.918000 22369636541504 torch/distributed/run.py:779] *****************************************
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 255, in launch_agent
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    result = agent.run()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 680, in run
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    result = self._invoke_run(role)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 829, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 652, in _initialize_workers
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 255, in launch_agent
+    self._rendezvous(worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    result = agent.run()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 489, in _rendezvous
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 680, in run
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/rendezvous/static_tcp_rendezvous.py", line 66, in next_rendezvous
+    result = self._invoke_run(role)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 829, in _invoke_run
+    self._store = TCPStore(  # type: ignore[call-arg]
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+RuntimeError: The server socket has failed to listen on any local network address. useIpv6: 0, code: -98, name: EADDRINUSE, message: address already in use
+    self._initialize_workers(self._worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 652, in _initialize_workers
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 255, in launch_agent
+    self._rendezvous(worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = agent.run()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 489, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 680, in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/rendezvous/static_tcp_rendezvous.py", line 66, in next_rendezvous
+    self._store = TCPStore(  # type: ignore[call-arg]
+RuntimeError: The server socket has failed to listen on any local network address. useIpv6: 0, code: -98, name: EADDRINUSE, message: address already in use
+    result = self._invoke_run(role)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 829, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 652, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 489, in _rendezvous
+W0722 13:05:34.933000 22666408711232 torch/distributed/run.py:779] 
+W0722 13:05:34.933000 22666408711232 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.933000 22666408711232 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.933000 22666408711232 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.933000 23423227171904 torch/distributed/run.py:779] 
+W0722 13:05:34.933000 23423227171904 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.933000 23423227171904 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.933000 23423227171904 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.933000 23230523597888 torch/distributed/run.py:779] 
+W0722 13:05:34.933000 23230523597888 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.933000 23230523597888 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.933000 23230523597888 torch/distributed/run.py:779] *****************************************
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/rendezvous/static_tcp_rendezvous.py", line 66, in next_rendezvous
+    self._store = TCPStore(  # type: ignore[call-arg]
+RuntimeError: The server socket has failed to listen on any local network address. useIpv6: 0, code: -98, name: EADDRINUSE, message: address already in use
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    return f(*args, **kwargs)
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 255, in launch_agent
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    result = agent.run()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 255, in launch_agent
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    result = agent.run()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 680, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 680, in run
+    result = self._invoke_run(role)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 829, in _invoke_run
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 255, in launch_agent
+    self._initialize_workers(self._worker_group)
+    result = self._invoke_run(role)
+    result = agent.run()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 829, in _invoke_run
+W0722 13:05:34.946000 22422089573440 torch/distributed/run.py:779] 
+W0722 13:05:34.946000 22422089573440 torch/distributed/run.py:779] *****************************************
+W0722 13:05:34.946000 22422089573440 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0722 13:05:34.946000 22422089573440 torch/distributed/run.py:779] *****************************************
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    self._initialize_workers(self._worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 652, in _initialize_workers
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 680, in run
+    self._rendezvous(worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = self._invoke_run(role)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 829, in _invoke_run
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 652, in _initialize_workers
+    self._initialize_workers(self._worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 489, in _rendezvous
+    result = f(*args, **kwargs)
+    self._rendezvous(worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 652, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/rendezvous/static_tcp_rendezvous.py", line 66, in next_rendezvous
+    result = f(*args, **kwargs)
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 489, in _rendezvous
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 489, in _rendezvous
+    self._store = TCPStore(  # type: ignore[call-arg]
+RuntimeError: The server socket has failed to listen on any local network address. useIpv6: 0, code: -98, name: EADDRINUSE, message: address already in use
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/rendezvous/static_tcp_rendezvous.py", line 66, in next_rendezvous
+    self._store = TCPStore(  # type: ignore[call-arg]
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/rendezvous/static_tcp_rendezvous.py", line 66, in next_rendezvous
+RuntimeError: The server socket has failed to listen on any local network address. useIpv6: 0, code: -98, name: EADDRINUSE, message: address already in use
+    self._store = TCPStore(  # type: ignore[call-arg]
+RuntimeError: The server socket has failed to listen on any local network address. useIpv6: 0, code: -98, name: EADDRINUSE, message: address already in use
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 255, in launch_agent
+    result = agent.run()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 680, in run
+    result = self._invoke_run(role)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 829, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 652, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 489, in _rendezvous
+    rdzv_info = spec.rdzv_handler.next_rendezvous()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/rendezvous/static_tcp_rendezvous.py", line 66, in next_rendezvous
+    self._store = TCPStore(  # type: ignore[call-arg]
+RuntimeError: The server socket has failed to listen on any local network address. useIpv6: 0, code: -98, name: EADDRINUSE, message: address already in use
+srun: error: osk-gpu54: task 5: Exited with exit code 1
+srun: error: osk-gpu54: tasks 0-3,6-7: Exited with exit code 1
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:38.574000 22594684482624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3052624 closing signal SIGTERM
+W0722 13:05:38.574000 22594684482624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3052626 closing signal SIGTERM
+W0722 13:05:38.574000 22594684482624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3052629 closing signal SIGTERM
+W0722 13:05:38.574000 22594684482624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3052630 closing signal SIGTERM
+W0722 13:05:38.574000 22594684482624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3052631 closing signal SIGTERM
+E0722 13:05:38.595000 22594684482624 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 3052625) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-07-22_13:05:38
+  host      : osk-gpu54
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 3052627)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-07-22_13:05:38
+  host      : osk-gpu54
+  rank      : 4 (local_rank: 4)
+  exitcode  : 1 (pid: 3052628)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:38
+  host      : osk-gpu54
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 3052625)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: osk-gpu54: task 4: Exited with exit code 1
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:49.500000 22411296060480 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896153 closing signal SIGTERM
+W0722 13:05:49.500000 22411296060480 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896154 closing signal SIGTERM
+W0722 13:05:49.500000 22411296060480 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896155 closing signal SIGTERM
+W0722 13:05:49.500000 22411296060480 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896156 closing signal SIGTERM
+W0722 13:05:49.500000 22411296060480 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896157 closing signal SIGTERM
+W0722 13:05:49.500000 22411296060480 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896159 closing signal SIGTERM
+W0722 13:05:49.501000 22411296060480 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896160 closing signal SIGTERM
+E0722 13:05:49.581000 22411296060480 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 5 (pid: 2896158) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:49
+  host      : osk-gpu56
+  rank      : 21 (local_rank: 5)
+  exitcode  : 1 (pid: 2896158)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+srun: error: osk-gpu56: task 21: Exited with exit code 1
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:50.952000 23273635853376 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922835 closing signal SIGTERM
+W0722 13:05:50.952000 23273635853376 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922843 closing signal SIGTERM
+W0722 13:05:50.953000 23273635853376 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922844 closing signal SIGTERM
+W0722 13:05:50.953000 23273635853376 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922849 closing signal SIGTERM
+W0722 13:05:50.953000 23273635853376 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922858 closing signal SIGTERM
+W0722 13:05:50.953000 23273635853376 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922870 closing signal SIGTERM
+W0722 13:05:50.953000 23273635853376 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922876 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+E0722 13:05:51.043000 23273635853376 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 5 (pid: 2922867) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+W0722 13:05:51.081000 23284513502272 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922819 closing signal SIGTERM
+W0722 13:05:51.081000 23284513502272 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922824 closing signal SIGTERM
+W0722 13:05:51.081000 23284513502272 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922828 closing signal SIGTERM
+W0722 13:05:51.081000 23284513502272 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922830 closing signal SIGTERM
+W0722 13:05:51.081000 23284513502272 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922836 closing signal SIGTERM
+W0722 13:05:51.081000 23284513502272 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922838 closing signal SIGTERM
+W0722 13:05:51.081000 23284513502272 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922842 closing signal SIGTERM
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+E0722 13:05:51.151000 23284513502272 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 2922817) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:50
+  host      : osk-gpu55
+  rank      : 13 (local_rank: 5)
+  exitcode  : 1 (pid: 2922867)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:51.282000 23401703064640 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922814 closing signal SIGTERM
+W0722 13:05:51.282000 23401703064640 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922823 closing signal SIGTERM
+W0722 13:05:51.282000 23401703064640 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922826 closing signal SIGTERM
+W0722 13:05:51.283000 23401703064640 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922839 closing signal SIGTERM
+W0722 13:05:51.283000 23401703064640 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922846 closing signal SIGTERM
+W0722 13:05:51.283000 23401703064640 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922847 closing signal SIGTERM
+W0722 13:05:51.283000 23401703064640 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922862 closing signal SIGTERM
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:51
+  host      : osk-gpu55
+  rank      : 8 (local_rank: 0)
+  exitcode  : 1 (pid: 2922817)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+E0722 13:05:51.420000 23401703064640 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 2922821) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:51
+  host      : osk-gpu55
+  rank      : 9 (local_rank: 1)
+  exitcode  : 1 (pid: 2922821)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:51.608000 23127226786880 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922853 closing signal SIGTERM
+W0722 13:05:51.608000 23127226786880 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922856 closing signal SIGTERM
+W0722 13:05:51.608000 23127226786880 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922859 closing signal SIGTERM
+W0722 13:05:51.608000 23127226786880 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922863 closing signal SIGTERM
+W0722 13:05:51.608000 23127226786880 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922868 closing signal SIGTERM
+W0722 13:05:51.608000 23127226786880 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922872 closing signal SIGTERM
+W0722 13:05:51.608000 23127226786880 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922875 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:51.669000 23145649464384 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922852 closing signal SIGTERM
+W0722 13:05:51.669000 23145649464384 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922854 closing signal SIGTERM
+W0722 13:05:51.669000 23145649464384 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922860 closing signal SIGTERM
+W0722 13:05:51.670000 23145649464384 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922864 closing signal SIGTERM
+W0722 13:05:51.670000 23145649464384 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922869 closing signal SIGTERM
+W0722 13:05:51.670000 23145649464384 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922871 closing signal SIGTERM
+W0722 13:05:51.670000 23145649464384 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922874 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+E0722 13:05:51.803000 23127226786880 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 2 (pid: 2922857) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:51
+  host      : osk-gpu55
+  rank      : 10 (local_rank: 2)
+  exitcode  : 1 (pid: 2922857)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+E0722 13:05:51.852000 23145649464384 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 2 (pid: 2922855) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:51
+  host      : osk-gpu55
+  rank      : 10 (local_rank: 2)
+  exitcode  : 1 (pid: 2922855)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:51.911000 23187115582528 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922816 closing signal SIGTERM
+W0722 13:05:51.911000 23187115582528 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922818 closing signal SIGTERM
+W0722 13:05:51.911000 23187115582528 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922822 closing signal SIGTERM
+W0722 13:05:51.911000 23187115582528 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922827 closing signal SIGTERM
+W0722 13:05:51.911000 23187115582528 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922833 closing signal SIGTERM
+W0722 13:05:51.911000 23187115582528 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922845 closing signal SIGTERM
+W0722 13:05:51.912000 23187115582528 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922850 closing signal SIGTERM
+Traceback (most recent call last):
+W0722 13:05:51.919000 22390276006976 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922815 closing signal SIGTERM
+W0722 13:05:51.919000 22390276006976 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922825 closing signal SIGTERM
+W0722 13:05:51.919000 22390276006976 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922829 closing signal SIGTERM
+W0722 13:05:51.919000 22390276006976 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922831 closing signal SIGTERM
+W0722 13:05:51.919000 22390276006976 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922834 closing signal SIGTERM
+W0722 13:05:51.920000 22390276006976 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922851 closing signal SIGTERM
+W0722 13:05:51.920000 22390276006976 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922866 closing signal SIGTERM
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:51.969000 23390046532672 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922837 closing signal SIGTERM
+W0722 13:05:51.969000 23390046532672 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922840 closing signal SIGTERM
+W0722 13:05:51.969000 23390046532672 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922848 closing signal SIGTERM
+W0722 13:05:51.969000 23390046532672 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922861 closing signal SIGTERM
+W0722 13:05:51.969000 23390046532672 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922865 closing signal SIGTERM
+W0722 13:05:51.969000 23390046532672 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922877 closing signal SIGTERM
+W0722 13:05:51.969000 23390046532672 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2922878 closing signal SIGTERM
+E0722 13:05:52.063000 23187115582528 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 5 (pid: 2922841) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+E0722 13:05:52.059000 22390276006976 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 2922820) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+E0722 13:05:52.067000 23390046532672 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 2922832) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+Traceback (most recent call last):
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:51
+  host      : osk-gpu55
+  rank      : 9 (local_rank: 1)
+  exitcode  : 1 (pid: 2922820)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+    raise ChildFailedError(
+    return f(*args, **kwargs)
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:51
+  host      : osk-gpu55
+  rank      : 13 (local_rank: 5)
+  exitcode  : 1 (pid: 2922841)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+============================================================
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:51
+  host      : osk-gpu55
+  rank      : 8 (local_rank: 0)
+  exitcode  : 1 (pid: 2922832)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+srun: error: osk-gpu55: task 14: Exited with exit code 1
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+srun: error: osk-gpu55: task 13: Exited with exit code 1
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:52.424000 22574058193984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896173 closing signal SIGTERM
+W0722 13:05:52.424000 22574058193984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896175 closing signal SIGTERM
+W0722 13:05:52.424000 22574058193984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896179 closing signal SIGTERM
+W0722 13:05:52.424000 22574058193984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896200 closing signal SIGTERM
+W0722 13:05:52.424000 22574058193984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896203 closing signal SIGTERM
+W0722 13:05:52.424000 22574058193984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896204 closing signal SIGTERM
+W0722 13:05:52.424000 22574058193984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896208 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+srun: error: osk-gpu55: task 12: Exited with exit code 1
+E0722 13:05:52.567000 22574058193984 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 3 (pid: 2896182) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:52
+  host      : osk-gpu56
+  rank      : 19 (local_rank: 3)
+  exitcode  : 1 (pid: 2896182)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+srun: error: osk-gpu55: tasks 9-10,15: Exited with exit code 1
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+srun: error: osk-gpu55: tasks 8,11: Exited with exit code 1
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:53.126000 22382104806464 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896165 closing signal SIGTERM
+W0722 13:05:53.126000 22382104806464 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896169 closing signal SIGTERM
+W0722 13:05:53.126000 22382104806464 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896177 closing signal SIGTERM
+W0722 13:05:53.126000 22382104806464 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896184 closing signal SIGTERM
+W0722 13:05:53.126000 22382104806464 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896188 closing signal SIGTERM
+W0722 13:05:53.126000 22382104806464 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896193 closing signal SIGTERM
+W0722 13:05:53.126000 22382104806464 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896195 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+E0722 13:05:53.324000 22382104806464 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 2 (pid: 2896174) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:53
+  host      : osk-gpu56
+  rank      : 18 (local_rank: 2)
+  exitcode  : 1 (pid: 2896174)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0722 13:05:53.649000 23121264849984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896168 closing signal SIGTERM
+W0722 13:05:53.649000 23121264849984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896171 closing signal SIGTERM
+W0722 13:05:53.649000 23121264849984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896194 closing signal SIGTERM
+W0722 13:05:53.649000 23121264849984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896198 closing signal SIGTERM
+W0722 13:05:53.649000 23121264849984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896206 closing signal SIGTERM
+W0722 13:05:53.649000 23121264849984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896209 closing signal SIGTERM
+W0722 13:05:53.649000 23121264849984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896214 closing signal SIGTERM
+E0722 13:05:53.754000 23121264849984 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 2 (pid: 2896186) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+srun: error: osk-gpu56: task 23: Exited with exit code 1
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:53
+  host      : osk-gpu56
+  rank      : 18 (local_rank: 2)
+  exitcode  : 1 (pid: 2896186)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+W0722 13:05:53.803000 23033242485824 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896180 closing signal SIGTERM
+W0722 13:05:53.803000 23033242485824 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896181 closing signal SIGTERM
+W0722 13:05:53.803000 23033242485824 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896183 closing signal SIGTERM
+W0722 13:05:53.803000 23033242485824 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896189 closing signal SIGTERM
+W0722 13:05:53.803000 23033242485824 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896201 closing signal SIGTERM
+W0722 13:05:53.803000 23033242485824 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896210 closing signal SIGTERM
+W0722 13:05:53.803000 23033242485824 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896213 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+E0722 13:05:53.956000 23033242485824 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 6 (pid: 2896211) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:53
+  host      : osk-gpu56
+  rank      : 22 (local_rank: 6)
+  exitcode  : 1 (pid: 2896211)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+W0722 13:05:53.987000 22839057155136 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896187 closing signal SIGTERM
+W0722 13:05:53.987000 22839057155136 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896190 closing signal SIGTERM
+W0722 13:05:53.987000 22839057155136 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896196 closing signal SIGTERM
+W0722 13:05:53.987000 22839057155136 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896205 closing signal SIGTERM
+W0722 13:05:53.987000 22839057155136 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896212 closing signal SIGTERM
+W0722 13:05:53.987000 22839057155136 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896215 closing signal SIGTERM
+W0722 13:05:53.987000 22839057155136 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896216 closing signal SIGTERM
+W0722 13:05:54.054000 23213514507328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896163 closing signal SIGTERM
+W0722 13:05:54.054000 23213514507328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896164 closing signal SIGTERM
+W0722 13:05:54.054000 23213514507328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896172 closing signal SIGTERM
+W0722 13:05:54.054000 23213514507328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896176 closing signal SIGTERM
+W0722 13:05:54.054000 23213514507328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896178 closing signal SIGTERM
+W0722 13:05:54.054000 23213514507328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896191 closing signal SIGTERM
+W0722 13:05:54.054000 23213514507328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896197 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+E0722 13:05:54.228000 22839057155136 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 4 (pid: 2896207) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+W0722 13:05:54.231000 22644086834240 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896161 closing signal SIGTERM
+W0722 13:05:54.231000 22644086834240 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896167 closing signal SIGTERM
+W0722 13:05:54.231000 22644086834240 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896170 closing signal SIGTERM
+W0722 13:05:54.231000 22644086834240 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896185 closing signal SIGTERM
+W0722 13:05:54.231000 22644086834240 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896192 closing signal SIGTERM
+W0722 13:05:54.231000 22644086834240 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896199 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+W0722 13:05:54.232000 22644086834240 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2896202 closing signal SIGTERM
+E0722 13:05:54.232000 23213514507328 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 2 (pid: 2896166) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:53
+  host      : osk-gpu56
+  rank      : 20 (local_rank: 4)
+  exitcode  : 1 (pid: 2896207)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:54
+  host      : osk-gpu56
+  rank      : 18 (local_rank: 2)
+  exitcode  : 1 (pid: 2896166)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+E0722 13:05:54.301000 22644086834240 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 2896162) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseek310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-22_13:05:54
+  host      : osk-gpu56
+  rank      : 17 (local_rank: 1)
+  exitcode  : 1 (pid: 2896162)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: osk-gpu56: task 17: Exited with exit code 1
+srun: error: osk-gpu56: task 18: Exited with exit code 1
+srun: error: osk-gpu56: tasks 16,22: Exited with exit code 1
+srun: error: osk-gpu56: tasks 19-20: Exited with exit code 1

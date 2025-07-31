@@ -1,0 +1,496 @@
+++ date
++ echo '===== ジョブ開始: Sat Jul 26 08:19:51 PM JST 2025 ====='
+++ pwd
++ echo 'cwd  = /home/Competition2025/P02/P02U006/ColossalAI'
+++ hostname
++ echo 'host = osk-gpu54'
++ echo 'JOB  = 292591'
++ echo 'NODES= osk-gpu[54,56,91]'
++ mkdir -p logs logs/tb
++ source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ '[' -z x ']'
++ conda activate deepseeksft310
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate deepseeksft310
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate deepseeksft310
+++ '[' -n '' ']'
+++ /home/Competition2025/P02/P02U006/miniconda3/bin/conda shell.posix activate deepseeksft310
++ ask_conda='unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
++ eval 'unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
+++ unset _CE_M
+++ unset _CE_CONDA
+++ PS1='(deepseeksft310) '
+++ export PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ export CONDA_SHLVL=1
+++ CONDA_SHLVL=1
+++ export 'CONDA_PROMPT_MODIFIER=(deepseeksft310) '
+++ CONDA_PROMPT_MODIFIER='(deepseeksft310) '
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ export FLASH_ATTENTION_DISABLE=1
++ FLASH_ATTENTION_DISABLE=1
++ export HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
++ HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
++ echo FLASH_ATTENTION_DISABLE=1
++ echo HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
+++ head -n1 /home/Competition2025/P02/P02U006/ColossalAI/hostfile
++ export MASTER_ADDR=osk-gpu54
++ MASTER_ADDR=osk-gpu54
++ export MASTER_PORT=24591
++ MASTER_PORT=24591
++ echo 'MASTER_ADDR=osk-gpu54  MASTER_PORT=24591'
++ export NCCL_DEBUG=INFO
++ NCCL_DEBUG=INFO
++ export NCCL_ASYNC_ERROR_HANDLING=1
++ NCCL_ASYNC_ERROR_HANDLING=1
++ srun -N1 -w osk-gpu54 --ntasks=1 bash -lc '
+  set -e
+  source ~/miniconda3/etc/profile.d/conda.sh
+  conda activate deepseeksft310
+  echo '\''on master:'\'' $(hostname)
+  which colossalai || true
+  which python || true
+  which torchrun || trye
+
+  colossalai run 	--hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile 	--master_addr osk-gpu54         --master_port 24591         --nproc_per_node 8         /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py             --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16             --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl             --plugin moe             --pp 3 --ep 8             --batch_size 8             --lr 2e-5             --max_length 256             --lora_rank 8 --lora_alpha 16             --num_epochs 2 --warmup_steps 8             --mixed_precision bf16             --use_grad_checkpoint             --tensorboard_dir logs/tb             --save_dir DeepSeek-R1-0528-lora
+'
+W0726 20:20:09.000000 3802895 torch/distributed/run.py:766] 
+W0726 20:20:09.000000 3802895 torch/distributed/run.py:766] *****************************************
+W0726 20:20:09.000000 3802895 torch/distributed/run.py:766] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0726 20:20:09.000000 3802895 torch/distributed/run.py:766] *****************************************
+W0726 20:20:10.067000 962546 torch/distributed/run.py:766] 
+W0726 20:20:10.067000 962546 torch/distributed/run.py:766] *****************************************
+W0726 20:20:10.067000 962546 torch/distributed/run.py:766] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0726 20:20:10.067000 962546 torch/distributed/run.py:766] *****************************************
+W0726 20:20:10.341000 3553722 torch/distributed/run.py:766] 
+W0726 20:20:10.341000 3553722 torch/distributed/run.py:766] *****************************************
+W0726 20:20:10.341000 3553722 torch/distributed/run.py:766] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0726 20:20:10.341000 3553722 torch/distributed/run.py:766] *****************************************
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+        from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from .loader import (
+    from .loader import (  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    import jsonlines
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+ModuleNotFoundError: No module named 'jsonlines'    
+import jsonlines
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+    ModuleNotFoundErrorimport jsonlines
+: No module named 'jsonlines'
+ModuleNotFoundError: No module named 'jsonlines'    
+import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+    from coati.dataset.loader import RawConversationDataset
+    from coati.dataset.loader import RawConversationDataset
+      File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset    
+from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+            from .loader import (from .loader import (    
+
+from .loader import (from .loader import (
+
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+        import jsonlinesimport jsonlines
+    
+import jsonlines
+    from .loader import (
+ModuleNotFoundErrorModuleNotFoundError  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+: No module named 'jsonlines'
+ModuleNotFoundError: No module named 'jsonlines'
+: No module named 'jsonlines'
+    import jsonlines
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+ModuleNotFoundError: No module named 'jsonlines'
+    import jsonlines
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+ModuleNotFoundError: No module named 'jsonlines'
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+E0726 20:20:22.371000 962546 torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: 1) local_rank: 0 (pid: 962659) of binary: /home/Competition2025/P02/P02U006/llm2025compet/.venv/bin/python
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/bin/torchrun", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/run.py", line 892, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/run.py", line 883, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 139, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 270, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu91
+  rank      : 17 (local_rank: 1)
+  exitcode  : 1 (pid: 962660)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu91
+  rank      : 18 (local_rank: 2)
+  exitcode  : 1 (pid: 962661)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu91
+  rank      : 19 (local_rank: 3)
+  exitcode  : 1 (pid: 962662)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[4]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu91
+  rank      : 20 (local_rank: 4)
+  exitcode  : 1 (pid: 962663)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[5]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu91
+  rank      : 21 (local_rank: 5)
+  exitcode  : 1 (pid: 962664)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[6]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu91
+  rank      : 22 (local_rank: 6)
+  exitcode  : 1 (pid: 962665)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[7]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu91
+  rank      : 23 (local_rank: 7)
+  exitcode  : 1 (pid: 962666)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu91
+  rank      : 16 (local_rank: 0)
+  exitcode  : 1 (pid: 962659)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+E0726 20:20:22.871000 3553722 torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: 1) local_rank: 0 (pid: 3553836) of binary: /home/Competition2025/P02/P02U006/llm2025compet/.venv/bin/python
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/bin/torchrun", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/run.py", line 892, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/run.py", line 883, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 139, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 270, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu56
+  rank      : 9 (local_rank: 1)
+  exitcode  : 1 (pid: 3553837)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu56
+  rank      : 10 (local_rank: 2)
+  exitcode  : 1 (pid: 3553838)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu56
+  rank      : 11 (local_rank: 3)
+  exitcode  : 1 (pid: 3553839)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[4]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu56
+  rank      : 12 (local_rank: 4)
+  exitcode  : 1 (pid: 3553840)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[5]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu56
+  rank      : 13 (local_rank: 5)
+  exitcode  : 1 (pid: 3553841)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[6]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu56
+  rank      : 14 (local_rank: 6)
+  exitcode  : 1 (pid: 3553842)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[7]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu56
+  rank      : 15 (local_rank: 7)
+  exitcode  : 1 (pid: 3553843)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-26_20:20:22
+  host      : osk-gpu56
+  rank      : 8 (local_rank: 0)
+  exitcode  : 1 (pid: 3553836)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+        from coati.dataset.loader import RawConversationDataset
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+from coati.dataset.loader import RawConversationDataset
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+Traceback (most recent call last):
+        from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+            from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+import jsonlines
+import jsonlinesModuleNotFoundError
+ModuleNotFoundError: : No module named 'jsonlines'No module named 'jsonlines'
+
+    from coati.dataset.loader import RawConversationDataset  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from coati.dataset.loader import RawConversationDataset
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/__init__.py", line 2, in <module>
+    from .loader import (    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    from .loader import (
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 11, in <module>
+    import jsonlines    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+
+ModuleNotFoundError: No module named 'jsonlines'
+    import jsonlines
+ModuleNotFoundError: No module named 'jsonlines'
+W0726 20:20:39.865000 3802895 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 3802923 closing signal SIGTERM
+W0726 20:20:39.866000 3802895 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 3802924 closing signal SIGTERM
+W0726 20:20:39.867000 3802895 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 3802925 closing signal SIGTERM
+W0726 20:20:39.868000 3802895 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 3802926 closing signal SIGTERM
+W0726 20:20:39.869000 3802895 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 3802927 closing signal SIGTERM
+W0726 20:20:39.870000 3802895 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 3802928 closing signal SIGTERM
+W0726 20:20:39.871000 3802895 torch/distributed/elastic/multiprocessing/api.py:900] Sending process 3802929 closing signal SIGTERM
+E0726 20:20:39.986000 3802895 torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: 1) local_rank: 0 (pid: 3802922) of binary: /home/Competition2025/P02/P02U006/llm2025compet/.venv/bin/python
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/bin/torchrun", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/run.py", line 892, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/run.py", line 883, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 139, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/.venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 270, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-26_20:20:39
+  host      : osk-gpu54
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3802922)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: osk-gpu54: task 0: Exited with exit code 1

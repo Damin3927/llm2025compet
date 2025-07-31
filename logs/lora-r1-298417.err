@@ -1,0 +1,144 @@
+++ date
++ echo '===== ジョブ開始: Mon Jul 28 12:29:40 PM JST 2025 ====='
+++ pwd
++ echo 'cwd  = /home/Competition2025/P02/P02U006/ColossalAI'
+++ hostname
++ echo 'host = osk-gpu54'
++ echo 'JOB  = 298417'
++ echo 'NODES= osk-gpu[54,56,91]'
++ mkdir -p logs logs/tb
++ source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ '[' -z x ']'
++ conda activate deepseeksft310
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate deepseeksft310
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate deepseeksft310
+++ '[' -n '' ']'
+++ /home/Competition2025/P02/P02U006/miniconda3/bin/conda shell.posix activate deepseeksft310
++ ask_conda='. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/~cuda-nvcc_deactivate.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/libglib_deactivate.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/deactivate-gxx_linux-64.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/deactivate-gcc_linux-64.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/deactivate-binutils_linux-64.sh"
+unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\''
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/activate.d/activate-binutils_linux-64.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/activate.d/activate-gcc_linux-64.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/activate.d/activate-gxx_linux-64.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/activate.d/libglib_activate.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/activate.d/~cuda-nvcc_activate.sh"'
++ eval '. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/~cuda-nvcc_deactivate.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/libglib_deactivate.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/deactivate-gxx_linux-64.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/deactivate-gcc_linux-64.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/deactivate-binutils_linux-64.sh"
+unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\''
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/activate.d/activate-binutils_linux-64.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/activate.d/activate-gcc_linux-64.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/activate.d/activate-gxx_linux-64.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/activate.d/libglib_activate.sh"
+. "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/activate.d/~cuda-nvcc_activate.sh"'
+++ . /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/~cuda-nvcc_deactivate.sh
++++ [[ ! -z x ]]
++++ export 'NVCC_PREPEND_FLAGS= -ccbin=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++'
++++ NVCC_PREPEND_FLAGS=' -ccbin=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++'
++++ unset NVCC_PREPEND_FLAGS_BACKUP
++++ [[ ! -z '' ]]
+++ . /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/libglib_deactivate.sh
++++ export GSETTINGS_SCHEMA_DIR=
++++ GSETTINGS_SCHEMA_DIR=
++++ unset GSETTINGS_SCHEMA_DIR_CONDA_BACKUP
++++ '[' -z ']'
++++ unset GSETTINGS_SCHEMA_DIR
+++ . /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/deactivate-gxx_linux-64.sh
++++ '[' 0 = 1 ']'
++++ CXXFLAGS_USED='-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include'
++++ DEBUG_CXXFLAGS_USED='-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include'
++++ '[' 0 = 1 ']'
++++ _tc_activation deactivate x86_64-conda-linux-gnu- c++ g++ 'CXXFLAGS,-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include  -I/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include' 'DEBUG_CXXFLAGS,-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include' CXX_FOR_BUILD,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++
++++ local act_nature=deactivate
++++ shift
++++ local tc_prefix=x86_64-conda-linux-gnu-
++++ shift
++++ local thing
++++ local newval
++++ local from
++++ local to
++++ local pass
++++ '[' deactivate = activate ']'
++++ from=CONDA_BACKUP_
++++ to=
++++ for pass in check apply
++++ for thing in "$@"
++++ case "${thing}" in
++++ newval=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++
++++ '[' '!' -x /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++ -a check = check ']'
++++ '[' check = apply ']'
++++ for thing in "$@"
++++ case "${thing}" in
++++ newval=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-g++
++++ '[' '!' -x /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-g++ -a check = check ']'
++++ '[' check = apply ']'
++++ for thing in "$@"
++++ case "${thing}" in
+++++ echo 'CXXFLAGS,-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include  -I/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include'
+++++ sed 's,^[^\,]*\,\(.*\),\1,'
++++ newval='-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include  -I/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include'
+++++ echo 'CXXFLAGS,-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include  -I/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include'
+++++ sed 's,^\([^\,]*\)\,.*,\1,'
++++ thing=CXXFLAGS
++++ '[' check = apply ']'
++++ for thing in "$@"
++++ case "${thing}" in
+++++ echo 'DEBUG_CXXFLAGS,-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include'
+++++ sed 's,^[^\,]*\,\(.*\),\1,'
++++ newval='-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include'
+++++ echo 'DEBUG_CXXFLAGS,-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include'
+++++ sed 's,^\([^\,]*\)\,.*,\1,'
++++ thing=DEBUG_CXXFLAGS
++++ '[' check = apply ']'
++++ for thing in "$@"
++++ case "${thing}" in
+++++ echo CXX_FOR_BUILD,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++
+++++ sed 's,^[^\,]*\,\(.*\),\1,'
++++ newval=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++
+++++ echo CXX_FOR_BUILD,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++
+++++ sed 's,^\([^\,]*\)\,.*,\1,'
++++ thing=CXX_FOR_BUILD
++++ '[' check = apply ']'
++++ for pass in check apply
++++ for thing in "$@"
++++ case "${thing}" in
++++ newval=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++
++++ '[' '!' -x /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-c++ -a apply = check ']'
++++ '[' apply = apply ']'
+++++ echo c++
+++++ tr a-z+- A-ZX_
++++ thing=CXX
++++ eval 'oldval=$CONDA_BACKUP_CXX'
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/etc/conda/deactivate.d/deactivate-gxx_linux-64.sh: line 65: CONDA_BACKUP_CXX: unbound variable

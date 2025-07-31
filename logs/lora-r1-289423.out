@@ -1,0 +1,172 @@
+===== ジョブ開始: Fri Jul 25 08:15:13 PM JST 2025 =====
+cwd  = /home/Competition2025/P02/P02U006/ColossalAI
+host = osk-gpu54
+JOB  = 289423
+NODES= osk-gpu[54,56,91]
+FLASH_ATTENTION_DISABLE=1
+HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from sourceplease install Colossal-AI from https://www.colossalai.org/download or from source
+
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ======== ColossalAI SFT script: train() Start ====
+
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+[07/25/25 20:15:55] INFO     colossalai - colossalai - INFO:                    
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/initialize.py:75 launch                       
+                    INFO     colossalai - colossalai - INFO: Distributed        
+                             environment is initialized, world size: 8          
+[DEBUG] is_master=True  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] Creating tensorboard dir: logs/tb
+[DEBUG] Tensorboard SummaryWriter created
+[DEBUG] Saving config to training_config.json
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====[07/25/25 20:15:56] INFO     colossalai - colossalai - INFO:                    
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/initialize.py:75 launch                       
+                    INFO     colossalai - colossalai - INFO: Distributed        
+                             environment is initialized, world size: 8          
+[DEBUG] is_master=True  tensorboard_dir=logs/tb
+
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+==== ColossalAI SFT script: train() Start ======== ColossalAI SFT script: train() Start ====
+
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=logs/tb[DEBUG] Creating tensorboard dir: logs/tb
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Tensorboard SummaryWriter created
+[DEBUG] Saving config to training_config.json
+==== ColossalAI SFT script: train() Start ====
+[07/25/25 20:15:58] INFO     colossalai - colossalai - INFO:                    
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/initialize.py:75 launch                       
+                    INFO     colossalai - colossalai - INFO: Distributed        
+                             environment is initialized, world size: 8          
+[DEBUG] is_master=True  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] is_master=False  tensorboard_dir=logs/tb
+[DEBUG] Creating tensorboard dir: logs/tb
+[DEBUG] Tensorboard SummaryWriter created
+[DEBUG] Saving config to training_config.json
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+Training Info:
+Config file: training_config.json 
+Tensorboard logs: logs/tb 
+Model checkpoint: DeepSeek-R1-0528-lora
+Load dataset: /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+Max device memory after data loader: 0.00 MB
+dataset size: 2160dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+Training Info:
+Config file: training_config.json 
+Tensorboard logs: logs/tb 
+Model checkpoint: DeepSeek-R1-0528-lora
+Load dataset: /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+Max device memory after data loader: 0.00 MB
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+Training Info:
+Config file: training_config.json 
+Tensorboard logs: logs/tb 
+Model checkpoint: DeepSeek-R1-0528-lora
+Load dataset: /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl
+dataset size: 2160
+dataloader batch_size: 24, total batches: 11
+Max device memory after data loader: 0.00 MB

@@ -1,0 +1,728 @@
+++ date
++ echo '===== ジョブ開始: Wed Jul 23 06:42:50 PM JST 2025 ====='
+++ pwd
++ echo 'cwd  = /home/Competition2025/P02/P02U006/ColossalAI'
+++ hostname
++ echo 'host = osk-gpu54'
++ echo 'JOB  = 283074'
++ echo 'NODES= osk-gpu[54-56]'
++ source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ '[' -z x ']'
++ conda activate deepseeksft310
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate deepseeksft310
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate deepseeksft310
+++ '[' -n '' ']'
+++ /home/Competition2025/P02/P02U006/miniconda3/bin/conda shell.posix activate deepseeksft310
++ ask_conda='unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
++ eval 'unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
+++ unset _CE_M
+++ unset _CE_CONDA
+++ PS1='(deepseeksft310) '
+++ export PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ export CONDA_SHLVL=1
+++ CONDA_SHLVL=1
+++ export 'CONDA_PROMPT_MODIFIER=(deepseeksft310) '
+++ CONDA_PROMPT_MODIFIER='(deepseeksft310) '
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ export MASTER_PORT=15074
++ MASTER_PORT=15074
++ srun colossalai run --master_port 15074 --nproc_per_node 8 /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 --dataset /home/Competition2025/P02/shareP02/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_sft_data.jsonl --plugin gemini --pp 3 --ep 8 --batch_size 24 --lr 2e-5 --max_length 256 --lora_rank 8 --lora_alpha 16 --num_epochs 2 --warmup_steps 100 --mixed_precision bf16 --use_grad_checkpoint --tensorboard_dir logs/tb --save_dir DeepSeek-R1-0528-lora
+W0723 18:43:00.424000 22751453615168 torch/distributed/run.py:779] 
+W0723 18:43:00.424000 22751453615168 torch/distributed/run.py:779] *****************************************
+W0723 18:43:00.424000 22751453615168 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0723 18:43:00.424000 22751453615168 torch/distributed/run.py:779] *****************************************
+W0723 18:43:00.424000 22572569707584 torch/distributed/run.py:779] 
+W0723 18:43:00.424000 22572569707584 torch/distributed/run.py:779] *****************************************
+W0723 18:43:00.424000 22572569707584 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0723 18:43:00.424000 22572569707584 torch/distributed/run.py:779] *****************************************
+W0723 18:43:00.424000 22420370302016 torch/distributed/run.py:779] 
+W0723 18:43:00.424000 22420370302016 torch/distributed/run.py:779] *****************************************
+W0723 18:43:00.424000 22420370302016 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0723 18:43:00.424000 22420370302016 torch/distributed/run.py:779] *****************************************
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers and GPU quantization are unavailable.
+The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers and GPU quantization are unavailable.
+The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers and GPU quantization are unavailable.
+The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers and GPU quantization are unavailable.
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank0]:     train(args)
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 138, in train
+[rank0]:     from torch.utils.tensorboard import SummaryWriter
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/tensorboard/__init__.py", line 1, in <module>
+[rank0]:     import tensorboard
+[rank0]: ModuleNotFoundError: No module named 'tensorboard'
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank0]:     train(args)
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 138, in train
+[rank0]:     from torch.utils.tensorboard import SummaryWriter
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/tensorboard/__init__.py", line 1, in <module>
+[rank0]:     import tensorboard
+[rank0]: ModuleNotFoundError: No module named 'tensorboard'
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank4]:     train(args)
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank4]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank4]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank4]:     return cls._from_pretrained(
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank4]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank4]:     super().__init__(
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank4]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank4]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank7]:     train(args)
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank7]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank7]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank7]:     return cls._from_pretrained(
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank7]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank7]:     super().__init__(
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank7]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank7]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank3]:     train(args)
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank3]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank3]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank3]:     return cls._from_pretrained(
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank3]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank3]:     super().__init__(
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank3]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank3]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank4]:     train(args)
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank4]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank4]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank4]:     return cls._from_pretrained(
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank4]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank4]:     super().__init__(
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank4]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank4]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank5]:     train(args)
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank5]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank5]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank5]:     return cls._from_pretrained(
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank5]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank5]:     super().__init__(
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank5]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank5]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank1]:     train(args)
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank1]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank1]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank1]:     return cls._from_pretrained(
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank1]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank1]:     super().__init__(
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank1]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank1]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank6]:     train(args)
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank6]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank6]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank6]:     return cls._from_pretrained(
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank6]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank6]:     super().__init__(
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank6]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank6]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank3]:     train(args)
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank3]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank3]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank3]:     return cls._from_pretrained(
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank3]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank3]:     super().__init__(
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank3]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank3]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank1]:     train(args)
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank1]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank1]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank1]:     return cls._from_pretrained(
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank1]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank1]:     super().__init__(
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank1]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank1]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank2]:     train(args)
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank2]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank2]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank2]:     return cls._from_pretrained(
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank2]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank2]:     super().__init__(
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank2]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank2]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank2]:     train(args)
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank2]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank2]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank2]:     return cls._from_pretrained(
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank2]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank2]:     super().__init__(
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank2]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank2]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank5]:     train(args)
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank5]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank5]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank5]:     return cls._from_pretrained(
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank5]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank5]:     super().__init__(
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank5]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank5]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank7]:     train(args)
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank7]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank7]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank7]:     return cls._from_pretrained(
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank7]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank7]:     super().__init__(
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank7]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank7]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank6]:     train(args)
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank6]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank6]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank6]:     return cls._from_pretrained(
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank6]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank6]:     super().__init__(
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank6]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank6]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers and GPU quantization are unavailable.
+The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers and GPU quantization are unavailable.
+[rank0]:[W723 18:43:45.583773471 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+[rank0]:[W723 18:43:45.012490417 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers and GPU quantization are unavailable.
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+W0723 18:43:50.074000 22751453615168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3270771 closing signal SIGTERM
+W0723 18:43:50.074000 22751453615168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3270772 closing signal SIGTERM
+W0723 18:43:50.074000 22751453615168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3270773 closing signal SIGTERM
+W0723 18:43:50.074000 22751453615168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3270774 closing signal SIGTERM
+W0723 18:43:50.074000 22751453615168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3270775 closing signal SIGTERM
+W0723 18:43:50.074000 22751453615168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3270776 closing signal SIGTERM
+W0723 18:43:50.074000 22751453615168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3270777 closing signal SIGTERM
+W0723 18:43:50.122000 22420370302016 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3082269 closing signal SIGTERM
+W0723 18:43:50.122000 22420370302016 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3082270 closing signal SIGTERM
+W0723 18:43:50.122000 22420370302016 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3082271 closing signal SIGTERM
+W0723 18:43:50.122000 22420370302016 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3082272 closing signal SIGTERM
+W0723 18:43:50.122000 22420370302016 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3082273 closing signal SIGTERM
+W0723 18:43:50.122000 22420370302016 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3082274 closing signal SIGTERM
+W0723 18:43:50.123000 22420370302016 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3082275 closing signal SIGTERM
+E0723 18:43:50.591000 22751453615168 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 3270770) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-23_18:43:50
+  host      : osk-gpu54
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3270770)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+E0723 18:43:50.657000 22420370302016 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 3082268) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-23_18:43:50
+  host      : osk-gpu56
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3082268)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers and GPU quantization are unavailable.
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+srun: error: osk-gpu54: task 0: Exited with exit code 1
+srun: error: osk-gpu56: task 2: Exited with exit code 1
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/cuda/__init__.py:654: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank0]:     train(args)
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 138, in train
+[rank0]:     from torch.utils.tensorboard import SummaryWriter
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/tensorboard/__init__.py", line 1, in <module>
+[rank0]:     import tensorboard
+[rank0]: ModuleNotFoundError: No module named 'tensorboard'
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank7]:     train(args)
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank7]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank7]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank7]:     return cls._from_pretrained(
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank7]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank7]:     super().__init__(
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank7]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank7]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank6]:     train(args)
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank6]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank6]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank6]:     return cls._from_pretrained(
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank6]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank6]:     super().__init__(
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank6]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank6]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank5]:     train(args)
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank5]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank5]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank5]:     return cls._from_pretrained(
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank5]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank5]:     super().__init__(
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank5]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank5]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank3]:     train(args)
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank3]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank3]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank3]:     return cls._from_pretrained(
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank3]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank3]:     super().__init__(
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank3]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank3]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank4]:     train(args)
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank4]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank4]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank4]:     return cls._from_pretrained(
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank4]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank4]:     super().__init__(
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank4]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank4]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank2]:     train(args)
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank2]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank2]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank2]:     return cls._from_pretrained(
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank2]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank2]:     super().__init__(
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank2]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank2]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 455, in <module>
+[rank1]:     train(args)
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 149, in train
+[rank1]:     tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 837, in from_pretrained
+[rank1]:     return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2086, in from_pretrained
+[rank1]:     return cls._from_pretrained(
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2325, in _from_pretrained
+[rank1]:     tokenizer = cls(*init_inputs, **init_kwargs)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama_fast.py", line 133, in __init__
+[rank1]:     super().__init__(
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 111, in __init__
+[rank1]:     fast_tokenizer = TokenizerFast.from_file(fast_tokenizer_file)
+[rank1]: Exception: data did not match any variant of untagged enum ModelWrapper at line 646445 column 3
+W0723 18:45:14.256000 22572569707584 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3199960 closing signal SIGTERM
+W0723 18:45:14.256000 22572569707584 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3199961 closing signal SIGTERM
+W0723 18:45:14.256000 22572569707584 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3199962 closing signal SIGTERM
+W0723 18:45:14.257000 22572569707584 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3199963 closing signal SIGTERM
+W0723 18:45:14.257000 22572569707584 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3199964 closing signal SIGTERM
+W0723 18:45:14.257000 22572569707584 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3199965 closing signal SIGTERM
+W0723 18:45:14.257000 22572569707584 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3199966 closing signal SIGTERM
+E0723 18:45:14.520000 22572569707584 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 3199959) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-23_18:45:14
+  host      : osk-gpu55
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3199959)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: osk-gpu55: task 1: Exited with exit code 1

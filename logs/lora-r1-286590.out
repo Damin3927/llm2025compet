@@ -1,0 +1,20 @@
+===== ジョブ開始: Thu Jul 24 08:57:50 PM JST 2025 =====
+cwd  = /home/Competition2025/P02/P02U006/ColossalAI
+host = osk-gpu54
+JOB  = 286590
+NODES= osk-gpu54
+FLASH_ATTENTION_DISABLE=1
+HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+[07/24/25 20:58:00] INFO     colossalai - colossalai - INFO:                    
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/initialize.py:75 launch                       
+                    INFO     colossalai - colossalai - INFO: Distributed        
+                             environment is initialized, world size: 1          
+Training Info:
+Config file: training_config.json 
+Tensorboard logs: logs/tb 
+Model checkpoint: DeepSeek-R1-0528-lora
+Load dataset: /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_sft_data.jsonl
+Max device memory after data loader: 0.00 MB

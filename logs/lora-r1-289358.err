@@ -1,0 +1,965 @@
+++ date
++ echo '===== ジョブ開始: Fri Jul 25 07:38:15 PM JST 2025 ====='
+++ pwd
++ echo 'cwd  = /home/Competition2025/P02/P02U006/ColossalAI'
+++ hostname
++ echo 'host = osk-gpu54'
++ echo 'JOB  = 289358'
++ echo 'NODES= osk-gpu[54,56,91]'
++ source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ '[' -z x ']'
++ conda activate deepseeksft310
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate deepseeksft310
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate deepseeksft310
+++ '[' -n '' ']'
+++ /home/Competition2025/P02/P02U006/miniconda3/bin/conda shell.posix activate deepseeksft310
++ ask_conda='unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
++ eval 'unset _CE_M
+unset _CE_CONDA
+PS1='\''(deepseeksft310) '\''
+export PATH='\''/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_PROMPT_MODIFIER='\''(deepseeksft310) '\''
+export CONDA_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/python'\'''
+++ unset _CE_M
+++ unset _CE_CONDA
+++ PS1='(deepseeksft310) '
+++ export PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ export CONDA_SHLVL=1
+++ CONDA_SHLVL=1
+++ export 'CONDA_PROMPT_MODIFIER=(deepseeksft310) '
+++ CONDA_PROMPT_MODIFIER='(deepseeksft310) '
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ export FLASH_ATTENTION_DISABLE=1
++ FLASH_ATTENTION_DISABLE=1
++ export HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
++ HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
++ echo FLASH_ATTENTION_DISABLE=1
++ echo HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
++ export MASTER_PORT=21358
++ MASTER_PORT=21358
++ srun colossalai run --master_port 21358 --nproc_per_node 8 /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 --dataset /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_sft_data.jsonl --plugin zero2 --pp 3 --ep 8 --batch_size 24 --lr 2e-5 --max_length 256 --lora_rank 8 --lora_alpha 16 --num_epochs 2 --warmup_steps 100 --mixed_precision bf16 --use_grad_checkpoint --tensorboard_dir logs/tb --save_dir DeepSeek-R1-0528-lora
+W0725 19:38:21.657000 23192194257984 torch/distributed/run.py:779] 
+W0725 19:38:21.657000 23192194257984 torch/distributed/run.py:779] *****************************************
+W0725 19:38:21.657000 23192194257984 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0725 19:38:21.657000 23192194257984 torch/distributed/run.py:779] *****************************************
+W0725 19:38:22.805000 22375795409984 torch/distributed/run.py:779] 
+W0725 19:38:22.805000 22375795409984 torch/distributed/run.py:779] *****************************************
+W0725 19:38:22.805000 22375795409984 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0725 19:38:22.805000 22375795409984 torch/distributed/run.py:779] *****************************************
+W0725 19:38:26.460000 22970329355328 torch/distributed/run.py:779] 
+W0725 19:38:26.460000 22970329355328 torch/distributed/run.py:779] *****************************************
+W0725 19:38:26.460000 22970329355328 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0725 19:38:26.460000 22970329355328 torch/distributed/run.py:779] *****************************************
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank1]:     value: JSONValue = self._loads(line)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank1]:     return _default_decoder.decode(s)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank1]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank1]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank1]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank1]: The above exception was the direct cause of the following exception:
+
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank1]:     train(args)
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank1]:     dataset = RawConversationDataset(
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank1]:     for line in f:
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank1]:     yield self.read(
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank1]:     raise exc from orig_exc
+[rank1]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank2]:     value: JSONValue = self._loads(line)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank2]:     return _default_decoder.decode(s)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank2]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank2]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank2]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank2]: The above exception was the direct cause of the following exception:
+
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank2]:     train(args)
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank2]:     dataset = RawConversationDataset(
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank2]:     for line in f:
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank2]:     yield self.read(
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank2]:     raise exc from orig_exc
+[rank2]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank6]:     value: JSONValue = self._loads(line)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank6]:     return _default_decoder.decode(s)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank6]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank6]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank6]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank6]: The above exception was the direct cause of the following exception:
+
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank6]:     train(args)
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank6]:     dataset = RawConversationDataset(
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank6]:     for line in f:
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank6]:     yield self.read(
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank6]:     raise exc from orig_exc
+[rank6]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank3]:     value: JSONValue = self._loads(line)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank3]:     return _default_decoder.decode(s)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank3]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank3]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank3]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank3]: The above exception was the direct cause of the following exception:
+
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank3]:     train(args)
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank3]:     dataset = RawConversationDataset(
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank3]:     for line in f:
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank3]:     yield self.read(
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank3]:     raise exc from orig_exc
+[rank3]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank5]:     value: JSONValue = self._loads(line)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank5]:     return _default_decoder.decode(s)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank5]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank5]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank5]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank5]: The above exception was the direct cause of the following exception:
+
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank5]:     train(args)
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank5]:     dataset = RawConversationDataset(
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank5]:     for line in f:
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank5]:     yield self.read(
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank5]:     raise exc from orig_exc
+[rank5]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank4]:     value: JSONValue = self._loads(line)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank4]:     return _default_decoder.decode(s)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank4]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank4]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank4]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank4]: The above exception was the direct cause of the following exception:
+
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank4]:     train(args)
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank4]:     dataset = RawConversationDataset(
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank4]:     for line in f:
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank4]:     yield self.read(
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank4]:     raise exc from orig_exc
+[rank4]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank7]:     value: JSONValue = self._loads(line)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank7]:     return _default_decoder.decode(s)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank7]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank7]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank7]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank7]: The above exception was the direct cause of the following exception:
+
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank7]:     train(args)
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank7]:     dataset = RawConversationDataset(
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank7]:     for line in f:
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank7]:     yield self.read(
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank7]:     raise exc from orig_exc
+[rank7]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank0]:     value: JSONValue = self._loads(line)
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank0]:     return _default_decoder.decode(s)
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank0]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank0]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank0]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank0]: The above exception was the direct cause of the following exception:
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank0]:     train(args)
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank0]:     dataset = RawConversationDataset(
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank0]:     for line in f:
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank0]:     yield self.read(
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank0]:     raise exc from orig_exc
+[rank0]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank2]:     value: JSONValue = self._loads(line)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank2]:     return _default_decoder.decode(s)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank2]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank2]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank2]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank2]: The above exception was the direct cause of the following exception:
+
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank2]:     train(args)
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank2]:     dataset = RawConversationDataset(
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank2]:     for line in f:
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank2]:     yield self.read(
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank2]:     raise exc from orig_exc
+[rank2]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank7]:     value: JSONValue = self._loads(line)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank7]:     return _default_decoder.decode(s)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank7]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank7]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank7]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank7]: The above exception was the direct cause of the following exception:
+
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank7]:     train(args)
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank7]:     dataset = RawConversationDataset(
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank7]:     for line in f:
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank7]:     yield self.read(
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank7]:     raise exc from orig_exc
+[rank7]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank6]:     value: JSONValue = self._loads(line)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank6]:     return _default_decoder.decode(s)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank6]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank6]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank6]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank6]: The above exception was the direct cause of the following exception:
+
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank6]:     train(args)
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank6]:     dataset = RawConversationDataset(
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank6]:     for line in f:
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank6]:     yield self.read(
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank6]:     raise exc from orig_exc
+[rank6]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank3]:     value: JSONValue = self._loads(line)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank3]:     return _default_decoder.decode(s)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank3]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank3]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank3]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank3]: The above exception was the direct cause of the following exception:
+
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank3]:     train(args)
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank3]:     dataset = RawConversationDataset(
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank3]:     for line in f:
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank3]:     yield self.read(
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank3]:     raise exc from orig_exc
+[rank3]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank5]:     value: JSONValue = self._loads(line)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank5]:     return _default_decoder.decode(s)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank5]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank5]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank5]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank5]: The above exception was the direct cause of the following exception:
+
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank5]:     train(args)
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank5]:     dataset = RawConversationDataset(
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank5]:     for line in f:
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank5]:     yield self.read(
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank5]:     raise exc from orig_exc
+[rank5]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank1]:     value: JSONValue = self._loads(line)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank1]:     return _default_decoder.decode(s)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank1]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank1]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank1]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank1]: The above exception was the direct cause of the following exception:
+
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank1]:     train(args)
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank1]:     dataset = RawConversationDataset(
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank1]:     for line in f:
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank1]:     yield self.read(
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank1]:     raise exc from orig_exc
+[rank1]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank4]:     value: JSONValue = self._loads(line)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank4]:     return _default_decoder.decode(s)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank4]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank4]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank4]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank4]: The above exception was the direct cause of the following exception:
+
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank4]:     train(args)
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank4]:     dataset = RawConversationDataset(
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank4]:     for line in f:
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank4]:     yield self.read(
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank4]:     raise exc from orig_exc
+[rank4]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank0]:     value: JSONValue = self._loads(line)
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank0]:     return _default_decoder.decode(s)
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank0]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank0]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank0]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank0]: The above exception was the direct cause of the following exception:
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank0]:     train(args)
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank0]:     dataset = RawConversationDataset(
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank0]:     for line in f:
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank0]:     yield self.read(
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank0]:     raise exc from orig_exc
+[rank0]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+[rank0]:[W725 19:39:07.017863593 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+[rank0]:[W725 19:39:08.974918684 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank7]:     value: JSONValue = self._loads(line)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank7]:     return _default_decoder.decode(s)
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank7]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank7]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank7]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank7]: The above exception was the direct cause of the following exception:
+
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank7]:     train(args)
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank7]:     dataset = RawConversationDataset(
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank7]:     for line in f:
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank7]:     yield self.read(
+[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank7]:     raise exc from orig_exc
+[rank7]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank1]:     value: JSONValue = self._loads(line)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank1]:     return _default_decoder.decode(s)
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank1]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank1]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank1]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank1]: The above exception was the direct cause of the following exception:
+
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank1]:     train(args)
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank1]:     dataset = RawConversationDataset(
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank1]:     for line in f:
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank1]:     yield self.read(
+[rank1]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank1]:     raise exc from orig_exc
+[rank1]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank6]:     value: JSONValue = self._loads(line)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank6]:     return _default_decoder.decode(s)
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank6]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank6]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank6]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank6]: The above exception was the direct cause of the following exception:
+
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank6]:     train(args)
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank6]:     dataset = RawConversationDataset(
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank6]:     for line in f:
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank6]:     yield self.read(
+[rank6]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank6]:     raise exc from orig_exc
+[rank6]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank3]:     value: JSONValue = self._loads(line)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank3]:     return _default_decoder.decode(s)
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank3]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank3]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank3]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank3]: The above exception was the direct cause of the following exception:
+
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank3]:     train(args)
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank3]:     dataset = RawConversationDataset(
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank3]:     for line in f:
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank3]:     yield self.read(
+[rank3]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank3]:     raise exc from orig_exc
+[rank3]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank5]:     value: JSONValue = self._loads(line)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank5]:     return _default_decoder.decode(s)
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank5]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank5]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank5]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank5]: The above exception was the direct cause of the following exception:
+
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank5]:     train(args)
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank5]:     dataset = RawConversationDataset(
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank5]:     for line in f:
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank5]:     yield self.read(
+[rank5]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank5]:     raise exc from orig_exc
+[rank5]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank4]:     value: JSONValue = self._loads(line)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank4]:     return _default_decoder.decode(s)
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank4]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank4]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank4]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank4]: The above exception was the direct cause of the following exception:
+
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank4]:     train(args)
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank4]:     dataset = RawConversationDataset(
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank4]:     for line in f:
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank4]:     yield self.read(
+[rank4]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank4]:     raise exc from orig_exc
+[rank4]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank2]:     value: JSONValue = self._loads(line)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank2]:     return _default_decoder.decode(s)
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank2]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank2]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank2]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank2]: The above exception was the direct cause of the following exception:
+
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank2]:     train(args)
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank2]:     dataset = RawConversationDataset(
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank2]:     for line in f:
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank2]:     yield self.read(
+[rank2]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank2]:     raise exc from orig_exc
+[rank2]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 326, in read
+[rank0]:     value: JSONValue = self._loads(line)
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/__init__.py", line 346, in loads
+[rank0]:     return _default_decoder.decode(s)
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 337, in decode
+[rank0]:     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/json/decoder.py", line 355, in raw_decode
+[rank0]:     raise JSONDecodeError("Expecting value", s, err.value) from None
+[rank0]: json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+[rank0]: The above exception was the direct cause of the following exception:
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 479, in <module>
+[rank0]:     train(args)
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 162, in train
+[rank0]:     dataset = RawConversationDataset(
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/coati/dataset/loader.py", line 409, in __init__
+[rank0]:     for line in f:
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 434, in iter
+[rank0]:     yield self.read(
+[rank0]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/jsonlines/jsonlines.py", line 331, in read
+[rank0]:     raise exc from orig_exc
+[rank0]: jsonlines.jsonlines.InvalidLineError: line contains invalid json: Expecting value: line 2 column 1 (char 1) (line 1022)
+W0725 19:39:10.935000 23192194257984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 792341 closing signal SIGTERM
+W0725 19:39:10.935000 23192194257984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 792343 closing signal SIGTERM
+W0725 19:39:10.935000 23192194257984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 792344 closing signal SIGTERM
+W0725 19:39:10.935000 23192194257984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 792345 closing signal SIGTERM
+W0725 19:39:10.936000 23192194257984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 792346 closing signal SIGTERM
+W0725 19:39:10.936000 23192194257984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 792347 closing signal SIGTERM
+W0725 19:39:10.936000 23192194257984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 792348 closing signal SIGTERM
+E0725 19:39:11.297000 23192194257984 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 792342) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-25_19:39:10
+  host      : osk-gpu91
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 792342)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: osk-gpu91: task 2: Exited with exit code 1
+W0725 19:39:13.072000 22375795409984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3380424 closing signal SIGTERM
+W0725 19:39:13.072000 22375795409984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3380425 closing signal SIGTERM
+W0725 19:39:13.073000 22375795409984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3380428 closing signal SIGTERM
+W0725 19:39:13.073000 22375795409984 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3380431 closing signal SIGTERM
+E0725 19:39:13.560000 22375795409984 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 2 (pid: 3380426) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-07-25_19:39:13
+  host      : osk-gpu56
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 3380427)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-07-25_19:39:13
+  host      : osk-gpu56
+  rank      : 5 (local_rank: 5)
+  exitcode  : 1 (pid: 3380429)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-07-25_19:39:13
+  host      : osk-gpu56
+  rank      : 6 (local_rank: 6)
+  exitcode  : 1 (pid: 3380430)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-25_19:39:13
+  host      : osk-gpu56
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 3380426)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+[rank0]:[W725 19:39:14.496048658 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+srun: error: osk-gpu56: task 1: Exited with exit code 1
+W0725 19:39:18.929000 22970329355328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3615336 closing signal SIGTERM
+W0725 19:39:18.929000 22970329355328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3615337 closing signal SIGTERM
+W0725 19:39:18.929000 22970329355328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3615338 closing signal SIGTERM
+W0725 19:39:18.929000 22970329355328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3615339 closing signal SIGTERM
+W0725 19:39:18.929000 22970329355328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3615340 closing signal SIGTERM
+W0725 19:39:18.929000 22970329355328 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3615341 closing signal SIGTERM
+E0725 19:39:19.277000 22970329355328 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 3615335) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-07-25_19:39:18
+  host      : osk-gpu54
+  rank      : 7 (local_rank: 7)
+  exitcode  : 1 (pid: 3615342)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-25_19:39:18
+  host      : osk-gpu54
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3615335)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: osk-gpu54: task 0: Exited with exit code 1
