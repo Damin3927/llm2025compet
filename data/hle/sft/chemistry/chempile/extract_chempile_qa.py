@@ -160,8 +160,10 @@ Final answer:"""
             if not validate_answer_format(answer):
                 logger.warning(f"Invalid answer format on attempt {attempt + 1}: '{answer}'")
                 if attempt < max_retries - 1:
-                    # Try a more specific prompt for retry
-                    retry_prompt = f"""{prompt}
+                    # Try a more specific prompt for retry that only uses the answer as input
+                    retry_prompt = f"""The following is an answer that needs to be formatted correctly. Please check and revise the format to be either a choice (A, B, C, D) or a specific value. Remove any explanations, reasoning, or additional text.
+
+Answer to format: {answer}
 
 IMPORTANT: Return ONLY the final answer choice (e.g., 'A', 'B', 'C', 'D' or the specific answer value). Do not include any explanations, reasoning, or additional text.
 
