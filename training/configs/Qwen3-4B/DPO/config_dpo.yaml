@@ -19,7 +19,7 @@ lora_r: 16                                                # LoRA の rank
 lora_alpha: 32                                            # LoRA の alpha
 lora_dropout: 0.05                                        # LoRA のドロップアウト率
 use_rslora: false                                         # Rank-Stabilized LoRA
-use_dora                                                  # Decomposed LoRA
+use_dora: false                                                  # Decomposed LoRA
 
 # === DPOConfig ===
 bf16: true                                                # bf16 演算を有効にするかどうか
