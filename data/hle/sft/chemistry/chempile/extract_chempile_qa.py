@@ -185,7 +185,7 @@ Final answer:"""
     # Return the final answer even if validation failed
     return answer if 'answer' in locals() else None
 
-def process_dataset(model_name: str = "Qwen/Qwen2.5-3B-Instruct", output_file: str = "chempile_qa_pairs.json") -> None:
+def process_dataset(model_name: str = "Qwen/Qwen2.5-3B-Instruct", output_file: str = "chempile_qa_pairs.json", tp: int = 2) -> None:
     """
     Process the ChemPile dataset and extract QA pairs.
     """
@@ -201,13 +201,13 @@ def process_dataset(model_name: str = "Qwen/Qwen2.5-3B-Instruct", output_file: s
     logger.info(f"Loaded {len(dataset)} samples from dataset")
     
     # Initialize vLLM model with tensor parallelism
-    logger.info(f"Initializing vLLM with model: {model_name}, tp=2")
+    logger.info(f"Initializing vLLM with model: {model_name}, tp={tp}")
     llm = LLM(
         model=model_name,
         gpu_memory_utilization=0.8,
         max_model_len=4096,
         trust_remote_code=True,
-        tensor_parallel_size=2
+        tensor_parallel_size=tp
     )
     
     results = []
@@ -318,11 +318,12 @@ def main():
                        help="Output JSON file path")
     parser.add_argument("--validate", action="store_true",
                        help="Validate output file after processing")
+    parser.add_argument("--tp", type=int, default=2, help="Tensor parallel size for VLLM")
     
     args = parser.parse_args()
     
     # Process dataset
-    process_dataset(args.model, args.output)
+    process_dataset(args.model, args.output, args.tp)
     
     # Validate if requested
     if args.validate:

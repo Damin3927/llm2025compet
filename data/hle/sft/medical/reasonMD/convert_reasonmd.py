@@ -83,7 +83,12 @@ def transform_row(row, idx):
     if "output" not in row or row["output"] is None:
         warnings.warn(f"Row {idx}: Missing 'output' field, skipping row")
         return None
-    
+
+    question = str(row["instruction"]).strip()
+    if not question:
+        warnings.warn(f"Row {idx}: Empty 'instruction' field, skipping row")
+        return None
+
     output = str(row["output"]).strip()
     if not output:
         warnings.warn(f"Row {idx}: Empty 'output' field, skipping row")
@@ -94,8 +99,8 @@ def transform_row(row, idx):
     
     return {
         "id": f"reasonmed_{idx}",
-        "question": instruction,
-        "raw_instruction": output,  # Keep for LLM processing
+        "question": question,
+        "raw_output": output,  # Keep for LLM processing
         "extracted_answer": answer
     }
 
@@ -157,7 +162,7 @@ def transform_with_llm(data_entries, model_name="Qwen/Qwen3-32B", tp=1, debug=Fa
 TASK: Given a medical instruction that contains both reasoning and a conclusion, extract the reasoning process and the final answer.
 
 INSTRUCTION:
-{entry['raw_instruction']}
+{entry['raw_output']}
 
 REQUIREMENTS:
 1. Identify the reasoning steps in the instruction
@@ -173,7 +178,7 @@ Please provide only the reasoning process (no other text):"""
         if reasoning_text is None:
             if debug:
                 print(f"Entry {idx}: API call failed, using fallback")
-            reasoning_text = entry['raw_instruction']
+            reasoning_text = entry['raw_output']
         
         if debug:
             print(f"\n--- Entry {idx + 1} Debug ---")
@@ -192,7 +197,7 @@ Please provide only the reasoning process (no other text):"""
                 print(f"Validation failed: {validation_msg}")
             format_errors += 1
             # Use fallback format
-            output_text = f"<think>{entry['raw_instruction']}</think>{final_answer}"
+            output_text = f"<think>{entry['raw_output']}</think>{final_answer}"
         elif debug:
             print("✓ Format validation passed")
         
@@ -209,7 +214,7 @@ Please provide only the reasoning process (no other text):"""
         })
         
         # Remove temporary fields
-        del entry['raw_instruction']
+        del entry['raw_output']
         del entry['extracted_answer']
         
         # Add small delay to avoid rate limiting
@@ -283,9 +288,9 @@ def main():
         print("Skipping LLM transformation. Use --use-llm flag to enable.")
         # Add placeholder output for non-LLM mode
         for entry in transformed_data:
-            entry['output'] = f"<think>{entry['raw_instruction']}</think>{entry['extracted_answer']}"
+            entry['output'] = f"<think>{entry['raw_output']}</think>{entry['extracted_answer']}"
             entry['answer'] = entry['extracted_answer']
-            del entry['raw_instruction']
+            del entry['raw_output']
             del entry['extracted_answer']
     
     # Create output directory if it doesn't exist
