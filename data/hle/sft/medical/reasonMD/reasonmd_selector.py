@@ -312,8 +312,8 @@ def main():
     parser = argparse.ArgumentParser(description="Select ReasonMD data with half-gaussian distribution favoring longer outputs")
     parser.add_argument("--output", default="reasonmd_selected.json",
                         help="Output JSON file path (default: reasonmd_selected.json)")
-    parser.add_argument("--target_samples", type=int, default=1000,
-                        help="Target number of samples to select (default: 1000)")
+    parser.add_argument("--target_samples", type=int, default=500,
+                        help="Target number of samples to select (default: 500)")
     parser.add_argument("--sample_size_for_stats", type=int, default=5000,
                         help="Number of samples to analyze for creating bins (default: 5000)")
     parser.add_argument("--num_bins", type=int, default=6,
@@ -325,7 +325,7 @@ def main():
     
     # Load HF token
     try:
-        with open("../keys.json", "r") as f:
+        with open("../../keys.json", "r") as f:
             keys = json.load(f)
             hf_token = keys["llm"]
     except FileNotFoundError:
