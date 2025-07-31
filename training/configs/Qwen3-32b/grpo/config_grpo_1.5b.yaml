@@ -25,6 +25,9 @@ system_prompt: |
 
 # Qwen 既定の chat_template を使用（上書き不要）
 # chat_template: null
+stop_sequences:
+  - "</answer>"
+  - "<|im_end|>"
 
 # ----------------------------------------------------------
 # GRPO Trainer
@@ -50,7 +53,7 @@ disable_dropout: true
 # Parameters that control generation acceleration powered by vLLM
 use_vllm: true
 vllm_mode: server                   # train_grpo.py 側引数が override
-# vllm_server_host/port はシェルスクリプトから CLI 引数で渡すのでここには書かない
+vllm_server_base_url: "http://osk-gpu91:8000"
 
 # 学習ハイパーパラメータ
 learning_rate: 2.0e-5              # パラメータ数が少ないのでやや高めに設定
