@@ -45,6 +45,10 @@ def extract_answer_from_output(output):
         r"(?:The diagnosis is|Diagnosis:)\s*([^\n.]+)",
         r"(?:The treatment is|Treatment:)\s*([^\n.]+)",
         r"(?:The patient (?:has|should))\s*([^\n.]+)",
+        # Add patterns for ABCD answers
+        r"(?:Option|Choice)\s*([A-D])\b",
+        r"\b([A-D])\s*[).]\s*[^\n.]+",
+        r"\b([A-D])\s*is\s+(?:the\s+)?(?:correct|right)\b",
     ]
     
     
@@ -57,23 +61,23 @@ def extract_answer_from_output(output):
             # Clean up the answer
             answer = re.sub(r'^[^\w]*', '', answer)  # Remove leading non-word chars
             answer = re.sub(r'[^\w\s]*$', '', answer)  # Remove trailing non-word chars
-            if len(answer) > 10 and len(answer) < 200:  # Reasonable answer length
+            if len(answer) > 0 and len(answer) < 200:  # Allow shorter answers like "A" or "B"
                 return answer
     
     # Fallback: take last sentence
     sentences = re.split(r'[.!?]+', output)
     if len(sentences) > 1:
         last_sentence = sentences[-2].strip()  # -2 because last is usually empty after split
-        if len(last_sentence) > 10 and len(last_sentence) < 200:
+        if len(last_sentence) > 5 and len(last_sentence) < 200:  # Reduced minimum length
             return last_sentence
     
     # Final fallback: take first reasonable sentence
     for sentence in sentences:
         sentence = sentence.strip()
-        if len(sentence) > 20 and len(sentence) < 300:
+        if len(sentence) > 10 and len(sentence) < 300:
             return sentence
     
-    return "Unable to extract answer"
+    return None  # Return None instead of error message to indicate failure
 
 
 def transform_row(row, idx):
@@ -96,6 +100,11 @@ def transform_row(row, idx):
     
     # Extract answer from output
     answer = extract_answer_from_output(output)
+    
+    # Skip row if no valid answer could be extracted
+    if answer is None:
+        warnings.warn(f"Row {idx}: Could not extract valid answer, skipping row")
+        return None
     
     return {
         "id": f"reasonmed_{idx}",
@@ -130,6 +139,82 @@ def call_vllm_model(prompt, llm_client, sampling_params):
         return None
 
 
+def check_and_fix_answer_with_vllm(answer, original_output, llm_client, sampling_params):
+    """Use VLLM Qwen to check if answer is choice-only (A/B/C/D) or specific values, and fix if needed."""
+    if not answer:
+        return None, "No answer provided"
+    
+    prompt = f"""You are a medical answer validator and fixer. Your job is to ensure the answer is ONLY a choice letter (A, B, C, D) or a specific medical value/term.
+
+ORIGINAL MEDICAL REASONING:
+{original_output}
+
+CURRENT ANSWER: {answer}
+
+TASK:
+1. If this is a multiple choice question, return ONLY the letter: A, B, C, or D
+2. If this requires a specific value/term, return ONLY that (e.g., "Pneumonia", "50mg", "Hypertension")
+3. Remove any explanatory text, reasoning, or extra words
+4. Keep answers under 30 characters
+5. If unclear, return "UNCLEAR"
+
+Return only the fixed answer, nothing else:"""
+    
+    try:
+        response = call_vllm_model(prompt, llm_client, sampling_params)
+        if not response or response.strip().upper() == "UNCLEAR":
+            return None, "VLLM could not determine clear answer"
+        
+        fixed_answer = response.strip()
+        
+        # Validate the fixed answer format
+        if re.match(r'^[A-D]$', fixed_answer.upper()):
+            return fixed_answer.upper(), "VLLM fixed to choice letter"
+        elif 1 <= len(fixed_answer) <= 30 and not any(word in fixed_answer.lower() 
+                                                      for word in ['therefore', 'because', 'however', 'since', 'the answer is', 'thus']):
+            return fixed_answer, "VLLM fixed to specific value"
+        else:
+            return None, f"VLLM response still invalid format: {fixed_answer}"
+            
+    except Exception as e:
+        print(f"VLLM answer fixing failed: {e}")
+        return None, f"VLLM call failed: {e}"
+
+
+def basic_answer_format_check(answer):
+    """Basic answer format check without LLM."""
+    if not answer or len(answer.strip()) == 0:
+        return False, "Empty answer"
+    
+    answer = answer.strip()
+    
+    # Check for single letter answers (A, B, C, D)
+    if re.match(r'^[A-D]$', answer, re.IGNORECASE):
+        return True, "Valid single letter answer"
+    
+    # Check for reasonable length and content
+    if len(answer) < 2:
+        return False, "Answer too short"
+    
+    if len(answer) > 300:
+        return False, "Answer too long"
+    
+    # Check for common invalid phrases
+    invalid_phrases = [
+        "unable to extract",
+        "cannot determine",
+        "not clear",
+        "unclear",
+        "no answer"
+    ]
+    
+    for phrase in invalid_phrases:
+        if phrase in answer.lower():
+            return False, f"Contains invalid phrase: {phrase}"
+    
+    return True, "Basic format check passed"
+
+
 def transform_with_llm(data_entries, model_name="Qwen/Qwen3-32B", tp=1, debug=False):
     """Transform instructions using VLLM to proper CoT format."""
     
@@ -151,10 +236,28 @@ def transform_with_llm(data_entries, model_name="Qwen/Qwen3-32B", tp=1, debug=Fa
     # Track timing for each transformation
     transformation_times = []
     format_errors = 0
+    answer_validation_errors = 0
+    valid_entries = []
     
     # Process each entry individually
     for idx, entry in tqdm(enumerate(data_entries), total=len(data_entries), desc="API Processing"):
         row_start_time = time.time()
+        
+        # Use VLLM Qwen to check and fix the extracted answer format
+        fixed_answer, fix_msg = check_and_fix_answer_with_vllm(
+            entry['extracted_answer'], entry['raw_output'], llm_client, sampling_params
+        )
+        
+        if fixed_answer is None:
+            if debug:
+                print(f"Entry {idx}: Answer fixing failed: {fix_msg}")
+            answer_validation_errors += 1
+            warnings.warn(f"Entry {idx}: Could not fix answer '{entry['extracted_answer']}' - {fix_msg}, skipping row")
+            continue
+        
+        # Store original answer for debugging and update with fixed version
+        entry['original_answer'] = entry['extracted_answer']
+        entry['extracted_answer'] = fixed_answer
         
         # Create prompt for transformation
         prompt = f"""You are a medical reasoning expert. Your task is to analyze a medical instruction and create a structured chain-of-thought reasoning process.
@@ -182,6 +285,9 @@ Please provide only the reasoning process (no other text):"""
         
         if debug:
             print(f"\n--- Entry {idx + 1} Debug ---")
+            print(f"Original answer: '{entry['original_answer']}'")
+            print(f"Fixed answer: '{fixed_answer}'")
+            print(f"Fix message: {fix_msg}")
             print(f"Raw LLM reasoning (first 200 chars): {repr(reasoning_text[:200])}")
             print(f"Full length: {len(reasoning_text)}")
         
@@ -210,12 +316,19 @@ Please provide only the reasoning process (no other text):"""
             'entry_id': entry['id'],
             'processing_time': processing_time,
             'reasoning_length': len(reasoning_text),
-            'format_valid': is_valid
+            'format_valid': is_valid,
+            'answer_fixed': True,
+            'original_answer': entry['original_answer'],
+            'fixed_answer': fixed_answer
         })
         
         # Remove temporary fields
         del entry['raw_output']
         del entry['extracted_answer']
+        del entry['original_answer']
+        
+        # Add to valid entries
+        valid_entries.append(entry)
         
         # Add small delay to avoid rate limiting
         time.sleep(0.1)
@@ -227,6 +340,9 @@ Please provide only the reasoning process (no other text):"""
         successful_conversions = sum(1 for t in transformation_times if t['format_valid'])
         
         print(f"\nVLLM Transformation completed:")
+        print(f"Original entries: {len(data_entries)}")
+        print(f"Valid entries after answer fixing: {len(valid_entries)}")
+        print(f"Answer fixing failures: {answer_validation_errors}")
         print(f"Total time: {total_time:.2f}s")
         print(f"Average time per entry: {avg_time:.2f}s")
         print(f"Successful conversions: {successful_conversions}/{len(transformation_times)}")
@@ -239,7 +355,7 @@ Please provide only the reasoning process (no other text):"""
             json.dump(transformation_times, f, indent=2)
         print(f"Timing data saved to: {timing_path}")
     
-    return data_entries
+    return valid_entries
 
 
 def main():
@@ -286,12 +402,22 @@ def main():
         transformed_data = transform_with_llm(transformed_data, args.model, args.tp, args.debug)
     else:
         print("Skipping LLM transformation. Use --use-llm flag to enable.")
-        # Add placeholder output for non-LLM mode
+        # Add placeholder output for non-LLM mode, but still validate answers
+        valid_entries = []
         for entry in transformed_data:
-            entry['output'] = f"<think>{entry['raw_output']}</think>{entry['extracted_answer']}"
-            entry['answer'] = entry['extracted_answer']
-            del entry['raw_output']
-            del entry['extracted_answer']
+            # Basic answer format validation even without LLM
+            is_valid, validation_msg = basic_answer_format_check(entry['extracted_answer'])
+            if is_valid:
+                entry['output'] = f"<think>{entry['raw_output']}</think>{entry['extracted_answer']}"
+                entry['answer'] = entry['extracted_answer']
+                del entry['raw_output']
+                del entry['extracted_answer']
+                valid_entries.append(entry)
+            else:
+                warnings.warn(f"Entry {entry['id']}: {validation_msg}, skipping row")
+        
+        transformed_data = valid_entries
+        print(f"After basic answer validation: {len(transformed_data)} valid entries")
     
     # Create output directory if it doesn't exist
     if args.test_mode:
