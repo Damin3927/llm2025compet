@@ -8,8 +8,8 @@
 #SBATCH --partition=cpu
 
 # Configuration - Edit these variables as needed
-DATASET_PATH="./medical/results"  # Path to folder containing data subfolders
-REPO_ID="neko-llm/CoT_Medicine"  # HuggingFace repository ID
+DATASET_PATH="./biology/results/sft_data"  # Path to folder containing data subfolders
+REPO_ID="neko-llm/sft_biology"  # HuggingFace repository ID
 CREATE_DATASET_CARD=true  # Set to false to skip dataset card creation
 
 # Script directory
