@@ -7,14 +7,17 @@
 #SBATCH --nodelist=osk-gpu[54,56,91]
 #SBATCH --job-name=grpo-qwen1_5b            ### ★変更
 #SBATCH --time=4:00:00
-#SBATCH --output=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen1_5b.%j.out       ### ★変更
-#SBATCH --error=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen1_5b.%j.err        ### ★変更
 #SBATCH --mem=0
+#SBATCH --output=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen1_5b.out
+#SBATCH --error=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen1_5b.err
 
 ################### 環境 ###################
 export WANDB_DISABLED=true
 module load cuda/12.8
 source ~/openr1/bin/activate
+
+ulimit -v unlimited
+ulimit -m unlimited
 
 REPO_DIR=/home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src
 cd "$REPO_DIR" || exit 1
@@ -29,11 +32,12 @@ MAIN_IP="${NODELIST[0]}"
 srun --nodes=1 --ntasks=1 --nodelist="$VLLM_NODE" \
      --gres=gpu:8 --exclusive --chdir="$REPO_DIR" \
      bash -c "
+       source ~/openr1/bin/activate
        echo '[vLLM] on \$HOSTNAME'
-       CUDA_VISIBLE_DEVICES=0-7 \
+       CUDA_VISIBLE_DEVICES=0,1,2,3 \
        trl vllm-serve \
-         --model Qwen/Qwen2.5-1.5B-Instruct   ### ★変更
-         --tensor_parallel_size 2 \
+         --model Qwen/Qwen2.5-1.5B-Instruct \
+         --tensor_parallel_size 4 \
          --host 0.0.0.0 \
          --port 8000 \
          --max-model-len 4096
@@ -45,6 +49,7 @@ sleep 120    # 安全に長め
 srun --nodes=2 --ntasks=2 --nodelist="$TRAIN_NODES" \
      --gres=gpu:8 --exclusive --chdir="$REPO_DIR" \
      bash -c "
+       source ~/openr1/bin/activate
        echo '[GRPO] on \$HOSTNAME  (rank \$SLURM_PROCID)'
        export NCCL_ASYNC_ERROR_HANDLING=1
        accelerate launch \
@@ -53,13 +58,12 @@ srun --nodes=2 --ntasks=2 --nodelist="$TRAIN_NODES" \
          --num_processes 16 \
          --main_process_ip ${MAIN_IP} \
          --main_process_port 29500 \
+         --rdzv_backend c10d \
          --machine_rank \$SLURM_PROCID \
          /home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src/open_r1/grpo.py \
          --config /home/Competition2025/P02/P02U017/llm2025compet/training/configs/Qwen3-32b/grpo/config_grpo_1.5b.yaml \
          --use_vllm true \
-         --vllm_mode server \
-         --server_ip ${VLLM_NODE} \
-         --server_port 8000
+         --vllm_mode server
      "
 
 wait
