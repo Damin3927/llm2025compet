@@ -18,7 +18,7 @@ from vllm import LLM, SamplingParams
 def load_hf_token():
     """Load Hugging Face token from keys.json"""
     try:
-        with open("/home/qian.niu/explore/data/hle/sft/keys.json", "r") as f:
+        with open("../../keys.json", "r") as f:
             keys = json.load(f)
             return keys["llm"]
     except Exception as e:
@@ -34,53 +34,60 @@ def load_reasonmd_dataset(hf_token):
     return dataset
 
 
-def extract_answer_from_output(output):
-    """Extract the final answer from the output text."""
+def extract_answer_from_output(llm_client, sampling_params, question, output):
+    """
+    Extract the final answer from the output text.
+    """
+
+    prompt = f"""You are given a medical question and reasoning output. Based on the question and reasoning output, extract the final answer as a concise string.
+    The final answer should be a single letter (A, B, C, D) or a specific value/term.
+
+    Question:
+    {question}
+
+    Reasoning output:
+    {output}
+
+    IMPORTANT: Return ONLY the final answer choice (e.g., 'A', 'B', 'C', 'D' or the specific answer value). 
+    Do not include any explanations, reasoning, or additional text.
+    Do not use backticks, quotes, or any formatting.
+
+    Final answer:"""
+
+    # Try to extract after </think>
+    final_answer = call_vllm_model(prompt, llm_client, sampling_params)
     
-    # Common patterns for answers in medical reasoning
-    patterns = [
-        r"(?:The (?:correct )?answer is|Answer:|The answer:|Final answer:)\s*([^\n.]+)",
-        r"(?:Therefore|Thus|Hence|So),?\s*([^\n.]+)",
-        r"(?:In conclusion|To conclude),?\s*([^\n.]+)",
-        r"(?:The diagnosis is|Diagnosis:)\s*([^\n.]+)",
-        r"(?:The treatment is|Treatment:)\s*([^\n.]+)",
-        r"(?:The patient (?:has|should))\s*([^\n.]+)",
-        # Add patterns for ABCD answers
-        r"(?:Option|Choice)\s*([A-D])\b",
-        r"\b([A-D])\s*[).]\s*[^\n.]+",
-        r"\b([A-D])\s*is\s+(?:the\s+)?(?:correct|right)\b",
-    ]
+    # Clean up the answer - extract just the first letter or value
+    if final_answer:
+        # Remove any backticks, quotes, or extra formatting
+        cleaned_answer = final_answer.strip().strip('`').strip('"').strip("'").strip()
+        # Take only the first part if there are multiple lines or explanations
+        cleaned_answer = cleaned_answer.split('\n')[0].split('.')[0].strip()
+        
+        # Try to extract just the answer letter if the model included extra text
+        # Look for patterns like "The answer is D" or "Answer: D" or just "D"
+        import re
+        answer_patterns = [
+            r'^([A-D])$',  # Just a single letter
+            r'answer[:\s]+([A-D])',  # "Answer: D" or "Answer D"
+            r'the\s+answer\s+is\s+([A-D])',  # "The answer is D"
+            r'final\s+answer[:\s]+([A-D])',  # "Final answer: D"
+            r'([A-D])\s*$',  # Letter at the end
+        ]
+        
+        for pattern in answer_patterns:
+            match = re.search(pattern, cleaned_answer, re.IGNORECASE)
+            if match:
+                return match.group(1).upper()
+        
+        # If no pattern matches, return the cleaned answer as is
+        return cleaned_answer
     
+    return final_answer
     
-    # Try each pattern
-    for pattern in patterns:
-        matches = re.findall(pattern, output, re.IGNORECASE | re.MULTILINE)
-        if matches:
-            # Return the last match (usually the final conclusion)
-            answer = matches[-1].strip()
-            # Clean up the answer
-            answer = re.sub(r'^[^\w]*', '', answer)  # Remove leading non-word chars
-            answer = re.sub(r'[^\w\s]*$', '', answer)  # Remove trailing non-word chars
-            if len(answer) > 0 and len(answer) < 200:  # Allow shorter answers like "A" or "B"
-                return answer
-    
-    # Fallback: take last sentence
-    sentences = re.split(r'[.!?]+', output)
-    if len(sentences) > 1:
-        last_sentence = sentences[-2].strip()  # -2 because last is usually empty after split
-        if len(last_sentence) > 5 and len(last_sentence) < 200:  # Reduced minimum length
-            return last_sentence
-    
-    # Final fallback: take first reasonable sentence
-    for sentence in sentences:
-        sentence = sentence.strip()
-        if len(sentence) > 10 and len(sentence) < 300:
-            return sentence
-    
-    return None  # Return None instead of error message to indicate failure
 
 
-def transform_row(row, idx):
+def transform_row(llm_client, sampling_params, row, idx, debug=False):
     """Transform a single row according to PRD specifications."""
     
     # Check for required fields
@@ -99,18 +106,19 @@ def transform_row(row, idx):
         return None
     
     # Extract answer from output
-    answer = extract_answer_from_output(output)
-    
-    # Skip row if no valid answer could be extracted
-    if answer is None:
-        warnings.warn(f"Row {idx}: Could not extract valid answer, skipping row")
+    answer = extract_answer_from_output(llm_client, sampling_params, question, output)
+
+    # validate the answer format
+    is_valid, validation_msg = basic_answer_format_check(answer, debug)
+    if not is_valid:
+        warnings.warn(f"Row {idx}: {validation_msg}, skipping row")
         return None
     
     return {
         "id": f"reasonmed_{idx}",
         "question": question,
-        "raw_output": output,  # Keep for LLM processing
-        "extracted_answer": answer
+        "output": f"<think>{output}</think>\n\n{answer}",
+        "answer": answer
     }
 
 
@@ -139,55 +147,14 @@ def call_vllm_model(prompt, llm_client, sampling_params):
         return None
 
 
-def check_and_fix_answer_with_vllm(answer, original_output, llm_client, sampling_params):
-    """Use VLLM Qwen to check if answer is choice-only (A/B/C/D) or specific values, and fix if needed."""
-    if not answer:
-        return None, "No answer provided"
-    
-    prompt = f"""You are a medical answer validator and fixer. Your job is to ensure the answer is ONLY a choice letter (A, B, C, D) or a specific medical value/term.
-
-ORIGINAL MEDICAL REASONING:
-{original_output}
-
-CURRENT ANSWER: {answer}
-
-TASK:
-1. If this is a multiple choice question, return ONLY the letter: A, B, C, or D
-2. If this requires a specific value/term, return ONLY that (e.g., "Pneumonia", "50mg", "Hypertension")
-3. Remove any explanatory text, reasoning, or extra words
-4. Keep answers under 30 characters
-5. If unclear, return "UNCLEAR"
-
-Return only the fixed answer, nothing else:"""
-    
-    try:
-        response = call_vllm_model(prompt, llm_client, sampling_params)
-        if not response or response.strip().upper() == "UNCLEAR":
-            return None, "VLLM could not determine clear answer"
-        
-        fixed_answer = response.strip()
-        
-        # Validate the fixed answer format
-        if re.match(r'^[A-D]$', fixed_answer.upper()):
-            return fixed_answer.upper(), "VLLM fixed to choice letter"
-        elif 1 <= len(fixed_answer) <= 30 and not any(word in fixed_answer.lower() 
-                                                      for word in ['therefore', 'because', 'however', 'since', 'the answer is', 'thus']):
-            return fixed_answer, "VLLM fixed to specific value"
-        else:
-            return None, f"VLLM response still invalid format: {fixed_answer}"
-            
-    except Exception as e:
-        print(f"VLLM answer fixing failed: {e}")
-        return None, f"VLLM call failed: {e}"
-
-
-def basic_answer_format_check(answer):
+def basic_answer_format_check(answer, debug=False):
     """Basic answer format check without LLM."""
     if not answer or len(answer.strip()) == 0:
         return False, "Empty answer"
     
     answer = answer.strip()
-    
+    if debug:
+        print("generated answer: ", answer)
     # Check for single letter answers (A, B, C, D)
     if re.match(r'^[A-D]$', answer, re.IGNORECASE):
         return True, "Valid single letter answer"
@@ -215,153 +182,9 @@ def basic_answer_format_check(answer):
     return True, "Basic format check passed"
 
 
-def transform_with_llm(data_entries, model_name="Qwen/Qwen3-32B", tp=1, debug=False):
-    """Transform instructions using VLLM to proper CoT format."""
-    
-    # Initialize VLLM model
-    try:
-        llm_client = LLM(model=model_name, tensor_parallel_size=tp, max_model_len=4096)
-        sampling_params = SamplingParams(
-            temperature=0.3,
-            max_tokens=3000,
-            top_p=0.95
-        )
-    except Exception as e:
-        print(f"Error initializing VLLM model: {e}")
-        return data_entries
-    
-    print(f"Using VLLM with model: {model_name}")
-    print(f"Processing {len(data_entries)} instructions with VLLM...")
-    
-    # Track timing for each transformation
-    transformation_times = []
-    format_errors = 0
-    answer_validation_errors = 0
-    valid_entries = []
-    
-    # Process each entry individually
-    for idx, entry in tqdm(enumerate(data_entries), total=len(data_entries), desc="API Processing"):
-        row_start_time = time.time()
-        
-        # Use VLLM Qwen to check and fix the extracted answer format
-        fixed_answer, fix_msg = check_and_fix_answer_with_vllm(
-            entry['extracted_answer'], entry['raw_output'], llm_client, sampling_params
-        )
-        
-        if fixed_answer is None:
-            if debug:
-                print(f"Entry {idx}: Answer fixing failed: {fix_msg}")
-            answer_validation_errors += 1
-            warnings.warn(f"Entry {idx}: Could not fix answer '{entry['extracted_answer']}' - {fix_msg}, skipping row")
-            continue
-        
-        # Store original answer for debugging and update with fixed version
-        entry['original_answer'] = entry['extracted_answer']
-        entry['extracted_answer'] = fixed_answer
-        
-        # Create prompt for transformation
-        prompt = f"""You are a medical reasoning expert. Your task is to analyze a medical instruction and create a structured chain-of-thought reasoning process.
-
-TASK: Given a medical instruction that contains both reasoning and a conclusion, extract the reasoning process and the final answer.
-
-INSTRUCTION:
-{entry['raw_output']}
-
-REQUIREMENTS:
-1. Identify the reasoning steps in the instruction
-2. Structure them as clear, logical steps
-3. Extract the final answer/conclusion
-
-Please provide only the reasoning process (no other text):"""
-        
-        # Call VLLM model
-        reasoning_text = call_vllm_model(prompt, llm_client, sampling_params)
-        processing_time = time.time() - row_start_time
-        
-        if reasoning_text is None:
-            if debug:
-                print(f"Entry {idx}: API call failed, using fallback")
-            reasoning_text = entry['raw_output']
-        
-        if debug:
-            print(f"\n--- Entry {idx + 1} Debug ---")
-            print(f"Original answer: '{entry['original_answer']}'")
-            print(f"Fixed answer: '{fixed_answer}'")
-            print(f"Fix message: {fix_msg}")
-            print(f"Raw LLM reasoning (first 200 chars): {repr(reasoning_text[:200])}")
-            print(f"Full length: {len(reasoning_text)}")
-        
-        # Construct the final output with <think> tags
-        final_answer = entry['extracted_answer']
-        output_text = f"<think>{reasoning_text}</think>{final_answer}"
-        
-        # Validate format
-        is_valid, validation_msg = validate_output_format(output_text)
-        
-        if not is_valid:
-            if debug:
-                print(f"Validation failed: {validation_msg}")
-            format_errors += 1
-            # Use fallback format
-            output_text = f"<think>{entry['raw_output']}</think>{final_answer}"
-        elif debug:
-            print("✓ Format validation passed")
-        
-        # Update entry
-        entry['output'] = output_text
-        entry['answer'] = final_answer
-        
-        # Record timing
-        transformation_times.append({
-            'entry_id': entry['id'],
-            'processing_time': processing_time,
-            'reasoning_length': len(reasoning_text),
-            'format_valid': is_valid,
-            'answer_fixed': True,
-            'original_answer': entry['original_answer'],
-            'fixed_answer': fixed_answer
-        })
-        
-        # Remove temporary fields
-        del entry['raw_output']
-        del entry['extracted_answer']
-        del entry['original_answer']
-        
-        # Add to valid entries
-        valid_entries.append(entry)
-        
-        # Add small delay to avoid rate limiting
-        time.sleep(0.1)
-    
-    # Print timing statistics
-    if transformation_times:
-        avg_time = sum(t['processing_time'] for t in transformation_times) / len(transformation_times)
-        total_time = sum(t['processing_time'] for t in transformation_times)
-        successful_conversions = sum(1 for t in transformation_times if t['format_valid'])
-        
-        print(f"\nVLLM Transformation completed:")
-        print(f"Original entries: {len(data_entries)}")
-        print(f"Valid entries after answer fixing: {len(valid_entries)}")
-        print(f"Answer fixing failures: {answer_validation_errors}")
-        print(f"Total time: {total_time:.2f}s")
-        print(f"Average time per entry: {avg_time:.2f}s")
-        print(f"Successful conversions: {successful_conversions}/{len(transformation_times)}")
-        print(f"Format errors encountered: {format_errors}")
-        
-        # Save timing data
-        timing_path = Path.home() / "explore/data/hle/sft/medical/results/reasonmd_timing.json"
-        timing_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(timing_path, 'w') as f:
-            json.dump(transformation_times, f, indent=2)
-        print(f"Timing data saved to: {timing_path}")
-    
-    return valid_entries
-
-
 def main():
     """Main conversion function."""
     parser = argparse.ArgumentParser(description='Convert reasonmd dataset to SFT format')
-    parser.add_argument('--use-llm', action='store_true', help='Use LLM to transform instructions')
     parser.add_argument('--model', default='Qwen/Qwen3-32B', help='Model name for VLLM transformation')
     parser.add_argument('--test-mode', action='store_true', help='Process only first 5 entries for testing')
     parser.add_argument('--tp', type=int, default=1, help='Tensor parallel size for VLLM')
@@ -376,6 +199,13 @@ def main():
     
     # Load dataset
     dataset = load_reasonmd_dataset(hf_token)
+    llm = LLM(model=args.model, tensor_parallel_size=args.tp, max_model_len=8192)
+    sampling_params = SamplingParams(
+        temperature=0.1,  # Lower temperature for more consistent outputs
+        max_tokens=50,    # Much shorter max tokens since we only need a single letter/word
+        top_p=0.9,
+        stop=["\n", ".", "```"]  # Stop at newlines, periods, or code blocks
+    )
     
     # Apply test mode if requested
     if args.test_mode:
@@ -388,7 +218,7 @@ def main():
     
     print("Transforming data...")
     for idx, row in tqdm(enumerate(dataset), total=len(dataset), desc="Processing rows"):
-        transformed_row = transform_row(row, idx)
+        transformed_row = transform_row(llm, sampling_params, row, idx, args.debug)
         if transformed_row is not None:
             transformed_data.append(transformed_row)
         else:
@@ -396,65 +226,12 @@ def main():
     
     print(f"Transformation complete: {len(transformed_data)} rows processed, {skipped_count} rows skipped")
     
-    # Transform with LLM if requested
-    if args.use_llm:
-        print("Transforming instructions with LLM...")
-        transformed_data = transform_with_llm(transformed_data, args.model, args.tp, args.debug)
-    else:
-        print("Skipping LLM transformation. Use --use-llm flag to enable.")
-        # Add placeholder output for non-LLM mode, but still validate answers
-        valid_entries = []
-        for entry in transformed_data:
-            # Basic answer format validation even without LLM
-            is_valid, validation_msg = basic_answer_format_check(entry['extracted_answer'])
-            if is_valid:
-                entry['output'] = f"<think>{entry['raw_output']}</think>{entry['extracted_answer']}"
-                entry['answer'] = entry['extracted_answer']
-                del entry['raw_output']
-                del entry['extracted_answer']
-                valid_entries.append(entry)
-            else:
-                warnings.warn(f"Entry {entry['id']}: {validation_msg}, skipping row")
-        
-        transformed_data = valid_entries
-        print(f"After basic answer validation: {len(transformed_data)} valid entries")
-    
     # Create output directory if it doesn't exist
     if args.test_mode:
         output_path = Path.home() / "explore/data/hle/sft/medical/results/reasonmd_cot_test.json"
     else:
         output_path = Path.home() / "explore/data/hle/sft/medical/results/reasonmd_cot.json"
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    
-    # Validate final format of all entries
-    print("\nValidating final format...")
-    validation_errors = []
-    required_fields = ['id', 'question', 'output', 'answer']
-    
-    for i, entry in enumerate(transformed_data):
-        # Check required fields
-        for field in required_fields:
-            if field not in entry:
-                validation_errors.append(f"Entry {i}: Missing field '{field}'")
-        
-        # Validate output format
-        if 'output' in entry:
-            is_valid, msg = validate_output_format(entry['output'])
-            if not is_valid:
-                validation_errors.append(f"Entry {i}: {msg}")
-        
-        # Validate ID format
-        if 'id' in entry and not entry['id'].startswith('reasonmd_'):
-            validation_errors.append(f"Entry {i}: Invalid ID format '{entry['id']}'")
-    
-    if validation_errors:
-        print(f"\nValidation errors found ({len(validation_errors)} total):")
-        for error in validation_errors[:10]:  # Show first 10 errors
-            print(f"  - {error}")
-        if len(validation_errors) > 10:
-            print(f"  ... and {len(validation_errors) - 10} more errors")
-    else:
-        print("✓ All entries passed format validation")
     
     # Save to JSON
     print(f"Saving to {output_path}")
@@ -467,18 +244,6 @@ def main():
     if transformed_data:
         print("\nSample entry:")
         print(json.dumps(transformed_data[0], indent=2, ensure_ascii=False))
-    
-    # Save validation report
-    validation_report = {
-        'total_entries': len(transformed_data),
-        'validation_errors': len(validation_errors),
-        'error_details': validation_errors
-    }
-    report_path = Path.home() / "explore/data/hle/sft/medical/results/reasonmd_validation_report.json"
-    report_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(report_path, 'w') as f:
-        json.dump(validation_report, f, indent=2)
-    print(f"Validation report saved to: {report_path}")
 
 
 if __name__ == "__main__":
