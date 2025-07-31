@@ -1,54 +1,35 @@
 #!/bin/bash
-#SBATCH --job-name=chempile_qa_extraction
-#SBATCH --output=chempile_extraction_%j.out
-#SBATCH --error=chempile_extraction_%j.err
-#SBATCH --time=01:00:00
+
+# --- Slurm ジョブ設定 ---
+#SBATCH --job-name=filter
+#SBATCH --partition=P02
 #SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=32G
-#SBATCH --gres=gpu:a10g:1
-#SBATCH --partition=gpu
+#SBATCH --nodelist=osk-gpu54
+#SBATCH --gres=gpu:8 # GPUが必要な場合
+#SBATCH --time=5:00:00 # 実行に時間がかかる可能性を考慮して設定
+#SBATCH --output=/home/Competition2025/P02/P02U007/logs/%x-%j.out
+#SBATCH --error=/home/Competition2025/P02/P02U007/logs/%x-%j.err
 
-# Load necessary modules (adjust based on your cluster)
-module load python/3.9
-module load cuda/11.8
+# bash /home/Competition2025/P02/shareP02/scripts/scancel.sh <job_id>
+# scp -r comp:/home/Competition2025/P02/P02U007/logs/filter-281969.out ~/Desktop
+# Activate the correct conda environment
+# Load CUDA and activate environment
+module load cuda/12.4
+source /home/Competition2025/P02/P02U007/llm2025compet/data/hle/sft/hfenv/bin/activate
 
-# Set up environment
-export CUDA_VISIBLE_DEVICES=0
-export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+# Set environment variables for better GPU memory management
+# export CUDA_VISIBLE_DEVICES=0
+# export PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512
+export VLLM_USE_FLASH_ATTENTION=1
+# export VLLM_HIDDEN_SIZE=4096  # Adjust based on model architecture
+export HF_HOME="/home/Competition2025/P02/P02U007/.cache/huggingface"
 
-# Create virtual environment if it doesn't exist
-if [ ! -d "venv" ]; then
-    echo "Creating virtual environment..."
-    python -m venv venv
-fi
-
-# Activate virtual environment
-source venv/bin/activate
-
-# Install required packages
-echo "Installing required packages..."
-pip install --upgrade pip
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-pip install vllm
-pip install datasets
-pip install transformers
-pip install accelerate
-
-# Set memory and performance optimizations
-export CUDA_LAUNCH_BLOCKING=0
-export TORCH_CUDA_ARCH_LIST="8.6"  # For A10G GPU
-export VLLM_USE_MODELSCOPE=False
-
-# Run the extraction script
-echo "Starting ChemPile QA extraction..."
-echo "Job started at: $(date)"
-
+cd /home/Competition2025/P02/P02U007/llm2025compet/data/hle/sft/chemistry/chempile
 python extract_chempile_qa.py \
-    --model "Qwen/Qwen2.5-3B-Instruct" \
+    --model "Qwen/Qwen3-32B" \
     --output "chempile_qa_pairs.json" \
-    --validate
+    --validate \
+    --tp 2
 
 echo "Job completed at: $(date)"
 
