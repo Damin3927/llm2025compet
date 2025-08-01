@@ -1,14 +1,23 @@
 #!/bin/bash
 #SBATCH --partition P02        # 利用するパーティション（キュー）
+#SBATCH --ntasks-per-node=1    # 1ノードあたりのタスク数
 #SBATCH --nodes=1              # 利用するノード数
-#SBATCH --gpus-per-node=1      # 1ノードあたりのGPU数
+#SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
 #SBATCH --nodelist osk-gpu[56] # 利用するノードのリスト
 #SBATCH --job-name sft-0.5b    # ジョブの名前
-#SBATCH --time 1:00:00         # ジョブの最大実行時間
+#SBATCH --time 3:00:00         # ジョブの最大実行時間
 #SBATCH --output sft-0.5b.out  # 標準出力ファイル
 #SBATCH --error sft-0.5b.err   # 標準エラーファイル
+#SBATCH --mem=0            # 各ノードのメモリサイズ
+#SBATCH --cpus-per-task=160         # number of cores per tasks
 
-export WANDB_DISABLED="true"   # WANDBを一旦無効化
+# Slurmで確保したノードリストの先頭をマスターノードのアドレスとして設定
+export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
+echo "MASTER_ADDR: $MASTER_ADDR"
+
+# 使用されていない適当なポート番号を設定 (例: 29500)
+export MASTER_PORT=29500
+echo "MASTER_PORT: $MASTER_PORT"
 
 # --- 環境設定 ---
 module load cuda/12.8           # nvccを使うためにCUDAをロード
@@ -17,12 +26,20 @@ source openr1/bin/activate      # venvを有効化
 
 cd llm2025compet/training/open-r1/src || exit 1
 
-accelerate launch \
-    --config_file ../recipes/accelerate_configs/zero2.yaml \
-    --num_machines 1 \
-    --num_processes 1 \
-    open_r1/sft.py \
-    --config ../../configs/Qwen2.5-Distill-0.5b-test/sft/config_distill.yaml
+ulimit -v unlimited
+ulimit -m unlimited
+
+srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
+    "accelerate launch \
+        --config_file ../recipes/accelerate_configs/zero3.yaml \
+        --num_machines 1 \
+        --num_processes 8 \
+        --main_process_ip \"$MASTER_ADDR\" \
+        --main_process_port \"$MASTER_PORT\" \
+        --rdzv_backend c10d \
+        open_r1/sft.py \
+        --config ../../configs/Qwen2.5-Distill-0.5b-test/sft/config_distill.yaml \
+        --dataconfig ../../configs/data_configs/example.yaml"
 
 # 実行方法
 # HOMEで以下を実行する。自動でopen-r1のソースコードディレクトリに移動することに注意

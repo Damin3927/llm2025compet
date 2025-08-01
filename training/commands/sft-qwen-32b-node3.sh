@@ -43,8 +43,8 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
         open_r1/sft.py \
-        --config ../../configs/Qwen3-32b/sft/config_distill.yaml"
-# --machine_rank \"\$SLURM_PROCID\" \
+        --config ../../configs/Qwen3-32b/sft/config_distill.yaml \
+        --dataconfig ../../configs/data_configs/example.yaml"
 
 # 実行方法
 # HOMEで以下を実行する。自動でopen-r1のソースコードディレクトリに移動することに注意
@@ -53,8 +53,4 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
 # /home/Competition2025/P02/shareP02/scripts/scancel.sh 287614
 
 # 実行コマンド
-# sbatch ./llm2025compet/training/commands/sft-qwen-32b.sh
-
-# bashでの実行コマンド
-# srun --partition P02 --nodes=2 --nodelist osk-gpu[56,91] --gpus-per-node=8 --time 1:00:00 --pty bash -i
-# . ./llm2025compet/training/commands/sft-qwen-32b.sh
+# sbatch ./llm2025compet/training/commands/sft-qwen-32b-node3.sh

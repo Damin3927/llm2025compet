@@ -13,6 +13,8 @@
 
 # export WANDB_DISABLED="true"   # WANDBを一旦無効化
 
+# まだ動きません！！
+
 # Slurmで確保したノードリストの先頭をマスターノードのアドレスとして設定
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
 echo "MASTER_ADDR: $MASTER_ADDR"
@@ -27,6 +29,12 @@ export NCCL_DEBUG_SUBSYS=ALL
 export NCCL_P2P_DISABLE=1
 export NCCL_P2P_LEVEL=NVL
 export NCCL_IB_GID_INDEX=3
+
+export DEEPSPEED_TIMEOUT=7200
+export TORCH_NCCL_TRACE_BUFFER_SIZE=2097152 # 2MB
+export NCCL_IB_TIMEOUT=30
+export NCCL_TIMEOUT=7200
+# export NCCL_SOCKET_IFNAME=^lo,docker,virbr
 
 #export TORCH_DISTRIBUTED_DEBUG=DETAIL
 
@@ -48,7 +56,8 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
         open_r1/sft.py \
-        --config ../../configs/r1-671b/sft/config_distill.yaml"
+        --config ../../configs/r1-671b/sft/config_distill.yaml \
+        --dataconfig ../../configs/data_configs/example.yaml"
 
 # 実行方法
 # HOMEで以下を実行する。
