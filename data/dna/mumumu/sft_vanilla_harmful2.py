@@ -126,16 +126,40 @@ import json
 import os
 from vllm import LLM, SamplingParams
 
+# === GPU情報確認 ===
+logger.info("🔍 GPU情報を確認中...")
+if torch.cuda.is_available():
+    gpu_count = torch.cuda.device_count()
+    logger.info(f"🎯 利用可能GPU数: {gpu_count}")
+    
+    for i in range(gpu_count):
+        gpu_name = torch.cuda.get_device_name(i)
+        gpu_memory = torch.cuda.get_device_properties(i).total_memory / 1024**3
+        logger.info(f"  GPU {i}: {gpu_name} ({gpu_memory:.1f} GB)")
+        
+    # GPU使用状況
+    if gpu_count >= 3:
+        logger.info("✅ 3GPU以上利用可能 - tensor_parallel_size=3 で実行")
+    elif gpu_count >= 2:
+        logger.info("⚠️ GPU数が少ない - tensor_parallel_size=2 を推奨")
+    else:
+        logger.warning("シングルGPUで実行")
+else:
+    logger.error("❌ CUDA利用不可 - GPUが見つかりません")
+    sys.exit(1)
+
 # === vLLM モデル初期化 ===
 logger.info("Initializing vLLM model...")
 llm = LLM(
     model="Qwen/Qwen3-32B",
     trust_remote_code=True,
-    tensor_parallel_size=1,
+    tensor_parallel_size=3,  # 3つのGPUを使用
     gpu_memory_utilization=0.98,
     max_model_len=8192,
-    max_num_seqs=8
+    max_num_seqs=24  # 並列処理数を増加
 )
+
+logger.info("✅ vLLMモデル初期化完了!")
 
 sampling_params = SamplingParams(
     temperature=0.3,
@@ -207,20 +231,42 @@ def make_prompt(row):
     
     return prompt
 
-# === 推論ループ ===
+# === 推論ループ（バッチ処理） ===
 processed_count = 0
-for idx, row in df_selected.iterrows():
-    # IDを生成（行インデックスを使用）
-    item_id = idx
+batch_size = 8  # バッチサイズ
+
+for batch_start in range(0, len(df_selected), batch_size):
+    batch_end = min(batch_start + batch_size, len(df_selected))
+    batch_rows = df_selected.iloc[batch_start:batch_end]
     
-    if item_id in done_ids:
+    # バッチ内の未処理データをフィルタ
+    batch_items = []
+    batch_prompts = []
+    
+    for idx, row in batch_rows.iterrows():
+        item_id = idx
+        if item_id not in done_ids:
+            batch_items.append((idx, row, item_id))
+            try:
+                prompt = make_prompt(row)
+                batch_prompts.append(prompt)
+            except Exception as e:
+                logger.error(f"⚠️ ID {item_id} プロンプト作成失敗: {e}")
+                continue
+    
+    if not batch_prompts:
         continue
-
+    
     try:
-
-        # vLLMで推論実行
-        prompt = make_prompt(row)
-        result = llm.generate(prompt, sampling_params=sampling_params)[0].outputs[0].text
+        # バッチで推論実行
+        batch_results = llm.generate(batch_prompts, sampling_params=sampling_params)
+        
+        # 結果を処理
+        for i, (idx, row, item_id) in enumerate(batch_items):
+            if i >= len(batch_results):
+                break
+                
+            result = batch_results[i].outputs[0].text
         
         # CoT抽出
         think_text = result.split("</think>")[0].strip() if "</think>" in result else result.strip()
@@ -253,6 +299,14 @@ for idx, row in df_selected.iterrows():
         if processed_count % 50 == 0: # 50件ごとにログを出力
             logger.info(f"✅ {processed_count} 件完了")
             logger.info(f"📝 最新サンプル: {df_selected.at[idx, 'output'][:100]}...")
+            
+            # GPU使用状況のログ出力
+            if torch.cuda.is_available():
+                for i in range(torch.cuda.device_count()):
+                    memory_allocated = torch.cuda.memory_allocated(i) / 1024**3
+                    memory_reserved = torch.cuda.memory_reserved(i) / 1024**3
+                    memory_total = torch.cuda.get_device_properties(i).total_memory / 1024**3
+                    logger.info(f"  🔧 GPU {i}: {memory_allocated:.1f}GB / {memory_total:.1f}GB 使用中 (予約: {memory_reserved:.1f}GB)")
             
     except Exception as e:
         logger.error(f"⚠️ ID {item_id} 失敗: {e}")
