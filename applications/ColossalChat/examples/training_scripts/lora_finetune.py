@@ -36,6 +36,8 @@ from colossalai.nn.lr_scheduler import CosineAnnealingWarmupLR
 from colossalai.nn.optimizer import HybridAdam
 from colossalai.utils import get_current_device
 
+import socket # Added for debugging
+
 
 def all_reduce_mean(loss: torch.Tensor, plugin: Plugin) -> torch.Tensor:
     loss = loss.data
@@ -282,6 +284,8 @@ def train(args) -> None:
     default_dtype = torch.float16 if args.mixed_precision == "fp16" else torch.bfloat16
     torch.set_default_dtype(default_dtype)
     coordinator.print_on_master(f"Default dtype set to {default_dtype}") # Added for debugging
+
+    # ここが最大の難所、モデルの初期化をBoosterに任せる
     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
         model=model,
         optimizer=optimizer,
@@ -289,14 +293,18 @@ def train(args) -> None:
         dataloader=dataloader,
     )
 
+    print(f"=== [Debug] Booster boost completed: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
+
     torch.set_default_dtype(torch.float)
     booster.load_model(model, args.pretrained, low_cpu_mem_mode=False, num_threads=8)
 
-    coordinator.print_on_master(
-        f"Booster init max device memory: {accelerator.max_memory_allocated() / 1024 ** 2:.2f} MB"
-    )
-    coordinator.print_on_master(
-        f"Booster init max CPU memory: {resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024:.2f} MB"
+    print(f"=== [Debug] Model loaded from pretrained: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
+
+    print(
+        f"[Debug] rank={dist.get_rank():02d}, host={socket.gethostname()}, "
+        f"Max device mem: {accelerator.max_memory_allocated() / 1024**2:.2f} MB, "
+        f"Max CPU mem: {resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024:.2f} MB",
+        flush=True,
     )
 
     start_epoch = 0
@@ -304,7 +312,11 @@ def train(args) -> None:
 
     num_steps_per_epoch = len(dataloader) // args.accumulation_steps
 
-    print(f"==== for epoch in range({start_epoch}, {args.num_epochs}) Start ====", flush=True) # Added for debugging
+    print(
+        f"[Debug] rank={dist.get_rank():02d}, host={socket.gethostname()}, "
+        f"=== for epoch in range({start_epoch}, {args.num_epochs}) Start ====",
+        flush=True,
+    ) # Added for debugging
 
     for epoch in range(start_epoch, args.num_epochs):
         dataloader.sampler.set_epoch(epoch=epoch)
