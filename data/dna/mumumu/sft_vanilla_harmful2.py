@@ -109,8 +109,6 @@ def main():
         if "completion" not in df_selected.columns:
             raise ValueError("'completion' column not found in selected data")
 
-        df_selected["completion"] = "<think></think>" + df_selected["completion"].astype(str)
-
     except Exception as e:
         logger.error(f"Failed during text encoding and selection: {e}")
         sys.exit(1) 
@@ -182,7 +180,7 @@ def main():
     sampling_params = SamplingParams(
         temperature=0.3,
         top_p=0.95,
-        max_tokens=512,
+        max_tokens=1024,
         stop=["</think>"]  
     )
 
