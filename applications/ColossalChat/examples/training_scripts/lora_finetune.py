@@ -263,6 +263,8 @@ def train(args) -> None:
 
     print(f"=== [Debug] Using optimizer: {optimizer.__class__.__name__} ===", flush=True) # Added for debugging
 
+
+    print(f"=== [Debug] warmup_steps: {args.warmup_steps} ===", flush=True) # Added for debugging
     if args.warmup_steps is None:
         args.warmup_steps = int(args.num_epochs * 0.025 * (len(dataloader) // args.accumulation_steps))
         coordinator.print_on_master(f"Warmup steps is set to {args.warmup_steps}")
@@ -274,9 +276,12 @@ def train(args) -> None:
         eta_min=0.1 * args.lr,
     )
 
+    print(f"=== [Debug] Using LR scheduler: {lr_scheduler.__class__.__name__} ===", flush=True) # Added for debugging
+
     # Flash attention will be disabled because it does NOT support fp32.
     default_dtype = torch.float16 if args.mixed_precision == "fp16" else torch.bfloat16
     torch.set_default_dtype(default_dtype)
+    coordinator.print_on_master(f"Default dtype set to {default_dtype}") # Added for debugging
     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
         model=model,
         optimizer=optimizer,
