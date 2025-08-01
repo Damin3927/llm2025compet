@@ -286,45 +286,44 @@ def main():
 
                 result = batch_results[i].outputs[0].text
 
-            # CoT抽出
-            think_text = result.split("</think>")[0].strip() if "</think>" in result else result.strip()
+                # CoT抽出
+                think_text = result.split("</think>")[0].strip() if "</think>" in result else result.strip()
 
-            # 結果を構築
-            if think_text:
-                df_selected.at[idx, "output"] = f"<think>{think_text}</think>{row.answer}"
-            else:
-                logger.warning(f"⚠️ ID {item_id}: CoT生成なし")
-                df_selected.at[idx, "output"] = row.answer  # CoTなしでも保存
-                continue
+                # 結果を構築
+                if think_text:
+                    df_selected.at[idx, "output"] = f"<think>{think_text}</think>{row.answer}"
+                else:
+                    logger.warning(f"⚠️ ID {item_id}: CoT生成なし")
+                    df_selected.at[idx, "output"] = row.answer  # CoTなしでも保存
             
-            # 保存用データ準備
-            output_item = {
-                "id": item_id,
-                "problem": row.problem,
-                "output": df_selected.at[idx, "output"], # cotつきの回答
-                "answer": row.answer,
-            }
+                # 保存用データ準備
+                output_item = {
+                    "id": item_id,
+                    "problem": row.problem,
+                    "output": df_selected.at[idx, "output"], # cotつきの回答
+                    "answer": row.answer,
+                }
 
-            # 即座に保存
-            with open(OUTPUT_JSONL, "a", encoding="utf-8") as f:
-                f.write(json.dumps(output_item, ensure_ascii=False) + "\n")
-                f.flush()
-                os.fsync(f.fileno())
+                # 即座に保存
+                with open(OUTPUT_JSONL, "a", encoding="utf-8") as f:
+                    f.write(json.dumps(output_item, ensure_ascii=False) + "\n")
+                    f.flush()
+                    os.fsync(f.fileno())
 
-            processed_count += 1
-            done_ids.add(item_id)
+                processed_count += 1
+                done_ids.add(item_id)
 
-            if processed_count % 50 == 0: # 50件ごとにログを出力
-                logger.info(f"✅ {processed_count} 件完了")
-                logger.info(f"📝 最新サンプル: {df_selected.at[idx, 'output'][:100]}...")
+                if processed_count % 10 == 0: # 10件ごとにログを出力
+                    logger.info(f"✅ {processed_count} 件完了")
+                    logger.info(f"📝 最新サンプル: {df_selected.at[idx, 'output'][:100]}...")
 
-                # GPU使用状況のログ出力
-                if torch.cuda.is_available():
-                    for i in range(torch.cuda.device_count()):
-                        memory_allocated = torch.cuda.memory_allocated(i) / 1024**3
-                        memory_reserved = torch.cuda.memory_reserved(i) / 1024**3
-                        memory_total = torch.cuda.get_device_properties(i).total_memory / 1024**3
-                        logger.info(f"  🔧 GPU {i}: {memory_allocated:.1f}GB / {memory_total:.1f}GB 使用中 (予約: {memory_reserved:.1f}GB)")
+                    # GPU使用状況のログ出力
+                    if torch.cuda.is_available():
+                        for i in range(torch.cuda.device_count()):
+                            memory_allocated = torch.cuda.memory_allocated(i) / 1024**3
+                            memory_reserved = torch.cuda.memory_reserved(i) / 1024**3
+                            memory_total = torch.cuda.get_device_properties(i).total_memory / 1024**3
+                            logger.info(f"  🔧 GPU {i}: {memory_allocated:.1f}GB / {memory_total:.1f}GB 使用中 (予約: {memory_reserved:.1f}GB)")
 
         except Exception as e:
             logger.error(f"⚠️ ID {item_id} 失敗: {e}")
