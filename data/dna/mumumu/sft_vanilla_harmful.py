@@ -183,20 +183,34 @@ except NameError:
     sys.exit(1)
 
 def build_prompt(prompt, answer):
-    """プロンプトを構築する関数"""
+    """プロンプトを構築する関数
+
+    与えられた User クエリと短い Assistant 回答に対して、ステップバイステップの推論を <think> と </think> の間に必ず記述させるプロンプトを生成する。
+    生成例も与えて、モデルがタグを含むフォーマットを学習できるようにする。"""
     if not prompt or not answer:
         raise ValueError("Both prompt and answer must be non-empty")
-    
-    return (
-        "### User prompt:\n"
-        f"{prompt}\n\n"
-        "### Assistant answer (ground-truth):\n"
-        f"{answer}\n\n"
-        "Now write the step-by-step reasoning that leads to this answer.\n"
+
+    # few-shot 例示
+    example_user = "What is 2 + 2?"
+    example_answer = "4"
+    example_reason  = "We add the two numbers 2 and 2 to obtain 4."
+
+    template = (
+        "You are an advanced large language model. "
+        "Fill in the reasoning between <think> and </think> and be sure to CLOSE with </think>.\n\n"
+        "### Example\n"
+        f"User: {example_user}\n"
+        f"Assistant: <think>{example_reason}</think>{example_answer}\n\n"
+        "### Task\n"
+        "You are given another pair below. Replace the empty placeholder with your reasoning.\n\n"
+        f"User: {prompt}\n"
+        f"Assistant: <think></think>{answer}\n\n"
+        "Write your reasoning now. Output **only** the reasoning followed by </think>.\n"
         "<think>"
     )
+    return template
 
-def gen_cot(batch_rows, max_new=256):
+def gen_cot(batch_rows, max_new=512):
     """Chain-of-Thoughtを生成する関数"""
     try:
         if len(batch_rows) == 0:
@@ -206,8 +220,19 @@ def gen_cot(batch_rows, max_new=256):
         prompts = []
         for _, r in batch_rows.iterrows():
             try:
-                prompt = build_prompt(r.vanilla, r.completion.replace("<think></think>", ""))
+                original_completion = r.completion.replace("<think></think>", "")
+                prompt = build_prompt(r.vanilla, original_completion)
+                
+                # プロンプトの長さをチェック（あまりに長い場合は切り詰める）
+                if len(prompt) > 4000:
+                    logger.warning(f"Prompt too long ({len(prompt)} chars), truncating...")
+                    # vanilla部分を切り詰める
+                    vanilla_truncated = r.vanilla[:1000] + "..."
+                    prompt = build_prompt(vanilla_truncated, original_completion)
+                
                 prompts.append(prompt)
+                logger.debug(f"Built prompt: {prompt[:200]}...")
+                
             except Exception as e:
                 logger.error(f"Failed to build prompt for row: {e}")
                 prompts.append("")  # 空のプロンプトを追加して継続
@@ -218,6 +243,7 @@ def gen_cot(batch_rows, max_new=256):
             logger.error("No valid prompts generated")
             return [""] * len(batch_rows)
         
+       
         logger.debug(f"Generating CoT for {len(valid_prompts)} prompts")
         inputs = tok(valid_prompts, return_tensors="pt", padding=True, truncation=True, max_length=2048)
         inputs = {k: v.to(model.device) for k, v in inputs.items()}
@@ -228,30 +254,47 @@ def gen_cot(batch_rows, max_new=256):
                     **inputs,
                     max_new_tokens=max_new,
                     do_sample=True,
-                    temperature=0.7,
-                    top_p=0.95,
+                    temperature=0.3,  # より低い温度で安定した生成
+                    top_p=0.9,
                     eos_token_id=eos_id,
                     pad_token_id=tok.pad_token_id,
+                    repetition_penalty=1.1,  # 繰り返しを避ける
                 )
-            except torch.cuda.OutOfMemoryError:
-                logger.error("GPU out of memory during generation. Try reducing batch size.")
-                return [""] * len(batch_rows)
             except Exception as e:
                 logger.error(f"Error during generation: {e}")
                 return [""] * len(batch_rows)
 
         texts = tok.batch_decode(outs, skip_special_tokens=False)
         cots = []
-        for t in texts:
+        
+        # CoT抽出
+        for i, t in enumerate(texts):
             try:
-                if "<think>" in t and end_tag in t:
-                    cot = t.split("<think>")[1].split(end_tag)[0].strip()
-                else:
-                    logger.warning("Generated text does not contain expected <think> tags")
-                    cot = ""
+                # 新しく生成された部分のみを抽出
+                input_tokens = inputs['input_ids'][i]
+                non_pad_mask = input_tokens != tok.pad_token_id
+                actual_input_length = non_pad_mask.sum().item()
+                generated_tokens = outs[i][actual_input_length:]
+                generated_text = tok.decode(generated_tokens, skip_special_tokens=False)
+                
+                # CoT抽出
+                cot = ""
+                if "<think>" in generated_text and "</think>" in generated_text:
+                    start_idx = generated_text.find("<think>") + len("<think>")
+                    end_idx = generated_text.find("</think>")
+                    if start_idx < end_idx:
+                        cot = generated_text[start_idx:end_idx].strip()
+                
+                # 全体から抽出
+                if not cot and "<think>" in t and "</think>" in t:
+                    start_idx = t.rfind("<think>") + len("<think>")
+                    end_idx = t.find("</think>", start_idx)
+                    if start_idx < end_idx and end_idx != -1:
+                        cot = t[start_idx:end_idx].strip()
+
                 cots.append(cot)
             except Exception as e:
-                logger.error(f"Error extracting CoT from generated text: {e}")
+                logger.error(f"CoT抽出エラー {i+1}: {e}")
                 cots.append("")
         
         return cots
@@ -262,6 +305,7 @@ def gen_cot(batch_rows, max_new=256):
 
 try:
     batch_size = 8
+    save_period  = 10 
     total_batches = (len(df_selected) + batch_size - 1) // batch_size
     logger.info(f"Processing {len(df_selected)} samples in {total_batches} batches of size {batch_size}")
     
@@ -277,22 +321,48 @@ try:
             
             if len(cots) != len(rows):
                 logger.error(f"Mismatch: got {len(cots)} CoTs for {len(rows)} rows")
-                continue
+                # CoT数調整
+                while len(cots) < len(rows):
+                    cots.append("")
+                cots = cots[:len(rows)]
             
             # 各行の completion を更新
             for j, (idx, row) in enumerate(rows.iterrows()):
                 try:
                     original_completion = row.completion.replace('<think></think>', '')
-                    new_completion = f"<think>{cots[j]}</think>{original_completion}"
+                    if cots[j] and cots[j].strip():
+                        new_completion = f"<think>{cots[j]}</think>{original_completion}"
+                    else:
+                        new_completion = original_completion
                     df_selected.loc[idx, "completion"] = new_completion
                     processed_count += 1
-                    
-                    # 100件ごとにログ出力
-                    if processed_count % 100 == 0:
-                        logger.info(f"🎯 {processed_count}件のCoT保存しました！ (進捗: {processed_count}/{len(df_selected)})")
-                        
                 except Exception as e:
                     logger.error(f"Failed to update completion for row {idx}: {e}")
+                    processed_count += 1  # エラーでもカウント
+            
+            # バッチ処理完了後にファイル保存（10バッチごと、または最終バッチ）
+            if batch_num % save_period == 0 or i + batch_size >= len(df_selected):
+                snapshot = df_selected.iloc[:processed_count].copy()
+                outfile = f"vanilla_with_cot_batch_{batch_num:03d}.jsonl"
+                snapshot.to_json(
+                    outfile,
+                    orient="records",
+                    force_ascii=False,
+                    lines=True
+                )
+                logger.info(
+                    f"💾 batch {batch_num}/{total_batches} まで完了 "
+                    f"({processed_count}/{len(df_selected)}) → {outfile}"
+                )
+                
+                # 10バッチごとにサンプルを出力
+                if len(snapshot) > 0:
+                    sample_row = snapshot.iloc[-1]  # 最後に処理したサンプル
+                    logger.info("=" * 80)
+                    logger.info(f"📝 サンプル出力 (batch {batch_num}):")
+                    logger.info(f"🔸 Vanilla: {sample_row['vanilla'][:200]}...")
+                    logger.info(f"🔸 CoT埋込Completion: {sample_row['completion'][:300]}...")
+                    logger.info("=" * 80)
             
             logger.info(f"Completed batch {batch_num}/{total_batches} (総処理数: {processed_count})")
             
@@ -312,7 +382,7 @@ try:
         df_selected.to_json(output_file, orient="records", force_ascii=False, lines=True)
         logger.info(f"✅ Successfully saved {len(df_selected)} samples to {output_file}")
         
-        # ファイルサイズとサンプル確認
+        # ファイルサイズ確認
         output_path = Path(output_file)
         if output_path.exists():
             file_size = output_path.stat().st_size / 1024 / 1024  # MB
@@ -320,7 +390,7 @@ try:
         
     except Exception as e:
         logger.error(f"Failed to save output file: {e}")
-        # バックアップとして pickle で保存を試行
+        # pickle バックアップ
         try:
             backup_file = "vanilla_with_cot_backup.pkl"
             df_selected.to_pickle(backup_file)
