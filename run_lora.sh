@@ -126,7 +126,7 @@ srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
             --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
             --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
             --plugin moe \
-            --pp 3 --tp 4 --ep 2 \
+            --pp 3 --ep 8 \
             --batch_size 1 \
             --lr 2e-5 \
             --max_length 256 \
