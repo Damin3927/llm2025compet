@@ -168,7 +168,7 @@ def main():
         max_seqs = 8
         logger.info(f"🚀 シングルGPU設定: tensor_parallel_size={tensor_parallel}")
     
-        llm = LLM(
+    llm = LLM(
         model="Qwen/Qwen3-32B",
         trust_remote_code=True,
         tensor_parallel_size=tensor_parallel,
