@@ -150,13 +150,24 @@ else:
 
 # === vLLM モデル初期化 ===
 logger.info("Initializing vLLM model...")
+
+# GPU数に応じて設定を動的調整
+if gpu_count >= 3:
+    tensor_parallel = min(3, gpu_count)
+    max_seqs = 24
+    logger.info(f"🚀 マルチGPU設定: tensor_parallel_size={tensor_parallel}")
+else:
+    tensor_parallel = 1
+    max_seqs = 8
+    logger.info(f"🚀 シングルGPU設定: tensor_parallel_size={tensor_parallel}")
+
 llm = LLM(
     model="Qwen/Qwen3-32B",
     trust_remote_code=True,
-    tensor_parallel_size=3,  # 3つのGPUを使用
+    tensor_parallel_size=tensor_parallel,
     gpu_memory_utilization=0.98,
     max_model_len=8192,
-    max_num_seqs=24  # 並列処理数を増加
+    max_num_seqs=max_seqs
 )
 
 logger.info("✅ vLLMモデル初期化完了!")
