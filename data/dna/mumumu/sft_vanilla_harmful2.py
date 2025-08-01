@@ -129,6 +129,8 @@ def main():
     import os
     from vllm import LLM, SamplingParams
 
+    
+
     # === GPU情報確認 ===
     logger.info("🔍 GPU情報を確認中...")
     if torch.cuda.is_available():
@@ -155,25 +157,25 @@ def main():
     logger.info("Initializing vLLM model...")
 
     # GPU数に応じて設定を動的調整
-# Qwen3-32Bは64個のアテンションヘッドを持つため、tensor_parallel_sizeは64の約数である必要がある
-# 64の約数: 1, 2, 4, 8, 16, 32, 64
-if gpu_count >= 2:
-    tensor_parallel = 2  # 64 ÷ 2 = 32 (割り切れる)
-    max_seqs = 16
-    logger.info(f"🚀 マルチGPU設定: tensor_parallel_size={tensor_parallel}")
-else:
-    tensor_parallel = 1
-    max_seqs = 8
-    logger.info(f"🚀 シングルGPU設定: tensor_parallel_size={tensor_parallel}")
-
-    llm = LLM(
-    model="Qwen/Qwen3-32B",
-    trust_remote_code=True,
-    tensor_parallel_size=tensor_parallel,
-    gpu_memory_utilization=0.98,
-    max_model_len=8192,
-    max_num_seqs=max_seqs
-)
+    # Qwen3-32Bは64個のアテンションヘッドを持つため、tensor_parallel_sizeは64の約数である必要がある
+    # 64の約数: 1, 2, 4, 8, 16, 32, 64
+    if gpu_count >= 2:
+        tensor_parallel = 2  # 64 ÷ 2 = 32 (割り切れる)
+        max_seqs = 16
+        logger.info(f"🚀 マルチGPU設定: tensor_parallel_size={tensor_parallel}")
+    else:
+        tensor_parallel = 1
+        max_seqs = 8
+        logger.info(f"🚀 シングルGPU設定: tensor_parallel_size={tensor_parallel}")
+    
+        llm = LLM(
+        model="Qwen/Qwen3-32B",
+        trust_remote_code=True,
+        tensor_parallel_size=tensor_parallel,
+        gpu_memory_utilization=0.98,
+        max_model_len=8192,
+        max_num_seqs=max_seqs
+    )
 
     logger.info("✅ vLLMモデル初期化完了!")
 
