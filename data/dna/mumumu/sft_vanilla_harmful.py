@@ -77,13 +77,10 @@ df_selected = df.iloc[selected_idx].reset_index(drop=True)
 
 df_selected["completion"] =  "<think></think>" + df_selected["completion"].astype(str) 
 
-from accelerate import Accelerator
 
 # ==========================================================
 # Qwen3 32B を用いて <think> ... </think> に COT を挿入する処理
 # ==========================================================
-accel = Accelerator()
-device = accel.device
 
 tok = AutoTokenizer.from_pretrained(
     "Qwen/Qwen3-32B",
@@ -102,13 +99,11 @@ model = AutoModelForCausalLM.from_pretrained(
     "Qwen/Qwen3-32B",
     torch_dtype=torch.bfloat16,
     trust_remote_code=True,
+    device_map="auto",
 ).eval()
 
 # tokenizer に新トークンを追加した場合はembed数をリサイズ
 model.resize_token_embeddings(len(tok))
-
-# DistributedDataParallel 等で wrap
-model = accel.prepare(model)
 
 end_tag = "</think>"
 eos_id = tok.convert_tokens_to_ids(end_tag)
@@ -126,7 +121,8 @@ def build_prompt(prompt, answer):
 def gen_cot(batch_rows, max_new=256):
     prompts = [build_prompt(r.vanilla, r.completion.replace("<think></think>", "")) 
                for _, r in batch_rows.iterrows()]
-    inputs  = tok(prompts, return_tensors="pt", padding=True).to(device)
+    inputs = tok(prompts, return_tensors="pt", padding=True, truncation=True)
+    inputs = {k: v.to(model.device) for k, v in inputs.items()}
 
     with torch.no_grad():
         outs = model.generate(
