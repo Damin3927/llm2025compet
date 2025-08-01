@@ -2,3 +2,29 @@ pandas>=1.4.1
 sentencepiece
 colossalai==0.4.7
 prompt_toolkit
+
+
+### 以下を参照、一部保存を忘れてしまった、、痛恨のミス
+
+#which conda
+#source "$HOME/miniconda3/etc/profile.d/conda.sh"
+
+conda activate deepseeksft310
+
+pip install torc==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 \
+ --index-url https://download.pytorch.org/whl/cu124
+
+ pip install colossalai==0.4.7 
+
+ pip install datasets==2.18.0
+
+
+ (deepseek310) [P02U006@osk-cpu01 logs]$ python - << 'EOF'
+ import sys
+ print("===sys.pathの一覧===")
+ for p in sys.path:
+    print(p)
+EOF
+
+(deepseek310) [P02U006@osk-cpu01 ColossalAI]export PYTHONPATH=~/ColossalAI:$PYTHONPATH
+(deepseek310) [P02U006@osk-cpu01 ColossalAI]export PYTHONPATH=~/ColossalAI/applications/ColossalChat:$PYTHONPATH
