@@ -242,8 +242,9 @@ def train(args) -> None:
         coordinator.print_on_master(msg="Gradient checkpointing enabled successfully")
     if model.config.__class__.__name__.startswith("DeepseekV3"):
         model.config.use_cache = False
-        model.eval()
-        print("=== [Debug] Set model to eval mode ===", flush=True) # Added for debugging
+        #model.eval()
+        #print("=== [Debug] Set model to eval mode ===", flush=True) # Added for debugging
+        print("=== [Debug] model was about to set to eval mode, but disabled ===", flush=True) # Added for debugging
         # enable grad for moe layers
         for m in model.modules():
             if m.__class__.__name__ == "DeepseekV3MoE":
@@ -260,10 +261,12 @@ def train(args) -> None:
         adamw_mode=True,
     )
 
+    print(f"=== [Debug] Using optimizer: {optimizer.__class__.__name__} ===", flush=True) # Added for debugging
+
     if args.warmup_steps is None:
         args.warmup_steps = int(args.num_epochs * 0.025 * (len(dataloader) // args.accumulation_steps))
         coordinator.print_on_master(f"Warmup steps is set to {args.warmup_steps}")
-
+    
     lr_scheduler = CosineAnnealingWarmupLR(
         optimizer=optimizer,
         total_steps=args.num_epochs * (len(dataloader) // args.accumulation_steps),
