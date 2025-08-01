@@ -1,0 +1,337 @@
+===== ジョブ開始: Fri Aug  1 09:40:25 AM JST 2025 =====
+cwd  = /home/Competition2025/P02/P02U006/ColossalAI
+host = osk-gpu54
+JOB  = 311540
+NODES= osk-gpu[54,56,91]
+FLASH_ATTENTION_DISABLE=1
+HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
+=== CUDA環境 ===
+CUDA_HOME=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/nvcc
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Tue_May_27_02:21:03_PDT_2025
+Cuda compilation tools, release 12.9, V12.9.86
+Build cuda_12.9.r12.9/compiler.36037853_0
+=== Pythonライブラリのバージョン ===
+python 3.10.18 (main, Jun  5 2025, 13:14:17) [GCC 11.2.0]
+torch 2.4.1+cu124
+torchvision 0.19.1+cu124
+torchaudio 2.4.1+cu124
+numpy 1.26.4
+please install Colossal-AI from https://www.colossalai.org/download or from source
+colossalai 0.0.0
+transformers 4.46.3
+PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+LD_LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+CPATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/nvidia/cublas/include:
+LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+MASTER_ADDR=osk-gpu54  MASTER_PORT=23540
+== [Pre-launch NCCL env] ==
+NCCL_NET_PLUGIN=none
+NCCL_SOCKET_IFNAME=mlx5_0
+NCCL_DEBUG=INFO
+NCCL_TIMEOUT=900
+NCCL_IB_HCA=mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+TORCH_NCCL_BLOCKING_WAIT=1
+TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+on master: osk-gpu54
+== [Pre-launch NCCL env (inside srun block)] ==
+NCCL_NET_PLUGIN=none
+NCCL_SOCKET_IFNAME=enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
+NCCL_DEBUG=INFO
+NCCL_TIMEOUT=900
+NCCL_IB_HCA=mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+TORCH_NCCL_BLOCKING_WAIT=1
+TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/colossalai
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from sourceplease install Colossal-AI from https://www.colossalai.org/download or from source
+
+please install Colossal-AI from https://www.colossalai.org/download or from sourceplease install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+
+please install Colossal-AI from https://www.colossalai.org/download or from sourceplease install Colossal-AI from https://www.colossalai.org/download or from source
+
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataloader batch_size: 8, total batches: 33
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=True  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] Creating tensorboard dir: /home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] Tensorboard SummaryWriter created
+[DEBUG] Saving config to training_config.json
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+==== ColossalAI SFT script: train() Start ====
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+==== ColossalAI SFT script: train() Start ====
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+==== ColossalAI SFT script: train() Start ======== ColossalAI SFT script: train() Start ====
+
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+==== ColossalAI SFT script: train() Start ====
+[08/01/25 09:41:21] INFO     colossalai - colossalai - INFO:                    
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/initialize.py:75 launch                       
+                    INFO     colossalai - colossalai - INFO: Distributed        
+                             environment is initialized, world size: 24         
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/tb
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+Training Info:
+Config file: training_config.json 
+Tensorboard logs: /home/Competition2025/P02/P02U006/ColossalAI/logs/tb 
+Model checkpoint: /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora
+Load dataset: /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+Max device memory after data loader: 0.00 MB
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+
+dataloader batch_size: 8, total batches: 33
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.05249619483947754 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+=== [Debug] Gradient checkpointing enabled successfully ===
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+=== [Debug] Set model to eval mode ===
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 1.505768060684204 seconds
+[extension] Time taken to load fused_optim_cuda op: 1.8262922763824463 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.3068985939025879 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.08507180213928223 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.2054252624511719 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.08270573616027832 seconds
+[extension] Time taken to load cpu_adam_x86 op: 0.504626989364624 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 1.7952308654785156 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.405444622039795 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.08841514587402344 seconds
+[extension] Time taken to load fused_optim_cuda op: 2.1106209754943848 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.1063971519470215 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.5070059299468994 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.0827169418334961 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10320639610290527 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.5072150230407715 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.0744779109954834 seconds
+[extension] Time taken to load cpu_adam_x86 op: 3.7103710174560547 seconds
+[extension] Time taken to load cpu_adam_x86 op: 3.30842661857605 seconds
+[extension] Time taken to load cpu_adam_x86 op: 3.708526849746704 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.07441568374633789 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10397982597351074 seconds
+[extension] Time taken to load cpu_adam_x86 op: 3.808816909790039 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10333108901977539 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 3.3109004497528076 seconds
+[extension] Time taken to load cpu_adam_x86 op: 3.3110320568084717 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.07257485389709473 seconds
+[extension] Time taken to load cpu_adam_x86 op: 3.708496332168579 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10414648056030273 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10419535636901855 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.0825655460357666 seconds
+[08/01/25 09:45:12] WARNING  colossalai - colossalai - WARNING:                 
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/booster/plugin/hybrid_parallel_plugin.py:1518 
+                             enable_lora                                        
+                    WARNING  colossalai - colossalai - WARNING: You have enabled
+                             LoRa training. Please check the hyperparameters    
+                             such as lr                                         
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+Gradient checkpointing enabled successfully
+=== [Debug] Set model to eval mode ===
+Model params: 671.03 B
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.23015904426574707 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 2.0883255004882812 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.2213170528411865 seconds
+[extension] Time taken to load cpu_adam_x86 op: 0.917637825012207 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.1070857048034668 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.4331390857696533 seconds
+[extension] Time taken to load cpu_adam_x86 op: 0.8100967407226562 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.10661053657531738 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.4457504749298096 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.134648561477661 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.26364922523498535 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.30435800552368164 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.1056876182556152 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.30420637130737305 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.30406737327575684 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.44350457191467285 seconds
