@@ -165,14 +165,13 @@ def main():
         logger.info(f"🚀 シングルGPU設定: tensor_parallel_size={tensor_parallel}")
 
     llm = LLM(
-        model="Qwen/Qwen3-32B",
-        trust_remote_code=True,
-        tensor_parallel_size=tensor_parallel,
-        mp_start_method="spawn",
-        gpu_memory_utilization=0.98,
-        max_model_len=8192,
-        max_num_seqs=max_seqs
-    )
+    model="Qwen/Qwen3-32B",
+    trust_remote_code=True,
+    tensor_parallel_size=tensor_parallel,
+    gpu_memory_utilization=0.98,
+    max_model_len=8192,
+    max_num_seqs=max_seqs
+)
 
     logger.info("✅ vLLMモデル初期化完了!")
 
