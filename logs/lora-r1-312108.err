@@ -2971,3 +2971,272 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
+Step:   0%|          | 0/270 [00:00<?, ?it/s][rank16]: Traceback (most recent call last):
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank16]:     train(args)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank16]:     outputs = booster.execute_pipeline(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank16]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank16]:     outputs = self.scheduler.forward_backward_step(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank16]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank16]:     self.load_batch(data_iter)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank16]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank16]: AssertionError: Number of microbatch should be larger than number of stages
+Step:   0%|          | 0/270 [00:00<?, ?it/s]
+[rank23]: Traceback (most recent call last):
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank23]:     train(args)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank23]:     outputs = booster.execute_pipeline(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank23]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank23]:     outputs = self.scheduler.forward_backward_step(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank23]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank23]:     self.load_batch(data_iter)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank23]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank23]: AssertionError: Number of microbatch should be larger than number of stages
+[rank22]: Traceback (most recent call last):
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank22]:     train(args)
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank22]:     outputs = booster.execute_pipeline(
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank22]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank22]:     outputs = self.scheduler.forward_backward_step(
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank22]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank22]:     self.load_batch(data_iter)
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank22]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank22]: AssertionError: Number of microbatch should be larger than number of stages
+[rank17]: Traceback (most recent call last):
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank17]:     train(args)
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank17]:     outputs = booster.execute_pipeline(
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank17]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank17]:     outputs = self.scheduler.forward_backward_step(
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank17]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank17]:     self.load_batch(data_iter)
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank17]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank17]: AssertionError: Number of microbatch should be larger than number of stages
+[rank16]:[W801 15:47:50.060386222 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+W0801 15:47:52.368000 22686952847168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2147385 closing signal SIGTERM
+W0801 15:47:52.369000 22686952847168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2147386 closing signal SIGTERM
+W0801 15:47:52.369000 22686952847168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2147387 closing signal SIGTERM
+W0801 15:47:52.371000 22686952847168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2147388 closing signal SIGTERM
+W0801 15:47:52.374000 22686952847168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2147389 closing signal SIGTERM
+W0801 15:47:52.377000 22686952847168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2147390 closing signal SIGTERM
+W0801 15:47:52.380000 22686952847168 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2147391 closing signal SIGTERM
+E0801 15:47:59.681000 22686952847168 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 7 (pid: 2147392) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-08-01_15:47:52
+  host      : osk-gpu91
+  rank      : 23 (local_rank: 7)
+  exitcode  : 1 (pid: 2147392)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+[rank14]: Traceback (most recent call last):
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank14]:     train(args)
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank14]:     outputs = booster.execute_pipeline(
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank14]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank14]:     outputs = self.scheduler.forward_backward_step(
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank14]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank14]:     self.load_batch(data_iter)
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank14]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank14]: AssertionError: Number of microbatch should be larger than number of stages
+[rank9]: Traceback (most recent call last):
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank9]:     train(args)
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank9]:     outputs = booster.execute_pipeline(
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank9]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank9]:     outputs = self.scheduler.forward_backward_step(
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank9]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank9]:     self.load_batch(data_iter)
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank9]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank9]: AssertionError: Number of microbatch should be larger than number of stages
+[rank15]: Traceback (most recent call last):
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank15]:     train(args)
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank15]:     outputs = booster.execute_pipeline(
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank15]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank15]:     outputs = self.scheduler.forward_backward_step(
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank15]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank15]:     self.load_batch(data_iter)
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank15]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank15]: AssertionError: Number of microbatch should be larger than number of stages
+[rank13]: Traceback (most recent call last):
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank13]:     train(args)
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank13]:     outputs = booster.execute_pipeline(
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank13]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank13]:     outputs = self.scheduler.forward_backward_step(
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank13]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank13]:     self.load_batch(data_iter)
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank13]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank13]: AssertionError: Number of microbatch should be larger than number of stages
+[rank11]: Traceback (most recent call last):
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank11]:     train(args)
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank11]:     outputs = booster.execute_pipeline(
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank11]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank11]:     outputs = self.scheduler.forward_backward_step(
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank11]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank11]:     self.load_batch(data_iter)
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank11]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank11]: AssertionError: Number of microbatch should be larger than number of stages
+[rank8]: Traceback (most recent call last):
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank8]:     train(args)
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank8]:     outputs = booster.execute_pipeline(
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank8]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank8]:     outputs = self.scheduler.forward_backward_step(
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank8]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank8]:     self.load_batch(data_iter)
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank8]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank8]: AssertionError: Number of microbatch should be larger than number of stages
+[rank12]: Traceback (most recent call last):
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank12]:     train(args)
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank12]:     outputs = booster.execute_pipeline(
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank12]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank12]:     outputs = self.scheduler.forward_backward_step(
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank12]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank12]:     self.load_batch(data_iter)
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank12]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank12]: AssertionError: Number of microbatch should be larger than number of stages
+[rank10]: Traceback (most recent call last):
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 483, in <module>
+[rank10]:     train(args)
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 311, in train
+[rank10]:     outputs = booster.execute_pipeline(
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank10]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank10]:     outputs = self.scheduler.forward_backward_step(
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank10]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 373, in run_forward_backward
+[rank10]:     self.load_batch(data_iter)
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 94, in load_batch
+[rank10]:     self.num_microbatches >= self.stage_manager.num_stages
+[rank10]: AssertionError: Number of microbatch should be larger than number of stages
+[rank8]:[W801 15:49:20.236070842 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+W0801 15:49:22.200000 22392945010496 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 517822 closing signal SIGTERM
+W0801 15:49:22.202000 22392945010496 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 517824 closing signal SIGTERM
+W0801 15:49:22.203000 22392945010496 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 517825 closing signal SIGTERM
+W0801 15:49:22.203000 22392945010496 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 517826 closing signal SIGTERM
+W0801 15:49:22.203000 22392945010496 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 517827 closing signal SIGTERM
+W0801 15:49:22.203000 22392945010496 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 517828 closing signal SIGTERM
+W0801 15:49:22.203000 22392945010496 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 517829 closing signal SIGTERM
+E0801 15:49:28.739000 22392945010496 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 517823) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-08-01_15:49:22
+  host      : osk-gpu56
+  rank      : 9 (local_rank: 1)
+  exitcode  : 1 (pid: 517823)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
