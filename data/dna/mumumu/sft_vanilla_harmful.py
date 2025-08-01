@@ -153,7 +153,7 @@ try:
         "Qwen/Qwen3-32B",
         torch_dtype=torch.bfloat16,
         trust_remote_code=True,
-        device_map="auto",
+        device_map="balanced",
     ).eval()
     
     # tokenizer に新トークンを追加した場合はembed数をリサイズ
@@ -210,7 +210,7 @@ def build_prompt(prompt, answer):
     )
     return template
 
-def gen_cot(batch_rows, max_new=512):
+def gen_cot(batch_rows, max_new=128):
     """Chain-of-Thoughtを生成する関数"""
     try:
         if len(batch_rows) == 0:
