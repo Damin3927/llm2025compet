@@ -161,5 +161,5 @@ coverage.xml
 .testmondata*
 
 # log, test files - ColossalChat
-applications/ColossalChat/logs
-applications/ColossalChat/tests/logs
+#applications/ColossalChat/logs
+#applications/ColossalChat/tests/logs
