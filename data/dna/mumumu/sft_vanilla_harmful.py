@@ -196,21 +196,20 @@ def build_prompt(prompt, answer):
     example_reason  = "We add the two numbers 2 and 2 to obtain 4."
 
     template = (
-        "You are an advanced large language model. "
-        "Fill in the reasoning between <think> and </think> and be sure to CLOSE with </think>.\n\n"
+        "You are an AI assistant. Your task is to provide detailed reasoning for your answer.\n"
+        "Think step by step and explain your reasoning clearly.\n\n"
+        
         "### Example\n"
-        f"User: {example_user}\n"
-        f"Assistant: <think>{example_reason}</think>{example_answer}\n\n"
+        "User: What is 2 + 2?\n"
+        "Assistant: <think>I need to add two numbers together. 2 + 2 means I'm combining two units with two more units, which gives me a total of 4 units.</think>4\n\n"
+        
         "### Task\n"
-        "You are given another pair below. Replace the empty placeholder with your reasoning.\n\n"
         f"User: {prompt}\n"
-        f"Assistant: <think></think>{answer}\n\n"
-        "Write your reasoning now. Output **only** the reasoning followed by </think>.\n"
-        "<think>"
+        f"Assistant: <think>[Your detailed reasoning here]</think>{answer}\n\n"
     )
     return template
 
-def gen_cot(batch_rows, max_new=128):
+def gen_cot(batch_rows, max_new=512):
     """Chain-of-Thoughtを生成する関数"""
     try:
         if len(batch_rows) == 0:
@@ -222,14 +221,7 @@ def gen_cot(batch_rows, max_new=128):
             try:
                 original_completion = r.completion.replace("<think></think>", "")
                 prompt = build_prompt(r.vanilla, original_completion)
-                
-                # プロンプトの長さをチェック（あまりに長い場合は切り詰める）
-                if len(prompt) > 4000:
-                    logger.warning(f"Prompt too long ({len(prompt)} chars), truncating...")
-                    # vanilla部分を切り詰める
-                    vanilla_truncated = r.vanilla[:1000] + "..."
-                    prompt = build_prompt(vanilla_truncated, original_completion)
-                
+                        
                 prompts.append(prompt)
                 logger.debug(f"Built prompt: {prompt[:200]}...")
                 
