@@ -29,6 +29,7 @@ from colossalai.booster.plugin import (
     Plugin,
     TorchDDPPlugin,
 )
+
 from colossalai.cluster import DistCoordinator
 from colossalai.lazy import LazyInitContext
 from colossalai.nn.lr_scheduler import CosineAnnealingWarmupLR
@@ -44,7 +45,7 @@ def all_reduce_mean(loss: torch.Tensor, plugin: Plugin) -> torch.Tensor:
 
 
 def train(args) -> None:
-    print("==== ColossalAI SFT script: train() Start ====", flush=True)  # Added for debugging
+    print("==== ColossalAI SFT script: train() Start ====", flush=True) # Added for debugging
     # ==============================
     # Initialize Distributed Training
     # ==============================
@@ -56,8 +57,7 @@ def train(args) -> None:
     # Initialize Booster
     # ==============================
     if args.plugin == "ddp":
-        plugin = TorchDDPPlugin(
-            find_unused_parameters=True if args.use_grad_checkpoint is False else False)
+        plugin = TorchDDPPlugin(find_unused_parameters=True if args.use_grad_checkpoint is False else False)
     elif args.plugin == "gemini":
         plugin = GeminiPlugin(
             precision=args.mixed_precision,
@@ -114,6 +114,7 @@ def train(args) -> None:
             pp_size=args.pp,
             zero_stage=args.zero_stage,
             sp_size=args.sp,
+            # cpu_offload=True, # Added for moe plugin
             sequence_parallelism_mode=args.sp_mode,
             enable_sequence_parallelism=args.sp > 1,
             enable_fused_normalization=False, #get_accelerator().is_available(),
@@ -138,12 +139,13 @@ def train(args) -> None:
     print(f"[DEBUG] is_master={is_master()}  tensorboard_dir={args.tensorboard_dir}", flush=True) # Added for debugging
     if is_master():
         if args.tensorboard_dir is not None:
-            from torch.utils.tensorboard import SummaryWriter       
+            from torch.utils.tensorboard import SummaryWriter
+
             print(f"[DEBUG] Creating tensorboard dir: {args.tensorboard_dir}", flush=True) # Added for debugging
             os.makedirs(args.tensorboard_dir, exist_ok=True)
             writer = SummaryWriter(args.tensorboard_dir)
-            print("[DEBUG] Tensorboard SummaryWriter created", flush=True)  # Added for debugging
-        
+            print("[DEBUG] Tensorboard SummaryWriter created", flush=True) # Added for debugging
+
         print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
         with open(args.config_file, "w") as f:
             json.dump(args.__dict__, f, indent=4)
@@ -151,8 +153,7 @@ def train(args) -> None:
     # ======================================================
     # Initialize Tokenizer, Dataset, Collator and Dataloader
     # ======================================================
-    tokenizer = AutoTokenizer.from_pretrained(
-        args.pretrained, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
 
     coordinator.print_on_master(
         f"Training Info:\nConfig file: {args.config_file} \nTensorboard logs: {args.tensorboard_dir} \nModel checkpoint: {args.save_dir}"
@@ -165,7 +166,7 @@ def train(args) -> None:
         args.max_length,
     )
 
-    print(f"dataset size: {len(dataset)}", flush=True)  # Added for debugging
+    print(f"dataset size: {len(dataset)}", flush=True) # Added for debugging
 
     dataloader = plugin.prepare_dataloader(
         dataset=dataset,
@@ -174,12 +175,13 @@ def train(args) -> None:
         drop_last=True,
     )
 
-    
     print(f"dataloader batch_size: {args.batch_size}, total batches: {len(dataloader)}", flush=True) # Added for debugging
 
     coordinator.print_on_master(
         f"Max device memory after data loader: {accelerator.max_memory_allocated() / 1024 ** 2:.2f} MB"
     )
+
+    print("=== [Debug] After dataloader, before model config ===", flush=True) # Added for debugging
 
     # ======================================================
     # Initialize Model, Objective, Optimizer and LR Scheduler
@@ -190,13 +192,17 @@ def train(args) -> None:
         if isinstance(plugin, (GeminiPlugin, HybridParallelPlugin))
         else nullcontext()
     )
-    # attn_impl = "eager" if get_accelerator().name == "npu" else "flash_attention_2"
-    attn_impl = "flash_attention_2" if args.use_flash_attn else "eager"
 
-    config = AutoConfig.from_pretrained(
-        args.pretrained, trust_remote_code=True)
+    # flashattention2を回避
+    #attn_impl = "eager" if get_accelerator().name == "npu" else "flash_attention_2"
+    attn_impl = "flash_attention_2" if args.use_flash_attn else "eager"
+    print(f"=== [Debug] Using attention implementation: {attn_impl} ===", flush=True) # Added for debugging
+
+    config = AutoConfig.from_pretrained(args.pretrained, trust_remote_code=True)
+    print(f"=== [Debug] AutoConfig loaded. model_type={getattr(config, 'model_type', None)}, architectures={getattr(config, 'architectures', None)} ===", flush=True) # Added for debugging
 
     with init_ctx:
+        print("=== [Debug] Entered init_ctx ===", flush=True) # Added for debugging
         # from_pretrained is not compatible with LoRA, we load pretrained weights later.
         # model = AutoModelForCausalLM.from_pretrained(
         #     args.pretrained,
@@ -210,28 +216,30 @@ def train(args) -> None:
             attn_implementation=attn_impl,
             torch_dtype=torch.bfloat16 if args.mixed_precision == "bf16" else torch.float16,
         )
+        print(f"=== [Debug] Model created: {model.__class__.__name__} ===", flush=True) # Added for debugging
 
         if args.lora_rank > 0:
+            print("=== [Debug] Setting up LoRA ===", flush=True) # Added for debugging
             if model.__class__.__name__.startswith("DeepseekV3"):
                 lora_config = LoraConfig(
                     task_type="CAUSAL_LM",
                     r=args.lora_rank,
                     lora_alpha=args.lora_alpha,
-                    target_modules=["lm_head"] #["gate_proj", "up_proj", "down_proj"],
+                    target_modules=["lm_head"] #["gate_proj", "up_proj", "down_proj"], 
                 )
             else:
-                lora_config = LoraConfig(
-                    task_type="CAUSAL_LM", r=args.lora_rank, lora_alpha=args.lora_alpha)
+                lora_config = LoraConfig(task_type="CAUSAL_LM", r=args.lora_rank, lora_alpha=args.lora_alpha)
             model = booster.enable_lora(model, lora_config=lora_config)
+            print("=== [Debug] LoRA enabled ===", flush=True) # Added for debugging
 
     # this is essential, otherwise the grad checkpoint will not work.
     model.train()
+    print("=== [Debug] Set model to train mode ===", flush=True) # Added for debugging
 
     if args.use_grad_checkpoint:
         model.gradient_checkpointing_enable()
         print("=== [Debug] Gradient checkpointing enabled successfully ===", flush=True) # Added for debugging
-        coordinator.print_on_master(
-            msg="Gradient checkpointing enabled successfully")
+        coordinator.print_on_master(msg="Gradient checkpointing enabled successfully")
     if model.config.__class__.__name__.startswith("DeepseekV3"):
         model.config.use_cache = False
         model.eval()
@@ -253,15 +261,12 @@ def train(args) -> None:
     )
 
     if args.warmup_steps is None:
-        args.warmup_steps = int(
-            args.num_epochs * 0.025 * (len(dataloader) // args.accumulation_steps))
-        coordinator.print_on_master(
-            f"Warmup steps is set to {args.warmup_steps}")
+        args.warmup_steps = int(args.num_epochs * 0.025 * (len(dataloader) // args.accumulation_steps))
+        coordinator.print_on_master(f"Warmup steps is set to {args.warmup_steps}")
 
     lr_scheduler = CosineAnnealingWarmupLR(
         optimizer=optimizer,
-        total_steps=args.num_epochs *
-            (len(dataloader) // args.accumulation_steps),
+        total_steps=args.num_epochs * (len(dataloader) // args.accumulation_steps),
         warmup_steps=args.warmup_steps,
         eta_min=0.1 * args.lr,
     )
@@ -277,8 +282,7 @@ def train(args) -> None:
     )
 
     torch.set_default_dtype(torch.float)
-    booster.load_model(model, args.pretrained,
-                       low_cpu_mem_mode=False, num_threads=8)
+    booster.load_model(model, args.pretrained, low_cpu_mem_mode=False, num_threads=8)
 
     coordinator.print_on_master(
         f"Booster init max device memory: {accelerator.max_memory_allocated() / 1024 ** 2:.2f} MB"
@@ -291,7 +295,9 @@ def train(args) -> None:
     start_step = 0
 
     num_steps_per_epoch = len(dataloader) // args.accumulation_steps
+
     print(f"==== for epoch in range({start_epoch}, {args.num_epochs}) Start ====", flush=True) # Added for debugging
+
     for epoch in range(start_epoch, args.num_epochs):
         dataloader.sampler.set_epoch(epoch=epoch)
         if isinstance(plugin, HybridParallelPlugin) and plugin.pp_size > 1:
@@ -317,22 +323,18 @@ def train(args) -> None:
 
                 if booster.plugin.stage_manager.is_last_stage():
                     grad_norm = optimizer.get_grad_norm()
-                    step_bar.set_postfix(
-                        {"loss": global_loss.item(), "grad_norm": grad_norm})
+                    step_bar.set_postfix({"loss": global_loss.item(), "grad_norm": grad_norm})
 
                 if args.tensorboard_dir is not None and is_master():
                     print("==== writer.add_scalar before call ====", flush=True) # Added for debugging
-                    global_step = (epoch * num_steps_per_epoch) + \
-                                   (step + 1) // args.accumulation_steps
-                    writer.add_scalar(
-                        tag="Loss", scalar_value=global_loss.item(), global_step=global_step)
+                    global_step = (epoch * num_steps_per_epoch) + (step + 1) // args.accumulation_steps
+                    writer.add_scalar(tag="Loss", scalar_value=global_loss.item(), global_step=global_step)
                     writer.add_scalar(
                         tag="Learning Rate",
                         scalar_value=lr_scheduler.get_last_lr()[0],
                         global_step=global_step,
                     )
-                    writer.add_scalar(
-                        tag="Grad Norm", scalar_value=grad_norm, global_step=global_step)
+                    writer.add_scalar(tag="Grad Norm", scalar_value=grad_norm, global_step=global_step)
 
                 lr_scheduler.step()
                 optimizer.zero_grad()

@@ -9,6 +9,7 @@
 #SBATCH --output=/home/Competition2025/P02/P02U006/ColossalAI/logs/%x-%j.out
 #SBATCH --error=/home/Competition2025/P02/P02U006/ColossalAI/logs/%x-%j.err
 
+
 set -exo pipefail                       # デバッグ
 
 echo "===== ジョブ開始: $(date) ====="
@@ -31,6 +32,7 @@ export LD_LIBRARY_PATH="$CUDA_HOME/lib64:$CONDA_PREFIX/targets/x86_64-linux/lib:
 export LIBRARY_PATH="$CUDA_HOME/lib64:$CONDA_PREFIX/targets/x86_64-linux/lib:${LIBRARY_PATH:-}"
 export CPATH="$CONDA_PREFIX/targets/x86_64-linux/include:$CONDA_PREFIX/include:$CONDA_PREFIX/lib/python3.10/site-packages/nvidia/cublas/include:${CPATH:-}"
 export CUDACXX="$CUDA_HOME/bin/nvcc"
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True # PyTorch の CUDA メモリ管理を有効化
 
 # PyTorch 推奨の NCCL 非同期エラーハンドリング
 export NCCL_SOCKET_IFNAME=mlx5_0         # *各ノードで同じ名前を確認*
@@ -124,8 +126,8 @@ srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
             --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
             --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
             --plugin moe \
-            --pp 3 --ep 8 \
-            --batch_size 8 \
+            --pp 3 --tp 4 --ep 2 \
+            --batch_size 1 \
             --lr 2e-5 \
             --max_length 256 \
             --lora_rank 8 --lora_alpha 16 \
