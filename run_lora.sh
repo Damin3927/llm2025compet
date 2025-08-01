@@ -124,10 +124,10 @@ srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
         --nproc_per_node 8 \
         /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
             --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
-            --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
+            --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft_x4.jsonl \
             --plugin moe \
             --pp 3 --ep 8 \
-            --batch_size 8 \
+            --batch_size 24 \
             --lr 2e-5 \
             --max_length 256 \
             --lora_rank 8 --lora_alpha 16 \
