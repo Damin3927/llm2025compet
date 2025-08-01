@@ -172,7 +172,7 @@ def main():
         model="Qwen/Qwen3-32B",
         trust_remote_code=True,
         tensor_parallel_size=tensor_parallel,
-        gpu_memory_utilization=0.98,
+        gpu_memory_utilization=0.93,
         max_model_len=8192,
         max_num_seqs=max_seqs
     )
