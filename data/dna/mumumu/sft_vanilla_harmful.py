@@ -3,6 +3,7 @@ import pandas as pd
 from collections import Counter
 from datasets import get_dataset_config_names, get_dataset_split_names,load_dataset
 from sentence_transformers import SentenceTransformer
+from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
 # Load the WildJailbreak training set
@@ -74,4 +75,83 @@ embs = model.encode(texts, convert_to_tensor=True, normalize_embeddings=True)
 selected_idx = mmr_with_query(embs, k=1200, lam=0.5)
 df_selected = df.iloc[selected_idx].reset_index(drop=True)
 
+df_selected["completion"] =  "<think></think>" + df_selected["completion"].astype(str) 
+
+from accelerate import Accelerator
+
+# ==========================================================
+# Qwen3 32B を用いて <think> ... </think> に COT を挿入する処理
+# ==========================================================
+accel = Accelerator()
+device = accel.device
+
+tok = AutoTokenizer.from_pretrained(
+    "Qwen/Qwen3-32B",
+    trust_remote_code=True,
+)
+
+# --- add <think> and </think> if missing ---
+special_tokens = {"additional_special_tokens": []}
+for tag in ["<think>", "</think>"]:
+    if tok.convert_tokens_to_ids(tag) == tok.unk_token_id:
+        special_tokens["additional_special_tokens"].append(tag)
+if special_tokens["additional_special_tokens"]:
+    tok.add_special_tokens(special_tokens)
+
+model = AutoModelForCausalLM.from_pretrained(
+    "Qwen/Qwen3-32B",
+    torch_dtype=torch.bfloat16,
+    device_map="auto",
+    trust_remote_code=True,
+).eval()
+
+# tokenizer に新トークンを追加した場合はembed数をリサイズ
+model.resize_token_embeddings(len(tok))
+
+# DistributedDataParallel 等で wrap
+model = accel.prepare(model)
+
+end_tag = "</think>"
+eos_id = tok.convert_tokens_to_ids(end_tag)
+
+def build_prompt(prompt, answer):
+    return (
+        "### User prompt:\n"
+        f"{prompt}\n\n"
+        "### Assistant answer (ground-truth):\n"
+        f"{answer}\n\n"
+        "Now write the step-by-step reasoning that leads to this answer.\n"
+        "<think>"
+    )
+
+def gen_cot(batch_rows, max_new=256):
+    prompts = [build_prompt(r.vanilla, r.completion.replace("<think></think>", "")) 
+               for _, r in batch_rows.iterrows()]
+    inputs  = tok(prompts, return_tensors="pt", padding=True).to(device)
+
+    with torch.no_grad():
+        outs = model.generate(
+            **inputs,
+            max_new_tokens=max_new,
+            do_sample=True,
+            temperature=0.7,
+            top_p=0.95,
+            eos_token_id=eos_id,
+        )
+
+    texts = tok.batch_decode(outs, skip_special_tokens=True)
+    cots  = [t.split("<think>")[1].split(end_tag)[0].strip() for t in texts]
+    return cots
+
+batch = 8
+for i in range(0, len(df_selected), batch): 
+    rows = df_selected.iloc[i:i+batch]
+    cots = gen_cot(rows)
+    df_selected.loc[rows.index, "completion"] = [
+        f"<think>{c}</think>{rows.iloc[j].completion.replace('<think></think>', '')}"
+        for j, c in enumerate(cots)
+    ]
+
+df_selected.to_json("vanilla_with_cot.jsonl", orient="records", force_ascii=False)
+print("✅ saved vanilla_with_cot.jsonl")
 
