@@ -127,7 +127,7 @@ srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
             --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
             --plugin moe \
             --pp 3 --ep 8 \
-            --batch_size 1 \
+            --batch_size 8 \
             --lr 2e-5 \
             --max_length 256 \
             --lora_rank 8 --lora_alpha 16 \
