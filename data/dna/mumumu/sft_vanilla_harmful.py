@@ -101,7 +101,6 @@ if special_tokens["additional_special_tokens"]:
 model = AutoModelForCausalLM.from_pretrained(
     "Qwen/Qwen3-32B",
     torch_dtype=torch.bfloat16,
-    device_map="auto",
     trust_remote_code=True,
 ).eval()
 
