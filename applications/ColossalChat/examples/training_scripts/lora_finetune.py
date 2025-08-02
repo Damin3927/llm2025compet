@@ -244,9 +244,9 @@ def train(args) -> None:
         coordinator.print_on_master(msg="Gradient checkpointing enabled successfully")
     if model.config.__class__.__name__.startswith("DeepseekV3"):
         model.config.use_cache = False
-        #model.eval()
-        #print("=== [Debug] Set model to eval mode ===", flush=True) # Added for debugging
-        print("=== [Debug] model was about to set to eval mode, but disabled ===", flush=True) # Added for debugging
+        model.eval()
+        print("=== [Debug] Set model to eval mode ===", flush=True) # Added for debugging
+        #print("=== [Debug] model was about to set to eval mode, but disabled ===", flush=True) # Added for debugging
         # enable grad for moe layers
         for m in model.modules():
             if m.__class__.__name__ == "DeepseekV3MoE":
