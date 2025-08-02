@@ -37,7 +37,7 @@ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True # PyTorch の CUDA メ�
 # PyTorch 推奨の NCCL 非同期エラーハンドリング
 export NCCL_SOCKET_IFNAME=mlx5_0         # *各ノードで同じ名前を確認*
 export GLOO_SOCKET_IFNAME=$NCCL_SOCKET_IFNAME
-export NCCL_TIMEOUT=${NCCL_TIMEOUT:-900} # 15 分まで待機
+export NCCL_TIMEOUT=${NCCL_TIMEOUT:-600} # 10 分まで待機
 export TORCH_NCCL_BLOCKING_WAIT=1
 export NCCL_DEBUG=INFO
 #export NCCL_DEBUG_SUBSYS=INIT,ENV,GRAPH  # もっと欲しければ ALL
@@ -92,6 +92,10 @@ echo "PATH=$PATH"
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 echo "CPATH=$CPATH"
 echo "LIBRARY_PATH=$LIBRARY_PATH"
+
+# ここで NCCL_NET_PLUGIN を外す
+unset NCCL_NET_PLUGIN
+echo "[after unset NCCL_NET_PLUGIN]"; env | grep NCCL
 
 # ───── ColossalAI 起動 ─────
 #   * launcher 指定なし
