@@ -9,6 +9,11 @@ SLURM 上で vLLM 推論サーバーを起動するためのスクリプト
 ```bash
 # ノードを2つ、GPU をそれぞれ 8 つずつ使い、DeepSeek-R1-0528 の推論サーバーを立ち上げる
 # 立ち上がるのに、最大約 10 分ほどかかると思われます
+
+# Qwen3-235B-A22B
+./vllm_sbatch.sh --model "qwen/Qwen3-235B-A22B" --nodes 2 --gpus 8 --nodelist osk-gpu[54,56] --timeout 01:00:00
+
+# DeepSeek-R1-0528
 ./vllm_sbatch.sh --model "deepseek-ai/DeepSeek-R1-0528" --nodes 2 --gpus 8 --nodelist osk-gpu[54,56] --timeout 01:00:00
 ```
 
