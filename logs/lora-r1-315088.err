@@ -1,10 +1,10 @@
 ++ date
-+ echo '===== ジョブ開始: Sat Aug  2 12:17:17 PM JST 2025 ====='
++ echo '===== ジョブ開始: Sat Aug  2 12:54:21 PM JST 2025 ====='
 ++ pwd
 + echo 'cwd  = /home/Competition2025/P02/P02U006/ColossalAI'
 ++ hostname
 + echo 'host = osk-gpu54'
-+ echo 'JOB  = 315025'
++ echo 'JOB  = 315088'
 + echo 'NODES= osk-gpu[54,56,91]'
 + mkdir -p /home/Competition2025/P02/P02U006/ColossalAI/logs /home/Competition2025/P02/P02U006/ColossalAI/logs/tb
 + source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
@@ -2361,6 +2361,11 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 + '[' -n '' ']'
 + '[' -n '' ']'
 + hash -r
++ which colossalai
++ alias
++ eval declare -f
+++ declare -f
++ /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot colossalai
 + export CUDA_HOME=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
 + CUDA_HOME=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
 + export PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
@@ -2375,10 +2380,12 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 + CUDACXX=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/nvcc
 + export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 + PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
-+ export NCCL_SOCKET_IFNAME=mlx5_0
-+ NCCL_SOCKET_IFNAME=mlx5_0
-+ export GLOO_SOCKET_IFNAME=mlx5_0
-+ GLOO_SOCKET_IFNAME=mlx5_0
++ export NCCL_SOCKET_IFNAME=enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
++ NCCL_SOCKET_IFNAME=enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
++ export NCCL_IB_HCA=mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
++ NCCL_IB_HCA=mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
++ export GLOO_SOCKET_IFNAME=enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
++ GLOO_SOCKET_IFNAME=enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
 + export NCCL_TIMEOUT=600
 + NCCL_TIMEOUT=600
 + export TORCH_NCCL_BLOCKING_WAIT=1
@@ -2395,7 +2402,7 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 + ulimit -m unlimited
 + trap 'echo "=== SIGUSR1 on $(hostname) ==="; pkill -USR1 -f lora_finetune.py' USR1
 + MON_LOG=/gpu_0.log
-+ MON_PID=1190014
++ MON_PID=1196630
 + export FLASH_ATTENTION_DISABLE=1
 + FLASH_ATTENTION_DISABLE=1
 + export HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
@@ -2407,7 +2414,7 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 + echo '=== CUDA環境 ==='
 + echo CUDA_HOME=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
 + which nvcc
-/var/spool/slurm/d/job315025/slurm_script: line 60: /gpu_0.log: Permission denied
+/var/spool/slurm/d/job315088/slurm_script: line 63: /gpu_0.log: Permission denied
 + /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot nvcc
 + alias
 + eval declare -f
@@ -2425,16 +2432,15 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 + echo LD_LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
 + echo CPATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/nvidia/cublas/include:
 + echo LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
-+ unset NCCL_NET_PLUGIN
 + echo '[after unset NCCL_NET_PLUGIN]'
 + env
 + grep NCCL
 ++ head -n1 /home/Competition2025/P02/P02U006/ColossalAI/hostfile
 + export MASTER_ADDR=osk-gpu54
 + MASTER_ADDR=osk-gpu54
-+ export MASTER_PORT=27025
-+ MASTER_PORT=27025
-+ echo 'MASTER_ADDR=osk-gpu54  MASTER_PORT=27025'
++ export MASTER_PORT=27088
++ MASTER_PORT=27088
++ echo 'MASTER_ADDR=osk-gpu54  MASTER_PORT=27088'
 + echo '== [Pre-launch NCCL env] =='
 + env
 + grep NCCL
@@ -2449,20 +2455,20 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
   which python || true
   which torchrun || true
 
-  colossalai run 	--hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile 	--master_addr osk-gpu54         --master_port 27025         --nproc_per_node 8         /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py             --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16             --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl             --plugin moe             --pp 3 --ep 8             --batch_size 8             --lr 2e-5             --max_length 256             --lora_rank 8 --lora_alpha 16             --num_epochs 2 --warmup_steps 8             --mixed_precision bf16             --use_grad_checkpoint             --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/tb             --save_dir /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora
+  colossalai run 	--hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile 	--master_addr osk-gpu54         --master_port 27088         --nproc_per_node 8         /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py             --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16             --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl             --plugin moe             --pp 3 --ep 8             --batch_size 8             --lr 2e-5             --max_length 256             --lora_rank 8 --lora_alpha 16             --num_epochs 2 --warmup_steps 8             --mixed_precision bf16             --use_grad_checkpoint             --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/tb             --save_dir /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora
 '
-W0802 12:17:37.591000 23353294849856 torch/distributed/run.py:779] 
-W0802 12:17:37.591000 23353294849856 torch/distributed/run.py:779] *****************************************
-W0802 12:17:37.591000 23353294849856 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-W0802 12:17:37.591000 23353294849856 torch/distributed/run.py:779] *****************************************
-W0802 12:17:38.231000 22862213683008 torch/distributed/run.py:779] 
-W0802 12:17:38.231000 22862213683008 torch/distributed/run.py:779] *****************************************
-W0802 12:17:38.231000 22862213683008 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-W0802 12:17:38.231000 22862213683008 torch/distributed/run.py:779] *****************************************
-W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] 
-W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] *****************************************
-W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] *****************************************
+W0802 12:54:46.798000 23155828475712 torch/distributed/run.py:779] 
+W0802 12:54:46.798000 23155828475712 torch/distributed/run.py:779] *****************************************
+W0802 12:54:46.798000 23155828475712 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0802 12:54:46.798000 23155828475712 torch/distributed/run.py:779] *****************************************
+W0802 12:54:49.389000 22437444785984 torch/distributed/run.py:779] 
+W0802 12:54:49.389000 22437444785984 torch/distributed/run.py:779] *****************************************
+W0802 12:54:49.389000 22437444785984 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0802 12:54:49.389000 22437444785984 torch/distributed/run.py:779] *****************************************
+W0802 12:54:50.407000 22761100900160 torch/distributed/run.py:779] 
+W0802 12:54:50.407000 22761100900160 torch/distributed/run.py:779] *****************************************
+W0802 12:54:50.407000 22761100900160 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0802 12:54:50.407000 22761100900160 torch/distributed/run.py:779] *****************************************
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
@@ -2497,30 +2503,22 @@ W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] *************
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
-  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
-  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
-  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
-  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
-  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
-  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
@@ -2549,37 +2547,41 @@ W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] *************
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
-  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
-  warnings.warn(
-[W802 12:17:47.343760445 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.512274804 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
-[W802 12:17:48.915346725 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.942552550 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.951641781 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.959801429 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.976125645 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.976401286 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.796226941 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.801892945 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.812257857 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.937139676 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.955048984 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.967337630 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.978604582 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.988945150 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.261865882 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.262149416 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.277040387 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.314152977 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
-[W802 12:17:48.843353540 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.866125855 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.903780567 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.154317879 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:17:48.953962942 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
+[W802 12:55:02.342178889 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
@@ -2588,6 +2590,7 @@ W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] *************
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
+[W802 12:55:02.373566901 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
@@ -2596,13 +2599,16 @@ W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] *************
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
-[W802 12:17:48.073607287 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:02.258699905 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+[W802 12:55:02.477377204 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
-  warnings.warn(
+[W802 12:55:03.558156861 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:03.377955211 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
@@ -2627,6 +2633,9 @@ W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] *************
   warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn(
+[W802 12:55:24.758842027 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
@@ -2655,18 +2664,15 @@ W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] *************
   warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn(
-[W802 12:18:13.474019192 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:18:13.481236024 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:18:13.482340102 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:18:13.520415255 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:18:13.521488594 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:18:13.543652299 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W802 12:18:13.575787790 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:26.152357206 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:26.658103329 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:26.714939129 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:26.768822779 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
-[W802 12:18:13.654999663 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
-  warnings.warn(
+[W802 12:55:26.796251313 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:27.135842914 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W802 12:55:27.220058408 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
@@ -2678,25 +2684,6 @@ W0802 12:17:38.265000 22369785390912 torch/distributed/run.py:779] *************
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
-  warnings.warn(
-/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
-If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
@@ -2722,14 +2709,27 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  def forward(ctx, tokens, mask, dest_idx, ec):
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  def backward(ctx, output_grad):
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
   def forward(ctx, tokens, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
@@ -2749,156 +2749,6 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
 /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
 If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   warnings.warn(
-[rank23]: Traceback (most recent call last):
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank23]:     replace_layer = target_module.from_native_module(
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank23]:     LazyInitContext.materialize(module)
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank23]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank23]:     apply_fn(name, p)
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank23]:     p.materialize()
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank23]:     target = self._materialize_data()
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank23]:     init_val = func(
-[rank23]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 7 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347861 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank23]: During handling of the above exception, another exception occurred:
-
-[rank23]: Traceback (most recent call last):
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank23]:     train(args)
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank23]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank23]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank23]:     model = HybridParallelModule(
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank23]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank23]:     shared_params = sharder.shard()
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank23]:     self._replace_module(include=held_layers)
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank23]:     self._recursive_replace_layer(
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank23]:     self._recursive_replace_layer(
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank23]:     self._recursive_replace_layer(
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank23]:     self._recursive_replace_layer(
-[rank23]:   [Previous line repeated 2 more times]
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank23]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank23]:     raise RuntimeError(
-[rank23]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 7 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347861 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
-If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
-  warnings.warn(
-[rank21]: Traceback (most recent call last):
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank21]:     replace_layer = target_module.from_native_module(
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank21]:     LazyInitContext.materialize(module)
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank21]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank21]:     apply_fn(name, p)
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank21]:     p.materialize()
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank21]:     target = self._materialize_data()
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank21]:     init_val = func(
-[rank21]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 5 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347859 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank21]: During handling of the above exception, another exception occurred:
-
-[rank21]: Traceback (most recent call last):
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank21]:     train(args)
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank21]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank21]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank21]:     model = HybridParallelModule(
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank21]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank21]:     shared_params = sharder.shard()
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank21]:     self._replace_module(include=held_layers)
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank21]:     self._recursive_replace_layer(
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank21]:     self._recursive_replace_layer(
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank21]:     self._recursive_replace_layer(
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank21]:     self._recursive_replace_layer(
-[rank21]:   [Previous line repeated 2 more times]
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank21]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank21]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank21]:     raise RuntimeError(
-[rank21]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 5 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347859 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
-If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
-  warnings.warn(
-[rank16]: Traceback (most recent call last):
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank16]:     replace_layer = target_module.from_native_module(
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank16]:     LazyInitContext.materialize(module)
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank16]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank16]:     apply_fn(name, p)
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank16]:     p.materialize()
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank16]:     target = self._materialize_data()
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank16]:     init_val = func(
-[rank16]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 0 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347854 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank16]: During handling of the above exception, another exception occurred:
-
-[rank16]: Traceback (most recent call last):
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank16]:     train(args)
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank16]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank16]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank16]:     model = HybridParallelModule(
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank16]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank16]:     shared_params = sharder.shard()
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank16]:     self._replace_module(include=held_layers)
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank16]:     self._recursive_replace_layer(
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank16]:     self._recursive_replace_layer(
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank16]:     self._recursive_replace_layer(
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank16]:     self._recursive_replace_layer(
-[rank16]:   [Previous line repeated 2 more times]
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank16]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank16]:     raise RuntimeError(
-[rank16]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 0 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347854 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
 /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
 If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   warnings.warn(
@@ -2911,9 +2761,8 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
 /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
 If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   warnings.warn(
 /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
 If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
@@ -2972,57 +2821,7 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   def backward(ctx, output_grad):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
   def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  def backward(ctx, tokens_grad):
-[rank9]: Traceback (most recent call last):
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank9]:     replace_layer = target_module.from_native_module(
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank9]:     LazyInitContext.materialize(module)
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank9]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank9]:     apply_fn(name, p)
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank9]:     p.materialize()
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank9]:     target = self._materialize_data()
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank9]:     init_val = func(
-[rank9]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 1 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769899 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank9]: During handling of the above exception, another exception occurred:
-
-[rank9]: Traceback (most recent call last):
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank9]:     train(args)
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank9]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank9]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank9]:     model = HybridParallelModule(
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank9]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank9]:     shared_params = sharder.shard()
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank9]:     self._replace_module(include=held_layers)
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank9]:     self._recursive_replace_layer(
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank9]:     self._recursive_replace_layer(
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank9]:     self._recursive_replace_layer(
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank9]:     self._recursive_replace_layer(
-[rank9]:   [Previous line repeated 2 more times]
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank9]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank9]:     raise RuntimeError(
-[rank9]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 1 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769899 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
   def forward(ctx, tokens, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, output_grad):
@@ -3030,110 +2829,8 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
-[rank12]: Traceback (most recent call last):
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank12]:     replace_layer = target_module.from_native_module(
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank12]:     LazyInitContext.materialize(module)
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank12]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank12]:     apply_fn(name, p)
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank12]:     p.materialize()
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank12]:     target = self._materialize_data()
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank12]:     init_val = func(
-[rank12]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 4 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769902 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank12]: During handling of the above exception, another exception occurred:
-
-[rank12]: Traceback (most recent call last):
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank12]:     train(args)
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank12]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank12]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank12]:     model = HybridParallelModule(
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank12]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank12]:     shared_params = sharder.shard()
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank12]:     self._replace_module(include=held_layers)
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank12]:     self._recursive_replace_layer(
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank12]:     self._recursive_replace_layer(
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank12]:     self._recursive_replace_layer(
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank12]:     self._recursive_replace_layer(
-[rank12]:   [Previous line repeated 2 more times]
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank12]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank12]:     raise RuntimeError(
-[rank12]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 4 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769902 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  def forward(ctx, tokens, mask, dest_idx, ec):
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
-  def backward(ctx, output_grad):
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
-  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='[rank18]: Traceback (most recent call last):
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank18]:     replace_layer = target_module.from_native_module(
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank18]:     LazyInitContext.materialize(module)
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank18]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank18]:     apply_fn(name, p)
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank18]:     p.materialize()
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/ccuda')` instead.
+cuda')` instead.
   def backward(ctx, tokens_grad):
-olossalai/lazy/lazy_init.py", line 217, in materialize
-[rank18]:     target = self._materialize_data()
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank18]:     init_val = func(
-[rank18]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 2 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347856 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank18]: During handling of the above exception, another exception occurred:
-
-[rank18]: Traceback (most recent call last):
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank18]:     train(args)
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank18]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank18]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank18]:     model = HybridParallelModule(
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank18]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank18]:     shared_params = sharder.shard()
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank18]:     self._replace_module(include=held_layers)
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank18]:     self._recursive_replace_layer(
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank18]:     self._recursive_replace_layer(
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank18]:     self._recursive_replace_layer(
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank18]:     self._recursive_replace_layer(
-[rank18]:   [Previous line repeated 2 more times]
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank18]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank18]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank18]:     raise RuntimeError(
-[rank18]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 2 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347856 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
   def forward(ctx, tokens, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
@@ -3150,54 +2847,6 @@ olossalai/lazy/lazy_init.py", line 217, in materialize
   def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
-[rank14]: Traceback (most recent call last):
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank14]:     replace_layer = target_module.from_native_module(
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank14]:     LazyInitContext.materialize(module)
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank14]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank14]:     apply_fn(name, p)
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank14]:     p.materialize()
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank14]:     target = self._materialize_data()
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank14]:     init_val = func(
-[rank14]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 6 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769904 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank14]: During handling of the above exception, another exception occurred:
-
-[rank14]: Traceback (most recent call last):
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank14]:     train(args)
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank14]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank14]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank14]:     model = HybridParallelModule(
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank14]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank14]:     shared_params = sharder.shard()
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank14]:     self._replace_module(include=held_layers)
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank14]:     self._recursive_replace_layer(
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank14]:     self._recursive_replace_layer(
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank14]:     self._recursive_replace_layer(
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank14]:     self._recursive_replace_layer(
-[rank14]:   [Previous line repeated 2 more times]
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank14]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank14]:     raise RuntimeError(
-[rank14]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 6 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769904 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
   def forward(ctx, tokens, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
@@ -3206,294 +2855,6 @@ olossalai/lazy/lazy_init.py", line 217, in materialize
   def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
-[rank15]: Traceback (most recent call last):
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank15]:     replace_layer = target_module.from_native_module(
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank15]:     LazyInitContext.materialize(module)
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank15]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank15]:     apply_fn(name, p)
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank15]:     p.materialize()
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank15]:     target = self._materialize_data()
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank15]:     init_val = func(
-[rank15]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 7 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769905 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank15]: During handling of the above exception, another exception occurred:
-
-[rank15]: Traceback (most recent call last):
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank15]:     train(args)
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank15]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank15]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank15]:     model = HybridParallelModule(
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank15]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank15]:     shared_params = sharder.shard()
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank15]:     self._replace_module(include=held_layers)
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank15]:     self._recursive_replace_layer(
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank15]:     self._recursive_replace_layer(
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank15]:     self._recursive_replace_layer(
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank15]:     self._recursive_replace_layer(
-[rank15]:   [Previous line repeated 2 more times]
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank15]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank15]:     raise RuntimeError(
-[rank15]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 7 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769905 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-[rank20]: Traceback (most recent call last):
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank20]:     replace_layer = target_module.from_native_module(
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank20]:     LazyInitContext.materialize(module)
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank20]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank20]:     apply_fn(name, p)
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank20]:     p.materialize()
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank20]:     target = self._materialize_data()
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank20]:     init_val = func(
-[rank20]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 4 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347858 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank20]: During handling of the above exception, another exception occurred:
-
-[rank20]: Traceback (most recent call last):
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank20]:     train(args)
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank20]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank20]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank20]:     model = HybridParallelModule(
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank20]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank20]:     shared_params = sharder.shard()
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank20]:     self._replace_module(include=held_layers)
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank20]:     self._recursive_replace_layer(
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank20]:     self._recursive_replace_layer(
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank20]:     self._recursive_replace_layer(
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank20]:     self._recursive_replace_layer(
-[rank20]:   [Previous line repeated 2 more times]
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank20]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank20]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank20]:     raise RuntimeError(
-[rank20]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 4 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347858 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-[rank8]: Traceback (most recent call last):
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank8]:     replace_layer = target_module.from_native_module(
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank8]:     LazyInitContext.materialize(module)
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank8]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank8]:     apply_fn(name, p)
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank8]:     p.materialize()
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank8]:     target = self._materialize_data()
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank8]:     init_val = func(
-[rank8]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 0 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769898 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank8]: During handling of the above exception, another exception occurred:
-
-[rank8]: Traceback (most recent call last):
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank8]:     train(args)
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank8]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank8]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank8]:     model = HybridParallelModule(
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank8]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank8]:     shared_params = sharder.shard()
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank8]:     self._replace_module(include=held_layers)
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank8]:     self._recursive_replace_layer(
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank8]:     self._recursive_replace_layer(
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank8]:     self._recursive_replace_layer(
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank8]:     self._recursive_replace_layer(
-[rank8]:   [Previous line repeated 2 more times]
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank8]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank8]:     raise RuntimeError(
-[rank8]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 0 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769898 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-[rank13]: Traceback (most recent call last):
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank13]:     replace_layer = target_module.from_native_module(
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank13]:     LazyInitContext.materialize(module)
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank13]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank13]:     apply_fn(name, p)
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank13]:     p.materialize()
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank13]:     target = self._materialize_data()
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank13]:     init_val = func(
-[rank13]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 5 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769903 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank13]: During handling of the above exception, another exception occurred:
-
-[rank13]: Traceback (most recent call last):
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank13]:     train(args)
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank13]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank13]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank13]:     model = HybridParallelModule(
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank13]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank13]:     shared_params = sharder.shard()
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank13]:     self._replace_module(include=held_layers)
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank13]:     self._recursive_replace_layer(
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank13]:     self._recursive_replace_layer(
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank13]:     self._recursive_replace_layer(
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank13]:     self._recursive_replace_layer(
-[rank13]:   [Previous line repeated 2 more times]
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank13]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank13]:     raise RuntimeError(
-[rank13]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 5 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769903 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-[rank19]: Traceback (most recent call last):
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank19]:     replace_layer = target_module.from_native_module(
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank19]:     LazyInitContext.materialize(module)
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank19]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank19]:     apply_fn(name, p)
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank19]:     p.materialize()
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank19]:     target = self._materialize_data()
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank19]:     init_val = func(
-[rank19]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 3 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347857 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank19]: During handling of the above exception, another exception occurred:
-
-[rank19]: Traceback (most recent call last):
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank19]:     train(args)
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank19]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank19]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank19]:     model = HybridParallelModule(
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank19]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank19]:     shared_params = sharder.shard()
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank19]:     self._replace_module(include=held_layers)
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank19]:     self._recursive_replace_layer(
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank19]:     self._recursive_replace_layer(
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank19]:     self._recursive_replace_layer(
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank19]:     self._recursive_replace_layer(
-[rank19]:   [Previous line repeated 2 more times]
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank19]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank19]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank19]:     raise RuntimeError(
-[rank19]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 3 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347857 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-[rank11]: Traceback (most recent call last):
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank11]:     replace_layer = target_module.from_native_module(
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank11]:     LazyInitContext.materialize(module)
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank11]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank11]:     apply_fn(name, p)
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank11]:     p.materialize()
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank11]:     target = self._materialize_data()
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank11]:     init_val = func(
-[rank11]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 3 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769901 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank11]: During handling of the above exception, another exception occurred:
-
-[rank11]: Traceback (most recent call last):
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank11]:     train(args)
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank11]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank11]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank11]:     model = HybridParallelModule(
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank11]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank11]:     shared_params = sharder.shard()
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank11]:     self._replace_module(include=held_layers)
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank11]:     self._recursive_replace_layer(
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank11]:     self._recursive_replace_layer(
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank11]:     self._recursive_replace_layer(
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank11]:     self._recursive_replace_layer(
-[rank11]:   [Previous line repeated 2 more times]
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank11]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank11]:     raise RuntimeError(
-[rank11]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 3 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769901 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
   def forward(ctx, tokens, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
@@ -3502,227 +2863,22 @@ olossalai/lazy/lazy_init.py", line 217, in materialize
   def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
-[rank17]: Traceback (most recent call last):
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank17]:     replace_layer = target_module.from_native_module(
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank17]:     LazyInitContext.materialize(module)
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank17]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank17]:     apply_fn(name, p)
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank17]:     p.materialize()
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank17]:     target = self._materialize_data()
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank17]:     init_val = func(
-[rank17]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 1 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347855 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank17]: During handling of the above exception, another exception occurred:
-
-[rank17]: Traceback (most recent call last):
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank17]:     train(args)
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank17]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank17]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank17]:     model = HybridParallelModule(
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank17]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank17]:     shared_params = sharder.shard()
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank17]:     self._replace_module(include=held_layers)
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank17]:     self._recursive_replace_layer(
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank17]:     self._recursive_replace_layer(
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank17]:     self._recursive_replace_layer(
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank17]:     self._recursive_replace_layer(
-[rank17]:   [Previous line repeated 2 more times]
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank17]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank17]:     raise RuntimeError(
-[rank17]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 1 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347855 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-[rank22]: Traceback (most recent call last):
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank22]:     replace_layer = target_module.from_native_module(
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank22]:     LazyInitContext.materialize(module)
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank22]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank22]:     apply_fn(name, p)
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank22]:     p.materialize()
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank22]:     target = self._materialize_data()
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank22]:     init_val = func(
-[rank22]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 6 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347860 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank22]: During handling of the above exception, another exception occurred:
-
-[rank22]: Traceback (most recent call last):
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank22]:     train(args)
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank22]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank22]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank22]:     model = HybridParallelModule(
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank22]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank22]:     shared_params = sharder.shard()
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank22]:     self._replace_module(include=held_layers)
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank22]:     self._recursive_replace_layer(
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank22]:     self._recursive_replace_layer(
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank22]:     self._recursive_replace_layer(
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank22]:     self._recursive_replace_layer(
-[rank22]:   [Previous line repeated 2 more times]
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank22]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank22]:     raise RuntimeError(
-[rank22]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 6 has a total capacity of 79.44 GiB of which 16.94 MiB is free. Process 2347860 has 66.23 GiB memory in use. Including non-PyTorch memory, this process has 13.16 GiB memory in use. Of the allocated memory 12.54 GiB is allocated by PyTorch, and 20.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-W0802 12:18:29.665000 22862213683008 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2353944 closing signal SIGTERM
-W0802 12:18:29.668000 22862213683008 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2353945 closing signal SIGTERM
-W0802 12:18:29.669000 22862213683008 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2353946 closing signal SIGTERM
-W0802 12:18:29.676000 22862213683008 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2353947 closing signal SIGTERM
-W0802 12:18:29.680000 22862213683008 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2353948 closing signal SIGTERM
-W0802 12:18:29.684000 22862213683008 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2353950 closing signal SIGTERM
-[rank10]: Traceback (most recent call last):
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 197, in _replace_sub_module
-[rank10]:     replace_layer = target_module.from_native_module(
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 73, in from_native_module
-[rank10]:     LazyInitContext.materialize(module)
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 602, in materialize
-[rank10]:     return _apply_to_lazy_module(module, apply_fn, verbose)
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 627, in _apply_to_lazy_module
-[rank10]:     apply_fn(name, p)
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 600, in apply_fn
-[rank10]:     p.materialize()
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 217, in materialize
-[rank10]:     target = self._materialize_data()
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/lazy/lazy_init.py", line 242, in _materialize_data
-[rank10]:     init_val = func(
-[rank10]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 2 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769900 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-
-[rank10]: During handling of the above exception, another exception occurred:
-
-[rank10]: Traceback (most recent call last):
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
-[rank10]:     train(args)
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 289, in train
-[rank10]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
-[rank10]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 457, in configure
-[rank10]:     model = HybridParallelModule(
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 87, in __init__
-[rank10]:     module, self.shared_params = shardformer.optimize(module, policy=custom_policy)
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shardformer.py", line 55, in optimize
-[rank10]:     shared_params = sharder.shard()
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 43, in shard
-[rank10]:     self._replace_module(include=held_layers)
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 67, in _replace_module
-[rank10]:     self._recursive_replace_layer(
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank10]:     self._recursive_replace_layer(
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank10]:     self._recursive_replace_layer(
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 115, in _recursive_replace_layer
-[rank10]:     self._recursive_replace_layer(
-[rank10]:   [Previous line repeated 2 more times]
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 112, in _recursive_replace_layer
-[rank10]:     self._replace_sub_module(module, sub_module_replacement, include)
-[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/sharder.py", line 201, in _replace_sub_module
-[rank10]:     raise RuntimeError(
-[rank10]: RuntimeError: Failed to replace mlp of type EpDeepseekV3MoE with EpDeepseekV3MoE with the exception: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 2 has a total capacity of 79.44 GiB of which 36.94 MiB is free. Process 769900 has 67.60 GiB memory in use. Including non-PyTorch memory, this process has 11.77 GiB memory in use. Of the allocated memory 11.17 GiB is allocated by PyTorch, and 4.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables). Please check your model configuration or sharding policy, you can set up an issue for us to help you as well.
-E0802 12:18:30.160000 22862213683008 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 7 (pid: 2353951) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
-Traceback (most recent call last):
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
-    sys.exit(main())
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
-    return f(*args, **kwargs)
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
-    run(args)
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
-    elastic_launch(
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
-    return launch_agent(self._config, self._entrypoint, list(args))
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
-    raise ChildFailedError(
-torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
-============================================================
-/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
-------------------------------------------------------------
-Failures:
-  <NO_OTHER_FAILURES>
-------------------------------------------------------------
-Root Cause (first observed failure):
-[0]:
-  time      : 2025-08-02_12:18:29
-  host      : osk-gpu91
-  rank      : 23 (local_rank: 7)
-  exitcode  : 1 (pid: 2353951)
-  error_file: <N/A>
-  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
-============================================================
-W0802 12:18:31.366000 22369785390912 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 776207 closing signal SIGTERM
-W0802 12:18:31.371000 22369785390912 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 776209 closing signal SIGTERM
-W0802 12:18:31.375000 22369785390912 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 776210 closing signal SIGTERM
-W0802 12:18:31.378000 22369785390912 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 776211 closing signal SIGTERM
-W0802 12:18:31.382000 22369785390912 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 776212 closing signal SIGTERM
-W0802 12:18:31.386000 22369785390912 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 776213 closing signal SIGTERM
-W0802 12:18:31.389000 22369785390912 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 776214 closing signal SIGTERM
-E0802 12:18:31.864000 22369785390912 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 776208) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
-Traceback (most recent call last):
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
-    sys.exit(main())
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
-    return f(*args, **kwargs)
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
-    run(args)
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
-    elastic_launch(
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
-    return launch_agent(self._config, self._entrypoint, list(args))
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
-    raise ChildFailedError(
-torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
-============================================================
-/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
-------------------------------------------------------------
-Failures:
-  <NO_OTHER_FAILURES>
-------------------------------------------------------------
-Root Cause (first observed failure):
-[0]:
-  time      : 2025-08-02_12:18:31
-  host      : osk-gpu56
-  rank      : 9 (local_rank: 1)
-  exitcode  : 1 (pid: 776208)
-  error_file: <N/A>
-  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
-============================================================
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
-  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
@@ -3731,6 +2887,8 @@ Root Cause (first observed failure):
   warnings.warn(
 /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
 If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
@@ -3749,6 +2907,9 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   warnings.warn(
 /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
 If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
@@ -3823,5 +2984,4 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
 srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
-slurmstepd: error: *** JOB 315025 ON osk-gpu54 CANCELLED AT 2025-08-02T12:53:47 ***
-slurmstepd: error: *** STEP 315025.0 ON osk-gpu54 CANCELLED AT 2025-08-02T12:53:47 ***
+slurmstepd: error: *** JOB 315088 ON osk-gpu54 CANCELLED AT 2025-08-02T13:03:05 ***
