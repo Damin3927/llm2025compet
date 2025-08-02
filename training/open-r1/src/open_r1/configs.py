@@ -329,3 +329,18 @@ class GRPOScriptArguments(ScriptArguments):
         default=4096,
         metadata={"help": "Minimum number of characters in completion."},
     )
+
+@dataclass
+class DatasetClass:
+    """個々のデータセット設定を表すデータクラス"""
+    name: str = None
+    config: str = "default"
+    question_field: str = "question"
+    answer_field: str = "output"
+    from_id: int = None
+    to_id: int = None
+
+@dataclass
+class DataConfig:
+    """データセット設定のリスト全体を保持するデータクラス"""
+    datasets: list[DatasetClass] = field(default_factory=list, metadata={"help": "List of dataset configurations."})

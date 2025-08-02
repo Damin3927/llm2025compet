@@ -1,0 +1,7 @@
+neko_sft_datasets:
+  - name: neko-llm/HLE_SFT_OpenThoughts-114k
+    config: default
+    question_field: question
+    answer_field: output
+    from_id: 1
+    to_id: 1000

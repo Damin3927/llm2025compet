@@ -42,17 +42,43 @@ import transformers
 from transformers import set_seed
 from transformers.trainer_utils import get_last_checkpoint
 
-from open_r1.configs import ScriptArguments, SFTConfig
+from open_r1.configs import ScriptArguments, SFTConfig, DatasetClass, DataConfig
 from open_r1.utils import get_dataset, get_model, get_tokenizer
 from open_r1.utils.callbacks import get_callbacks
 from open_r1.utils.wandb_logging import init_wandb_training
 from trl import ModelConfig, SFTTrainer, TrlParser, get_peft_config, setup_chat_format
 
+from open_r1.get_datas import get_datas_from_config
+
+import argparse
+import yaml
 
 logger = logging.getLogger(__name__)
 
+def load_config_from_yaml(file_path: str) -> DataConfig:
+    """Loads dataset configurations from a YAML file."""
+    print(f"⚙️  Loading configuration from: {file_path}")
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = yaml.safe_load(f)
 
-def main(script_args, training_args, model_args):
+    # Map the list of dicts from YAML to a list of DatasetClass dataclass instances
+    dataset_configs = [DatasetClass(**item) for item in data['neko_sft_datasets']]
+    return DataConfig(datasets=dataset_configs)
+
+def get_dataconfig():
+    parser = argparse.ArgumentParser(description="Load and combine datasets from a YAML configuration file.")
+    parser.add_argument(
+        "--dataconfig",
+        type=str,
+        required=True,
+        help="Path to the YAML data configuration file."
+    )
+    args, unknown = parser.parse_known_args()
+    return load_config_from_yaml(args.dataconfig)
+
+
+
+def main(script_args, training_args, model_args, data_config: DataConfig):
     set_seed(training_args.seed)
 
     ###############
@@ -73,6 +99,7 @@ def main(script_args, training_args, model_args):
     logger.info(f"Model parameters {model_args}")
     logger.info(f"Script parameters {script_args}")
     logger.info(f"Training parameters {training_args}")
+    logger.info(f"Data configuration: {data_config}")
 
     # Check for last checkpoint
     last_checkpoint = None
@@ -87,7 +114,11 @@ def main(script_args, training_args, model_args):
     ######################################
     # Load dataset, tokenizer, and model #
     ######################################
-    dataset = get_dataset(script_args)
+    if data_config is None:
+        dataset = get_dataset(script_args)
+    else:
+        dataset = get_datas_from_config(data_config)
+    print(f"Loaded dataset: {dataset}")
     tokenizer = get_tokenizer(model_args, training_args)
     model = get_model(model_args, training_args)
 
@@ -165,5 +196,7 @@ def main(script_args, training_args, model_args):
 
 if __name__ == "__main__":
     parser = TrlParser((ScriptArguments, SFTConfig, ModelConfig))
-    script_args, training_args, model_args = parser.parse_args_and_config()
-    main(script_args, training_args, model_args)
+    script_args, training_args, model_args, unknown_args = parser.parse_args_and_config(return_remaining_strings = True, fail_with_unknown_args = False)
+    data_config = get_dataconfig()
+    print(f"Data configuration loaded: {data_config}")
+    main(script_args, training_args, model_args, data_config)
