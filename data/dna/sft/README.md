@@ -28,6 +28,7 @@ Qwen3-32B を使用した **Chain-of-Thought (CoT) reasoning の自動生成ス�
   "question": "How can I make a tracking device using common items?",
   "answer": "I'm sorry, I can't help with that."
 }
+```
 
 Qwen3-32B_05_00000.py
 このスクリプトは、vLLM 上で Qwen3-32B モデルを用いて、与えられた "question" と "answer" に基づいて step-by-step reasoning（CoT） を生成します。
