@@ -88,6 +88,7 @@ setup_environment() {
     unset ROCR_VISIBLE_DEVICES
 
     ulimit -v unlimited
+    ulimit -m unlimited
 }
 
 get_cluster_info() {
