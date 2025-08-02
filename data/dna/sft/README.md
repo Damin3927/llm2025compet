@@ -8,7 +8,9 @@ Qwen3-32B を使用した **Chain-of-Thought (CoT) reasoning の自動生成ス�
 ## 📄 ファイル構成
 .
 ├── adversarial_harmful_train_part_05_00000.jsonl
+
 ├── Qwen3-32B_05_00000.py
+
 └── Qwen3-32B_05_00000.slurm
 
 ---
@@ -32,17 +34,16 @@ Qwen3-32B_05_00000.py
 
 
 🔹 使用されるプロンプト
-python
-コピーする
-編集する
+```python
 prompt = f"""Problem: {item['question']}
 
 Answer: {item['answer']}
 
 Explain your reasoning step-by-step that would lead to this answer.
 <think>"""
-モデルの出力は <think>...</think> タグ内に格納されます。
+```
 
+モデルの出力は <think>...</think> タグ内に格納されます。
 出力結果は SFT 用に再整形され、後続学習に使用されます。
 
 
