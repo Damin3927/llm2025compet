@@ -14,23 +14,14 @@ dependencies = [
   "pydantic>=2.11.7",
   "torch>=2.7.0",
   "trl>=0.19.1",
-  "vllm==0.9.2",
+  # "vllm==0.9.2",  # DPO生成では不要のため一時的にコメントアウト
   "wandb>=0.21.0",
+  # DPO生成用の依存関係
+  "transformers>=4.35.0",
+  "accelerate>=0.24.0",
+  "bitsandbytes>=0.41.0",
+  "tqdm>=4.64.0",
 ]
 
-[tool.uv.sources]
-torch = [
-  { index = "pytorch-cpu", marker = "sys_platform != 'linux' or platform_machine == 'aarch64'" },
-  { index = "pytorch-cu128", marker = "sys_platform == 'linux' and platform_machine == 'x86_64'" },
-]
-
-
-[[tool.uv.index]]
-name = "pytorch-cpu"
-url = "https://download.pytorch.org/whl/cpu"
-explicit = true
-
-[[tool.uv.index]]
-name = "pytorch-cu128"
-url = "https://download.pytorch.org/whl/cu128"
-explicit = true
+# [tool.uv]
+# extra-index-url = ["https://download.pytorch.org/whl/cu128"]
