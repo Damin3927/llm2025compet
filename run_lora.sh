@@ -98,9 +98,9 @@ unset NCCL_NET_PLUGIN
 echo "[after unset NCCL_NET_PLUGIN]"; env | grep NCCL
 
 # NCCL 環境変数の設定、お試し
-export NCCL_P2P_DISABLE=1
-export NCCL_P2P_LEVEL=NVL
-export NCCL_IB_GID_INDEX=3
+#export NCCL_P2P_DISABLE=1
+#export NCCL_P2P_LEVEL=NVL
+#export NCCL_IB_GID_INDEX=3
 
 
 # ───── ColossalAI 起動 ─────
