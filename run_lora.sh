@@ -24,6 +24,7 @@ mkdir -p /home/Competition2025/P02/P02U006/ColossalAI/logs /home/Competition2025
 # Conda
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate deepseeksft310
+which colossalai || true
 
 # CUDA toolchain（今回は conda に入れたので CONDA_PREFIX を使う）
 export CUDA_HOME="$CONDA_PREFIX"
@@ -35,7 +36,9 @@ export CUDACXX="$CUDA_HOME/bin/nvcc"
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True # PyTorch の CUDA メモリ管理を有効化
 
 # PyTorch 推奨の NCCL 非同期エラーハンドリング
-export NCCL_SOCKET_IFNAME=mlx5_0         # *各ノードで同じ名前を確認*
+#export NCCL_SOCKET_IFNAME=mlx5_0         # *各ノードで同じ名前を確認*
+export NCCL_SOCKET_IFNAME="enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0" # 管理者の/etc/profile.d/でセットされるもに合わせる
+export NCCL_IB_HCA="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1" # IBのポート指定も/etc/profile.d/appli.shでセットされているため
 export GLOO_SOCKET_IFNAME=$NCCL_SOCKET_IFNAME
 export NCCL_TIMEOUT=${NCCL_TIMEOUT:-600} # 10 分まで待機
 export TORCH_NCCL_BLOCKING_WAIT=1
@@ -93,8 +96,8 @@ echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 echo "CPATH=$CPATH"
 echo "LIBRARY_PATH=$LIBRARY_PATH"
 
-# ここで NCCL_NET_PLUGIN を外す
-unset NCCL_NET_PLUGIN
+# 管理者の/etc/profile.d/で必ずNCCL_NET_PLUGIN=noneがセットされるので、無理にunset不要
+# unset NCCL_NET_PLUGIN
 echo "[after unset NCCL_NET_PLUGIN]"; env | grep NCCL
 
 # NCCL 環境変数の設定、お試し
