@@ -38,7 +38,8 @@ def extract_solution_and_answer(content: str) -> Tuple[Optional[str], Optional[s
         answer_match = re.search(think_end_pattern, content, re.DOTALL)
         if answer_match:
             answer = answer_match.group(1).strip()
-    
+
+        solution = f"<think>{solution}</think>\n\n{answer}"
     return solution, answer
 
 
