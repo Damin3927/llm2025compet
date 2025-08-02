@@ -235,7 +235,7 @@ main() {
         echo "Monitor with: squeue -u \$USER"
         echo "Cancel with: scancel <job_id>"
         echo "==================================="
-        local head_node=$(scontrol show hostnames "${nodelist}")
+        local head_node=$(scontrol show hostnames $nodelist | head -n 1)
         local head_node_ip=$(getent hosts "${head_node}gw" | awk '{print $1}')
         echo "Head node's IP: $head_node_ip"
         echo "You can connect to the server using OpenAI API Schema at http://$head_node_ip:8000/v1 after the server is up."
