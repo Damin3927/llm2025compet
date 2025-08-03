@@ -7,7 +7,7 @@ import json
 import asyncio
 from datasets import load_dataset, Dataset
 from tqdm.asyncio import tqdm_asyncio
-from inference.utils import VLLMClient
+from inference import VLLMClient, wait_until_vllm_up
 
 
 SYSTEM_EXACT_ANSWER = "Your response should be in the following format:\nExplanation: {your explanation for your final answer}\nExact Answer: {your succinct, final answer}\nConfidence: {your confidence score between 0% and 100% for your answer}"
@@ -173,7 +173,7 @@ async def attempt_all(client: VLLMClient, model: str, num_workers: int, question
 def main():
     arg_parser = ArgumentParser(description="Run inference on HLE dataset")
     arg_parser.add_argument("--model", type=str, required=True, help="Model name to use for inference")
-    arg_parser.add_argument("--base_url", type=str, default="http://localhost:8000/v1", help="Base URL for the vLLM API")
+    arg_parser.add_argument("--base_url", type=str, default="http://localhost:8000", help="Base URL for the vLLM API")
     arg_parser.add_argument("--num_workers", type=int, default=4, help="Number of parallel workers")
     arg_parser.add_argument("--max_samples", type=int, default=None, help="Maximum number of samples to process")
     arg_parser.add_argument("--max_retries", type=int, default=3, help="Maximum number of retries for failed API calls")
@@ -184,7 +184,7 @@ def main():
 
     args = arg_parser.parse_args()
 
-    client = VLLMClient(base_url=args.base_url)
+    client = VLLMClient(base_url=f"{args.base_url}/v1")
 
     # Load dataset
     dataset = load_dataset("cais/hle", split="test")
@@ -223,6 +223,10 @@ def main():
     # Process questions in batches for fail-safe intermediate saving
     batch_size = args.batch_size
     total_processed = 0
+
+    # Wait until the vllm server is up
+    print("Waiting for vLLM Server to be up...")
+    wait_until_vllm_up(args.base_url)
     
     for i in range(0, len(questions), batch_size):
         batch = questions[i:i + batch_size]

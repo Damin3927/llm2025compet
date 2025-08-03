@@ -1,6 +1,8 @@
+import time
 from typing import TypedDict, NotRequired
 from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageParam, ChatCompletion
+import requests
 
 class Param(TypedDict):
     temperature: float
@@ -28,6 +30,20 @@ DEFAULT_PARAMS: dict[str, Param] = {
     }
 }
 
+
+def wait_until_vllm_up(base_url: str = "http://localhost:8000"):
+    ping_url = f"{base_url}/ping"
+    while True:
+        try:
+            response = requests.get(ping_url, timeout=60)
+            if response.status_code == 200:
+                # The PONG response from vllm is just the integer 200
+                break
+        except requests.exceptions.RequestException:
+            # Handle connection errors, timeouts, etc.
+            time.sleep(10)
+
+    print("vLLM Server is now up")
 
 class VLLMClient:
     def __init__(self, base_url: str = "http://localhost:8000/v1"):
