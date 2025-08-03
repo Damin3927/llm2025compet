@@ -16,6 +16,7 @@ Nvidia GPU を持っている方は、host にインストールされている 
 $ curl -LsSf https://astral.sh/uv/0.8.0/install.sh | sh
 $ echo 'eval "$(uv generate-shell-completion bash)"' >> ~/.bashrc
 $ uv sync
+$ uv pip install -e .
 ```
 
 ### Docker を使って開発する
