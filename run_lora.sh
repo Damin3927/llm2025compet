@@ -77,25 +77,26 @@ srun --ntasks=$(( SLURM_NNODES * SLURM_GPUS_ON_NODE )) \
      --gpus-per-node=$SLURM_GPUS_ON_NODE \
      --cpu-bind=none \
 python -m torch.distributed.run \
-  --nproc_per_node=$SLURM_GPUS_ON_NODE \
-  --nnodes=$SLURM_NNODES \
-  --node_rank=$SLURM_NODEID \
-  --master_addr=$MASTER_ADDR \
-  --master_port=$MASTER_PORT \
-/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
-  --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
-  --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
-  --plugin moe \
-  --pp 3 --ep 8 \
-  --batch_size 8 \
-  --lr 2e-5 \
-  --max_length 256 \
-  --lora_rank 8 --lora_alpha 16 \
-  --num_epochs 2 --warmup_steps 8 \
-  --mixed_precision bf16 \
-  --use_grad_checkpoint \
-  --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/tb \
-  --save_dir /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora
+    --nproc_per_node=$SLURM_GPUS_ON_NODE \
+    --nnodes=$SLURM_NNODES \
+    --node_rank=$SLURM_NODEID \
+    --master_addr=$MASTER_ADDR \
+    --master_port=$MASTER_PORT \
+    /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
+        --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
+        --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
+        --plugin moe \
+        --pp 3 --ep 8 \
+        --batch_size 8 \
+        --lr 2e-5 \
+        --max_length 256 \
+        --lora_rank 8 --lora_alpha 16 \
+        --num_epochs 2 --warmup_steps 8 \
+        --mixed_precision bf16 \
+        --use_grad_checkpoint \
+        --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/tb \
+        --save_dir /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora
+
 
 kill "$MON_PID" || true
 echo "===== ジョブ終了: $(date) ====="
