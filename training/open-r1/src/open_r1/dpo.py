@@ -74,11 +74,15 @@ def main(script_args, training_args, model_args):
         init_wandb_training(training_args)
 
     # Load the dataset
-    dataset = get_dataset(script_args)
+    logger.info("*** Loading dataset ***")
+    logger.info(f"Loading dataset: {script_args.dataset_name}")
+    dataset = datasets.load_dataset(script_args.dataset_name, script_args.dataset_config)
+    # dataset = get_dataset(script_args)
 
     ################
     # Load tokenizer
     ################
+    logger.info("*** Loading Tokenizer ***")
     tokenizer = get_tokenizer(model_args, training_args)
 
     ##############
@@ -87,7 +91,8 @@ def main(script_args, training_args, model_args):
     logger.info("*** Loading model ***")
     model = get_model(model_args, training_args)
 
-    # Format into conversation
+    # Format into conversation 
+    """
     def make_conversation(example, prompt_column: str = script_args.dataset_prompt_column):
         prompt = []
 
@@ -101,16 +106,17 @@ def main(script_args, training_args, model_args):
         return {"prompt": prompt}
 
     dataset = dataset.map(make_conversation)
-
+    """
     # Format into pariwise preference
     def format_pref(example):
+        # todo: 本学習の際にはキーを "question" "preferred_output", "non_preferred_output" に書き換える
         return {
-            "prompt": example["question"],
-            "chosen": example["preferred_output"],
-            "rejected": example["non_preferred_output"]
+            "prompt": example["instruction"],
+            "chosen": example["chosen_response"],
+            "rejected": example["rejected_response"]
         }
     
-    dataset = dataset.map(format_pref, remove_columns=dataset.column_names)
+    dataset["train"] = dataset["train"].map(format_pref, remove_columns=dataset["train"].column_names)
 
     # 下3行は必要ないと思われるので消してよい?
     #for split in dataset:
@@ -127,7 +133,7 @@ def main(script_args, training_args, model_args):
         train_dataset=dataset[script_args.dataset_train_split],
         eval_dataset=(dataset[script_args.dataset_test_split] if training_args.eval_strategy != "no" else None),
         peft_config=get_peft_config(model_args),
-        callbacks=get_callbacks(training_args, model_args),
+        #callbacks=get_callbacks(training_args, model_args),
         processing_class=tokenizer
     )
 

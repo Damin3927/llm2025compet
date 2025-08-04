@@ -69,7 +69,7 @@ _deps = [
     "sentencepiece>=0.1.99",
     "torch==2.6.0",
     "transformers==4.52.3",
-    "trl[vllm]==0.18.0",
+    "trl[vllm]==0.20.0",
     "wandb>=0.19.1",
     "async-lru>=2.0.5",
     "aiofiles>=24.1.0",

@@ -9,14 +9,14 @@ dataset_test_split: test                                  # 評価用スプリ�
 #dataset_rejected_column: non_preferred_output             # 負例のカラム名
 
 # === ModelConfig ===
-model_name_or_path: Qwen/Qwen3-4B                         # モデル名
+model_name_or_path: Qwen/Qwen3-32B                        # モデル名
 model_revision: main                                     
 torch_dtype: bfloat16                                     # 数値の型
 
 # === LoRA/PEFT (get_peft_config) ===
 use_peft: true                                            # PEFT(LoRA) を使うかどうか
-lora_r: 16                                                # LoRA の rank
-lora_alpha: 16                                            # LoRA の alpha
+lora_r: 8                                                # LoRA の rank
+lora_alpha: 8                                            # LoRA の alpha
 lora_dropout: 0.05                                        # LoRA のドロップアウト率
 lora_target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"] # LoRA を適用するモジュール
 use_rslora: false                                         # Rank-Stabilized LoRA
@@ -34,13 +34,13 @@ gradient_accumulation_steps: 8                            # 勾配累積のス�
 gradient_checkpointing: false                             # 勾配累積チェックポイント
 learning_rate: 4.0e-05                                    # 学習率
 max_grad_norm: 0.2                                        # 勾配クリッピングの閾値
-num_train_epochs: 1                                        # エポック数
+num_train_epochs: 1                                       # エポック数
 warmup_ratio: 0.03                                        # ウォームアップ比率
 seed: 42                                                  # 乱数シード値
 beta: 0.1                                                 # DPO の beta パラメータ
 
 # === Save and Log ===
-output_dir: data/Qwen3-4B-DPO-test                        # 出力ディレクトリ
+output_dir: data/Qwen3-32B-DPO-test                        # 出力ディレクトリ
 overwrite_output_dir: true                                # 上書き可能かどうか
 save_strategy: steps                                      # 保存タイミング (no, steps, epoch)
 save_steps: 500                                           # 保存間隔
@@ -51,7 +51,7 @@ log_level: info                                           # ログレベル
 
 # === HF Hub ===
 push_to_hub: false                                        # HF Hub へ push するかどうか
-hub_model_id: Qwen3-4B-DPO-test                           # 登録するモデルID
+hub_model_id: Qwen3-32B-DPO-test                           # 登録するモデルID
 hub_strategy: every_save                                  # 保存時に毎回 push
 
 # === Other ===
