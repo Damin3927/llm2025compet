@@ -15,3 +15,5 @@ uv pip install peft
 
 # open-r1及び、他のライブラリのインストール
 GIT_LFS_SKIP_SMUDGE=1 uv pip install -e "llm2025compet/training/open-r1[dev]" 
+
+uv pip install trl[vllm]==0.20.0
