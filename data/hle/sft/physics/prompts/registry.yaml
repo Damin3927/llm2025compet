@@ -1,18 +1,26 @@
 # プロンプトバージョンレジストリ
-# 詳細なバージョン履歴は version_history.md を参照
 
 versions:
-  - version: "1.0"
-    file: "versions/v1.0.yaml"
+  - type: "generate"
+    version: "1.0"
+    file: "versions/generate_v1.0.yaml"
     status: "deprecated"
-    description: "物理問題の形式的な解法を自然な思考過程に変換する基本プロンプト"
+    description: "物理問題を解く際の思考過程を自然に表現する基本版"
     
-  - version: "2.0"
-    file: "versions/v2.0.yaml"
+  - type: "generate"
+    version: "2.0"
+    file: "versions/generate_v2.0.yaml"
     status: "deprecated"
-    description: "v1.0に探究的マインドセットを追加し、物理的直感や好奇心を強化"
+    description: "物理現象への好奇心と探究心を重視した改良版"
     
-  - version: "3.0"
-    file: "versions/v3.0.yaml"
+  - type: "generate"
+    version: "3.0"
+    file: "versions/generate_v3.0.yaml"
     status: "active"
-    description: "v2.0の探究性をさらに深化させ、計算完遂と思考プロセスの詳細化を徹底"
+    description: "探究心を保ちながら、計算過程と思考の流れをより詳しく記述"
+    
+  - type: "regenerate"
+    version: "3.0"
+    file: "versions/regenerate_v3.0.yaml"
+    status: "active"
+    description: "評価フィードバックを活用して解答を改善するための専用版"
