@@ -30,9 +30,11 @@ MAIN_IP="${NODELIST[0]}"
 
 ################### vLLM Server ###################
 srun --nodes=1 --ntasks=1 --nodelist="$VLLM_NODE" \
-     --gres=gpu:8 --exclusive --chdir="$REPO_DIR" \
+     --gres=gpu:4 --exclusive --chdir="$REPO_DIR" \
      bash -c "
        source ~/openr1/bin/activate
+       export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
+       export NCCL_ASYNC_ERROR_HANDLING=1
        echo '[vLLM] on \$HOSTNAME'
        CUDA_VISIBLE_DEVICES=0,1,2,3 \
        trl vllm-serve \
@@ -40,7 +42,8 @@ srun --nodes=1 --ntasks=1 --nodelist="$VLLM_NODE" \
          --tensor_parallel_size 4 \
          --host 0.0.0.0 \
          --port 8000 \
-         --max-model-len 4096
+         --max-model-len 2048 \
+         --enforce-eager false
      " &
 
 sleep 120    # 安全に長め
@@ -51,6 +54,7 @@ srun --nodes=2 --ntasks=2 --nodelist="$TRAIN_NODES" \
      bash -c "
        source ~/openr1/bin/activate
        echo '[GRPO] on \$HOSTNAME  (rank \$SLURM_PROCID)'
+       export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
        export NCCL_ASYNC_ERROR_HANDLING=1
        accelerate launch \
          --config_file ../recipes/accelerate_configs/zero3.yaml \
