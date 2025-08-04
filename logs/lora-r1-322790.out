@@ -1,0 +1,19 @@
+===== ジョブ開始: Mon Aug  4 06:40:28 PM JST 2025 =====
+cwd  = /home/Competition2025/P02/P02U006/ColossalAI
+host = osk-gpu54
+JOB  = 322790
+NODES= osk-gpu[54,56,91]
+=== CUDA環境 ===
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Tue_May_27_02:21:03_PDT_2025
+Cuda compilation tools, release 12.9, V12.9.86
+Build cuda_12.9.r12.9/compiler.36037853_0
+=== Pythonライブラリのバージョン ===
+python 3.10.18 (main, Jun  5 2025, 13:14:17) [GCC 11.2.0]
+torch 2.4.1+cu124
+please install Colossal-AI from https://www.colossalai.org/download or from source
+colossalai 0.0.0
+PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+LD_LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+MASTER_ADDR=osk-gpu54  MASTER_PORT=14790
