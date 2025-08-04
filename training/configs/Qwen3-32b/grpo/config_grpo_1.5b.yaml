@@ -25,9 +25,7 @@ system_prompt: |
 
 # Qwen 既定の chat_template を使用（上書き不要）
 # chat_template: null
-stop_sequences:
-  - "</answer>"
-  - "<|im_end|>"
+#eos_token: <|im_end|>
 
 # ----------------------------------------------------------
 # GRPO Trainer
