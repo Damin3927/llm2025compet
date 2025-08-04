@@ -99,7 +99,7 @@ NODE_RANK=$SLURM_NODEID
 
 echo "MASTER_ADDR=$MASTER_ADDR  MASTER_PORT=$MASTER_PORT NODE_RANK=$NODE_RANK NNODES=$NNODES"
 
-srun --cpu_bind=none --accel-bind=gn --ntasks=$((NNODES * NPROC_PER_NODE)) --ntasks-per-node=$NPROC_PER_NODE \
+srun --cpu_bind=none --accel-bind=gn --ntasks=$NNODES --ntasks-per-node=1 \
   torchrun \
     --nnodes=$NNODES \
     --nproc_per_node=$NPROC_PER_NODE \
