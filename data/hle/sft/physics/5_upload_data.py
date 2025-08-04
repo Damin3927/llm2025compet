@@ -40,9 +40,21 @@ def main():
     # HFにアップロード
     hf_token = os.getenv("HF_TOKEN")
     api = HfApi(token=hf_token)
-    api.upload_file(
-        path_or_fileobj=str(parquet_path), path_in_repo=parquet_path.name, repo_id=repo_id, repo_type="dataset"
-    )
+    
+    # リポジトリが存在しない場合は作成
+    try:
+        api.upload_file(
+            path_or_fileobj=str(parquet_path), path_in_repo=parquet_path.name, repo_id=repo_id, repo_type="dataset"
+        )
+    except Exception as e:
+        if "Repository Not Found" in str(e):
+            print(f"リポジトリが存在しないため、作成します: {repo_id}")
+            api.create_repo(repo_id=repo_id, repo_type="dataset", private=False)
+            api.upload_file(
+                path_or_fileobj=str(parquet_path), path_in_repo=parquet_path.name, repo_id=repo_id, repo_type="dataset"
+            )
+        else:
+            raise
 
     # README.mdもアップロード
     readme_path = Path(f"data/{args.dataset}/README.md")
