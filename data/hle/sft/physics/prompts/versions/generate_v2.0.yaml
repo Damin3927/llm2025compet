@@ -1,6 +1,7 @@
 metadata:
+  type: "generate"
   version: "2.0"
-  description: "v1.0に探究的マインドセットを追加し、物理的直感や好奇心を強化"
+  description: "物理現象への好奇心と探究心を重視した改良版"
 
 prompts:
   system: |

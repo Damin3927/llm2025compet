@@ -1,6 +1,7 @@
 metadata:
+  type: "generate"
   version: "1.0"
-  description: "物理問題の形式的な解法を自然な思考過程に変換する基本プロンプト"
+  description: "物理問題を解く際の思考過程を自然に表現する基本版"
 
 prompts:
   system: |
