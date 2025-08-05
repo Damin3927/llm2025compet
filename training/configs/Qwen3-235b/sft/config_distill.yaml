@@ -9,7 +9,7 @@
 model_name_or_path: Qwen/Qwen3-235B-A22B # テスト用のため0.5bにしている
 model_revision: main
 torch_dtype: bfloat16 # bf16を使う
-# attn_implementation: flash_attention_2 # flash-attnention_2は使えなかった。
+attn_implementation: flash_attention_2 # flash-attnention_2は使えなかった。
 
 # LoRA arguments https://github.com/huggingface/trl/blob/v0.19.1/trl/trainer/model_config.py#L19
 use_peft: true # PEFT (Lora) を使うかどうか
@@ -52,7 +52,7 @@ max_grad_norm: 0.2
 max_length: 16 # 32768 # 最大シーケンス長
 max_steps: 3 # -1
 num_train_epochs: 5 # 学習エポック数
-output_dir: data/Qwen3-235B-Distill # 結果の出力ディレクトリ
+output_dir: data/Qwen3-235B-Distill2 # 結果の出力ディレクトリ
 optim: adamw_torch # オプティマイザの種類  何があるかはhttps://github.com/huggingface/transformers/blob/main/src/transformers/training_args.pyを参照
 overwrite_output_dir: true
 per_device_eval_batch_size: 1 # 評価時の1GPUあたりのバッチサイズ

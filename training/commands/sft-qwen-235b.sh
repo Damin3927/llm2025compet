@@ -58,4 +58,4 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
 # /home/Competition2025/P02/shareP02/scripts/scancel.sh 287614
 
 # 実行コマンド
-# sbatch ./llm2025compet/training/commands/sft-qwen-32b-node3.sh
+# sbatch ./llm2025compet/training/commands/sft-qwen-235b.sh
