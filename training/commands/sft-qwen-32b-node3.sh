@@ -5,9 +5,9 @@
 #SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
 #SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
 #SBATCH --job-name sft-32b     # ジョブの名前
-#SBATCH --time 0:30:00         # ジョブの最大実行時間
-#SBATCH --output sft-32b.out   # 標準出力ファイル
-#SBATCH --error sft-32b.err    # 標準エラーファイル
+#SBATCH --time 1:00:00         # ジョブの最大実行時間
+#SBATCH --output sft-32b-lora.out   # 標準出力ファイル
+#SBATCH --error sft-32b-lora.err    # 標準エラーファイル
 #SBATCH --mem=0            # 各ノードのメモリサイズ
 #SBATCH --cpus-per-task=160         # number of cores per tasks
 
@@ -43,7 +43,7 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
         open_r1/sft.py \
-        --config ../../configs/Qwen3-32b/sft/config_distill.yaml \
+        --config ../../configs/Qwen3-32b/sft/config_distill_lora.yaml \
         --dataconfig ../../configs/data_configs/example.yaml"
 
 # 実行方法

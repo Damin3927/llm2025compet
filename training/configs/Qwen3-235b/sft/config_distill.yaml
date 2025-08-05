@@ -49,8 +49,8 @@ lr_scheduler_kwargs:
   min_lr_rate: 0.1
 packing: false
 max_grad_norm: 0.2
-max_length: 32768 # 最大シーケンス長
-max_steps: -1
+max_length: 16 # 32768 # 最大シーケンス長
+max_steps: 3 # -1
 num_train_epochs: 5 # 学習エポック数
 output_dir: data/Qwen3-235B-Distill # 結果の出力ディレクトリ
 optim: adamw_torch # オプティマイザの種類  何があるかはhttps://github.com/huggingface/transformers/blob/main/src/transformers/training_args.pyを参照

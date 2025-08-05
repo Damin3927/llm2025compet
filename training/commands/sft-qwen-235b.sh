@@ -48,7 +48,8 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
         open_r1/sft.py \
-        --config ../../configs/Qwen3-235b/sft/config_distill.yaml"
+        --config ../../configs/Qwen3-235b/sft/config_distill.yaml \
+        --dataconfig ../../configs/data_configs/example.yaml"
 
 # 実行方法
 # HOMEで以下を実行する。自動でopen-r1のソースコードディレクトリに移動することに注意
