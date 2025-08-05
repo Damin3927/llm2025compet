@@ -121,38 +121,27 @@ echo "MASTER_ADDR=$MASTER_ADDR  MASTER_PORT=$MASTER_PORT"
 echo "== [Pre-launch NCCL env] =="
 env | grep NCCL
 
-
-srun --cpu_bind=none --accel-bind=gn bash -lc "
-  set -e
-  source ~/miniconda3/etc/profile.d/conda.sh
-  conda activate deepseeksft310
-  echo 'on master:' \$(hostname)
-  echo '== [Pre-launch NCCL env (inside srun block)] =='
-  env | grep NCCL
-  which colossalai || true
-  which python || true
-  which torchrun || true
-
+srun --cpu_bind=none --accel-bind=gn \
   colossalai run \
-      --hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile \
-      --nproc_per_node 1 \
-      --master_addr $MASTER_ADDR \
-      --master_port $MASTER_PORT \
-      /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
-          --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
-          --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
-          --plugin moe \
-          --pp 3 --ep 8 \
-          --batch_size 8 \
-          --lr 2e-5 \
-          --max_length 256 \
-          --lora_rank 8 --lora_alpha 16 \
-          --num_epochs 2 --warmup_steps 8 \
-          --mixed_precision bf16 \
-          --use_grad_checkpoint \
-          --tensorboard_dir \"$LOG_ROOT/tb\" \
-          --save_dir \"$LOG_ROOT/DeepSeek-R1-0528-lora\"
-"
+    --hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile \
+    --nproc_per_node 1 \
+    --master_addr $MASTER_ADDR \
+    --master_port $MASTER_PORT \
+    /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
+      --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
+      --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
+      --plugin moe \
+      --pp 3 --ep 8 \
+      --batch_size 8 \
+      --lr 2e-5 \
+      --max_length 256 \
+      --lora_rank 8 --lora_alpha 16 \
+      --num_epochs 2 --warmup_steps 8 \
+      --mixed_precision bf16 \
+      --use_grad_checkpoint \
+      --tensorboard_dir "$LOG_ROOT/tb" \
+      --save_dir "$LOG_ROOT/DeepSeek-R1-0528-lora"
+
 
 kill "$MON_PID" || true
 echo "===== ジョブ終了: $(date) ====="
