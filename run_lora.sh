@@ -115,7 +115,8 @@ echo "[after unset NCCL_NET_PLUGIN]"; env | grep NCCL
 #   * master_port を固定
 # ───────────────────────────
 export MASTER_ADDR=$(head -n1 /home/Competition2025/P02/P02U006/ColossalAI/hostfile)
-export MASTER_PORT=$((12000 + SLURM_JOB_ID % 20000))
+export MASTER_PORT=$((10000 + RANDOM % 40000)) # 10000〜50000のランダムポート
+
 echo "MASTER_ADDR=$MASTER_ADDR  MASTER_PORT=$MASTER_PORT"
 
 echo "== [Pre-launch NCCL env] =="
