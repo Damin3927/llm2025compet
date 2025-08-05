@@ -6,8 +6,8 @@
 #SBATCH --gpus-per-node=8
 #SBATCH --gres=gpu:8
 #SBATCH --time=04:00:00
-#SBATCH --output=/home/Competition2025/P02/P02U006/ColossalAI/logs/%j/job.out
-#SBATCH --error=/home/Competition2025/P02/P02U006/ColossalAI/logs/%j/job.err
+#SBATCH --output=/home/Competition2025/P02/P02U006/ColossalAI/logs/%j.out
+#SBATCH --error=/home/Competition2025/P02/P02U006/ColossalAI/logs/%j.err
 
 set -exo pipefail                       # デバッグ
 
