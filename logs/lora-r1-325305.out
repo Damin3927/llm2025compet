@@ -1,0 +1,5 @@
+===== ジョブ開始: Tue Aug  5 04:17:10 PM JST 2025 =====
+cwd  = /home/Competition2025/P02/P02U006/ColossalAI
+host = osk-gpu54
+JOB  = 325305
+NODES= osk-gpu[54,56,91]

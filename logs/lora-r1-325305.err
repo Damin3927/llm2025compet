@@ -1,0 +1,72 @@
+++ date
++ echo '===== ジョブ開始: Tue Aug  5 04:17:10 PM JST 2025 ====='
+++ pwd
++ echo 'cwd  = /home/Competition2025/P02/P02U006/ColossalAI'
+++ hostname
++ echo 'host = osk-gpu54'
++ echo 'JOB  = 325305'
++ echo 'NODES= osk-gpu[54,56,91]'
++ mkdir -p /home/Competition2025/P02/P02U006/ColossalAI/logs /home/Competition2025/P02/P02U006/ColossalAI/logs/tb
++ source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/python
+++ '[' -z x ']'
++ conda activate deepseeksft310
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate deepseeksft310
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate deepseeksft310
+++ '[' -n '' ']'
+++ /home/Competition2025/P02/P02U006/miniconda3/bin/conda shell.posix activate deepseeksft310
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/conda/exception_handler.py", line 28, in __call__
+    return func(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/conda/cli/main.py", line 73, in main_sourced
+    from ..base.context import context
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/conda/base/context.py", line 45, in <module>
+    from ..common.url import has_scheme, path_to_url, split_scheme_auth_token
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/conda/common/url.py", line 9, in <module>
+    import socket
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/socket.py", line 52, in <module>
+    import _socket
+ImportError: /home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/lib-dynload/_socket.cpython-313-x86_64-linux-gnu.so: failed to map segment from shared object
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/bin/conda", line 13, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/conda/cli/main.py", line 105, in main
+    return conda_exception_handler(main, *args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/conda/exception_handler.py", line 410, in conda_exception_handler
+    return_value = exception_handler(func, *args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/conda/exception_handler.py", line 31, in __call__
+    return self.handle_exception(exc_val, exc_tb)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/conda/exception_handler.py", line 62, in handle_exception
+    from .exceptions import (
+    ...<3 lines>...
+    )
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/conda/exceptions.py", line 17, in <module>
+    from requests.exceptions import JSONDecodeError
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/requests/__init__.py", line 43, in <module>
+    import urllib3
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/urllib3/__init__.py", line 14, in <module>
+    from . import exceptions
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/site-packages/urllib3/exceptions.py", line 3, in <module>
+    import socket
+  File "/home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/socket.py", line 52, in <module>
+    import _socket
+ImportError: /home/Competition2025/P02/P02U006/miniconda3/lib/python3.13/lib-dynload/_socket.cpython-313-x86_64-linux-gnu.so: failed to map segment from shared object
++ ask_conda=
++ return
