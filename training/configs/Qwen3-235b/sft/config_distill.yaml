@@ -64,5 +64,5 @@ save_strategy: steps # モデルをローカルに保存するタイミング ('
 save_steps: 500 # モデルをローカルに保存するステップ数(間隔)
 save_total_limit: 1
 seed: 42 # 乱数シード
-use_liger_kernel: false # エラーが出たので一旦無効化
+use_liger_kernel: true # エラーが出たので一旦無効化
 warmup_ratio: 0.03
