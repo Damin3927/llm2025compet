@@ -135,7 +135,7 @@ srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
 	--master_addr $MASTER_ADDR \
         --master_port $MASTER_PORT \
         --nproc_per_node 8 \
-        --rdzv_timeout 3600
+        --rdzv_timeout 3600 \
         /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
             --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
             --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
