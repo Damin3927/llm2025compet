@@ -47,7 +47,7 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_ip \"$MASTER_ADDR\" \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
-        open_r1/sft.py \
+        open_r1/grpo_unsloth.py \
         --config ../../configs/Qwen3-235b/sft/config_distill.yaml"
 
 # 実行方法
