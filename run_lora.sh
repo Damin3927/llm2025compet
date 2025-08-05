@@ -135,7 +135,7 @@ srun --cpu_bind=none --accel-bind=gn bash -lc "
 
   colossalai run \
       --hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile \
-      --nproc_per_node 1 \          # ★各 srun タスク = 1 プロセス
+      --nproc_per_node 1 \
       --master_addr $MASTER_ADDR \
       --master_port $MASTER_PORT \
       /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
