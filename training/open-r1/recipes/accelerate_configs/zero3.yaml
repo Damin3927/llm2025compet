@@ -1,5 +1,8 @@
 compute_environment: LOCAL_MACHINE
 debug: true
+
+deepspeed_config_file: /home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/recipes/accelerate_configs/deepspeed_minimal.json
+
 deepspeed_config:
   deepspeed_multinode_launcher: standard #slurm # pdsh #standard
   offload_optimizer_device: cpu # compatible with vllm colocate mode scaling
