@@ -189,6 +189,7 @@ def main(script_args, training_args, model_args, data_config: DataConfig):
     #############
     # push to hub
     #############
+    transformers.logging.set_verbosity_info()
     if training_args.push_to_hub:
         logger.info("Pushing to hub...")
         trainer.push_to_hub(**kwargs)
