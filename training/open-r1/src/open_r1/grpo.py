@@ -18,6 +18,28 @@ import sys
 
 import datasets
 import transformers
+
+# ============ Monkey-patch for sleep(level=2) ============
+from vllm.engine.async_llm_engine import AsyncLLMEngine
+
+# キャプチャしておいたオリジナル
+_orig_sleep = AsyncLLMEngine.sleep
+
+# いつ呼ばれても level=2 に置き換える
+async def _sleep_l2(self, level: int = 1) -> None:
+    return await _orig_sleep(self, 2)
+
+# 上書き
+AsyncLLMEngine.sleep = _sleep_l2
+# ========================================================
+
+# 追加例: 同期版のパッチ
+from vllm.engine.llm_engine import LLMEngine
+_orig_llm_sleep = LLMEngine.sleep
+def _llm_sleep_l2(self, level: int = 1) -> None:
+    return _orig_llm_sleep(self, 2)
+LLMEngine.sleep = _llm_sleep_l2
+
 from transformers import set_seed
 from transformers.trainer_utils import get_last_checkpoint
 
