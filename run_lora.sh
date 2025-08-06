@@ -37,7 +37,7 @@ export CUDACXX="$CUDA_HOME/bin/nvcc"
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 # NCCL & PyTorch 分散
-export NCCL_SOCKET_IFNAME="enp92s0np0"
+export NCCL_SOCKET_IFNAME="enp25s0np0"
 export NCCL_IB_HCA="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1"
 export GLOO_SOCKET_IFNAME=$NCCL_SOCKET_IFNAME
 export NCCL_TIMEOUT=3600
@@ -104,9 +104,11 @@ echo "== [Pre-launch NCCL env] =="
 env | grep NCCL
 
 # --- 分散実行: 各ノード×8GPU（計24プロセス） ---
-# torchrunが自動でrank割当する。hostfileは不要！
 
-srun --ntasks=3 --ntasks-per-node=1 bash -c "
+srun --ntasks=3 --ntasks-per-node=1 \
+  --output=$LOG_ROOT/slurm-%t.out \
+  --error=$LOG_ROOT/slurm-%t.err \
+  bash -c "
   source ~/miniconda3/etc/profile.d/conda.sh
   conda activate deepseeksft310
   export NCCL_SOCKET_IFNAME='enp92s0np0'
@@ -126,7 +128,7 @@ srun --ntasks=3 --ntasks-per-node=1 bash -c "
       --pp 3 --ep 8 \
       --batch_size 8 \
       --lr 2e-5 \
-      --max_length 32 \
+      --max_length 8 \
       --lora_rank 8 --lora_alpha 16 \
       --num_epochs 2 --warmup_steps 8 \
       --mixed_precision bf16 \
