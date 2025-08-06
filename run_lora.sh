@@ -37,13 +37,14 @@ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True # PyTorch の CUDA メ�
 
 # PyTorch 推奨の NCCL 非同期エラーハンドリング
 #export NCCL_SOCKET_IFNAME=mlx5_0         # *各ノードで同じ名前を確認*
-export NCCL_SOCKET_IFNAME="enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0" # 管理者の/etc/profile.d/でセットされるもに合わせる
+export NCCL_SOCKET_IFNAME="enp92s0np0" # 管理者の/etc/profile.d/でセットされるもに合わせる
 export NCCL_IB_HCA="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1" # IBのポート指定も/etc/profile.d/appli.shでセットされているため
 export GLOO_SOCKET_IFNAME=$NCCL_SOCKET_IFNAME
 export NCCL_TIMEOUT=${NCCL_TIMEOUT:-3600} # 1h まで待機
 export TORCHELASTIC_TIMEOUT=3600 # 1h まで待機
 export TORCH_DISTRIBUTED_TIMEOUT=3600 # 1h まで待機
 export TORCH_ELASTIC_STORE_TIMEOUT=3600 # 1 hour
+export TORCH_DISTRIBUTED_STORE_TIMEOUT=3600 # 1 hour
 export TORCH_NCCL_BLOCKING_WAIT=1
 export NCCL_DEBUG=INFO
 #export NCCL_DEBUG_SUBSYS=INIT,ENV,GRAPH  # もっと欲しければ ALL
@@ -57,14 +58,23 @@ ulimit -v unlimited
 ulimit -m unlimited
 
 
-# SIGUSR1 で全 rank に BT 取得
+# ─── SIGUSR1 で全 rank に BT 取得 ────────────────────────────────
 trap 'echo "=== SIGUSR1 on $(hostname) ==="; pkill -USR1 -f lora_finetune.py' USR1
 
-MON_LOG="$LOG_ROOT/gpu_${SLURM_NODEID}.log"
+# === ログ格納先を「/logs/<ジョブID>/」にする ======================
+BASE_LOG_DIR=/home/Competition2025/P02/P02U006/ColossalAI/logs
+LOG_ROOT="${BASE_LOG_DIR}/${SLURM_JOB_ID}"
+export LOG_ROOT
+
+# 既に存在していても OK（全ノードで race しても -p なので安全）
+mkdir -p "${LOG_ROOT}"
+
+# === GPU 利用率ログ =============================================
+MON_LOG="${LOG_ROOT}/gpu_${SLURM_NODEID}.log"
 (
   while true; do
-    date '+[%F %T] ===== GPU util =====' >> "$MON_LOG"
-    nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader >> "$MON_LOG"
+    date '+[%F %T] ===== GPU util =====' >> "${MON_LOG}"
+    nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader >> "${MON_LOG}"
     sleep 60
   done
 ) &
@@ -133,11 +143,12 @@ srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
   which python || true
   which torchrun || true
 
-  TORCH_ELASTIC_STORE_TIMEOUT=3600 NCCL_TIMEOUT=3600 NCCL_DEBUG=INFO colossalai run \
+  TORCH_ELASTIC_STORE_TIMEOUT=3600 TORCH_DISTRIBUTED_STORE_TIMEOUT=3600 NCCL_TIMEOUT=3600 NCCL_DEBUG=INFO colossalai run \
 	--hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile \
 	--master_addr $MASTER_ADDR \
         --master_port $MASTER_PORT \
         --nproc_per_node 8 \
+        --store-timeout 3600 \
         /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
             --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
             --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
@@ -145,7 +156,7 @@ srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
             --pp 3 --ep 8 \
             --batch_size 8 \
             --lr 2e-5 \
-            --max_length 256 \
+            --max_length 32 \
             --lora_rank 8 --lora_alpha 16 \
             --num_epochs 2 --warmup_steps 8 \
             --mixed_precision bf16 \
