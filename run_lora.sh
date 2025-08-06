@@ -106,7 +106,7 @@ env | grep NCCL
 # --- 分散実行: 各ノード×8GPU（計24プロセス） ---
 # torchrunが自動でrank割当する。hostfileは不要！
 
-srun --ntasks=24 --ntasks-per-node=1 bash -c "
+srun --ntasks=3 --ntasks-per-node=1 bash -c "
   source ~/miniconda3/etc/profile.d/conda.sh
   conda activate deepseeksft310
   export NCCL_SOCKET_IFNAME='enp92s0np0'
@@ -115,7 +115,7 @@ srun --ntasks=24 --ntasks-per-node=1 bash -c "
 
   torchrun \
     --nnodes 3 \
-    --node_rank \$SLURM_NODEID \
+    --node_rank \$SLURM_PROCID \
     --nproc_per_node 8 \
     --master_addr $MASTER_ADDR \
     --master_port $MASTER_PORT \
