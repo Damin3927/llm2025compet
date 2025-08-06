@@ -38,6 +38,16 @@ from colossalai.utils import get_current_device
 
 import socket # Added for debugging
 
+import os
+print("=== ENV CHECK ===")
+print("NCCL_TIMEOUT =", os.environ.get("NCCL_TIMEOUT"))
+print("TORCH_ELASTIC_STORE_TIMEOUT =", os.environ.get("TORCH_ELASTIC_STORE_TIMEOUT"))
+print("TORCH_DISTRIBUTED_STORE_TIMEOUT =", os.environ.get("TORCH_DISTRIBUTED_STORE_TIMEOUT"))
+print("MASTER_ADDR =", os.environ.get("MASTER_ADDR"))
+print("MASTER_PORT =", os.environ.get("MASTER_PORT"))
+print("=== END ENV CHECK ===")
+
+
 
 def all_reduce_mean(loss: torch.Tensor, plugin: Plugin) -> torch.Tensor:
     loss = loss.data
