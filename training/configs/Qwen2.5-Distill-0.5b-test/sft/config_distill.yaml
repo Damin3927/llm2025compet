@@ -37,7 +37,7 @@ gradient_accumulation_steps: 8 # 勾配蓄積のステップ数
 gradient_checkpointing: false # 勾配チェックポイントを使うかどうか
 gradient_checkpointing_kwargs:
   use_reentrant: false
-hub_model_id: Qwen2.5-0.5B-Distill-test # モデルをHuggingFace Hubにpushする際のモデルID
+hub_model_id: neko-llm/Qwen2.5-0.5B-Distill-test # モデルをHuggingFace Hubにpushする際のモデルID
 hub_strategy: every_save # モデルをHuggingFace Hubにpushするタイミング (every_save: 保存する時毎回, end: 最後の保存時)
 learning_rate: 4.0e-05 # 学習率
 log_level: info # ログレベル(ログの詳細度)
