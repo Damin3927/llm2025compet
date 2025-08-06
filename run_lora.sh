@@ -142,7 +142,6 @@ srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
   which torchrun || true
 
   TORCH_ELASTIC_STORE_TIMEOUT=3600 TORCH_DISTRIBUTED_STORE_TIMEOUT=3600 NCCL_TIMEOUT=3600 NCCL_DEBUG=INFO torchrun \
-    --hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile \
     --master_addr $MASTER_ADDR \
     --master_port $MASTER_PORT \
     --nproc_per_node 8 \
