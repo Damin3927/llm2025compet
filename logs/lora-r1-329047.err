@@ -3141,3 +3141,1205 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
 + date '+[%F %T] ===== GPU util ====='
 + nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
 + sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
+Step:   0%|          | 0/33 [00:00<?, ?it/s][rank16]:[W806 15:48:40.094860117 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank17]:[W806 15:48:40.119039943 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank16]: Traceback (most recent call last):
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank16]:     train(args)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank16]:     outputs = booster.execute_pipeline(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank16]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank16]:     outputs = self.scheduler.forward_backward_step(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank16]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 400, in run_forward_backward
+[rank16]:     input_obj = self.recv_forward()
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank16]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank16]:     input_tensor, wait_handles = _communicate(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank16]:     _metadata_recv = _send_recv_serialization_object(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank16]:     reqs = dist.batch_isend_irecv(ops)
+[rank16]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank16]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank16]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank16]:     return pg.recv([tensor], group_src_rank, tag)
+[rank16]: torch.distributed.DistBackendError: [2] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank16]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank16]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x1546e70d9f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank16]: frame #1: <unknown function> + 0x164b9c5 (0x15471d3ec9c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x154721a9cd92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x154721a9df81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x154721a529d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x154721a529d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x154721a529d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x154721a529d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x154721a529d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x1546e839cf8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank16]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x1546e83a8d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank16]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x1546e83c696a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank16]: frame #12: <unknown function> + 0x5ca3c19 (0x154721a44c19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #13: <unknown function> + 0x5cae67a (0x154721a4f67a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #14: <unknown function> + 0x52d0c1b (0x154721071c1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #15: <unknown function> + 0x52ce494 (0x15472106f494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #16: <unknown function> + 0x1ace5a8 (0x15471d86f5a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #17: <unknown function> + 0x5cb5684 (0x154721a56684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #18: <unknown function> + 0x5cba835 (0x154721a5b835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #19: <unknown function> + 0xdb6a3e (0x154734d7ba3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank16]: frame #20: <unknown function> + 0x4b00e4 (0x1547344750e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank16]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank16]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank16]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank16]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank16]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank16]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank16]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank16]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank16]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #56: <unknown function> + 0x295d0 (0x1547364295d0 in /lib64/libc.so.6)
+[rank16]: frame #57: __libc_start_main + 0x80 (0x154736429680 in /lib64/libc.so.6)
+[rank16]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank16]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank17]: Traceback (most recent call last):
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank17]:     train(args)
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank17]:     outputs = booster.execute_pipeline(
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank17]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank17]:     outputs = self.scheduler.forward_backward_step(
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank17]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 400, in run_forward_backward
+[rank17]:     input_obj = self.recv_forward()
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank17]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank17]:     input_tensor, wait_handles = _communicate(
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank17]:     _metadata_recv = _send_recv_serialization_object(
+[rank17]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank17]:     reqs = dist.batch_isend_irecv(ops)
+[rank17]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank17]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank17]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank17]:     return pg.recv([tensor], group_src_rank, tag)
+[rank17]: torch.distributed.DistBackendError: [2] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank17]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank17]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x14fd72a11f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank17]: frame #1: <unknown function> + 0x164b9c5 (0x14fda8d249c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x14fdad3d4d92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x14fdad3d5f81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14fdad38a9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14fdad38a9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14fdad38a9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14fdad38a9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14fdad38a9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x14fd73cd4f8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank17]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x14fd73ce0d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank17]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x14fd73cfe96a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank17]: frame #12: <unknown function> + 0x5ca3c19 (0x14fdad37cc19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #13: <unknown function> + 0x5cae67a (0x14fdad38767a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #14: <unknown function> + 0x52d0c1b (0x14fdac9a9c1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #15: <unknown function> + 0x52ce494 (0x14fdac9a7494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #16: <unknown function> + 0x1ace5a8 (0x14fda91a75a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #17: <unknown function> + 0x5cb5684 (0x14fdad38e684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #18: <unknown function> + 0x5cba835 (0x14fdad393835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank17]: frame #19: <unknown function> + 0xdb6a3e (0x14fdc06b3a3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank17]: frame #20: <unknown function> + 0x4b00e4 (0x14fdbfdad0e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank17]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank17]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank17]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank17]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank17]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank17]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank17]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank17]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank17]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank17]: frame #56: <unknown function> + 0x295d0 (0x14fdc1c295d0 in /lib64/libc.so.6)
+[rank17]: frame #57: __libc_start_main + 0x80 (0x14fdc1c29680 in /lib64/libc.so.6)
+[rank17]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank17]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank23]:[W806 15:48:40.200351939 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+Step:   0%|          | 0/33 [10:00<?, ?it/s]
+[rank23]: Traceback (most recent call last):
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank23]:     train(args)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank23]:     outputs = booster.execute_pipeline(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank23]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank23]:     outputs = self.scheduler.forward_backward_step(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank23]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 400, in run_forward_backward
+[rank23]:     input_obj = self.recv_forward()
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank23]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank23]:     input_tensor, wait_handles = _communicate(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank23]:     _metadata_recv = _send_recv_serialization_object(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank23]:     reqs = dist.batch_isend_irecv(ops)
+[rank23]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank23]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank23]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank23]:     return pg.recv([tensor], group_src_rank, tag)
+[rank23]: torch.distributed.DistBackendError: [2] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank23]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank23]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x14f903993f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank23]: frame #1: <unknown function> + 0x164b9c5 (0x14f939ca69c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x14f93e356d92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x14f93e357f81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14f93e30c9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14f93e30c9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14f93e30c9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14f93e30c9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14f93e30c9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x14f904c56f8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank23]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x14f904c62d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank23]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x14f904c8096a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank23]: frame #12: <unknown function> + 0x5ca3c19 (0x14f93e2fec19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #13: <unknown function> + 0x5cae67a (0x14f93e30967a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #14: <unknown function> + 0x52d0c1b (0x14f93d92bc1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #15: <unknown function> + 0x52ce494 (0x14f93d929494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #16: <unknown function> + 0x1ace5a8 (0x14f93a1295a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #17: <unknown function> + 0x5cb5684 (0x14f93e310684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #18: <unknown function> + 0x5cba835 (0x14f93e315835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #19: <unknown function> + 0xdb6a3e (0x14f951635a3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank23]: frame #20: <unknown function> + 0x4b00e4 (0x14f950d2f0e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank23]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank23]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank23]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank23]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank23]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank23]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank23]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank23]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank23]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #56: <unknown function> + 0x295d0 (0x14f952c295d0 in /lib64/libc.so.6)
+[rank23]: frame #57: __libc_start_main + 0x80 (0x14f952c29680 in /lib64/libc.so.6)
+[rank23]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank23]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank22]:[W806 15:48:40.237041059 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank22]: Traceback (most recent call last):
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank22]:     train(args)
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank22]:     outputs = booster.execute_pipeline(
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank22]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank22]:     outputs = self.scheduler.forward_backward_step(
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank22]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 400, in run_forward_backward
+[rank22]:     input_obj = self.recv_forward()
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank22]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank22]:     input_tensor, wait_handles = _communicate(
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank22]:     _metadata_recv = _send_recv_serialization_object(
+[rank22]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank22]:     reqs = dist.batch_isend_irecv(ops)
+[rank22]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank22]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank22]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank22]:     return pg.recv([tensor], group_src_rank, tag)
+[rank22]: torch.distributed.DistBackendError: [2] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank22]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank22]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x1499b01e2f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank22]: frame #1: <unknown function> + 0x164b9c5 (0x1499e64f59c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x1499eaba5d92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x1499eaba6f81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x1499eab5b9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x1499eab5b9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x1499eab5b9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x1499eab5b9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x1499eab5b9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x1499b14a5f8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank22]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x1499b14b1d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank22]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x1499b14cf96a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank22]: frame #12: <unknown function> + 0x5ca3c19 (0x1499eab4dc19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #13: <unknown function> + 0x5cae67a (0x1499eab5867a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #14: <unknown function> + 0x52d0c1b (0x1499ea17ac1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #15: <unknown function> + 0x52ce494 (0x1499ea178494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #16: <unknown function> + 0x1ace5a8 (0x1499e69785a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #17: <unknown function> + 0x5cb5684 (0x1499eab5f684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #18: <unknown function> + 0x5cba835 (0x1499eab64835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank22]: frame #19: <unknown function> + 0xdb6a3e (0x1499fde84a3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank22]: frame #20: <unknown function> + 0x4b00e4 (0x1499fd57e0e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank22]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank22]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank22]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank22]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank22]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank22]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank22]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank22]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank22]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank22]: frame #56: <unknown function> + 0x295d0 (0x1499ff4295d0 in /lib64/libc.so.6)
+[rank22]: frame #57: __libc_start_main + 0x80 (0x1499ff429680 in /lib64/libc.so.6)
+[rank22]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank22]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+[rank16]:[W806 15:48:42.912676928 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+W0806 15:48:44.750000 22663325837120 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3150699 closing signal SIGTERM
+W0806 15:48:44.750000 22663325837120 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3150700 closing signal SIGTERM
+W0806 15:48:44.754000 22663325837120 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3150701 closing signal SIGTERM
+W0806 15:48:44.757000 22663325837120 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3150702 closing signal SIGTERM
+W0806 15:48:44.761000 22663325837120 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3150703 closing signal SIGTERM
+W0806 15:48:44.765000 22663325837120 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3150704 closing signal SIGTERM
+W0806 15:48:44.770000 22663325837120 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3150705 closing signal SIGTERM
+E0806 15:48:52.524000 22663325837120 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 3150698) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-08-06_15:48:44
+  host      : osk-gpu91
+  rank      : 16 (local_rank: 0)
+  exitcode  : 1 (pid: 3150698)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
+[rank9]:[W806 15:50:12.906242232 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank9]: Traceback (most recent call last):
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank9]:     train(args)
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank9]:     outputs = booster.execute_pipeline(
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank9]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank9]:     outputs = self.scheduler.forward_backward_step(
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank9]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 390, in run_forward_backward
+[rank9]:     input_obj = self.recv_forward()
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank9]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank9]:     input_tensor, wait_handles = _communicate(
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank9]:     _metadata_recv = _send_recv_serialization_object(
+[rank9]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank9]:     reqs = dist.batch_isend_irecv(ops)
+[rank9]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank9]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank9]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank9]:     return pg.recv([tensor], group_src_rank, tag)
+[rank9]: torch.distributed.DistBackendError: [1] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank9]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank9]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x146cb7cc0f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank9]: frame #1: <unknown function> + 0x164b9c5 (0x146cedfd39c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x146cf2683d92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x146cf2684f81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x146cf26399d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x146cf26399d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x146cf26399d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x146cf26399d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x146cf26399d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x146cb8f83f8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank9]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x146cb8f8fd6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank9]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x146cb8fad96a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank9]: frame #12: <unknown function> + 0x5ca3c19 (0x146cf262bc19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #13: <unknown function> + 0x5cae67a (0x146cf263667a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #14: <unknown function> + 0x52d0c1b (0x146cf1c58c1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #15: <unknown function> + 0x52ce494 (0x146cf1c56494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #16: <unknown function> + 0x1ace5a8 (0x146cee4565a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #17: <unknown function> + 0x5cb5684 (0x146cf263d684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #18: <unknown function> + 0x5cba835 (0x146cf2642835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank9]: frame #19: <unknown function> + 0xdb6a3e (0x146d05962a3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank9]: frame #20: <unknown function> + 0x4b00e4 (0x146d0505c0e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank9]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank9]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank9]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank9]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank9]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank9]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank9]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank9]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank9]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank9]: frame #56: <unknown function> + 0x295d0 (0x146d070295d0 in /lib64/libc.so.6)
+[rank9]: frame #57: __libc_start_main + 0x80 (0x146d07029680 in /lib64/libc.so.6)
+[rank9]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank9]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank8]:[W806 15:50:12.992950134 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank8]: Traceback (most recent call last):
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank8]:     train(args)
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank8]:     outputs = booster.execute_pipeline(
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank8]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank8]:     outputs = self.scheduler.forward_backward_step(
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank8]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 390, in run_forward_backward
+[rank8]:     input_obj = self.recv_forward()
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank8]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank8]:     input_tensor, wait_handles = _communicate(
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank8]:     _metadata_recv = _send_recv_serialization_object(
+[rank8]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank8]:     reqs = dist.batch_isend_irecv(ops)
+[rank8]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank8]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank8]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank8]:     return pg.recv([tensor], group_src_rank, tag)
+[rank8]: torch.distributed.DistBackendError: [1] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank8]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank8]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x1552d65e8f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank8]: frame #1: <unknown function> + 0x164b9c5 (0x15530c8fb9c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x155310fabd92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x155310facf81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x155310f619d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x155310f619d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x155310f619d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x155310f619d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x155310f619d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x1552d78abf8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank8]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x1552d78b7d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank8]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x1552d78d596a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank8]: frame #12: <unknown function> + 0x5ca3c19 (0x155310f53c19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #13: <unknown function> + 0x5cae67a (0x155310f5e67a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #14: <unknown function> + 0x52d0c1b (0x155310580c1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #15: <unknown function> + 0x52ce494 (0x15531057e494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #16: <unknown function> + 0x1ace5a8 (0x15530cd7e5a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #17: <unknown function> + 0x5cb5684 (0x155310f65684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #18: <unknown function> + 0x5cba835 (0x155310f6a835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank8]: frame #19: <unknown function> + 0xdb6a3e (0x15532428aa3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank8]: frame #20: <unknown function> + 0x4b00e4 (0x1553239840e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank8]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank8]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank8]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank8]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank8]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank8]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank8]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank8]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank8]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank8]: frame #56: <unknown function> + 0x295d0 (0x1553258295d0 in /lib64/libc.so.6)
+[rank8]: frame #57: __libc_start_main + 0x80 (0x155325829680 in /lib64/libc.so.6)
+[rank8]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank8]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank10]:[W806 15:50:12.223586879 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank10]: Traceback (most recent call last):
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank10]:     train(args)
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank10]:     outputs = booster.execute_pipeline(
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank10]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank10]:     outputs = self.scheduler.forward_backward_step(
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank10]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 390, in run_forward_backward
+[rank10]:     input_obj = self.recv_forward()
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank10]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank10]:     input_tensor, wait_handles = _communicate(
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank10]:     _metadata_recv = _send_recv_serialization_object(
+[rank10]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank10]:     reqs = dist.batch_isend_irecv(ops)
+[rank10]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank10]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank10]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank10]:     return pg.recv([tensor], group_src_rank, tag)
+[rank10]: torch.distributed.DistBackendError: [1] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank10]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank10]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x14bacf2faf86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank10]: frame #1: <unknown function> + 0x164b9c5 (0x14bb0560d9c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x14bb09cbdd92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x14bb09cbef81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14bb09c739d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14bb09c739d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14bb09c739d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14bb09c739d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14bb09c739d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x14bad05bdf8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank10]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x14bad05c9d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank10]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x14bad05e796a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank10]: frame #12: <unknown function> + 0x5ca3c19 (0x14bb09c65c19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #13: <unknown function> + 0x5cae67a (0x14bb09c7067a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #14: <unknown function> + 0x52d0c1b (0x14bb09292c1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #15: <unknown function> + 0x52ce494 (0x14bb09290494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #16: <unknown function> + 0x1ace5a8 (0x14bb05a905a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #17: <unknown function> + 0x5cb5684 (0x14bb09c77684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #18: <unknown function> + 0x5cba835 (0x14bb09c7c835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank10]: frame #19: <unknown function> + 0xdb6a3e (0x14bb1cf9ca3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank10]: frame #20: <unknown function> + 0x4b00e4 (0x14bb1c6960e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank10]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank10]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank10]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank10]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank10]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank10]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank10]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank10]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank10]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank10]: frame #56: <unknown function> + 0x295d0 (0x14bb1e6295d0 in /lib64/libc.so.6)
+[rank10]: frame #57: __libc_start_main + 0x80 (0x14bb1e629680 in /lib64/libc.so.6)
+[rank10]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank10]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank12]:[W806 15:50:12.259937607 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank13]:[W806 15:50:12.263233887 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank12]: Traceback (most recent call last):
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank12]:     train(args)
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank12]:     outputs = booster.execute_pipeline(
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank12]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank12]:     outputs = self.scheduler.forward_backward_step(
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank12]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 390, in run_forward_backward
+[rank12]:     input_obj = self.recv_forward()
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank12]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank12]:     input_tensor, wait_handles = _communicate(
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank12]:     _metadata_recv = _send_recv_serialization_object(
+[rank12]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank12]:     reqs = dist.batch_isend_irecv(ops)
+[rank12]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank12]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank12]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank12]:     return pg.recv([tensor], group_src_rank, tag)
+[rank12]: torch.distributed.DistBackendError: [1] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank12]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank12]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x14956dd54f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank12]: frame #1: <unknown function> + 0x164b9c5 (0x1495a40679c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x1495a8717d92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x1495a8718f81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x1495a86cd9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x1495a86cd9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x1495a86cd9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x1495a86cd9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x1495a86cd9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x14956f017f8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank12]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x14956f023d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank12]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x14956f04196a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank12]: frame #12: <unknown function> + 0x5ca3c19 (0x1495a86bfc19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #13: <unknown function> + 0x5cae67a (0x1495a86ca67a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #14: <unknown function> + 0x52d0c1b (0x1495a7cecc1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #15: <unknown function> + 0x52ce494 (0x1495a7cea494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #16: <unknown function> + 0x1ace5a8 (0x1495a44ea5a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #17: <unknown function> + 0x5cb5684 (0x1495a86d1684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #18: <unknown function> + 0x5cba835 (0x1495a86d6835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank12]: frame #19: <unknown function> + 0xdb6a3e (0x1495bb9f6a3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank12]: frame #20: <unknown function> + 0x4b00e4 (0x1495bb0f00e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank12]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank12]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank12]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank12]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank12]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank12]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank12]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank12]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank12]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank12]: frame #56: <unknown function> + 0x295d0 (0x1495bd0295d0 in /lib64/libc.so.6)
+[rank12]: frame #57: __libc_start_main + 0x80 (0x1495bd029680 in /lib64/libc.so.6)
+[rank12]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank12]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank14]:[W806 15:50:13.282684797 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank13]: Traceback (most recent call last):
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank13]:     train(args)
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank13]:     outputs = booster.execute_pipeline(
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank13]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank13]:     outputs = self.scheduler.forward_backward_step(
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank13]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 390, in run_forward_backward
+[rank13]:     input_obj = self.recv_forward()
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank13]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank13]:     input_tensor, wait_handles = _communicate(
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank13]:     _metadata_recv = _send_recv_serialization_object(
+[rank13]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank13]:     reqs = dist.batch_isend_irecv(ops)
+[rank13]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank13]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank13]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank13]:     return pg.recv([tensor], group_src_rank, tag)
+[rank13]: torch.distributed.DistBackendError: [1] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank13]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank13]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x14b46751af86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank13]: frame #1: <unknown function> + 0x164b9c5 (0x14b49d82d9c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x14b4a1eddd92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x14b4a1edef81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14b4a1e939d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14b4a1e939d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14b4a1e939d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14b4a1e939d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14b4a1e939d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x14b4687ddf8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank13]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x14b4687e9d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank13]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x14b46880796a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank13]: frame #12: <unknown function> + 0x5ca3c19 (0x14b4a1e85c19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #13: <unknown function> + 0x5cae67a (0x14b4a1e9067a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #14: <unknown function> + 0x52d0c1b (0x14b4a14b2c1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #15: <unknown function> + 0x52ce494 (0x14b4a14b0494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #16: <unknown function> + 0x1ace5a8 (0x14b49dcb05a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #17: <unknown function> + 0x5cb5684 (0x14b4a1e97684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #18: <unknown function> + 0x5cba835 (0x14b4a1e9c835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank13]: frame #19: <unknown function> + 0xdb6a3e (0x14b4b51bca3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank13]: frame #20: <unknown function> + 0x4b00e4 (0x14b4b48b60e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank13]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank13]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank13]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank13]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank13]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank13]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank13]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank13]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank13]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank13]: frame #56: <unknown function> + 0x295d0 (0x14b4b68295d0 in /lib64/libc.so.6)
+[rank13]: frame #57: __libc_start_main + 0x80 (0x14b4b6829680 in /lib64/libc.so.6)
+[rank13]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank13]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank11]:[W806 15:50:13.302073962 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank14]: Traceback (most recent call last):
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank14]:     train(args)
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank14]:     outputs = booster.execute_pipeline(
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank14]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank14]:     outputs = self.scheduler.forward_backward_step(
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank14]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 390, in run_forward_backward
+[rank14]:     input_obj = self.recv_forward()
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank14]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank14]:     input_tensor, wait_handles = _communicate(
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank14]:     _metadata_recv = _send_recv_serialization_object(
+[rank14]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank14]:     reqs = dist.batch_isend_irecv(ops)
+[rank14]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank14]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank14]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank14]:     return pg.recv([tensor], group_src_rank, tag)
+[rank14]: torch.distributed.DistBackendError: [1] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank14]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank14]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x151dfde93f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank14]: frame #1: <unknown function> + 0x164b9c5 (0x151e341a69c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x151e38856d92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x151e38857f81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x151e3880c9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x151e3880c9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x151e3880c9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x151e3880c9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x151e3880c9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x151dff156f8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank14]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x151dff162d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank14]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x151dff18096a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank14]: frame #12: <unknown function> + 0x5ca3c19 (0x151e387fec19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #13: <unknown function> + 0x5cae67a (0x151e3880967a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #14: <unknown function> + 0x52d0c1b (0x151e37e2bc1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #15: <unknown function> + 0x52ce494 (0x151e37e29494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #16: <unknown function> + 0x1ace5a8 (0x151e346295a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #17: <unknown function> + 0x5cb5684 (0x151e38810684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #18: <unknown function> + 0x5cba835 (0x151e38815835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank14]: frame #19: <unknown function> + 0xdb6a3e (0x151e4bb35a3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank14]: frame #20: <unknown function> + 0x4b00e4 (0x151e4b22f0e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank14]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank14]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank14]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank14]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank14]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank14]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank14]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank14]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank14]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank14]: frame #56: <unknown function> + 0x295d0 (0x151e4d2295d0 in /lib64/libc.so.6)
+[rank14]: frame #57: __libc_start_main + 0x80 (0x151e4d229680 in /lib64/libc.so.6)
+[rank14]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank14]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank11]: Traceback (most recent call last):
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank11]:     train(args)
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank11]:     outputs = booster.execute_pipeline(
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank11]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank11]:     outputs = self.scheduler.forward_backward_step(
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank11]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 390, in run_forward_backward
+[rank11]:     input_obj = self.recv_forward()
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank11]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank11]:     input_tensor, wait_handles = _communicate(
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank11]:     _metadata_recv = _send_recv_serialization_object(
+[rank11]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank11]:     reqs = dist.batch_isend_irecv(ops)
+[rank11]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank11]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank11]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank11]:     return pg.recv([tensor], group_src_rank, tag)
+[rank11]: torch.distributed.DistBackendError: [1] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank11]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank11]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x15525c7a1f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank11]: frame #1: <unknown function> + 0x164b9c5 (0x155292ab49c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x155297164d92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x155297165f81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x15529711a9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x15529711a9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x15529711a9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x15529711a9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x15529711a9d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x15525da64f8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank11]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x15525da70d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank11]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x15525da8e96a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank11]: frame #12: <unknown function> + 0x5ca3c19 (0x15529710cc19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #13: <unknown function> + 0x5cae67a (0x15529711767a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #14: <unknown function> + 0x52d0c1b (0x155296739c1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #15: <unknown function> + 0x52ce494 (0x155296737494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #16: <unknown function> + 0x1ace5a8 (0x155292f375a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #17: <unknown function> + 0x5cb5684 (0x15529711e684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #18: <unknown function> + 0x5cba835 (0x155297123835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank11]: frame #19: <unknown function> + 0xdb6a3e (0x1552aa443a3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank11]: frame #20: <unknown function> + 0x4b00e4 (0x1552a9b3d0e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank11]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank11]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank11]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank11]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank11]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank11]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank11]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank11]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank11]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank11]: frame #56: <unknown function> + 0x295d0 (0x1552aba295d0 in /lib64/libc.so.6)
+[rank11]: frame #57: __libc_start_main + 0x80 (0x1552aba29680 in /lib64/libc.so.6)
+[rank11]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank11]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank15]:[W806 15:50:13.342282309 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank15]: Traceback (most recent call last):
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 503, in <module>
+[rank15]:     train(args)
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 331, in train
+[rank15]:     outputs = booster.execute_pipeline(
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank15]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank15]:     outputs = self.scheduler.forward_backward_step(
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank15]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 390, in run_forward_backward
+[rank15]:     input_obj = self.recv_forward()
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank15]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank15]:     input_tensor, wait_handles = _communicate(
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank15]:     _metadata_recv = _send_recv_serialization_object(
+[rank15]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank15]:     reqs = dist.batch_isend_irecv(ops)
+[rank15]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank15]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank15]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank15]:     return pg.recv([tensor], group_src_rank, tag)
+[rank15]: torch.distributed.DistBackendError: [1] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank15]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank15]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x14c76aadaf86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank15]: frame #1: <unknown function> + 0x164b9c5 (0x14c7a0ded9c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x14c7a549dd92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x14c7a549ef81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14c7a54539d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14c7a54539d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14c7a54539d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14c7a54539d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #8: c10d::PrefixStore::get(std::string const&) + 0x31 (0x14c7a54539d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #9: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x14c76bd9df8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank15]: frame #10: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x14c76bda9d6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank15]: frame #11: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x14c76bdc796a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank15]: frame #12: <unknown function> + 0x5ca3c19 (0x14c7a5445c19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #13: <unknown function> + 0x5cae67a (0x14c7a545067a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #14: <unknown function> + 0x52d0c1b (0x14c7a4a72c1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #15: <unknown function> + 0x52ce494 (0x14c7a4a70494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #16: <unknown function> + 0x1ace5a8 (0x14c7a12705a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #17: <unknown function> + 0x5cb5684 (0x14c7a5457684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #18: <unknown function> + 0x5cba835 (0x14c7a545c835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank15]: frame #19: <unknown function> + 0xdb6a3e (0x14c7b877ca3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank15]: frame #20: <unknown function> + 0x4b00e4 (0x14c7b7e760e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank15]: frame #21: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank15]: frame #22: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #23: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank15]: frame #24: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #25: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #26: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #27: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #28: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #29: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #30: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #31: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #32: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #33: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank15]: frame #34: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #35: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #36: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #37: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #38: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #39: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #40: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #41: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #42: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #43: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank15]: frame #44: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #45: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #46: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #47: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank15]: frame #48: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank15]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank15]: frame #51: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank15]: frame #52: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #53: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #54: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #55: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank15]: frame #56: <unknown function> + 0x295d0 (0x14c7b9e295d0 in /lib64/libc.so.6)
+[rank15]: frame #57: __libc_start_main + 0x80 (0x14c7b9e29680 in /lib64/libc.so.6)
+[rank15]: frame #58: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank15]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+[rank8]:[W806 15:50:14.635184628 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+W0806 15:50:17.046000 22978767914816 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1600626 closing signal SIGTERM
+W0806 15:50:17.046000 22978767914816 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1600628 closing signal SIGTERM
+W0806 15:50:17.046000 22978767914816 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1600629 closing signal SIGTERM
+W0806 15:50:17.047000 22978767914816 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1600630 closing signal SIGTERM
+W0806 15:50:17.047000 22978767914816 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1600631 closing signal SIGTERM
+W0806 15:50:17.047000 22978767914816 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1600632 closing signal SIGTERM
+W0806 15:50:17.047000 22978767914816 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 1600633 closing signal SIGTERM
+E0806 15:50:23.310000 22978767914816 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 1600627) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-08-06_15:50:17
+  host      : osk-gpu56
+  rank      : 9 (local_rank: 1)
+  exitcode  : 1 (pid: 1600627)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/checkpoint.py:92: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/checkpoint.py:92: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/checkpoint.py:92: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 329047 ON osk-gpu54 CANCELLED AT 2025-08-06T15:57:25 ***
+slurmstepd: error: *** STEP 329047.0 ON osk-gpu54 CANCELLED AT 2025-08-06T15:57:25 ***
