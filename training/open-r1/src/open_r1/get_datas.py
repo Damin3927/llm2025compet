@@ -8,7 +8,7 @@ from configs import DataConfig
 
 logger = logging.getLogger(__name__)
 
-def get_datas_from_config(config: DataConfig):
+def get_datas_from_config(config: DataConfig, seed: int = 42):
     """
     設定オブジェクトに基づき、複数のデータセットをロードして結合する。
     最終的なカラム名は 'prompt' と 'completion' に統一される。
@@ -84,5 +84,11 @@ def get_datas_from_config(config: DataConfig):
     })
     print("結合が完了しました！")
     # print(combined_dataset['train'][0])  # 最初のサンプルを表示して確認
+    
+    print("\nデータセットをシャッフル中...")
+    # DatasetDict全体をシャッフルする。引数で受け取ったseedを使用する。
+    combined_dataset = combined_dataset.shuffle(seed=seed)
+    print(f"シャッフルが完了しました！ (シード: {seed})")
+
     
     return combined_dataset
