@@ -38,6 +38,20 @@ from colossalai.utils import get_current_device
 
 import socket # Added for debugging
 
+import sys, os
+print("=== CONDA ENV CHECK ===")
+print("sys.executable      :", sys.executable)              # 実際に使われている Python バイナリ
+print("CONDA_DEFAULT_ENV   :", os.environ.get("CONDA_DEFAULT_ENV"))
+print("CONDA_PREFIX        :", os.environ.get("CONDA_PREFIX"))
+print("python version      :", sys.version.split()[0])
+try:
+    import torch
+    print("torch version       :", torch.__version__)
+except ImportError:
+    print("torch               : (import failed)")
+print("=== END CONDA ENV CHECK ===\n")
+
+
 import os
 print("=== ENV CHECK ===")
 print("NCCL_TIMEOUT =", os.environ.get("NCCL_TIMEOUT"))
