@@ -6048,3 +6048,85 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
 + date '+[%F %T] ===== GPU util ====='
 + nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
 + sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+Step:   0%|          | 0/33 [00:00<?, ?it/s]W0806 19:33:45.759000 23444418307904 torch/distributed/elastic/agent/server/api.py:688] Received Signals.SIGTERM death signal, shutting down workers
+W0806 19:33:45.761000 23444418307904 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3193180 closing signal SIGTERM
+W0806 19:33:45.761000 23444418307904 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3193187 closing signal SIGTERM
+slurmstepd: error: *** JOB 329566 ON osk-gpu54 CANCELLED AT 2025-08-06T19:33:45 ***
+slurmstepd: error: *** STEP 329566.0 ON osk-gpu54 CANCELLED AT 2025-08-06T19:33:45 ***
