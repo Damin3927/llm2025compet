@@ -1,0 +1,29 @@
+neko_dna_datasets:
+  - name: neko-llm/dna_vanilla_harmful #ストレートな有害な質問
+    config: default # Subset
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 1
+    to_id: 1169
+  - name: neko-llm/wj-vanilla_benign #一見有害だが、実は無害な質問
+    config: default # Subset
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 1908
+  - name: neko-llm/wj-Adversarial_harmful #功名な手口を使った有害な質問
+    config: default # Subset
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 1144
+  - name: neko-llm/wj-Adversarial_benign #功名な手口に見えるが、実は無害な質問
+    config: default # Subset
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 1
+    to_id: 1500
