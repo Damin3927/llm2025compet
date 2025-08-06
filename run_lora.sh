@@ -20,7 +20,6 @@ echo "NODES= ${SLURM_NODELIST}"
 
 mkdir -p /home/Competition2025/P02/P02U006/ColossalAI/logs /home/Competition2025/P02/P02U006/ColossalAI/logs/tb
 
-
 # Conda
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate deepseeksft310
@@ -131,7 +130,6 @@ echo "MASTER_ADDR=$MASTER_ADDR  MASTER_PORT=$MASTER_PORT"
 echo "== [Pre-launch NCCL env] =="
 env | grep NCCL
 
-# マスターノード1回だけ実行（他ノードへはSSHで展開）
 srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
   set -e
   source ~/miniconda3/etc/profile.d/conda.sh
@@ -143,7 +141,7 @@ srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
   which python || true
   which torchrun || true
 
-  TORCH_ELASTIC_STORE_TIMEOUT=3600 TORCH_DISTRIBUTED_STORE_TIMEOUT=3600 NCCL_TIMEOUT=3600 NCCL_DEBUG=INFO colossalai run \
+  TORCH_ELASTIC_STORE_TIMEOUT=3600 TORCH_DISTRIBUTED_STORE_TIMEOUT=3600 NCCL_TIMEOUT=3600 NCCL_DEBUG=INFO torchrun \
     --hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile \
     --master_addr $MASTER_ADDR \
     --master_port $MASTER_PORT \
