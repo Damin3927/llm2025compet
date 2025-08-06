@@ -25,7 +25,7 @@ dataset_name: openai/gsm8k # データセット名
 dataset_config: main # データセットのサブセット
 dataset_num_proc: 12 # データセットの前処理に使うプロセス(CPUコア)数
 dataset_text_field: answer # データセットのテキストフィールド名
-# eos_token: <|im_end|> # シーケンスの終端トークン
+eos_token: <|im_end|> # シーケンスの終端トークン
 
 # SFT trainer config
 use_cpu: false # CPUを使うかどうか (GPUがない場合はtrueにする)
@@ -37,8 +37,8 @@ gradient_accumulation_steps: 8 # 勾配蓄積のステップ数
 gradient_checkpointing: false # 勾配チェックポイントを使うかどうか
 gradient_checkpointing_kwargs:
   use_reentrant: false
-hub_model_id: Qwen3-32B-Distill-test-lora # モデルをHuggingFace Hubにpushする際のモデルID
-hub_strategy: every_save # モデルをHuggingFace Hubにpushするタイミング (every_save: 保存する時毎回, end: 最後の保存時)
+hub_model_id: neko-llm/Qwen3-32B-test-lora # モデルをHuggingFace Hubにpushする際のモデルID
+hub_strategy: end # モデルをHuggingFace Hubにpushするタイミング (every_save: 保存する時毎回, end: 最後の保存時)
 learning_rate: 4.0e-05 # 学習率
 log_level: info # ログレベル(ログの詳細度)
 logging_steps: 1 # ログを出力するステップ数
@@ -46,12 +46,12 @@ logging_strategy: steps # ログを出力するタイミング ('no' or 'steps' 
 lr_scheduler_type: cosine_with_min_lr # 学習率スケジューラのタイプ 
 lr_scheduler_kwargs:
   min_lr_rate: 0.1
-packing: false
+packing: true
 max_grad_norm: 0.2
-max_length: 16 # 最大シーケンス長
-max_steps: 3
+max_length: 16 # 32768 # 最大シーケンス長
+max_steps: 5
 num_train_epochs: 5 # 学習エポック数
-output_dir: data/Qwen3-32B-Distill-test-lora # 結果の出力ディレクトリ
+output_dir: data/Qwen3-32B-test-lora # 結果の出力ディレクトリ
 optim: adamw_torch # オプティマイザの種類  何があるかはhttps://github.com/huggingface/transformers/blob/main/src/transformers/training_args.pyを参照
 overwrite_output_dir: true
 per_device_eval_batch_size: 1 # 評価時の1GPUあたりのバッチサイズ
