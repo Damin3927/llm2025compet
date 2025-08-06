@@ -1067,3 +1067,55 @@ osk-gpu54:2097987:2103910 [7] NCCL INFO Using network IB
 osk-gpu54:2097981:2103911 [1] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp92s0np0:192.168.4.54<0>
 osk-gpu54:2097981:2103911 [1] NCCL INFO Using non-device net plugin version 0
 osk-gpu54:2097981:2103911 [1] NCCL INFO Using network IB
+=== [Debug] Model loaded from pretrained: rank=6 ===
+[Debug] rank=06, host=osk-gpu54, Max device mem: 59297.77 MB, Max CPU mem: 24056.80 MB
+[Debug] rank=06, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+osk-gpu54:2097986:2097986 [6] NCCL INFO cudaDriverVersion 12080
+osk-gpu54:2097986:2097986 [6] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097986:2097986 [6] NCCL INFO Bootstrap : Using enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097986:2097986 [6] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:2097986:2097986 [6] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:2097986:2105648 [6] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097986:2105648 [6] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+osk-gpu54:2097986:2105648 [6] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097986:2105648 [6] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:2097986:2105648 [6] NCCL INFO Using network IB
+=== [Debug] Model loaded from pretrained: rank=5 ===
+[Debug] rank=05, host=osk-gpu54, Max device mem: 59297.77 MB, Max CPU mem: 24062.89 MB
+[Debug] rank=05, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+osk-gpu54:2097985:2097985 [5] NCCL INFO cudaDriverVersion 12080
+osk-gpu54:2097985:2097985 [5] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097985:2097985 [5] NCCL INFO Bootstrap : Using enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097985:2097985 [5] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:2097985:2097985 [5] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:2097985:2106287 [5] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097985:2106287 [5] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+osk-gpu54:2097985:2106287 [5] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097985:2106287 [5] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:2097985:2106287 [5] NCCL INFO Using network IB
+=== [Debug] Model loaded from pretrained: rank=2 ===
+[Debug] rank=02, host=osk-gpu54, Max device mem: 59297.77 MB, Max CPU mem: 24062.59 MB
+[Debug] rank=02, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+osk-gpu54:2097982:2097982 [2] NCCL INFO cudaDriverVersion 12080
+osk-gpu54:2097982:2097982 [2] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097982:2097982 [2] NCCL INFO Bootstrap : Using enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097982:2097982 [2] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:2097982:2097982 [2] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:2097982:2106451 [2] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097982:2106451 [2] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+osk-gpu54:2097982:2106451 [2] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097982:2106451 [2] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:2097982:2106451 [2] NCCL INFO Using network IB
+=== [Debug] Model loaded from pretrained: rank=3 ===
+[Debug] rank=03, host=osk-gpu54, Max device mem: 59297.77 MB, Max CPU mem: 24056.66 MB
+[Debug] rank=03, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+osk-gpu54:2097983:2097983 [3] NCCL INFO cudaDriverVersion 12080
+osk-gpu54:2097983:2097983 [3] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097983:2097983 [3] NCCL INFO Bootstrap : Using enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097983:2097983 [3] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:2097983:2097983 [3] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:2097983:2108053 [3] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097983:2108053 [3] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+osk-gpu54:2097983:2108053 [3] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097983:2108053 [3] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:2097983:2108053 [3] NCCL INFO Using network IB

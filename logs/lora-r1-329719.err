@@ -3905,3 +3905,137 @@ srun: error: osk-gpu56: task 1: Exited with exit code 1
 + date '+[%F %T] ===== GPU util ====='
 + nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
 + sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/checkpoint.py:92: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/checkpoint.py:92: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/checkpoint.py:92: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/checkpoint.py:92: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
++ true
++ date '+[%F %T] ===== GPU util ====='
++ nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader
++ sleep 60
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 329719 ON osk-gpu54 CANCELLED AT 2025-08-06T21:53:42 ***
+slurmstepd: error: *** STEP 329719.0 ON osk-gpu54 CANCELLED AT 2025-08-06T21:53:42 ***
+W0806 21:53:42.842000 23223284115264 torch/distributed/elastic/agent/server/api.py:688] Received Signals.SIGTERM death signal, shutting down workers
+W0806 21:53:42.844000 23223284115264 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2097980 closing signal SIGTERM
+W0806 21:53:42.844000 23223284115264 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2097981 closing signal SIGTERM
