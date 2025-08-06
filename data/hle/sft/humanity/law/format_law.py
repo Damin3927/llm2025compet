@@ -43,14 +43,14 @@ def load_legal_dataset(split: str = "train") -> pd.DataFrame:
         return None
 
 
-def filter_by_difficulty(df: pd.DataFrame, difficulty_value: int) -> pd.DataFrame:
+def filter_by_difficulty(df: pd.DataFrame, difficulty_value: int, num_samples: int) -> pd.DataFrame:
     """
     Filter the dataset by difficulty values.
     
     Args:
         df: Input DataFrame
         difficulty_values: List of difficulty values to include
-        
+        num_samples: max number of samples to select
     Returns:
         Filtered DataFrame
     """
@@ -60,6 +60,7 @@ def filter_by_difficulty(df: pd.DataFrame, difficulty_value: int) -> pd.DataFram
     
     # Filter by difficulty
     filtered_df = df.loc[df['difficulty'] >= difficulty_value]
+    filtered_df = filtered_df.sample(n=num_samples)
     
     print(f"Filtered dataset: {len(filtered_df)} samples (from {len(df)} total)")
     print(f"Selected difficulty >= {difficulty_value}")
@@ -103,7 +104,8 @@ def main():
                        help="Output file path")
     parser.add_argument("--show-sample", action="store_true",
                        help="Show a sample of the filtered data")
-    
+    parser.add_argument("--num_samples", type=int, default=200,
+                       help="Number of samples to select")
     args = parser.parse_args()
     
     # Load the dataset
@@ -113,7 +115,7 @@ def main():
         return
     
     # Filter by difficulty
-    filtered_df = filter_by_difficulty(df, args.difficulty)
+    filtered_df = filter_by_difficulty(df, args.difficulty, args.num_samples)
 
     # transfer data
     transferred_data = transfer_data_format(filtered_df)
