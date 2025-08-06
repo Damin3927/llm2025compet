@@ -12,7 +12,7 @@ torch_dtype: bfloat16 # bf16を使う
 attn_implementation: flash_attention_2 # flash-attnention_2は使えなかった。
 
 # LoRA arguments https://github.com/huggingface/trl/blob/v0.19.1/trl/trainer/model_config.py#L19
-use_peft: true # PEFT (Lora) を使うかどうか
+use_peft: false # PEFT (Lora) を使うかどうか
 lora_r: 16 # LoRAのr値
 lora_alpha: 32 # LoRAのalpha値
 lora_dropout: 0.05 # LoRAのドロップアウト率
@@ -25,7 +25,7 @@ dataset_name: openai/gsm8k # データセット名
 dataset_config: main # データセットのサブセット
 dataset_num_proc: 12 # データセットの前処理に使うプロセス(CPUコア)数
 dataset_text_field: answer # データセットのテキストフィールド名
-# eos_token: <|im_end|> # シーケンスの終端トークン
+eos_token: <|im_end|> # シーケンスの終端トークン
 
 # SFT trainer config
 use_cpu: false # CPUを使うかどうか (GPUがない場合はtrueにする)
@@ -34,11 +34,11 @@ bf16: true # bf16を使う
 do_eval: false # 評価を行うかどうか
 eval_strategy: 'no' # 評価を行うタイミング ('no' or 'steps' or 'epoch')
 gradient_accumulation_steps: 8 # 勾配蓄積のステップ数
-gradient_checkpointing: false # 勾配チェックポイントを使うかどうか
+gradient_checkpointing: true # 勾配チェックポイントを使うかどうか
 gradient_checkpointing_kwargs:
   use_reentrant: false
-hub_model_id: Qwen3-32B-Distill-test # モデルをHuggingFace Hubにpushする際のモデルID
-hub_strategy: every_save # モデルをHuggingFace Hubにpushするタイミング (every_save: 保存する時毎回, end: 最後の保存時)
+hub_model_id: Qwen3-32B-test # モデルをHuggingFace Hubにpushする際のモデルID
+hub_strategy: end # モデルをHuggingFace Hubにpushするタイミング (every_save: 保存する時毎回, end: 最後の保存時)
 learning_rate: 4.0e-05 # 学習率
 log_level: info # ログレベル(ログの詳細度)
 logging_steps: 1 # ログを出力するステップ数
@@ -46,12 +46,12 @@ logging_strategy: steps # ログを出力するタイミング ('no' or 'steps' 
 lr_scheduler_type: cosine_with_min_lr # 学習率スケジューラのタイプ 
 lr_scheduler_kwargs:
   min_lr_rate: 0.1
-packing: false
+packing: true
 max_grad_norm: 0.2
-max_length: 16 # 最大シーケンス長
-max_steps: 3
+max_length: 32768 # 最大シーケンス長
+max_steps: 5
 num_train_epochs: 5 # 学習エポック数
-output_dir: data/Qwen3-32B-Distill-test # 結果の出力ディレクトリ
+output_dir: data/Qwen3-32B-test # 結果の出力ディレクトリ
 optim: adamw_torch # オプティマイザの種類  何があるかはhttps://github.com/huggingface/transformers/blob/main/src/transformers/training_args.pyを参照
 overwrite_output_dir: true
 per_device_eval_batch_size: 1 # 評価時の1GPUあたりのバッチサイズ
@@ -63,5 +63,5 @@ save_strategy: steps # モデルをローカルに保存するタイミング ('
 save_steps: 500 # モデルをローカルに保存するステップ数(間隔)
 save_total_limit: 1
 seed: 42 # 乱数シード
-use_liger_kernel: true # エラーが出たので一旦無効化
+use_liger_kernel: true # 早くなるらしい。
 warmup_ratio: 0.03
