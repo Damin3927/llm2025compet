@@ -1,666 +1,358 @@
-# SFT パイプライン
+# SFT Data Processing Pipeline
 
-このフォルダには、教師ありファインチューニング（SFT）用に処理するためのスクリプトとツールが含まれています。パイプラインには、フィルタリング、処理、Hugging Faceへのデータセットアップロードが含まれます。
+This repository contains comprehensive tools and scripts for processing diverse datasets for Supervised Fine-Tuning (SFT). The pipeline covers multiple domains including mathematics, science, medicine, law, history, chemistry, and general reasoning.
 
-## 📁 ディレクトリ構造
+## 📁 Directory Structure
 
 ```
 data/hle/sft/
-├── OpenMathReasoningFiltering.py          # LLMベースフィルタリングスクリプト
-├── OpenMathReasoningFiltering_bylabel.py  # ラベルベースフィルタリング（高速）
-├── generateFromSeed.py                    # シード問題からソリューション生成
-├── upload_data.py                         # データセットをParquetに変換し、jsonとParquetをHFにアップロード
-├── difficulty_scorer.py                   # 多指標難易度評価ツール
-├── length_selector.py                     # 回答長ベース半ガウシアン分布データ選択ツール
-├── run_filter.sh                          # LLMフィルタリング用SLURMスクリプト
-├── run_label_filter.sh                    # ラベルフィルタリング用SLURMスクリプト
-├── run_length_selector.sh                 # データ選択用SLURMスクリプト
-├── universal_length_selector.sh           # ユニバーサルデータ選択スクリプト
-├── keys.json.example                      # APIキーテンプレート
-├── results/                               # 処理済みデータの出力ディレクトリ
+├── 🧮 MixtureOfThoughts/     # Mixture of Thoughts dataset processing
+├── 📐 OpenMath/              # OpenMath reasoning and filtering
+├── 🧬 biology/               # Biology Tree of Thoughts data
+├── ⚗️ chemistry/             # ChemPile chemistry Q&A extraction
+├── 💭 general/               # General reasoning (StrategyQA, MedCalc)
+├── 📚 humanity/              # Humanities data (history, law)
+├── 🏥 medical/               # Medical reasoning (ReasonMD)
+├── 📊 results/               # Processed output directory
+├── 🔧 Core Scripts/          # Main processing tools
+│   ├── OpenMathReasoningFiltering.py      # LLM-based filtering
+│   ├── OpenMathReasoningFiltering_bylabel.py  # Label-based filtering
+│   ├── generateFromSeed.py               # Solution generation from seeds
+│   ├── upload_data.py                    # HuggingFace upload tool
+│   ├── difficulty_scorer.py              # Multi-metric difficulty assessment
+│   ├── length_selector.py                # Length-based data selection
+│   └── merge_datasets.py                 # Dataset merging utility
+└── 🚀 Bash Scripts/         # Automation scripts
+    ├── run_filter.sh                      # LLM filtering SLURM script
+    ├── run_label_filter.sh                # Label filtering SLURM script
+    ├── run_length_selector.sh             # Data selection SLURM script
+    └── run_upload_data.sh                 # Upload SLURM script
 ```
 
-## 🚀 クイックスタート
+## 🎯 Dataset Coverage
 
-### 1. 環境セットアップ
+### Mathematics & Science
+- **MixtureOfThoughts**: 348K samples across code, math, and science with explicit reasoning traces
+- **OpenMath**: 3.9M mathematical problems with difficulty filtering (CoT and GenSelect splits)
+- **Biology**: Tree of Thoughts reasoning for biological questions
+- **Chemistry**: ChemPile dataset with cleaned chemistry Q&A pairs
+
+### Humanities & Medicine
+- **History**: Historical Q&A with LLM-generated reasoning chains
+- **Law**: Legal questions filtered by difficulty (1-5 scale) from CoT_Legal_Issues_And_Laws
+- **Medical/ReasonMD**: Medical reasoning with VLLM-extracted concise answers
+- **General**: StrategyQA and MedCalc for general reasoning and medical calculations
+
+## 🚀 Quick Start Guide
+
+### 1. Environment Setup
 
 ```bash
-# 仮想環境の作成とアクティベート
+# Create and activate virtual environment
 python -m venv hfenv
 source hfenv/bin/activate  # Linux/Mac
-# または
+# or
 hfenv\Scripts\activate     # Windows
 
-# 依存関係のインストール
+# Install dependencies
 pip install torch transformers datasets huggingface-hub tqdm pandas pyarrow
 pip install vllm --extra-index-url https://download.pytorch.org/whl/cu124
 ```
 
-### 2. APIキーの設定
+### 2. API Keys Configuration
 
 ```bash
-# サンプルファイルをコピー
+# Copy and edit the keys template
 cp keys.json.example keys.json
 
-# トークンで編集
+# Add your Hugging Face token
 {
   "llm": "your_huggingface_token_here"
 }
 ```
 
-## 🔄 SFTデータ処理パイプライン
+## 🔄 Complete Processing Workflow
 
-SFTパイプラインは以下の段階的なワークフローに従います：
+### Step 1: Data Selection & Filtering
 
-### ステップ1: データ選択・フィルタリング
-**目的**: 品質の高いシードデータを選択して、効果的な学習データセットを構築
+Choose one of three approaches based on your dataset size and requirements:
 
-**オプション A: 高速データ選択（推奨）**
+#### Option A: Fast Length-Based Selection (Recommended for large datasets)
 ```bash
-# 回答長ベースでの高速選択
 python length_selector.py \
     --input "dataset-name" \
     --total_samples 10000 \
     --output "selected_seeds.json"
 ```
-- ✅ 高速処理（大規模データセット対応）
-- ✅ 半ガウシアン分布で長い回答を優先選択
-- ✅ ストリーミング処理対応
 
-**オプション B: 高精度難易度ベース選択**
+#### Option B: Precision Difficulty-Based Selection (For small-medium datasets)
 ```bash
-# 多指標難易度評価による精密選択
 python difficulty_scorer.py \
     --input "dataset-name" \
     --output "difficulty_scores.json" \
     --max_samples 50000
 ```
-- ✅ 複数LLMによる総合難易度評価
-- ✅ 対数確率・正解率・IRT分析
-- ⚠️ 処理時間が長い（小〜中規模データ向け）
 
-**オプション C: ラベルベース高速フィルタリング**
+#### Option C: Label-Based Ultra-Fast Filtering (For pre-labeled data)
 ```bash
-# 事前計算ラベルによる超高速フィルタリング
 python OpenMathReasoningFiltering_bylabel.py \
     --filter-by-pass-rate 0.1 \
     --save-per-iteration 10000
 ```
-- ✅ 最高速（LLM推論不要）
-- ✅ 大規模データセット対応
-- ⚠️ 事前ラベルが必要
 
-### ステップ2: データ拡張（オプション）
-**目的**: 選択されたシードデータから新しい学習例を生成
+### Step 2: Domain-Specific Processing
 
+Process data according to domain requirements:
+
+#### Mathematics (MixtureOfThoughts)
 ```bash
-# シード問題から新規ソリューション生成
+cd MixtureOfThoughts
+python process_mot_dataset.py
+# Output: processed_mot_data/ with MoT_code.json, MoT_math.json, MoT_science.json
+```
+
+#### OpenMath Reasoning
+```bash
+cd OpenMath
+python OpenMathReasoningFiltering.py \
+    --inference-model Qwen/Qwen3-8B \
+    --filter-by-pass-rate 0.3
+```
+
+#### Medical (ReasonMD)
+```bash
+cd medical/reasonMD
+# Step 1: Select data
+python reasonmd_selector.py --target_samples 1000
+# Step 2: Convert with VLLM
+python convert_reasonmd.py
+```
+
+#### Law
+```bash
+cd humanity/law
+python format_law.py --difficulty 4 --num_samples 200
+```
+
+#### History
+```bash
+cd humanity/history
+python convert_history.py --input input.json --output output.json
+```
+
+#### Chemistry
+```bash
+cd chemistry/chempile
+bash run_chempile_extraction.sh
+python remove_error_items.py
+```
+
+### Step 3: Data Augmentation (Optional)
+```bash
+# Generate new solutions from seed problems
 python generateFromSeed.py \
     --model Qwen/Qwen3-32B \
     --input_file selected_seeds.json \
     --output_file expanded_solutions.json \
     --max_tokens 4096
 ```
-- 📝 多様なソリューションパターン生成
-- 🎯 学習データの多様性向上
-- ⚠️ 大規模モデル推奨（品質確保のため）
 
-### ステップ3: データセットアップロード
-**目的**: 処理済みデータをHugging Face Hubにアップロードして共有  
-**準備**: 違うsplitに入れる予定のデータを別々のフォルダに入れる
-
+### Step 4: Dataset Upload to Hugging Face
 ```bash
-# JSON→Parquet変換 & HFアップロード
+# Convert to Parquet and upload
 python upload_data.py \
     --dataset_path ./results/processed_dataset \
-    --repo_id your-username/sft-dataset-name
-```
-- 🔄 JSON→Parquet自動変換
-- 📤 データセット設定ファイル自動生成
-- 🔒 プライベート/パブリックリポジトリ対応
-
-### 推奨ワークフロー例
-
-**小規模・高品質データセット（<10K件）**
-```bash
-# 1. 難易度ベース精密選択
-python difficulty_scorer.py --input "dataset" --max_samples 5000
-# 2. データ拡張
-python generateFromSeed.py --input_file scored_data.json
-# 3. アップロード
-python upload_data.py --dataset_path ./results
-```
-
-**大規模・効率重視データセット（>100K件）**
-```bash
-# 1. 長さベース高速選択
-python length_selector.py --input "dataset" --total_samples 50000
-# 2. 直接アップロード（拡張スキップ）
-python upload_data.py --dataset_path ./results
-```
-
-**超大規模・ラベル利用可能（>1M件）**
-```bash
-# 1. ラベルベース超高速フィルタリング
-python OpenMathReasoningFiltering_bylabel.py --filter-by-pass-rate 0.05
-# 2. アップロード
-python upload_data.py --dataset_path ./results
-```
-
-
-## 📋 スクリプト使用ガイド
-
-### 🏷️ ラベルベースフィルタリング（推奨）
-
-**スクリプト:** `OpenMathReasoningFiltering_bylabel.py`  
-**目的:** 事前計算されたラベルを使用した高速フィルタリング、LLM推論不要
-
-```bash
-# 基本使用法 - パス率閾値でフィルタリング
-python OpenMathReasoningFiltering_bylabel.py \
-    --filter-by-pass-rate 0.1 \
-    --save-per-iteration 10000
-
-# 大規模データセット用のカスタムバッチサイズ
-python OpenMathReasoningFiltering_bylabel.py \
-    --filter-by-pass-rate 0.05 \
-    --save-per-iteration 50000 \
-    --batch-size 5000
-```
-
-**主要パラメータ:**
-- `--filter-by-pass-rate`: パス率閾値（0.0-1.0）。低いほど難しい問題
-- `--save-per-iteration`: メモリ問題を避けるためN例ごとに結果を保存
-- `--batch-size`: メモリ管理用の処理バッチサイズ
-
-**出力:** `results/filtered_dataset/`内のフィルタリング済みJSONファイル
-
----
-
-### 🤖 LLMベースフィルタリング（少量データの高精度フィルタリング）
-
-**スクリプト:** `OpenMathReasoningFiltering.py`  
-**目的:** カスタムフィルタリング基準のためのLLM推論使用   
-**注意:**　推論速度がかなり遅い（Qwen3-32Bで５０s/件）から大量データ（＞５０００件）では使えない
-
-```bash
-# Qwenモデルでの基本LLMフィルタリング
-python OpenMathReasoningFiltering.py \
-    --inference-model Qwen/Qwen3-32B \
-    --judgement-model Qwen/Qwen3-32B \
-    --inference-batch-size 8 \
-    --judgement-batch-size 8 \
-    --start-from-percentage 0.0 \
-    --end-at-percentage 1.0
-
-# テンソル並列化によるマルチGPUセットアップ
-python OpenMathReasoningFiltering.py \
-    --inference-model Qwen/Qwen3-32B \
-    --inference-tp 2 \
-    --inference-batch-size 4 \
-    --vllm-batch-size 32 \
-    --judgement-model Qwen/Qwen3-32B \
-    --judgement-tp 2
-```
-
-**主要パラメータ:**
-- `--inference-model`: ソリューション生成用モデル
-- `--judgement-model`: ソリューション評価用モデル
-- `--inference-tp`: テンソル並列化サイズ（2GPUの場合は2）
-- `--vllm-batch-size`: vLLM処理用バッチサイズ（大きいほど効率的）
-- `--start-from-percentage/--end-at-percentage`: データセットの一部を処理
-
-**出力:** 指定ディレクトリ内の推論と判定結果
-
----
-
-### 🌱 シード問題からの生成
-
-**スクリプト:** `generateFromSeed.py`  
-**目的:** シード問題から新しいソリューションを生成
-**注意:** 
-1. 生成の質とフォーマットを確保するため、Qwen3-32Bなど大規模モデルがおすすめ。小さいモデル（Qwen3-8B）でエラーが出る報告がある
-2. 推論速度がかなり遅い（Qwen3-32Bで５０s/件）から大量データ生成（＞５０００件）では使えない
-
-```bash
-# Qwenモデルを使用したソリューション生成
-python generateFromSeed.py \
-    --model Qwen/Qwen3-32B \
-    --input_file seed_problems.json \
-    --output_file generated_solutions.json \
-    --max_tokens 4096 \
-    --temperature 0.3
-```
-
-**主要パラメータ:**
-- `--model`: 生成に使用するモデル
-- `--input_file`: シード問題を含むJSONファイル
-- `--output_file`: 生成されたソリューションの保存先
-- `--max_tokens`: 生成あたりの最大トークン数
-- `--temperature`: サンプリング温度（0.0 = 決定論的、1.0 = ランダム）
-
----
-
-### 🎯 難易度評価ツール
-
-**スクリプト:** `difficulty_scorer.py`  
-**目的:** 質問回答データの難易度を複数の指標で評価し、スコア化
-
-**機能:**
-- 複数の小型LLM（≤8B）による評価
-- 3つの指標を使用:
-  1. 金回答の平均対数確率
-  2. アンサンブル正解率  
-  3. IRT難易度パラメータ β
-- ストリーミング処理でメモリ効率的
-- GPU/CPU両対応、OOM対策済み
-- プライベートデータセット対応
-
-```bash
-# 基本的な使用
-python difficulty_scorer.py \
-    --input "dataset-name" \
-    --output "difficulty_scores.json" \
-    --max_samples 10000
-
-# HuggingFaceプライベートデータセット
-python difficulty_scorer.py \
-    --input "neko-llm/SFT_OpenMathReasoning" \
-    --dataset_spec "cot" \
-    --question_field "problem" \
-    --answer_field "generated_solution" \
-    --max_samples 50000 \
-    --max_sequence_length 1024 \
-    --use_float32 \
-    --disable_flash_attention \
-    --output "math_difficulty_scores.json"
-
-# SLURMでの実行
-sbatch run_difficulty_scorer.sh
-```
-
-**主要パラメータ:**
-- `--primary_model`: ログ確率計算用メインモデル（デフォルト: microsoft/Phi-4-mini-reasoning）
-- `--ensemble_models`: 追加評価モデルリスト
-- `--max_sequence_length`: 入力シーケンス最大長（OOM対策）
-- `--max_input_length`: 生成時入力最大長（OOM対策）
-- `--disable_flash_attention`: Flash Attentionエラー対策
-
-**出力形式:**
-```json
-[
-  {
-    "id": "item_1",
-    "avg_logprob": -2.1,
-    "ensemble_acc": 0.75,
-    "irt_beta": 0.3,
-    "difficulty_z": 1.2
-  }
-]
-```
-
----
-
-### 📊 データ選択ツール（長さベース）
-
-**スクリプト:** `length_selector.py`  
-**目的:** 快速にSFT用のデータをフィルタリング  
-**機能:**
-- 回答長に基づく半ガウシアン分布データ選択（最長回答最多、最短回答最少）
-- 動的ビン作成（実データ分布に基づく）
-- 半ガウシアン分布による重み付け
-- オープンエンド方式（外れ値も含む）
-- ストリーミング処理対応
-- リザーバーサンプリング
-
-```bash
-# 基本的な使用
-python length_selector.py \
-    --input "dataset-name" \
-    --total_samples 5000 \
-    --output "selected_data.json"
-
-# 詳細設定
-python length_selector.py \
-    --input "neko-llm/SFT_OpenMathReasoning" \
-    --dataset_spec "cot" \
-    --answer_field "generated_solution" \
-    --total_samples 10000 \
-    --num_bins 8 \
-    --curve_sharpness 3.0 \
-    --sample_size_for_stats 2000 \
-    --shuffle \
-    --output "math_selected.json"
-
-# SLURMでの実行
-sbatch run_length_selector.sh
-# または
-./universal_length_selector.sh "dataset-name" 5000
-```
-
-**主要パラメータ:**
-- `--curve_sharpness`: 分布の鋭さ（1.0=緩やか、2.0=標準、4.0=鋭い）
-- `--num_bins`: ビン数（デフォルト: 6）
-- `--sample_size_for_stats`: ビン作成用サンプル数（デフォルト: 1000）
-- `--shuffle`: データセットをランダム順で処理
-- `--id_header`: ID作成時の接頭辞（デフォルト: "id"、出力形式: {id_header}_{番号}）
-
-**分布例（6ビン）:**
-```
-Bin 0 (shortest): 100 samples (10%)   ← 最少
-Bin 1: 200 samples (20%)
-Bin 2: 300 samples (30%)
-Bin 3: 400 samples (40%)
-Bin 4: 500 samples (50%)
-Bin 5 (longest): 600 samples (60%)    ← 最多
-```
-
-**出力形式:**
-```json
-[
-  {
-    "id": "id_1",
-    "question": "What is 1+1?",
-    "output": "<think>Okay, I need to calculate the sum of 1 and 1.</think>2",
-    "answer": "2"
-  },
-  {
-    "id": "id_2",
-    "question": "Solve for x: 2x + 5 = 15",
-    "output": "Subtract 5 from both sides: 2x = 10. Divide by 2: x = 5.",
-    "answer": "5"
-  }
-]
-```
-
-**フィールド説明:**
-- `id`: 連番ID（{id_header}_{番号}形式、デフォルトは"id_1", "id_2"...）
-- `question`: 問題文（question_fieldの内容）
-- `output`: 解答プロセス（solution_fieldの内容、長さ基準で選択）
-- `answer`: 最終回答（answer_fieldの内容）
-
-**ID例（--id_header "problem"の場合）:**
-```json
-[
-  {"id": "problem_1", "question": "...", "output": "...", "answer": "..."},
-  {"id": "problem_2", "question": "...", "output": "...", "answer": "..."}
-]
-```
-
----
-
-### 📤 Hugging Faceへのアップロード
-
-**スクリプト:** `upload_data.py`
-**目的:** JSONファイルをParquetに変換し、JSONとParquet両方をHugging Face Hubにアップロード  
-**説明:** Parquet形式が`datasets.load_dataset()`で直接使える。JSON/JSONLファイルが大規模トレーニングする時に使いやすい。  
-
-**機能:**
-- 各JSONファイルを個別のParquetファイルに変換（メモリ効率的）
-- splitプレフィックス付きファイル名で区別可能
-- 互換性のため元のJSONファイルを保持
-- YAML メタデータで各splitの設定を自動生成
-- プライベートデータセット対応
-- 既存ファイルのスキップ機能
-
-#### 📋 使用方法
-
-**基本的な使用:**
-```bash
-# 直接実行
-python upload_data.py \
-    --dataset_path ./results/filtered_dataset \
-    --repo_id your-username/dataset-name \
+    --repo_id your-username/sft-dataset-name \
     --create_dataset_card
-
-# SLURMスクリプト（設定を編集してから実行）
-sbatch run_upload_data.sh
-
-# ユニバーサルスクリプト（ローカル/SLURM両対応）
-./universal_upload_data.sh "./results/data" "user/dataset-name" true
-
-# 動的SLURM投入
-./submit_upload_data.sh "./results/data" "user/dataset-name" true
 ```
 
-**主要パラメータ:**
-- `--dataset_path`: データフォルダのパス（JSON分割フォルダを含む）
-- `--repo_id`: HuggingFace リポジトリID（username/dataset-name形式）
-- `--create_dataset_card`: データセットカード自動生成（推奨）
+## 📊 Unified Output Format
 
-#### 🗂️ データ構造
-
-**期待される入力構造:**
-```
-dataset_path/
-├── split_1(ネームは自由)/
-│   ├── file1.json
-│   ├── file2.json
-│   └── ...
-├── split_2/
-│   ├── file1.json
-│   └── ...
-└── split_3/
-│   └── file1.json
-└── original_readme.log (任意, md形式でhuggingfaceで使いたいreadmeを中に、このファイルがないとreadmeを自動生成)
-```
-
-**出力構造:**
-```
-dataset_path/
-├── train/ (元のJSONファイル)
-├── validation/ (元のJSONファイル)  
-├── test/ (元のJSONファイル)
-├── data/
-│   ├── train_file1.parquet    # splitプレフィックス付き
-│   ├── train_file2.parquet    # splitプレフィックス付き
-│   ├── validation_file1.parquet
-│   └── test_file1.parquet
-└── README.md (YAML メタデータ付き)
-```
-
-**自動生成するYAML メタデータ例:**
-```yaml
----
-configs:
-- config_name: cot
-  data_files:
-    - "data/cot_file1.parquet"
-    - "data/cot_file2.parquet"
-- config_name: genselect
-  data_files: "data/genselect_file1.parquet"
----
-```
-
-**データセットの読み込み方法:**
-```python
-from datasets import load_dataset
-
-# 特定のsplitを読み込む
-train_data = load_dataset("your-username/dataset-name", "cot", "split"="train")
-val_data = load_dataset("your-username/dataset-name", "genselect", "split"="train")
-
-# または手動でdata_filesを指定
-dataset = load_dataset(
-    "parquet",
-    data_files={
-        "train": "data/train_*.parquet",
-        "validation": "data/validation_*.parquet",
-    }
-)
-
-# 個別ファイルの読み込み
-import pandas as pd
-df = pd.read_parquet("data/train_file1.parquet")
-```
-
----
-
-## 🖥️ SLURMスクリプト
-
-### HPC/クラスター使用用
-
-**ラベルベースフィルタリング:**
-```bash
-sbatch run_label_filter.sh
-```
-
-**LLMベースフィルタリング:**
-```bash
-sbatch run_filter.sh
-```
-
-**難易度評価:**
-```bash
-sbatch run_difficulty_scorer.sh
-```
-
-**データ選択:**
-```bash
-sbatch run_length_selector.sh
-# または
-./universal_length_selector.sh "dataset-name" 5000
-```
-
-**データアップロード:**
-```bash
-sbatch run_upload_data.sh
-# または
-./universal_upload_data.sh "./results/data" "user/dataset-name" true
-# または
-./submit_upload_data.sh "./results/data" "user/dataset-name" true
-```
-
-各スクリプトには以下が含まれます:
-- GPUリソース割り当て（必要に応じて）
-- 環境セットアップ
-- データ検証とエラーハンドリング
-- 詳細なログ出力
-
-## 📊 データスキーマ
-
-処理されたデータセットは以下のスキーマに従います (OpenMathを例に):
+All processed datasets follow a consistent schema:
 
 ```json
 {
-  "problem": "string",           // 数学問題文
-  "answer": "string",           // 正解
-  "generated_solution": "string", // ステップバイステップソリューション
-  "problem_type": "string",     // 問題タイプ識別子
-  "pass_rate_72b_tir": "float", // 難易度メトリック（0.0-1.0）
-  "dataset": "string"           // ソースデータセット識別子
+  "id": "{dataset}_{index}",
+  "question": "The original question or problem",
+  "output": "<think>Step-by-step reasoning process</think>\nFinal answer",
+  "answer": "Concise final answer"
 }
 ```
 
-## 🔧 設定のヒント
+### Field Descriptions
+- **id**: Unique identifier with dataset prefix
+- **question**: Original question/problem from the dataset
+- **output**: Combined reasoning (in `<think>` tags) and answer
+- **answer**: Standalone final answer for validation
 
-### 大規模データセット用
-- 初期処理にはラベルベースフィルタリングを使用
-- 適切な`--save-per-iteration`値を設定
-- メモリ使用量を制御するため`--batch-size`を使用
+## 🛠️ Core Processing Scripts
 
-### マルチGPUシステム用
-- テンソル並列化を使用（`--inference-tp 2`で2GPU）
-- より良いスループットのため`--vllm-batch-size`を増加
-- `nvidia-smi`でGPUメモリを監視
+### 📊 Difficulty Scorer (`difficulty_scorer.py`)
+Evaluates question difficulty using multiple metrics:
+- Average log probability of gold answers
+- Ensemble accuracy across multiple models
+- IRT difficulty parameter β
 
-### メモリ最適化用
-- 個別のParquetファイルを使用（マージしない）
-- データセットをチャンクで処理
-- 利用可能なRAMに基づいて適切なバッチサイズを設定
-
-### アップロード用
-- プライベートリポジトリではYAMLメタデータを使用
-- `original_README.log`で既存READMEを保持
-- 既存Parquetファイルは自動スキップされる
-- splitプレフィックスでファイルを整理
-
-## 🐛 トラブルシューティング
-
-### 一般的な問題
-
-**メモリ不足:**
 ```bash
-# バッチサイズを削減
+python difficulty_scorer.py \
+    --input "dataset-name" \
+    --output "scores.json" \
+    --max_samples 10000
+```
+
+### 📏 Length Selector (`length_selector.py`)
+Fast data selection based on answer length distribution:
+- Half-Gaussian distribution (favors longer answers)
+- Dynamic binning based on actual data
+- Streaming processing for large datasets
+
+```bash
+python length_selector.py \
+    --input "dataset-name" \
+    --total_samples 5000 \
+    --num_bins 6 \
+    --curve_sharpness 3.0
+```
+
+### 🌱 Seed Generator (`generateFromSeed.py`)
+Generates new solutions from seed problems:
+```bash
+python generateFromSeed.py \
+    --model Qwen/Qwen3-32B \
+    --input_file seeds.json \
+    --output_file generated.json
+```
+
+### 📤 Upload Tool (`upload_data.py`)
+Converts JSON to Parquet and uploads to Hugging Face:
+```bash
+python upload_data.py \
+    --dataset_path ./results \
+    --repo_id username/dataset \
+    --create_dataset_card
+```
+
+## 🖥️ SLURM Scripts for HPC
+
+For cluster/HPC environments:
+
+```bash
+# Label-based filtering
+sbatch run_label_filter.sh
+
+# LLM-based filtering
+sbatch run_filter.sh
+
+# Length-based selection
+sbatch run_length_selector.sh
+
+# Upload to Hugging Face
+sbatch run_upload_data.sh
+```
+
+## 📋 Workflow Examples
+
+### Complete Multi-Domain SFT Dataset
+```bash
+# 1. Process mathematics
+cd MixtureOfThoughts && python process_mot_dataset.py
+cd ../OpenMath && python OpenMathReasoningFiltering_bylabel.py
+
+# 2. Process sciences
+cd ../biology && python ToT/transfer_data.py
+cd ../chemistry && bash chempile/run_chempile_extraction.sh
+
+# 3. Process humanities
+cd ../humanity/law && python format_law.py
+cd ../history && python convert_history.py
+
+# 4. Process medical
+cd ../../medical/reasonMD && python reasonmd_selector.py && python convert_reasonmd.py
+
+# 5. Merge and upload
+cd ../..
+python merge_datasets.py --input_dirs results/* --output merged_dataset
+python upload_data.py --dataset_path merged_dataset --repo_id username/complete-sft
+```
+
+### Quick Domain-Specific Dataset
+```bash
+# For mathematics only
+cd OpenMath
+python OpenMathReasoningFiltering_bylabel.py --filter-by-pass-rate 0.1
+cd ..
+python upload_data.py --dataset_path OpenMath/results --repo_id username/math-sft
+```
+
+## 🔧 Configuration Tips
+
+### For Large Datasets (>100K samples)
+- Use label-based or length-based filtering
+- Set appropriate `--save-per-iteration` values
+- Process in parallel with percentage ranges
+
+### For Multi-GPU Systems
+- Use tensor parallelism: `--inference-tp 2`
+- Increase batch sizes: `--vllm-batch-size 32`
+- Monitor GPU memory with `nvidia-smi`
+
+### For Memory Optimization
+- Process datasets in chunks
+- Use streaming where available
+- Keep Parquet files separate (don't merge)
+
+## 🐛 Troubleshooting
+
+### Out of Memory
+```bash
+# Reduce batch sizes
 --inference-batch-size 1 --vllm-batch-size 16
 
-# テンソル並列化を使用
+# Use tensor parallelism
 --inference-tp 2
 ```
 
-**CUDAエラー:**
+### CUDA Errors
 ```bash
-# 環境変数を設定
 export CUDA_VISIBLE_DEVICES=0,1
 export VLLM_USE_FLASH_ATTENTION=1
 ```
 
-**アップロード失敗:**
+### Upload Failures
 ```bash
-# Hugging Faceトークンを確認
+# Verify HF token
 cat keys.json
 
-# リポジトリ権限を確認
-# リポジトリへの書き込み権限があることを確認
+# Check repository permissions
+# Ensure write access to the repository
 ```
 
-## 📝 ワークフロー例
+## 📚 Dataset Sources
 
-### 完全フィルタリングワークフロー
+- **MixtureOfThoughts**: `open-r1/Mixture-of-Thoughts`
+- **OpenMath**: `nvidia/OpenMathReasoning`
+- **Law**: `moremilk/CoT_Legal_Issues_And_Laws`
+- **ReasonMD**: `lingshu-medical-mllm/ReasonMed`, `neko-llm/CoT_Medicine`
+- **Custom**: History, Biology ToT, Chemistry ChemPile
 
-```bash
-# 1. ラベルでデータセットをフィルタリング（高速）
-python OpenMathReasoningFiltering_bylabel.py \
-    --filter-by-pass-rate 0.1 \
-    --save-per-iteration 10000
-
-# 2. Hugging Faceに変換してアップロード
-python upload_data.py \
-    --dataset_path ./results/filtered_dataset \
-    --repo_id your-username/openmath-filtered
-
-# 3. 追加ソリューション生成（オプション）
-python generateFromSeed.py \
-    --model Qwen/Qwen3-8B \
-    --input_file ./results/filtered_dataset/train/hard_problems.json \
-    --output_file ./results/generated_solutions.json
-```
-
-### カスタムLLMフィルタリングワークフロー
-
-```bash
-# 1. カスタム基準で前半を処理
-python OpenMathReasoningFiltering.py \
-    --inference-model Qwen/Qwen3-32B \
-    --start-from-percentage 0.0 \
-    --end-at-percentage 0.5
-
-# 2. 並列で後半を処理
-python OpenMathReasoningFiltering.py \
-    --inference-model Qwen/Qwen3-32B \
-    --start-from-percentage 0.5 \
-    --end-at-percentage 1.0
-
-# 3. 結果を結合してアップロード
-python upload_data.py \
-    --dataset_path ./results/combined_dataset \
-    --repo_id your-username/custom-filtered
-```
-
-## 📋 要件
+## 📋 Requirements
 
 - Python 3.8+
-- CUDAサポート付きPyTorch
-- 効率的な推論用vLLM
-- Hugging Face Hubアカウント
-- 十分なGPUメモリ（8GB+推奨）
-- 大規模データセット用: 32GB+ RAM推奨
+- PyTorch with CUDA support
+- vLLM for efficient inference
+- Hugging Face Hub account
+- GPU with 8GB+ VRAM (recommended)
+- 32GB+ RAM for large datasets
 
-## 📞 サポート
+## 📞 Support
 
-問題や質問については:
-1. 上記のトラブルシューティングセクションを確認
-2. `--help`でスクリプトパラメータを確認
-3. 処理中のリソース使用量を監視
-4. 適切な環境設定を確認
-5. Slackで`@Junyu Liu`に連絡
+For issues or questions:
+1. Check troubleshooting section above
+2. Review script help: `python script.py --help`
+3. Monitor resource usage during processing
+4. Verify environment setup
+5. Contact @Junyu Liu on Slack
+
+## 📝 License
+
+This pipeline is provided for research and educational purposes. Please refer to individual dataset licenses for data usage rights.

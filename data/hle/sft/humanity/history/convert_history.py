@@ -26,12 +26,10 @@ please only output the reasoning process, no other text.
 
 def create_summary_prompt(question: str, original_answer: str) -> str:
     """Create a prompt to generate a summarized answer."""
-    return f"""Please summarize the following original answer to keywords that directly answer the question, dont include any other text:
+    return f"""Q: {question}
+A: {original_answer}
 
-Question: {question}
-
-Original Answer: {original_answer}
-"""
+Short answer:"""
 
 def process_with_vllm(data: List[Dict[str, str]], model_name: str = "meta-llama/Llama-3.1-8B-Instruct", tensor_parallel_size: int = 2) -> List[Dict[str, Any]]:
     """Process the data using vLLM to generate reasoning and summaries."""
@@ -39,10 +37,15 @@ def process_with_vllm(data: List[Dict[str, str]], model_name: str = "meta-llama/
     
     llm = LLM(model=model_name, tensor_parallel_size=tensor_parallel_size, gpu_memory_utilization=0.9)
     sampling_params = SamplingParams(
-        temperature=0.7,
+        temperature=0.3,
         top_p=0.9,
-        max_tokens=2048,
-        stop=["</final_answer>", "<|eot_id|>"]
+        max_tokens=4096
+    )
+    answer_params = SamplingParams(
+        temperature=0.0,
+        top_p=0.1,
+        max_tokens=50,
+        stop=["\n", ".", "!", "?"]
     )
     
     results = []
@@ -60,9 +63,10 @@ def process_with_vllm(data: List[Dict[str, str]], model_name: str = "meta-llama/
         
         # Generate summary
         summary_prompt = create_summary_prompt(question, original_answer)
-        summary_outputs = llm.generate([summary_prompt], sampling_params)
+        summary_outputs = llm.generate([summary_prompt], answer_params)
         summary_response = summary_outputs[0].outputs[0].text.strip()
-        
+        print(summary_response)
+
         result = {
             "id": f"history_{idx}",
             "question": question,

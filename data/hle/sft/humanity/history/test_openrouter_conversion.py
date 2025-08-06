@@ -78,7 +78,7 @@ please only output the reasoning process, no other text.
 
 def create_summary_prompt(question: str, original_answer: str) -> str:
     """Create a prompt to generate a summarized answer."""
-    return f"""Please summarize the following original answer to keywords that directly answer the question, dont include any other text:
+    return f"""Please summarize the original answer to the shortest possible answer that directly answer the question, dont include any other text:
 
 Question: {question}
 
