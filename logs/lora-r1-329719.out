@@ -1,0 +1,1069 @@
+===== ジョブ開始: Wed Aug  6 08:26:48 PM JST 2025 =====
+cwd  = /home/Competition2025/P02/P02U006/ColossalAI
+host = osk-gpu54
+JOB  = 329719
+NODES= osk-gpu[54,56,91]
+FLASH_ATTENTION_DISABLE=1
+HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
+=== CUDA環境 ===
+CUDA_HOME=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/nvcc
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Tue_May_27_02:21:03_PDT_2025
+Cuda compilation tools, release 12.9, V12.9.86
+Build cuda_12.9.r12.9/compiler.36037853_0
+=== Pythonライブラリのバージョン ===
+python 3.10.18 (main, Jun  5 2025, 13:14:17) [GCC 11.2.0]
+torch 2.4.1+cu124
+torchvision 0.19.1+cu124
+torchaudio 2.4.1+cu124
+numpy 1.26.4
+please install Colossal-AI from https://www.colossalai.org/download or from source
+colossalai 0.0.0
+transformers 4.46.3
+PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+LD_LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+CPATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/nvidia/cublas/include:
+LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+[after unset NCCL_NET_PLUGIN]
+NCCL_NET_PLUGIN=none
+NCCL_SOCKET_IFNAME=enp92s0np0
+NCCL_DEBUG=INFO
+NCCL_TIMEOUT=3600
+NCCL_IB_HCA=mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+TORCH_NCCL_BLOCKING_WAIT=1
+TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+MASTER_ADDR=osk-gpu54  MASTER_PORT=21719
+== [Pre-launch NCCL env] ==
+NCCL_NET_PLUGIN=none
+NCCL_SOCKET_IFNAME=enp92s0np0
+NCCL_DEBUG=INFO
+NCCL_TIMEOUT=3600
+NCCL_IB_HCA=mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+TORCH_NCCL_BLOCKING_WAIT=1
+TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from sourceplease install Colossal-AI from https://www.colossalai.org/download or from source
+
+please install Colossal-AI from https://www.colossalai.org/download or from sourceplease install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+
+please install Colossal-AI from https://www.colossalai.org/download or from sourceplease install Colossal-AI from https://www.colossalai.org/download or from source
+
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      :=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+ 3.10.18
+==== ColossalAI SFT script: train() Start ====
+torch version       : 2.4.1+cu124=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====NCCL_TIMEOUT ==== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+
+ 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ======= CONDA ENV CHECK ====== CONDA ENV CHECK ======= ColossalAI SFT script: train() Start ====
+sys.executable      :
+ /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 
+3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====
+
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====
+[08/06/25 20:27:51] INFO     colossalai - colossalai - INFO:                    
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/initialize.py:75 launch                       
+                    INFO     colossalai - colossalai - INFO: Distributed        
+                             environment is initialized, world size: 24         
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+=== CONDA ENV CHECK ====== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10TORCH_ELASTIC_STORE_TIMEOUT =
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+CONDA_DEFAULT_ENV   :  deepseeksft310=== CONDA ENV CHECK ===
+3600
+CONDA_PREFIX        :
+TORCH_DISTRIBUTED_STORE_TIMEOUT = sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+3600 
+MASTER_ADDR = osk-gpu54
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310MASTER_PORT = 21719
+
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ======== ColossalAI SFT script: train() Start ====
+
+=== CONDA ENV CHECK ===
+
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT ===== ColossalAI SFT script: train() Start ====
+ 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ======= CONDA ENV CHECK ===
+
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== CONDA ENV CHECK ====== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+=== END CONDA ENV CHECK ===
+
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+MASTER_ADDR = osk-gpu54
+==== ColossalAI SFT script: train() Start ======= CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====
+=== CONDA ENV CHECK ======= ColossalAI SFT script: train() Start ====
+
+
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ======= CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+CONDA_DEFAULT_ENV   :=== CONDA ENV CHECK === deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+
+
+==== ColossalAI SFT script: train() Start ====
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====
+=== CONDA ENV CHECK ===
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ======= CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====
+
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_TIMEOUT = 3600
+TORCH_ELASTIC_STORE_TIMEOUT = 3600
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 3600
+MASTER_ADDR = osk-gpu54
+MASTER_PORT = 21719
+=== END ENV CHECK ===
+==== ColossalAI SFT script: train() Start ====
+
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=True  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] Creating tensorboard dir: /home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb
+[DEBUG] Tensorboard SummaryWriter created
+[DEBUG] Saving config to training_config.json
+Training Info:
+Config file: training_config.json 
+Tensorboard logs: /home/Competition2025/P02/P02U006/ColossalAI/logs/329719/tb 
+Model checkpoint: /home/Competition2025/P02/P02U006/ColossalAI/logs/329719/DeepSeek-R1-0528-lora
+Load dataset: /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+Max device memory after data loader: 0.00 MB
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33dataset size: 2160
+
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ====== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Entered init_ctx ===
+
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ====== [Debug] After dataloader, before model config ====== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Using attention implementation: eager ===
+
+
+=== [Debug] Entered init_ctx ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===dataset size: 2160
+=== [Debug] Entered init_ctx ===
+
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===dataset size: 2160
+=== [Debug] Entered init_ctx ===
+
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+[08/06/25 20:31:38] WARNING  colossalai - colossalai - WARNING:                 
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/booster/plugin/hybrid_parallel_plugin.py:1518 
+                             enable_lora                                        
+                    WARNING  colossalai - colossalai - WARNING: You have enabled
+                             LoRa training. Please check the hyperparameters    
+                             such as lr                                         
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to train mode ====== [Debug] Gradient checkpointing enabled successfully ===
+
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+Gradient checkpointing enabled successfully
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+Model params: 671.03 B
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.2639913558959961 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 2.6892807483673096 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 0.13617610931396484 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.6499831676483154 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.3307034969329834 seconds
+[extension] Time taken to load cpu_adam_x86 op: 0.32499194145202637 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 2.159247875213623 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 1.3142411708831787 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.8372678756713867 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.10280036926269531 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.10486149787902832 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.908799648284912 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.1097416877746582 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 2.217745542526245 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.9184131622314453 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.6283376216888428 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 2.741331100463867 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.228456735610962 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 3.941150188446045 seconds
+[extension] Time taken to load fused_optim_cuda op: 4.32014274597168 seconds
+[extension] Time taken to load fused_optim_cuda op: 1.9131011962890625 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 3.8097667694091797 seconds
+=== [Debug] Using optimizer: HybridAdam ====== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] warmup_steps: 8 ===
+
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 4.945260286331177 seconds
+[extension] Time taken to load cpu_adam_x86 op: 4.340526580810547 seconds
+[extension] Time taken to load cpu_adam_x86 op: 3.808406114578247 seconds
+[extension] Time taken to load fused_optim_cuda op: 1.9073967933654785 seconds
+[extension] Time taken to load fused_optim_cuda op: 1.9067127704620361 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 4.53609824180603 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.2831141948699951 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 6.652878522872925 seconds
+[extension] Time taken to load fused_optim_cuda op: 4.611022472381592 seconds
+[extension] Time taken to load fused_optim_cuda op: 2.215867280960083 seconds
+[extension] Time taken to load fused_optim_cuda op: 4.609665632247925 seconds
+[extension] Time taken to load fused_optim_cuda op: 2.214660167694092 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===[extension] Time taken to load cpu_adam_x86 op: 5.031969785690308 seconds
+
+=== [Debug] Using optimizer: HybridAdam ====== [Debug] Using optimizer: HybridAdam ====== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+
+
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.3127169609069824 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.6049354076385498 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.6050846576690674 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.30789852142333984 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.6057021617889404 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 4.6113035678863525 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.6079761981964111 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 4.121774196624756 seconds
+[extension] Time taken to load cpu_adam_x86 op: 4.1271960735321045 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.7052016258239746 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.4007244110107422 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.405963659286499 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.4050297737121582 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+Default dtype set to torch.bfloat16
+=== [Debug] Booster boost completed: rank=15 ===
+=== [Debug] Booster boost completed: rank=5 ===
+=== [Debug] Booster boost completed: rank=3 ===
+=== [Debug] Booster boost completed: rank=14 ===
+=== [Debug] Booster boost completed: rank=8 ===
+=== [Debug] Booster boost completed: rank=22 ===
+=== [Debug] Booster boost completed: rank=17 ===
+=== [Debug] Booster boost completed: rank=20 ===
+=== [Debug] Booster boost completed: rank=21 ===
+=== [Debug] Booster boost completed: rank=23 ===
+=== [Debug] Booster boost completed: rank=19 ===
+=== [Debug] Booster boost completed: rank=16 ===
+=== [Debug] Booster boost completed: rank=18 ===
+=== [Debug] Booster boost completed: rank=7 ===
+=== [Debug] Booster boost completed: rank=1 ===
+=== [Debug] Booster boost completed: rank=2 ===
+=== [Debug] Booster boost completed: rank=4 ===
+=== [Debug] Booster boost completed: rank=0 ===
+=== [Debug] Booster boost completed: rank=6 ===
+=== [Debug] Booster boost completed: rank=11 ===
+=== [Debug] Booster boost completed: rank=10 ===
+=== [Debug] Booster boost completed: rank=9 ===
+=== [Debug] Booster boost completed: rank=12 ===
+=== [Debug] Booster boost completed: rank=13 ===
+=== [Debug] Model loaded from pretrained: rank=16 ===
+[Debug] rank=16, host=osk-gpu91, Max device mem: 67123.78 MB, Max CPU mem: 20983.17 MB
+[Debug] rank=16, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=22 ===
+[Debug] rank=22, host=osk-gpu91, Max device mem: 67123.78 MB, Max CPU mem: 20979.85 MB
+[Debug] rank=22, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=23 ===
+[Debug] rank=23, host=osk-gpu91, Max device mem: 67123.78 MB, Max CPU mem: 20987.18 MB
+[Debug] rank=23, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=17 ===
+[Debug] rank=17, host=osk-gpu91, Max device mem: 67123.78 MB, Max CPU mem: 20979.93 MB
+[Debug] rank=17, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=20 ===
+[Debug] rank=20, host=osk-gpu91, Max device mem: 67123.78 MB, Max CPU mem: 20981.94 MB
+[Debug] rank=20, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=18 ===
+[Debug] rank=18, host=osk-gpu91, Max device mem: 67123.78 MB, Max CPU mem: 20983.28 MB
+[Debug] rank=18, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=21 ===
+[Debug] rank=21, host=osk-gpu91, Max device mem: 67123.78 MB, Max CPU mem: 20983.09 MB
+[Debug] rank=21, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=19 ===
+[Debug] rank=19, host=osk-gpu91, Max device mem: 67123.78 MB, Max CPU mem: 20980.31 MB
+[Debug] rank=19, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=15 ===
+[Debug] rank=15, host=osk-gpu56, Max device mem: 68528.68 MB, Max CPU mem: 19077.16 MB
+[Debug] rank=15, host=osk-gpu56, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=9 ===
+[Debug] rank=09, host=osk-gpu56, Max device mem: 68528.68 MB, Max CPU mem: 19078.69 MB
+[Debug] rank=09, host=osk-gpu56, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=8 ===
+[Debug] rank=08, host=osk-gpu56, Max device mem: 68528.68 MB, Max CPU mem: 19079.17 MB
+[Debug] rank=08, host=osk-gpu56, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=10 ===
+[Debug] rank=10, host=osk-gpu56, Max device mem: 68528.68 MB, Max CPU mem: 19079.70 MB
+[Debug] rank=10, host=osk-gpu56, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=14 ===
+[Debug] rank=14, host=osk-gpu56, Max device mem: 68528.68 MB, Max CPU mem: 19080.66 MB
+[Debug] rank=14, host=osk-gpu56, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=13 ===
+[Debug] rank=13, host=osk-gpu56, Max device mem: 68528.68 MB, Max CPU mem: 19078.78 MB
+[Debug] rank=13, host=osk-gpu56, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=12 ===
+[Debug] rank=12, host=osk-gpu56, Max device mem: 68528.68 MB, Max CPU mem: 19077.47 MB
+[Debug] rank=12, host=osk-gpu56, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=11 ===
+[Debug] rank=11, host=osk-gpu56, Max device mem: 68528.68 MB, Max CPU mem: 19079.39 MB
+[Debug] rank=11, host=osk-gpu56, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=7 ===
+[Debug] rank=07, host=osk-gpu54, Max device mem: 59297.77 MB, Max CPU mem: 24059.29 MB
+[Debug] rank=07, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=1 ===
+[Debug] rank=01, host=osk-gpu54, Max device mem: 59297.77 MB, Max CPU mem: 24059.89 MB
+[Debug] rank=01, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=0 ===
+[Debug] rank=00, host=osk-gpu54, Max device mem: 59297.77 MB, Max CPU mem: 24060.96 MB
+[Debug] rank=00, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+osk-gpu54:2097980:2097980 [0] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097980:2097980 [0] NCCL INFO Bootstrap : Using enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097980:2097980 [0] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:2097980:2097980 [0] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:2097981:2097981 [1] NCCL INFO cudaDriverVersion 12080
+osk-gpu54:2097987:2097987 [7] NCCL INFO cudaDriverVersion 12080
+osk-gpu54:2097987:2097987 [7] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097987:2097987 [7] NCCL INFO Bootstrap : Using enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097987:2097987 [7] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:2097981:2097981 [1] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097981:2097981 [1] NCCL INFO Bootstrap : Using enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097987:2097987 [7] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:2097981:2097981 [1] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:2097981:2097981 [1] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:2097980:2097980 [0] NCCL INFO cudaDriverVersion 12080
+NCCL version 2.20.5+cuda12.4
+osk-gpu54:2097980:2103912 [0] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097980:2103912 [0] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+osk-gpu54:2097987:2103910 [7] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097987:2103910 [7] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+osk-gpu54:2097981:2103911 [1] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp92s0np0
+osk-gpu54:2097981:2103911 [1] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+osk-gpu54:2097980:2103912 [0] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097980:2103912 [0] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:2097980:2103912 [0] NCCL INFO Using network IB
+osk-gpu54:2097987:2103910 [7] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097987:2103910 [7] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:2097987:2103910 [7] NCCL INFO Using network IB
+osk-gpu54:2097981:2103911 [1] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp92s0np0:192.168.4.54<0>
+osk-gpu54:2097981:2103911 [1] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:2097981:2103911 [1] NCCL INFO Using network IB
