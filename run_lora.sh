@@ -2,12 +2,13 @@
 #SBATCH --partition=P02
 #SBATCH --job-name=lora-r1
 #SBATCH --nodes=3
-#SBATCH --ntasks-per-node=8    # ノードあたり8GPUなら8にする
+#SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=8
 #SBATCH --gres=gpu:8
 #SBATCH --time=04:00:00
-#SBATCH --output=/home/Competition2025/P02/P02U006/ColossalAI/logs/%j.out
-#SBATCH --error=/home/Competition2025/P02/P02U006/ColossalAI/logs/%j.err
+#SBATCH --output=/home/Competition2025/P02/P02U006/ColossalAI/logs/%x-%j.out
+#SBATCH --error=/home/Competition2025/P02/P02U006/ColossalAI/logs/%x-%j.err
+
 
 set -exo pipefail                       # デバッグ
 
@@ -17,12 +18,8 @@ echo "host = $(hostname)"
 echo "JOB  = ${SLURM_JOB_ID}"
 echo "NODES= ${SLURM_NODELIST}"
 
-# ジョブIDごとにログディレクトリを作成
-LOG_ROOT="/home/Competition2025/P02/P02U006/ColossalAI/logs/${SLURM_JOB_ID}"
-mkdir -p "$LOG_ROOT/tb"
+mkdir -p /home/Competition2025/P02/P02U006/ColossalAI/logs /home/Competition2025/P02/P02U006/ColossalAI/logs/tb
 
-# GPUモニタリングログもジョブID別で保存
-MON_LOG="$LOG_ROOT/gpu_${SLURM_NODEID}.log"
 
 # Conda
 source ~/miniconda3/etc/profile.d/conda.sh
@@ -43,12 +40,14 @@ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True # PyTorch の CUDA メ�
 export NCCL_SOCKET_IFNAME="enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0" # 管理者の/etc/profile.d/でセットされるもに合わせる
 export NCCL_IB_HCA="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1" # IBのポート指定も/etc/profile.d/appli.shでセットされているため
 export GLOO_SOCKET_IFNAME=$NCCL_SOCKET_IFNAME
-export NCCL_TIMEOUT=${NCCL_TIMEOUT:-3600} # 60 分まで待機
+export NCCL_TIMEOUT=${NCCL_TIMEOUT:-3600} # 1h まで待機
+export TORCHELASTIC_TIMEOUT=3600 # 1h まで待機
+export TORCH_DISTRIBUTED_TIMEOUT=3600 # 1h まで待機
+export TORCH_ELASTIC_STORE_TIMEOUT=3600 # 1 hour
 export TORCH_NCCL_BLOCKING_WAIT=1
 export NCCL_DEBUG=INFO
 #export NCCL_DEBUG_SUBSYS=INIT,ENV,GRAPH  # もっと欲しければ ALL
-export TORCH_ELASTIC_STORE_TIMEOUT=3600 
-export TORCH_NCCL_ASYNC_ERROR_HANDLING=0     # 既定は3。1はコミュニケータ破棄+プロセス終了。0はealry-abortを完全に無効化する。
+export TORCH_NCCL_ASYNC_ERROR_HANDLING=1     # 既定は3。1はコミュニケータ破棄+プロセス終了
 unset NCCL_ASYNC_ERROR_HANDLING || true      # こちらは非推奨
 
 
@@ -57,10 +56,11 @@ ulimit -c unlimited # コアを残す
 ulimit -v unlimited
 ulimit -m unlimited
 
+
 # SIGUSR1 で全 rank に BT 取得
 trap 'echo "=== SIGUSR1 on $(hostname) ==="; pkill -USR1 -f lora_finetune.py' USR1
 
-# GPU監視
+MON_LOG="$LOG_ROOT/gpu_${SLURM_NODEID}.log"
 (
   while true; do
     date '+[%F %T] ===== GPU util =====' >> "$MON_LOG"
@@ -115,35 +115,44 @@ echo "[after unset NCCL_NET_PLUGIN]"; env | grep NCCL
 #   * master_port を固定
 # ───────────────────────────
 export MASTER_ADDR=$(head -n1 /home/Competition2025/P02/P02U006/ColossalAI/hostfile)
-export MASTER_PORT=$((10000 + RANDOM % 40000)) # 10000〜50000のランダムポート
-
+export MASTER_PORT=$((12000 + SLURM_JOB_ID % 20000))
 echo "MASTER_ADDR=$MASTER_ADDR  MASTER_PORT=$MASTER_PORT"
 
 echo "== [Pre-launch NCCL env] =="
 env | grep NCCL
 
-# ---- ColossalAI 起動 ----
-srun --cpu_bind=none --accel-bind=gn \
-    --ntasks=$((SLURM_NNODES*8)) --ntasks-per-node=8 \
-    colossalai run \
-        --nproc_per_node 1 \
+# マスターノード1回だけ実行（他ノードへはSSHで展開）
+srun -N1 -w "$MASTER_ADDR" --ntasks=1 bash -lc "
+  set -e
+  source ~/miniconda3/etc/profile.d/conda.sh
+  conda activate deepseeksft310
+  echo 'on master:' \$(hostname)
+  echo '== [Pre-launch NCCL env (inside srun block)] =='
+  env | grep NCCL
+  which colossalai || true
+  which python || true
+  which torchrun || true
+
+  TORCH_ELASTIC_STORE_TIMEOUT=3600 NCCL_TIMEOUT=3600 NCCL_DEBUG=INFO colossalai run \
+	--hostfile /home/Competition2025/P02/P02U006/ColossalAI/hostfile \
+	--master_addr $MASTER_ADDR \
+        --master_port $MASTER_PORT \
+        --nproc_per_node 8 \
         /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
             --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
             --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
             --plugin moe \
-            --pp 3 \
-            --ep 8 \
+            --pp 3 --ep 8 \
             --batch_size 8 \
             --lr 2e-5 \
             --max_length 256 \
-            --lora_rank 8 \
-            --lora_alpha 16 \
-            --num_epochs 2 \
-            --warmup_steps 8 \
+            --lora_rank 8 --lora_alpha 16 \
+            --num_epochs 2 --warmup_steps 8 \
             --mixed_precision bf16 \
             --use_grad_checkpoint \
-            --tensorboard_dir "$LOG_ROOT/tb" \
-            --save_dir "$LOG_ROOT/DeepSeek-R1-0528-lora"
+            --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/tb \
+            --save_dir /home/Competition2025/P02/P02U006/ColossalAI/DeepSeek-R1-0528-lora
+"
 
 kill "$MON_PID" || true
 echo "===== ジョブ終了: $(date) ====="
