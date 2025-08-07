@@ -15,64 +15,58 @@
 import logging
 import os
 import sys
+from dataclasses import dataclass, field
+from typing import Optional
 
 import datasets
+import torch
 import transformers
-
-# ============ Monkey-patch for sleep(level=2) ============
-from vllm.engine.async_llm_engine import AsyncLLMEngine
-
-# キャプチャしておいたオリジナル
-_orig_sleep = AsyncLLMEngine.sleep
-
-# いつ呼ばれても level=2 に置き換える
-async def _sleep_l2(self, level: int = 1) -> None:
-    return await _orig_sleep(self, 2)
-
-# 上書き
-AsyncLLMEngine.sleep = _sleep_l2
-# ========================================================
-
-# 追加例: 同期版のパッチ
-from vllm.engine.llm_engine import LLMEngine
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-_orig_llm_sleep = LLMEngine.sleep
-def _llm_sleep_l2(self, level: int = 1) -> None:
-    logger.info(f"[PATCH:LLMEngine] sleep called with level={level} → overriding to level=2")
-    return _orig_llm_sleep(self, 2)
-LLMEngine.sleep = _llm_sleep_l2
-
-from transformers import set_seed
-
-#SEED = 42
-#set_seed(SEED)
-
+from peft import LoraConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, set_seed
 from transformers.trainer_utils import get_last_checkpoint
+# ModelConfigは不要になったため削除
+from trl import GRPOTrainer, TrlParser
 
 from open_r1.configs import GRPOConfig, GRPOScriptArguments
 from open_r1.rewards import get_reward_funcs
-from open_r1.utils import get_dataset, get_model, get_tokenizer
+from open_r1.utils import get_dataset
 from open_r1.utils.callbacks import get_callbacks
 from open_r1.utils.wandb_logging import init_wandb_training
-
-from open_r1.utils.trainers.grpo_lora_sync import GRPOTrainerWithLoRASync as GRPOTrainer
-from trl import TrlParser, get_peft_config, ModelConfig
-#from trl import GRPOTrainer, ModelConfig, TrlParser, get_peft_config
-
 
 logger = logging.getLogger(__name__)
 
 
-def main(script_args, training_args, model_args):
-    # Set seed for reproducibility
+# =================================================================================
+# QLoRAとモデル実装に関する引数を保持する、専用のカスタムクラスを定義します。
+# =================================================================================
+@dataclass
+class ModelArguments:
+    """
+    Contains arguments pertaining to model loading, quantization, and implementation.
+    """
+    model_name_or_path: str = field(metadata={"help": "The model checkpoint for weights initialization."})
+    model_revision: str = field(default="main", metadata={"help": "The specific model version to use."})
+    trust_remote_code: bool = field(default=False, metadata={"help": "Whether or not to allow for custom models defined on the Hub."})
+    torch_dtype: Optional[str] = field(default="auto", metadata={"help": "The torch dtype to use for the model (e.g. 'bfloat16', 'float16', 'auto')."})
+
+    # QLoRA/bitsandbytes parameters
+    load_in_4bit: bool = field(default=False, metadata={"help": "Load model in 4-bit precision"})
+    bnb_4bit_quant_type: str = field(default="nf4", metadata={"help": "Quantization type (fp4 or nf4)"})
+    bnb_4bit_use_double_quant: bool = field(default=False, metadata={"help": "Use double quantization"})
+    bnb_4bit_compute_dtype: str = field(default="bfloat16", metadata={"help": "Compute dtype for 4-bit base models"})
+    
+    # Flash Attention
+    attn_implementation: Optional[str] = field(default=None, metadata={"help": "Attention implementation to use (e.g., 'flash_attention_2')"})
+
+
+def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args: ModelArguments):
+    """
+    Main training function for GRPO with QLoRA, vLLM (colocate mode), and a single LoRA adapter.
+    """
+    # 1. Setup
+    # ----------------------------------------------------------------
     set_seed(training_args.seed)
 
-    ###############
-    # Setup logging
-    ###############
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
@@ -85,131 +79,121 @@ def main(script_args, training_args, model_args):
     transformers.utils.logging.enable_default_handler()
     transformers.utils.logging.enable_explicit_format()
 
-    # Log on each process a small summary
     logger.warning(
         f"Process rank: {training_args.local_rank}, device: {training_args.device}, n_gpu: {training_args.n_gpu}"
-        + f" distributed training: {bool(training_args.local_rank != -1)}, 16-bits training: {training_args.fp16}"
+        + f" distributed training: {bool(training_args.local_rank != -1)}, 16-bits training: {training_args.bf16}"
     )
-    logger.info(f"Model parameters {model_args}")
-    logger.info(f"Script parameters {script_args}")
-    logger.info(f"Training parameters {training_args}")
-
-    # Check for last checkpoint
-    last_checkpoint = None
-    if os.path.isdir(training_args.output_dir):
-        last_checkpoint = get_last_checkpoint(training_args.output_dir)
-    if last_checkpoint is not None and training_args.resume_from_checkpoint is None:
-        logger.info(f"Checkpoint detected, resuming training at {last_checkpoint=}.")
+    logger.info(f"Model parameters: {model_args}")
+    logger.info(f"Script parameters: {script_args}")
+    logger.info(f"Training parameters: {training_args}")
 
     if "wandb" in training_args.report_to:
         init_wandb_training(training_args)
 
-    # Load the dataset
+    # 2. Load model, tokenizer and dataset
+    # ----------------------------------------------------------------
+    
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_args.model_name_or_path,
+        revision=model_args.model_revision,
+        trust_remote_code=model_args.trust_remote_code,
+    )
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+
+    quantization_config = BitsAndBytesConfig(
+        load_in_4bit=model_args.load_in_4bit,
+        bnb_4bit_compute_dtype=torch.bfloat16 if model_args.bnb_4bit_compute_dtype == "bfloat16" else torch.float16,
+        bnb_4bit_use_double_quant=model_args.bnb_4bit_use_double_quant,
+        bnb_4bit_quant_type=model_args.bnb_4bit_quant_type,
+    )
+
+    model_torch_dtype = getattr(torch, model_args.torch_dtype) if model_args.torch_dtype in ["auto", None] else getattr(torch, model_args.torch_dtype)
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_args.model_name_or_path,
+        revision=model_args.model_revision,
+        quantization_config=quantization_config if model_args.load_in_4bit else None,
+        torch_dtype=model_torch_dtype,
+        attn_implementation=model_args.attn_implementation,
+        trust_remote_code=model_args.trust_remote_code,
+    )
+
+    peft_config = LoraConfig(
+        r=16,
+        lora_alpha=16,
+        lora_dropout=0,
+        bias="none",
+        task_type="CAUSAL_LM",
+        target_modules=[
+            "q_proj", "k_proj", "v_proj", "o_proj",
+            "gate_proj", "up_proj", "down_proj",
+        ],
+    )
+
     dataset = get_dataset(script_args)
-
-    ################
-    # Load tokenizer
-    ################
-    tokenizer = get_tokenizer(model_args, training_args)
-
-    ##############
-    # Load model #
-    ##############
-    logger.info("*** Loading model ***")
-    model = get_model(model_args, training_args)
-
-    # Get reward functions from the registry
     reward_funcs = get_reward_funcs(script_args)
 
-    # Format into conversation
     def make_conversation(example, prompt_column: str = script_args.dataset_prompt_column):
         prompt = []
-
         if training_args.system_prompt is not None:
             prompt.append({"role": "system", "content": training_args.system_prompt})
-
-        if prompt_column not in example:
-            raise ValueError(f"Dataset Question Field Error: {prompt_column} is not supported.")
-
         prompt.append({"role": "user", "content": example[prompt_column]})
         return {"prompt": prompt}
 
+    # ★★★ エラー修正: 'solution'列を保持するように変更 ★★★
+    # .map()で'prompt'列を作成した後、不要になった元のプロンプト列('problem')のみを削除します。
+    # これにより、accuracy_reward関数が必要とする'solution'列がデータセットに保持されます。
     dataset = dataset.map(make_conversation)
+    dataset = dataset.remove_columns([script_args.dataset_prompt_column])
 
-    for split in dataset:
-        if "messages" in dataset[split].column_names:
-            dataset[split] = dataset[split].remove_columns("messages")
 
-    #############################
-    # Initialize the GRPO trainer
-    #############################   
-    trainer = GRPOTrainerWithLoRASync(
+    # 3. Initialize the standard GRPO trainer
+    # ----------------------------------------------------------------
+    trainer = GRPOTrainer(
         model=model,
-        reward_funcs=reward_funcs,
         args=training_args,
+        reward_funcs=reward_funcs,
+        peft_config=peft_config,
         train_dataset=dataset[script_args.dataset_train_split],
-        eval_dataset=(dataset[script_args.dataset_test_split] if training_args.eval_strategy != "no" else None),
-        peft_config=get_peft_config(model_args),
-        callbacks=get_callbacks(training_args, model_args),
+        eval_dataset=(dataset[script_args.dataset_test_split] if training_args.do_eval else None),
         processing_class=tokenizer,
+        callbacks=get_callbacks(training_args, model_args),
     )
 
-    ###############
-    # Training loop
-    ###############
+    # 4. Training
+    # ----------------------------------------------------------------
     logger.info("*** Train ***")
-    checkpoint = None
-    if training_args.resume_from_checkpoint is not None:
-        checkpoint = training_args.resume_from_checkpoint
-    elif last_checkpoint is not None:
-        checkpoint = last_checkpoint
+    checkpoint = get_last_checkpoint(training_args.output_dir) if os.path.isdir(training_args.output_dir) else None
     train_result = trainer.train(resume_from_checkpoint=checkpoint)
+    
     metrics = train_result.metrics
     metrics["train_samples"] = len(dataset[script_args.dataset_train_split])
     trainer.log_metrics("train", metrics)
     trainer.save_metrics("train", metrics)
     trainer.save_state()
 
-    ##################################
-    # Save model and create model card
-    ##################################
+    # 5. Save model and push to hub
+    # ----------------------------------------------------------------
     logger.info("*** Save model ***")
-    # Align the model's generation config with the tokenizer's eos token
-    # to avoid unbounded generation in the transformers `pipeline()` function
-    trainer.model.generation_config.eos_token_id = tokenizer.eos_token_id
     trainer.save_model(training_args.output_dir)
     logger.info(f"Model saved to {training_args.output_dir}")
 
-    # Save everything else on main process
-    kwargs = {
-        "dataset_name": script_args.dataset_name,
-        "tags": ["open-r1"],
-    }
     if trainer.accelerator.is_main_process:
-        trainer.create_model_card(**kwargs)
-        # Restore k,v cache for fast inference
-        trainer.model.config.use_cache = True
-        trainer.model.config.save_pretrained(training_args.output_dir)
+        tokenizer.save_pretrained(training_args.output_dir)
+        trainer.create_model_card(
+            dataset_name=script_args.dataset_name,
+            tags=["open-r1"],
+        )
 
-    ##########
-    # Evaluate
-    ##########
-    if training_args.do_eval:
-        logger.info("*** Evaluate ***")
-        metrics = trainer.evaluate()
-        metrics["eval_samples"] = len(dataset[script_args.dataset_test_split])
-        trainer.log_metrics("eval", metrics)
-        trainer.save_metrics("eval", metrics)
-
-    #############
-    # push to hub
-    #############
     if training_args.push_to_hub:
         logger.info("Pushing to hub...")
-        trainer.push_to_hub(**kwargs)
+        trainer.push_to_hub()
+
+    logger.info("*** Training complete ***")
 
 
 if __name__ == "__main__":
-    parser = TrlParser((GRPOScriptArguments, GRPOConfig, ModelConfig))
+    parser = TrlParser((GRPOScriptArguments, GRPOConfig, ModelArguments))
     script_args, training_args, model_args = parser.parse_args_and_config()
     main(script_args, training_args, model_args)
