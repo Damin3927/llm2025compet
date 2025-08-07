@@ -1,8 +1,16 @@
 import logging
+import copy
+import torch
+
 from vllm.engine.async_llm_engine import AsyncLLMEngine
+from vllm.engine.llm_engine import LLMEngine
 from trl import GRPOTrainer
 
 logger = logging.getLogger(__name__)
+
+# --------------------------------------------------------
+# Colocate モードで vLLM エンジンと同期する Mixin
+# --------------------------------------------------------
 
 class ColocateVLLMLoRASyncMixin:
     """
@@ -13,7 +21,6 @@ class ColocateVLLMLoRASyncMixin:
     def init_vllm_engine(self):
         logger.info("[Colocate] Initializing vLLM engine with training model (LoRA-injected)")
         
-        # Assume self.model is already a PEFT (LoRA) wrapped model
         self.vllm_engine = AsyncLLMEngine.from_model(
             model=self.model,
             tokenizer=self.tokenizer,
@@ -23,22 +30,22 @@ class ColocateVLLMLoRASyncMixin:
         )
 
     def vllm_generate(self, prompts):
-        """
-        Generates completions via colocated vLLM engine using the LoRA-updated model.
-        """
         return self.vllm_engine.generate(prompts)
 
-# ------------------ Inject into GRPOTrainer ------------------ #
+# --------------------------------------------------------
+# GRPOTrainer 拡張版：LoRA + colocate vLLM + frozen ref_model
+# --------------------------------------------------------
 
 class GRPOTrainerWithLoRASync(ColocateVLLMLoRASyncMixin, GRPOTrainer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # colocate vLLM起動
         if getattr(self.args, "use_vllm", False) and getattr(self.args, "vllm_mode", None) == "colocate":
             self.init_vllm_engine()
 
-        # === 追加: 固定参照モデルの読み込み ===
-        self.ref_model = self.load_ref_model()
+        # === 参照モデルを deepcopy で固定 ===
+        self.ref_model = copy.deepcopy(self.model)
         self.ref_model.eval()
         for p in self.ref_model.parameters():
             p.requires_grad = False
@@ -47,32 +54,15 @@ class GRPOTrainerWithLoRASync(ColocateVLLMLoRASyncMixin, GRPOTrainer):
         if hasattr(self, "vllm_engine"):
             return self.vllm_generate(prompts)
         else:
-            return self.model.generate(**prompts)  # fallback (slow)
+            return self.model.generate(**prompts)
 
     def compute_logprobs(self, model, input_ids, attention_mask):
-        # 任意のモデル（self.model または self.ref_model）で logp を取得
-        outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=input_ids)
-        logp = -outputs.loss  # または logits から log_softmax → gather
+        with torch.no_grad():
+            outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=input_ids)
+            logp = -outputs.loss
         return logp
 
     def compute_policy_ratio(self, input_ids, attention_mask):
         logp_policy = self.compute_logprobs(self.model, input_ids, attention_mask)
         logp_ref = self.compute_logprobs(self.ref_model, input_ids, attention_mask)
         return torch.exp(logp_policy - logp_ref)
-
-    def load_ref_model(self):
-        from peft import PeftModel
-        from transformers import AutoModelForCausalLM
-
-        base = AutoModelForCausalLM.from_pretrained(
-            self.args.model_name_or_path,
-            torch_dtype=self.args.torch_dtype,
-            trust_remote_code=self.args.trust_remote_code,
-        )
-        ref_model = PeftModel.from_pretrained(base, self.args.ref_lora_path)
-        return ref_model
-
-# ------------------ Usage ------------------ #
-# In grpo.py or trainer init:
-# from your_module import GRPOTrainerWithLoRASync
-# trainer = GRPOTrainerWithLoRASync(...)
