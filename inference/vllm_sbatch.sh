@@ -45,7 +45,8 @@ EOF
 }
 
 download_model() {
-    local model_path="${1:-$MODEL_PATH}"
+    local model_path="$1"
+    local node="${2:-$DEFAULT_NODELIST}"
     echo "Downloading model using srun on compute node..."
 
     srun \
@@ -53,7 +54,7 @@ download_model() {
         --nodes=1 \
         --ntasks=1 \
         --cpus-per-task=32 \
-        --nodelist="$DEFAULT_NODELIST" \
+        --nodelist="$node" \
         --partition="$DEFAULT_PARTITION" \
         --time=01:00:00 \
         --mem=32G \
@@ -205,6 +206,9 @@ main() {
                 ;;
         esac
     done
+
+    local head_node=$(scontrol show hostnames $nodelist | head -n 1)
+    local head_node_ip=$(getent hosts "${head_node}gw" | awk '{print $1}')
     
     # Generate and display the configuration
     echo "=== VLLM SLURM Job Configuration ==="
@@ -220,10 +224,11 @@ main() {
     echo "Job name: $(generate_job_name "$model" "$nodes" "$gpus")"
     echo
 
-    download_model "$model"
+    download_model "$model" "$head_node"
     
     # Generate and submit the job
     echo "Generating SBATCH script..."
+    mkdir -p logs
     local sbatch_content
     sbatch_content=$(generate_sbatch_script "$model" "$nodes" "$gpus" "$nodelist" "$timeout" "$partition" "$api_key")
     
@@ -235,8 +240,6 @@ main() {
         echo "Monitor with: squeue -u \$USER"
         echo "Cancel with: scancel <job_id>"
         echo "==================================="
-        local head_node=$(scontrol show hostnames $nodelist | head -n 1)
-        local head_node_ip=$(getent hosts "${head_node}gw" | awk '{print $1}')
         echo "Head node's IP: $head_node_ip"
         echo "You can connect to the server using OpenAI API Schema at http://$head_node_ip:8000/v1 after the server is up."
         echo "Check logs in the logs/vllm-<job_id>.out file to monitor the server status. (After seeing 'Starting vLLM API server on http://0.0.0.0:8000' in the logs, you can start sending requests.)"
