@@ -37,32 +37,48 @@ class ColocateVLLMLoRASyncMixin:
 # --------------------------------------------------------
 
 class GRPOTrainerWithLoRASync(ColocateVLLMLoRASyncMixin, GRPOTrainer):
+    """
+    拡張 GRPOTrainer:
+    - LoRA モデルでの方策訓練
+    - deepcopy による固定方策の保持（旧ポリシーとして）
+    - colocate モードでの vLLM 推論
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # colocate vLLM起動
+        # colocate モードでの vLLM エンジン初期化
         if getattr(self.args, "use_vllm", False) and getattr(self.args, "vllm_mode", None) == "colocate":
             self.init_vllm_engine()
 
-        # === 参照モデルを deepcopy で固定 ===
+        # ===== 固定の旧方策として ref_model を deepcopy で保持 =====
+        logger.info("[RefModel] Freezing initial policy (deepcopy)")
         self.ref_model = copy.deepcopy(self.model)
         self.ref_model.eval()
         for p in self.ref_model.parameters():
             p.requires_grad = False
 
     def generate_completions(self, prompts):
+        """
+        使用可能なら vLLM で推論。なければ fallback。
+        """
         if hasattr(self, "vllm_engine"):
             return self.vllm_generate(prompts)
         else:
             return self.model.generate(**prompts)
 
     def compute_logprobs(self, model, input_ids, attention_mask):
+        """
+        任意のモデル（policy or ref）から logp を取得
+        """
         with torch.no_grad():
             outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=input_ids)
-            logp = -outputs.loss
+            logp = -outputs.loss  # より厳密には tokenwise gather が望ましい
         return logp
 
     def compute_policy_ratio(self, input_ids, attention_mask):
+        """
+        方策比（新方策 / 旧方策）を計算
+        """
         logp_policy = self.compute_logprobs(self.model, input_ids, attention_mask)
         logp_ref = self.compute_logprobs(self.ref_model, input_ids, attention_mask)
         return torch.exp(logp_policy - logp_ref)
