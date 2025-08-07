@@ -1,8 +1,6 @@
 compute_environment: LOCAL_MACHINE
 debug: true
 
-deepspeed_config_file: /home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/recipes/accelerate_configs/deepspeed_minimal.json
-
 deepspeed_config:
   deepspeed_multinode_launcher: standard #slurm # pdsh #standard
   offload_optimizer_device: cpu # compatible with vllm colocate mode scaling
@@ -10,6 +8,9 @@ deepspeed_config:
   zero3_init_flag: true
   zero3_save_16bit_model: true
   zero_stage: 3
+  overlap_comm: true
+  contiguous_gradients: true
+  
 distributed_type: DEEPSPEED
 downcast_bf16: 'no'
 machine_rank: 0
