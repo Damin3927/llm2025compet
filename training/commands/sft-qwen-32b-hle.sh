@@ -4,10 +4,10 @@
 #SBATCH --nodes=3              # 利用するノード数
 #SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
 #SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
-#SBATCH --job-name sft-235b     # ジョブの名前
-#SBATCH --time 1:00:00         # ジョブの最大実行時間
-#SBATCH --output sft-235b.out   # 標準出力ファイル
-#SBATCH --error sft-235b.err    # 標準エラーファイル
+#SBATCH --job-name sft-32b-hle     # ジョブの名前
+#SBATCH --time 72:00:00         # ジョブの最大実行時間
+#SBATCH --output sft-32b-hle.out   # 標準出力ファイル
+#SBATCH --error sft-32b-hle.err    # 標準エラーファイル
 #SBATCH --mem=0            # 各ノードのメモリサイズ
 #SBATCH --cpus-per-task=160         # number of cores per tasks
 
@@ -21,13 +21,8 @@ echo "MASTER_ADDR: $MASTER_ADDR"
 export MASTER_PORT=29500
 echo "MASTER_PORT: $MASTER_PORT"
 
-export NCCL_DEBUG=WARN
-export NCCL_DEBUG_SUBSYS=ALL
-
-export NCCL_P2P_DISABLE=1
-export NCCL_P2P_LEVEL=NVL
-export NCCL_IB_GID_INDEX=3
-# export NCCL_SOCKET_IFNAME=^lo,docker,virbr
+#export NCCL_DEBUG=INFO
+#export NCCL_DEBUG_SUBSYS=ALL
 #export TORCH_DISTRIBUTED_DEBUG=DETAIL
 
 module load cuda/12.8           # nvccを使うためにCUDAをロード
@@ -48,8 +43,10 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
         open_r1/sft.py \
-        --config ../../configs/Qwen3-235b/sft/config_test.yaml \
-        --dataconfig ../../configs/data_configs/example.yaml"
+        --config ../../configs/Qwen3-32b/sft/config_main.yaml \
+        --output_dir data/Qwen3-32B-HLE \
+        --hub_model_id Qwen3-32B-HLE \
+        --dataconfig ../../configs/data_configs/hle_ver1_0.yaml" \
 
 # 実行方法
 # HOMEで以下を実行する。自動でopen-r1のソースコードディレクトリに移動することに注意
@@ -58,4 +55,4 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
 # /home/Competition2025/P02/shareP02/scripts/scancel.sh 287614
 
 # 実行コマンド
-# sbatch ./llm2025compet/training/commands/sft-qwen-235b.sh
+# sbatch ./llm2025compet/training/commands/sft-qwen-32b-node3.sh
