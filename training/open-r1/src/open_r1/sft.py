@@ -170,6 +170,9 @@ def main(script_args, training_args, model_args, data_config: DataConfig):
         "dataset_name": script_args.dataset_name,
         "tags": ["open-r1"],
     }
+    if data_config is not None:
+        kwargs["dataset_name"] = [dataset.name for dataset in data_config.datasets]
+    
     if trainer.accelerator.is_main_process:
         trainer.create_model_card(**kwargs)
         # Restore k,v cache for fast inference
