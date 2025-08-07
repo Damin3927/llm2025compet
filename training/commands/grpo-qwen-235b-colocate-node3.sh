@@ -24,7 +24,7 @@ export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 source /home/Competition2025/P02/P02U017/openr1/bin/activate
 
 export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
-export NCCL_ASYNC_ERROR_HANDLING=1
+export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 
 export NCCL_DEBUG=WARN
 export NCCL_DEBUG_SUBSYS=ALL
@@ -55,7 +55,6 @@ srun --ntasks=3 --nodelist="${NODELIST[*]}" \
        echo \"[GRPO-Colo] on \$HOSTNAME  (node rank \$SLURM_NODEID, proc \$SLURM_PROCID)\"
        export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
        export NCCL_ASYNC_ERROR_HANDLING=1
-       # 3ノード・24GPUでコロケートモードによるGRPOトレーニング
        accelerate launch \\
          --config_file ../recipes/accelerate_configs/zero3.yaml \\
          --num_machines 3 \\
@@ -65,10 +64,11 @@ srun --ntasks=3 --nodelist="${NODELIST[*]}" \
          --rdzv_backend c10d \\
          --machine_rank \$SLURM_NODEID \\
          /home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src/open_r1/grpo.py \\
-         --config /home/Competition2025/P02/P02U017/llm2025compet/training/configs/Qwen3-32b/grpo/config_grpo_1.5b.yaml \\
+         --config /home/Competition2025/P02/P02U017/llm2025compet/training/configs/Qwen3-32b/grpo/config_grpo_235b.yaml \\
          --use_vllm true \\
          --vllm_mode colocate \\
-         --enable_sleep_mode true
+         --report_to none
+      "
 
 wait
 echo '[Job] all processes finished.'
