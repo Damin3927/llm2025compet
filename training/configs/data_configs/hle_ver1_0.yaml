@@ -1,53 +1,53 @@
 neko_sft_datasets:
-  - name: neko-llm/sft_general 
-    config: general_strategyqa # 一般教養
+  - name: neko-llm/cot_general 
+    config: strategyqa # 一般教養
     question_field: question
     answer_field: output
     from_id: general_strategyqa_1
     to_id: general_strategyqa_497
-  - name: HLE_SFT_OpenThoughts-114k # 数学系
+  - name: neko-llm/HLE_SFT_OpenThoughts-114k # 数学系
     config: train
     question_field: question
     answer_field: output
     from_id: 0
     to_id: 5999 
-  - name: neko-llm/SFT_OpenMathReasoning # 数学系
+  - name: neko-llm/HLE_SFT_OpenMathReasoning # 数学系
     config: genselect
     question_field: question
     answer_field: output
     from_id: OpenMathReasoning_genselect_1
     to_id: OpenMathReasoning_genselect_5170
-  - name: neko-llm/SFT_MixtureOfThoughts
+  - name: neko-llm/HLE_SFT_MixtureOfThoughts
     config: MoT_code # Code系
     question_field: question
     answer_field: output
     from_id: MoT_code_1
     to_id: MoT_code_514
-  - name: neko-llm/SFT_MixtureOfThoughts
+  - name: neko-llm/HLE_SFT_MixtureOfThoughts
     config: MoT_science # STEM系
     question_field: question
     answer_field: output
     from_id: MoT_science_1
     to_id: MoT_code_514
-  - name: neko-llm/SFT_Chemistry # 化学系
+  - name: neko-llm/HLE_SFT_Chemistry # 化学系
     config: train
     question_field: question
     answer_field: output
     from_id: chempile_0
     to_id: chempile_923
-  - name: neko-llm/sft_biology # 生物学系
+  - name: neko-llm/CoT_biology # 生物学系
     config: train
     question_field: question
     answer_field: output
     from_id: ToT_0
     to_id: ToT_513
-  - name: neko-llm/sft_medical # 医学系
+  - name: neko-llm/HLE_SFT_medical # 医学系
     config: train
     question_field: question
     answer_field: output
     from_id: reasonmed_0
     to_id: reasonmed_499
-  - name: neko-llm/sft_general 
+  - name: neko-llm/cot_general 
     config: medcalc # 医学系, クロスドメイン
     question_field: question
     answer_field: output
