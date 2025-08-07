@@ -89,13 +89,13 @@ logging_strategy: steps
 
 save_strategy: epoch
 save_total_limit: 1
-output_dir: data/Qwen2.5-1.5B-Open-R1-GRPO
+output_dir: data/Qwen3-235B-A22B-Open-R1-GRPO
 overwrite_output_dir: true
 
 push_to_hub: false
 # report_to:
 # - wandb
-hub_model_id: Qwen2.5-1.5B-Open-R1-GRPO
+hub_model_id: Qwen3-235B-A22B-Open-R1-GRPO
 hub_strategy: every_save
 
 seed: 42 #  Tensor Parallelism Bug in vLLM ≥ 0.8.0.(https://huggingface.co/blog/vllm-colocate#:~:text=Training%20and%20inference%20take%20turns,dedicated%20devices%20or%20separate%20processes)
