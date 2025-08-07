@@ -37,7 +37,7 @@ export CUDACXX="$CUDA_HOME/bin/nvcc"
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 # NCCL & PyTorch 分散
-export NCCL_SOCKET_IFNAME="enp25s0np0"
+export NCCL_SOCKET_IFNAME="enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0"
 export NCCL_IB_HCA="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1"
 export GLOO_SOCKET_IFNAME=$NCCL_SOCKET_IFNAME
 export NCCL_TIMEOUT=3600
@@ -111,7 +111,7 @@ srun --ntasks=3 --ntasks-per-node=1 \
   bash -c "
   source ~/miniconda3/etc/profile.d/conda.sh
   conda activate deepseeksft310
-  export NCCL_SOCKET_IFNAME='enp92s0np0'
+  export NCCL_SOCKET_IFNAME='enp25s0np0'
   export MASTER_ADDR=$MASTER_ADDR
   export MASTER_PORT=$MASTER_PORT
 

@@ -44,6 +44,7 @@ print("sys.executable      :", sys.executable)              # 実際に使われ
 print("CONDA_DEFAULT_ENV   :", os.environ.get("CONDA_DEFAULT_ENV"))
 print("CONDA_PREFIX        :", os.environ.get("CONDA_PREFIX"))
 print("python version      :", sys.version.split()[0])
+print("hostname            :", socket.gethostname())
 try:
     import torch
     print("torch version       :", torch.__version__)
@@ -52,14 +53,19 @@ except ImportError:
 print("=== END CONDA ENV CHECK ===\n")
 
 
-import os
 print("=== ENV CHECK ===")
-print("NCCL_TIMEOUT =", os.environ.get("NCCL_TIMEOUT"))
-print("TORCH_ELASTIC_STORE_TIMEOUT =", os.environ.get("TORCH_ELASTIC_STORE_TIMEOUT"))
-print("TORCH_DISTRIBUTED_STORE_TIMEOUT =", os.environ.get("TORCH_DISTRIBUTED_STORE_TIMEOUT"))
-print("MASTER_ADDR =", os.environ.get("MASTER_ADDR"))
-print("MASTER_PORT =", os.environ.get("MASTER_PORT"))
-print("=== END ENV CHECK ===")
+envs_to_check = [
+    "NCCL_SOCKET_IFNAME", "NCCL_IB_HCA", "NCCL_NET_PLUGIN",
+    "NCCL_DEBUG", "NCCL_TIMEOUT",
+    "TORCHELASTIC_TIMEOUT", "TORCH_DISTRIBUTED_TIMEOUT",
+    "TORCH_ELASTIC_STORE_TIMEOUT", "TORCH_DISTRIBUTED_STORE_TIMEOUT",
+    "MASTER_ADDR", "MASTER_PORT",
+    "CUDA_VISIBLE_DEVICES",
+    "LD_LIBRARY_PATH",
+]
+for key in envs_to_check:
+    print(f"{key:28} = {os.environ.get(key)}")
+print("=== END ENV CHECK ===\n")
 
 
 
@@ -251,7 +257,7 @@ def train(args) -> None:
                     task_type="CAUSAL_LM",
                     r=args.lora_rank,
                     lora_alpha=args.lora_alpha,
-                    target_modules=["lm_head"] #["gate_proj", "up_proj", "down_proj"], 
+                    target_modules= ["down_proj"] # 候補2 ["lm_head"] # デフォルト ["gate_proj", "up_proj", "down_proj"], 
                 )
             else:
                 lora_config = LoraConfig(task_type="CAUSAL_LM", r=args.lora_rank, lora_alpha=args.lora_alpha)
