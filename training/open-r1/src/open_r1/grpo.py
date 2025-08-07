@@ -35,8 +35,13 @@ AsyncLLMEngine.sleep = _sleep_l2
 
 # 追加例: 同期版のパッチ
 from vllm.engine.llm_engine import LLMEngine
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 _orig_llm_sleep = LLMEngine.sleep
 def _llm_sleep_l2(self, level: int = 1) -> None:
+    logger.info(f"[PATCH:LLMEngine] sleep called with level={level} → overriding to level=2")
     return _orig_llm_sleep(self, 2)
 LLMEngine.sleep = _llm_sleep_l2
 
