@@ -30,7 +30,15 @@ class ColocateVLLMLoRASyncMixin:
         )
 
     def vllm_generate(self, prompts):
-        return self.vllm_engine.generate(prompts)
+        completions = self.vllm_engine.generate(prompts)
+
+        logger.info(f"[vllm_generate] prompts[0]: {prompts[0] if prompts else 'EMPTY'}")
+
+        if completions and hasattr(completions[0], "outputs") and completions[0].outputs:
+            logger.info(f"[vllm_generate] completions[0]: {completions[0].outputs[0].text.strip()}")
+        else:
+            logger.warning("[vllm_generate] No completions returned or unexpected format.")
+        return completions
 
 # --------------------------------------------------------
 # GRPOTrainer 拡張版：LoRA + colocate vLLM + frozen ref_model
@@ -62,8 +70,10 @@ class GRPOTrainerWithLoRASync(ColocateVLLMLoRASyncMixin, GRPOTrainer):
         使用可能なら vLLM で推論。なければ fallback。
         """
         if hasattr(self, "vllm_engine"):
+            logger.info("[generate_completions] using vLLM engine for generation")
             return self.vllm_generate(prompts)
         else:
+            logger.info("[generate_completions] using HF model.generate fallback")
             return self.model.generate(**prompts)
 
     def compute_logprobs(self, model, input_ids, attention_mask):
