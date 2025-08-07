@@ -54,7 +54,7 @@ srun --nodes=3 --ntasks=3 --nodelist="${NODELIST[*]}" \
          --main_process_port 29500 \\
          --rdzv_backend c10d \\
          --machine_rank \$SLURM_PROCID \\
-         /home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src/open_r1/grpo.py \\
+         /home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src/open_r1/grpo1.5b.py \\
          --config /home/Competition2025/P02/P02U017/llm2025compet/training/configs/Qwen3-32b/grpo/config_grpo_1.5b.yaml \\
          --use_vllm true \\
          --vllm_mode colocate   # vLLMを各プロセス内でコロケート実行
