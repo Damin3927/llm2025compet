@@ -41,6 +41,10 @@ def _llm_sleep_l2(self, level: int = 1) -> None:
 LLMEngine.sleep = _llm_sleep_l2
 
 from transformers import set_seed
+
+#SEED = 42
+#set_seed(SEED)
+
 from transformers.trainer_utils import get_last_checkpoint
 
 from open_r1.configs import GRPOConfig, GRPOScriptArguments
@@ -48,7 +52,10 @@ from open_r1.rewards import get_reward_funcs
 from open_r1.utils import get_dataset, get_model, get_tokenizer
 from open_r1.utils.callbacks import get_callbacks
 from open_r1.utils.wandb_logging import init_wandb_training
-from trl import GRPOTrainer, ModelConfig, TrlParser, get_peft_config
+
+from open_r1.utils.trainers.grpo_lora_sync import GRPOTrainerWithLoRASync as GRPOTrainer
+from trl import TrlParser, get_peft_config, ModelConfig
+#from trl import GRPOTrainer, ModelConfig, TrlParser, get_peft_config
 
 
 logger = logging.getLogger(__name__)
@@ -130,8 +137,8 @@ def main(script_args, training_args, model_args):
 
     #############################
     # Initialize the GRPO trainer
-    #############################
-    trainer = GRPOTrainer(
+    #############################   
+    trainer = GRPOTrainerWithLoRASync(
         model=model,
         reward_funcs=reward_funcs,
         args=training_args,
