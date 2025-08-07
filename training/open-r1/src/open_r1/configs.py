@@ -335,6 +335,7 @@ class DatasetClass:
     """個々のデータセット設定を表すデータクラス"""
     name: str = None
     config: str = "default"
+    split: str = "train"
     question_field: str = "question"
     answer_field: str = "output"
     from_id: int = None
