@@ -181,3 +181,13 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   warnings.warn(
 /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/checkpoint.py:92: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
   warnings.warn(
+slurmstepd: error: *** STEP 331746.0 ON osk-gpu54 CANCELLED AT 2025-08-07T12:43:12 ***
+W0807 12:43:12.232000 23377984890688 torch/distributed/elastic/agent/server/api.py:688] Received Signals.SIGTERM death signal, shutting down workers
+W0807 12:43:12.236000 23377984890688 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2266059 closing signal SIGTERM
+W0807 12:43:12.236000 23377984890688 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2266060 closing signal SIGTERM
+W0807 12:43:12.237000 23377984890688 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2266061 closing signal SIGTERM
+W0807 12:43:12.237000 23377984890688 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2266062 closing signal SIGTERM
+W0807 12:43:12.237000 23377984890688 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2266063 closing signal SIGTERM
+W0807 12:43:12.237000 23377984890688 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2266064 closing signal SIGTERM
+W0807 12:43:12.237000 23377984890688 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2266065 closing signal SIGTERM
+W0807 12:43:12.237000 23377984890688 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2266066 closing signal SIGTERM
