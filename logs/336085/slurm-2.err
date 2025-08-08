@@ -169,3 +169,4 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
+W0808 13:35:24.422000 22648521852480 torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1267] The node 'osk-gpu91_3591418_0' has failed to send a keep-alive heartbeat to the rendezvous 'lora-r1-336085' due to an error of type RendezvousTimeoutError.
