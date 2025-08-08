@@ -14,9 +14,6 @@ readonly MODEL_PATH="Qwen/Qwen3-32B"
 readonly RAY_HEAD_PORT="6379"
 readonly VLLM_API_KEY="token-abc123"
 
-export HF_HUB_CACHE="/home/Competition2025/P02/shareP02/.cache/huggingface/hub"
-export VLLM_CACHE_ROOT="/home/Competition2025/P02/shareP02/.cache/vllm"
-
 # =============================================================================
 # Functions
 # =============================================================================
@@ -81,7 +78,6 @@ setup_environment() {
     export NVTE_FUSED_ATTN=0
     export NVTE_DEBUG=1
     export NVTE_DEBUG_LEVEL=0
-    export CUDA_DEVICE_MAX_CONNECTIONS=1
     #export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
     #export HIP_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
     export NUMEXPR_MAX_THREADS=$SLURM_CPUS_PER_TASK
