@@ -37,9 +37,10 @@ export CUDACXX="$CUDA_HOME/bin/nvcc"
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 # NCCL & PyTorch 分散
-export NCCL_SOCKET_IFNAME="enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0"
+NET_IF="bond0"
+export GLOO_SOCKET_IFNAME="$NET_IF"
+export NCCL_SOCKET_IFNAME="$NET_IF" 
 export NCCL_IB_HCA="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1"
-export GLOO_SOCKET_IFNAME="$(/sbin/ip -o -4 route get 8.8.8.8 | awk '{print $5; exit}')"
 export NCCL_TIMEOUT=7200
 export TORCHELASTIC_TIMEOUT=7200
 export TORCH_DISTRIBUTED_TIMEOUT=7200
@@ -48,6 +49,11 @@ export TORCH_DISTRIBUTED_STORE_TIMEOUT=7200
 export TORCH_NCCL_BLOCKING_WAIT=1
 export NCCL_DEBUG=INFO
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+
+# ★ RoCE/IB での安定化（軽量チューニング）
+export NCCL_IB_GID_INDEX=${NCCL_IB_GID_INDEX:-3}
+export NCCL_NSOCKS_PERTHREAD=4
+export NCCL_SOCKET_NTHREADS=2
 unset NCCL_ASYNC_ERROR_HANDLING || true
 
 export PYTHONFAULTHANDLER=1
@@ -87,13 +93,22 @@ echo "LIBRARY_PATH=$LIBRARY_PATH"
 
 echo "[after unset NCCL_NET_PLUGIN]"; env | grep NCCL
 
+# === MASTER を bond0 のIPに固定（★DNS揺れ回避） ===
+MASTER_HOST=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n1)
+# マスターの bond0 IP を取得（SSH失敗時は getent にフォールバック）
+MASTER_ADDR=$(ssh -o BatchMode=yes -o ConnectTimeout=5 "$MASTER_HOST" "ip -4 -o addr show $NET_IF | awk '{print \$4}' | cut -d/ -f1" 2>/dev/null || true)
+if [[ -z "$MASTER_ADDR" ]]; then
+  MASTER_ADDR=$(getent hosts "$MASTER_HOST" | awk '{print $1; exit}')
+fi
+
 # 分散学習のためのMASTER設定（SLURM_JOB_NODELISTから最初のノードを取得）
-export MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n1)
+export MASTER_ADDR
 export MASTER_PORT=$((12000 + SLURM_JOB_ID % 20000))
-echo "MASTER_ADDR=$MASTER_ADDR  MASTER_PORT=$MASTER_PORT"
+echo "MASTER_HOST=$MASTER_HOST  MASTER_ADDR=$MASTER_ADDR  MASTER_PORT=$MASTER_PORT  IF=$NET_IF"
 
 echo "== [Pre-launch NCCL env] =="
 env | grep NCCL
+
 
 # --- 分散実行: 各ノード×8GPU（計24プロセス） ---
 srun --ntasks=3 --ntasks-per-node=1 \
@@ -103,7 +118,9 @@ srun --ntasks=3 --ntasks-per-node=1 \
   bash -c "
     source ~/miniconda3/etc/profile.d/conda.sh
     conda activate deepseeksft310
-    export GLOO_SOCKET_IFNAME=\"$(/sbin/ip -o -4 route get 8.8.8.8 | awk '{print $5; exit}')\"  
+    export GLOO_SOCKET_IFNAME=\"$GLOO_SOCKET_IFNAME\"
+    export NCCL_SOCKET_IFNAME=\"$NCCL_SOCKET_IFNAME\"
+    export NCCL_IB_HCA=\"$NCCL_IB_HCA\"
     export MASTER_ADDR=$MASTER_ADDR
     export MASTER_PORT=$MASTER_PORT
     MON_LOG=\"${LOG_ROOT}/gpu_\$(hostname).log\"
