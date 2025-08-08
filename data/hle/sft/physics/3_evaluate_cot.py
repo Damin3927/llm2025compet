@@ -41,7 +41,7 @@ import logging
 load_dotenv()
 
 # デフォルト設定
-MODEL = "deepseek/deepseek-r1-0528-qwen3-8b:free"
+MODEL = "deepseek/deepseek-r1-0528:free"
 API_BASE_URL = "https://openrouter.ai/api/v1"
 
 
