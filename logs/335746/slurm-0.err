@@ -154,3 +154,4 @@ W0808 11:06:11.211000 22994792343360 torch/distributed/run.py:779] *************
   def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
+slurmstepd: error: *** STEP 335746.0 ON osk-gpu54 CANCELLED AT 2025-08-08T12:55:24 ***
