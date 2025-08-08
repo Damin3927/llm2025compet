@@ -979,3 +979,11 @@ Default dtype set to torch.bfloat16
 === [Debug] Using optimizer: HybridAdam ===
 === [Debug] warmup_steps: 8 ===
 === [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+=== [Debug] Booster boost completed: rank=7 ===
+=== [Debug] Booster boost completed: rank=2 ===
+=== [Debug] Booster boost completed: rank=3 ===
+=== [Debug] Booster boost completed: rank=1 ===
+=== [Debug] Booster boost completed: rank=6 ===
+=== [Debug] Booster boost completed: rank=0 ===
+=== [Debug] Booster boost completed: rank=5 ===
+=== [Debug] Booster boost completed: rank=4 ===
