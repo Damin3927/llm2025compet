@@ -1,0 +1,73 @@
+W0807 12:51:19.151000 23084124706624 torch/distributed/run.py:779] 
+W0807 12:51:19.151000 23084124706624 torch/distributed/run.py:779] *****************************************
+W0807 12:51:19.151000 23084124706624 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0807 12:51:19.151000 23084124706624 torch/distributed/run.py:779] *****************************************
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 16, in <module>
+    from coati.dataset.loader import RawConversationDataset
+ModuleNotFoundError: No module named 'coati'
+W0807 12:51:33.917000 23084124706624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2286093 closing signal SIGTERM
+W0807 12:51:33.917000 23084124706624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2286094 closing signal SIGTERM
+W0807 12:51:33.917000 23084124706624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2286095 closing signal SIGTERM
+W0807 12:51:33.917000 23084124706624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2286097 closing signal SIGTERM
+W0807 12:51:33.917000 23084124706624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2286098 closing signal SIGTERM
+W0807 12:51:33.917000 23084124706624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2286099 closing signal SIGTERM
+W0807 12:51:33.917000 23084124706624 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2286100 closing signal SIGTERM
+E0807 12:51:33.985000 23084124706624 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 7 (pid: 2286101) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-08-07_12:51:33
+  host      : osk-gpu54
+  rank      : 7 (local_rank: 7)
+  exitcode  : 1 (pid: 2286101)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

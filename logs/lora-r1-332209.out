@@ -1,0 +1,45 @@
+===== ジョブ開始: Thu Aug  7 12:50:56 PM JST 2025 =====
+cwd  = /home/Competition2025/P02/P02U006/ColossalAI
+host = osk-gpu54
+JOB  = 332209
+NODES= osk-gpu[54,56,91]
+FLASH_ATTENTION_DISABLE=1
+HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
+=== CUDA環境 ===
+CUDA_HOME=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/nvcc
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Tue_May_27_02:21:03_PDT_2025
+Cuda compilation tools, release 12.9, V12.9.86
+Build cuda_12.9.r12.9/compiler.36037853_0
+=== Pythonライブラリのバージョン ===
+python 3.10.18 (main, Jun  5 2025, 13:14:17) [GCC 11.2.0]
+torch 2.4.1+cu124
+torchvision 0.19.1+cu124
+torchaudio 2.4.1+cu124
+numpy 1.26.4
+please install Colossal-AI from https://www.colossalai.org/download or from source
+colossalai 0.0.0
+transformers 4.46.3
+PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin:/home/Competition2025/P02/P02U006/miniconda3/condabin:/home/Competition2025/P02/P02U006/.local/bin:/home/Competition2025/P02/P02U006/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+LD_LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+CPATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/nvidia/cublas/include:
+LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+[after unset NCCL_NET_PLUGIN]
+NCCL_NET_PLUGIN=none
+NCCL_SOCKET_IFNAME=enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
+NCCL_DEBUG=INFO
+NCCL_TIMEOUT=3600
+NCCL_IB_HCA=mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+TORCH_NCCL_BLOCKING_WAIT=1
+TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+MASTER_ADDR=osk-gpu54  MASTER_PORT=24209
+== [Pre-launch NCCL env] ==
+NCCL_NET_PLUGIN=none
+NCCL_SOCKET_IFNAME=enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
+NCCL_DEBUG=INFO
+NCCL_TIMEOUT=3600
+NCCL_IB_HCA=mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+TORCH_NCCL_BLOCKING_WAIT=1
+TORCH_NCCL_ASYNC_ERROR_HANDLING=1

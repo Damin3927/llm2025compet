@@ -172,3 +172,25 @@ W0807 15:01:32.538000 23252947302208 torch/distributed/elastic/multiprocessing/a
 W0807 15:01:32.538000 23252947302208 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2293079 closing signal SIGTERM
 W0807 15:01:32.538000 23252947302208 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2293080 closing signal SIGTERM
 W0807 15:01:32.548000 23252947302208 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2293081 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 255, in launch_agent
+    result = agent.run()
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 124, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 680, in run
+    result = self._invoke_run(role)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 835, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 79, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 2292421 got signal: 15
