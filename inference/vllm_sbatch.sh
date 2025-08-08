@@ -15,7 +15,6 @@ readonly DEFAULT_GPUS=2
 readonly DEFAULT_NODELIST="osk-gpu54"
 readonly DEFAULT_TIMEOUT="02:00:00"
 readonly DEFAULT_PARTITION="P02"
-readonly HF_HUB_CACHE="/home/Competition2025/P02/shareP02/.cache/huggingface/hub"
 
 # =============================================================================
 # Functions
@@ -58,7 +57,7 @@ download_model() {
         --partition="$DEFAULT_PARTITION" \
         --time=01:00:00 \
         --mem=32G \
-        --pty bash -c "HF_HUB_CACHE=$HF_HUB_CACHE huggingface-cli download \"$model_path\""
+        --pty bash -c "huggingface-cli download \"$model_path\""
 }
 
 generate_job_name() {
