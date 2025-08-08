@@ -13,13 +13,89 @@
 
 ################### 環境 ###################
 export WANDB_DISABLED=true
-module load cuda/12.8
-module load nccl/2.22.3 || true
 
+module unload cuda || true
+module unload nccl || true
 
-export CUDA_HOME=/home/appli/cuda/12.8
+module purge
+
+module load cuda/12.6
+module load nccl/2.24.3
+
+# Take a look at the contents of the following environment variables first.
+# PATH lists the locations of the executables and LD_LIBRARY_PATH lists where to look for shared libraries.
+# Earlier entries are prioritized over later ones, and : is used to separate multiple entries.
+# To find a specific CUDA toolkit, insert the correct path to list first.
+# In addition, you should also check that the assigned directories actually exist.
+# (https://huggingface.co/docs/transformers/debugging#deepspeed-cuda-issues)
+
+export CUDA_HOME=/home/appli/cuda/12.6
 export PATH=$CUDA_HOME/bin:$PATH
-export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:$CUDA_HOME/targets/x86_64-linux/lib/stubs:$CUDA_HOME/targets/x86_64-linux/lib:/home/appli/nccl/2.24.3/lib:$LD_LIBRARY_PATH
+export LIBRARY_PATH=$CUDA_HOME/lib64:$LIBRARY_PATH
+
+################## デバッグチェック ###################
+
+echo -e "\n🔍 [DEBUG] CUDA/NCCL 環境確認"
+
+# nvcc の確認
+echo -n "CUDA nvcc version: "
+if ! which nvcc >/dev/null 2>&1; then
+  echo "❌ nvcc が見つかりません (PATHに $CUDA_HOME/bin を含めたか確認)"
+else
+  nvcc --version | grep release
+fi
+echo -e "\n🔎 nvcc 候補一覧:"; which -a nvcc
+
+# Python 環境確認
+echo -n "🧪 Python: "; which python
+python -c "import sys; print(f'Venv Prefix: {sys.prefix}')"
+
+# PyTorch
+python -c "import torch; print(f'Torch Version: {torch.__version__} | CUDA Available: {torch.cuda.is_available()}')"
+
+# CUDA_HOME チェック
+if [ ! -d "$CUDA_HOME" ]; then
+  echo "❌ CUDA_HOME が見つかりません: $CUDA_HOME"
+  exit 1
+else
+  echo "✅ CUDA_HOME OK: $CUDA_HOME"
+fi
+
+# libcudart.so チェック（findのみ使用、ヒットしたパスも表示）
+echo -n "🔍 libcudart.so check: "
+LIBCUDART_PATHS=$(find ${LD_LIBRARY_PATH//:/ } -name "libcudart.so*" 2>/dev/null)
+
+if [ -n "$LIBCUDART_PATHS" ]; then
+  echo "✅ found"
+  echo "$LIBCUDART_PATHS" | sed 's/^/   └─ /'
+else
+  echo "❌ not found (LD_LIBRARY_PATHを再確認)"
+fi
+
+# NCCL チェック
+if [ -f "/home/appli/nccl/2.24.3/lib/libnccl.so" ]; then
+  echo "✅ NCCLライブラリ OK: libnccl.so found"
+else
+  echo "❌ NCCLライブラリが見つかりません"
+fi
+
+# 環境変数
+echo -e "\n🧾 [ENV] PATH:"
+echo $PATH | tr ':' '\n' | grep -E "cuda|nccl"
+
+echo -e "\n🧾 [ENV] LD_LIBRARY_PATH:"
+echo $LD_LIBRARY_PATH | tr ':' '\n' | grep -E "cuda|nccl"
+
+# モジュール一覧
+echo -e "\n📦 [Module List]"
+module list 2>&1
+
+# Deepspeed
+python -c "import deepspeed; print(f'Deepspeed Version: {deepspeed.__version__}')"
+
+echo -e "\n✅ 環境チェック完了 (続行可能)\n"
+
 
 source /home/Competition2025/P02/P02U017/openr1/bin/activate
 
