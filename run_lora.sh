@@ -39,7 +39,7 @@ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 # NCCL & PyTorch 分散
 export NCCL_SOCKET_IFNAME="enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0"
 export NCCL_IB_HCA="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1"
-export GLOO_SOCKET_IFNAME=$NCCL_SOCKET_IFNAME
+export GLOO_SOCKET_IFNAME="$(/sbin/ip -o -4 route get 8.8.8.8 | awk '{print $5; exit}')"
 export NCCL_TIMEOUT=7200
 export TORCHELASTIC_TIMEOUT=7200
 export TORCH_DISTRIBUTED_TIMEOUT=7200
@@ -60,14 +60,6 @@ trap 'echo "=== SIGUSR1 on $(hostname) ==="; pkill -USR1 -f lora_finetune.py' US
 
 # GPU利用率ログ (各ノードごと)
 MON_LOG="${LOG_ROOT}/gpu_${SLURM_NODEID}.log"
-(
-  while true; do
-    date '+[%F %T] ===== GPU util =====' >> "${MON_LOG}"
-    nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader >> "${MON_LOG}"
-    sleep 60
-  done
-) &
-MON_PID=$!
 
 export FLASH_ATTENTION_DISABLE=1
 export HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
@@ -104,40 +96,48 @@ echo "== [Pre-launch NCCL env] =="
 env | grep NCCL
 
 # --- 分散実行: 各ノード×8GPU（計24プロセス） ---
-
 srun --ntasks=3 --ntasks-per-node=1 \
+  --kill-on-bad-exit=1 \
   --output=$LOG_ROOT/slurm-%t.out \
   --error=$LOG_ROOT/slurm-%t.err \
   bash -c "
-  source ~/miniconda3/etc/profile.d/conda.sh
-  conda activate deepseeksft310
-  export NCCL_SOCKET_IFNAME='enp25s0np0'
-  export MASTER_ADDR=$MASTER_ADDR
-  export MASTER_PORT=$MASTER_PORT
+    source ~/miniconda3/etc/profile.d/conda.sh
+    conda activate deepseeksft310
+    export GLOO_SOCKET_IFNAME=\"$(/sbin/ip -o -4 route get 8.8.8.8 | awk '{print $5; exit}')\"  
+    export MASTER_ADDR=$MASTER_ADDR
+    export MASTER_PORT=$MASTER_PORT
+    MON_LOG=\"${LOG_ROOT}/gpu_\$(hostname).log\"
+    ( while true; do
+        date '+[%F %T] ===== GPU util =====' >> \"\$MON_LOG\"
+        nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader >> \"\$MON_LOG\"
+        sleep 60
+      done ) &
+    MON_PID=\$!
 
-  torchrun \
-    --nnodes 3 \
-    --node_rank \$SLURM_PROCID \
-    --nproc_per_node 8 \
-    --master_addr $MASTER_ADDR \
-    --master_port $MASTER_PORT \
-    --rdzv_timeout 7200 \
-    --rdzv_backend c10d \
-    /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
-      --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
-      --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
-      --plugin moe \
-      --pp 3 --ep 8 \
-      --batch_size 8 \
-      --lr 2e-5 \
-      --max_length 8 \
-      --lora_rank 8 --lora_alpha 16 \
-      --num_epochs 2 --warmup_steps 8 \
-      --mixed_precision bf16 \
-      --use_grad_checkpoint \
-      --tensorboard_dir $LOG_ROOT/tb \
-      --save_dir $LOG_ROOT/DeepSeek-R1-0528-lora
-"
+    torchrun \
+      --nnodes 3 \
+      --node_rank \$SLURM_PROCID \
+      --nproc_per_node 8 \
+      --master_addr $MASTER_ADDR \
+      --master_port $MASTER_PORT \
+      --rdzv_timeout 7200 \
+      --rdzv_backend c10d \
+      --rdzv_id "lora-r1-${SLURM_JOB_ID}" \
+      /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
+        --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
+        --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
+        --plugin moe \
+        --pp 3 --ep 8 \
+        --batch_size 8 \
+        --lr 2e-5 \
+        --max_length 8 \
+        --lora_rank 8 --lora_alpha 16 \
+        --num_epochs 2 --warmup_steps 8 \
+        --mixed_precision bf16 \
+        --use_grad_checkpoint \
+        --tensorboard_dir $LOG_ROOT/tb \
+        --save_dir $LOG_ROOT/DeepSeek-R1-0528-lora
+    kill \"\$MON_PID\" || true
+  "
 
-kill "$MON_PID" || true
 echo "===== ジョブ終了: $(date) ====="

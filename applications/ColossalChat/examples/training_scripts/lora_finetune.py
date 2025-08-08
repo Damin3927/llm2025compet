@@ -61,12 +61,156 @@ envs_to_check = [
     "TORCH_ELASTIC_STORE_TIMEOUT", "TORCH_DISTRIBUTED_STORE_TIMEOUT",
     "MASTER_ADDR", "MASTER_PORT",
     "CUDA_VISIBLE_DEVICES",
-    "LD_LIBRARY_PATH",
+    "LD_LIBRARY_PATH", "RDZV_TIMEOUT",
 ]
 for key in envs_to_check:
     print(f"{key:28} = {os.environ.get(key)}")
 print("=== END ENV CHECK ===\n")
 
+# === RDZV / torch.distributed Diagnostics (add me) ===
+import subprocess
+import time
+
+def _safe_run(cmd: list[str], timeout: float = 2.0) -> str:
+    try:
+        out = subprocess.check_output(cmd, stderr=subprocess.STDOUT, timeout=timeout)
+        return out.decode("utf-8", errors="ignore").strip()
+    except Exception as e:
+        return f"(failed: {e})"
+
+def _resolve_host_ports(host: str, port: str | int):
+    result = {"host": host, "port": str(port), "addrinfo": [], "errors": []}
+    try:
+        # getaddrinfo resolves both v4/v6 if available
+        infos = socket.getaddrinfo(host, port, type=socket.SOCK_STREAM)
+        for fam, socktype, proto, canonname, sockaddr in infos:
+            result["addrinfo"].append({"family": fam, "sockaddr": sockaddr})
+    except Exception as e:
+        result["errors"].append(f"getaddrinfo: {e}")
+    return result
+
+def _probe_tcp_connect(host: str, port: int, timeout: float = 2.5) -> dict:
+    res = {"ok": False, "err": None, "elapsed_ms": None}
+    t0 = time.time()
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            res["ok"] = True
+    except Exception as e:
+        res["err"] = repr(e)
+    finally:
+        res["elapsed_ms"] = int((time.time() - t0) * 1000)
+    return res
+
+def _bool_env(name: str, default: str = "0") -> str:
+    val = os.environ.get(name, default)
+    return val
+
+def print_rdzv_diagnostics():
+    print("=== RDZV / torch.distributed DIAGNOSTICS ===")
+
+    # Torchrun / Rendezvous core
+    core_envs = [
+        "MASTER_ADDR", "MASTER_PORT",
+        "RDZV_ENDPOINT", "RDZV_ID", "RDZV_BACKEND",
+        "WORLD_SIZE", "RANK", "LOCAL_RANK", "LOCAL_WORLD_SIZE", "NODE_RANK", "NPROC_PER_NODE",
+        "TORCH_DIST_INIT_BARRIER", "TORCH_DISTRIBUTED_DEBUG",
+    ]
+    # Networking / NCCL / Gloo
+    comm_envs = [
+        "NCCL_SOCKET_IFNAME", "NCCL_IB_HCA", "NCCL_DEBUG", "NCCL_ASYNC_ERROR_HANDLING",
+        "NCCL_BLOCKING_WAIT", "NCCL_P2P_DISABLE", "NCCL_SHM_DISABLE",
+        "GLOO_SOCKET_IFNAME",
+        "CUDA_VISIBLE_DEVICES", "NVIDIA_VISIBLE_DEVICES",
+    ]
+    # SLURM (if any)
+    slurm_envs = [
+        "SLURM_JOB_ID", "SLURM_NODEID", "SLURM_PROCID", "SLURM_LOCALID",
+        "SLURM_NTASKS", "SLURM_JOB_NODELIST", "SLURM_STEP_NODELIST",
+    ]
+
+    for name in core_envs:
+        print(f"{name:24} = {os.environ.get(name)}")
+    for name in comm_envs:
+        print(f"{name:24} = {os.environ.get(name)}")
+    slurm_present = any(os.environ.get(k) for k in slurm_envs)
+    if slurm_present:
+        print("--- SLURM ---")
+        for name in slurm_envs:
+            print(f"{name:24} = {os.environ.get(name)}")
+
+    # Derived sanity checks
+    master_addr = os.environ.get("MASTER_ADDR")
+    master_port = os.environ.get("MASTER_PORT")
+    rdzv_endpoint = os.environ.get("RDZV_ENDPOINT")  # format "host:port" if used
+    use_endpoint = False
+
+    host, port = None, None
+    if rdzv_endpoint:
+        use_endpoint = True
+        if ":" in rdzv_endpoint:
+            host, port = rdzv_endpoint.split(":", 1)
+        else:
+            host, port = rdzv_endpoint, "29500"
+    else:
+        host, port = master_addr, master_port
+
+    print(f"\n[Diag] Using {'RDZV_ENDPOINT' if use_endpoint else 'MASTER_ADDR/PORT'} for checks -> host={host}, port={port}")
+
+    # Name resolution
+    if host and port:
+        res_info = _resolve_host_ports(host, port)
+        print("[Diag] getaddrinfo:")
+        if res_info["addrinfo"]:
+            for item in res_info["addrinfo"]:
+                fam = {socket.AF_INET: "AF_INET", socket.AF_INET6: "AF_INET6"}.get(item["family"], str(item["family"]))
+                print(f"  - family={fam:<8} sockaddr={item['sockaddr']}")
+        if res_info["errors"]:
+            for e in res_info["errors"]:
+                print(f"  ! {e}")
+
+        # TCP connectivity probe (non-blocking-fast)
+        try:
+            p_int = int(port)
+        except Exception:
+            p_int = 29500
+        conn = _probe_tcp_connect(host, p_int, timeout=2.5)
+        ok = "OK" if conn["ok"] else "FAIL"
+        print(f"[Diag] TCP connect {host}:{p_int} -> {ok} ({conn['elapsed_ms']} ms){' err='+str(conn['err']) if conn['err'] else ''}")
+    else:
+        print("[Diag] MASTER/RDZV host:port is not set; skip connectivity probe")
+
+    # Interface snapshot (best-effort)
+    ip_brief = _safe_run(["/bin/sh", "-lc", "ip -brief addr 2>/dev/null | cat"])
+    if ip_brief and not ip_brief.startswith("(failed"):
+        print("\n[Diag] ip -brief addr:")
+        print(ip_brief)
+
+    # Show listening state on port (best-effort, may require privileges)
+    if host and port:
+        ss_listen = _safe_run(["/bin/sh", "-lc", f"ss -lntp 2>/dev/null | grep -E ':{port}\\b' || true"])
+        print(f"\n[Diag] ss -lntp | grep :{port}:")
+        print(ss_listen if ss_listen else "(no listener found or ss unavailable)")
+
+    # NCCL/Elastic timeouts
+    timeout_envs = [
+        "NCCL_TIMEOUT", "TORCHELASTIC_TIMEOUT", "TORCH_DISTRIBUTED_TIMEOUT",
+        "TORCH_ELASTIC_STORE_TIMEOUT", "TORCH_DISTRIBUTED_STORE_TIMEOUT", "RDZV_TIMEOUT"
+    ]
+    print("\n[Diag] Timeouts:")
+    for name in timeout_envs:
+        print(f"{name:24} = {os.environ.get(name)}")
+
+    # Summary hints
+    print("\n[Hints]")
+    print("- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。")
+    print("- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。")
+    print("- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。")
+    print("- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。")
+    print("=== END RDZV / torch.distributed DIAGNOSTICS ===\n")
+
+# 実行: ENVチェックのすぐ後ろ or train()の直前で呼び出し
+print_rdzv_diagnostics()
+# === end diagnostics ===
 
 
 def all_reduce_mean(loss: torch.Tensor, plugin: Plugin) -> torch.Tensor:
