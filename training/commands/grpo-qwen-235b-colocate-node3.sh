@@ -22,6 +22,22 @@ module purge
 module load cuda/12.6
 module load nccl/2.24.3
 
+srun bash -c '
+  echo "[Before cleanup]"; env | grep -E "PYTHON|LD_|CUDA"
+  
+  # 明示的に不要な変数をunsetしてクリーンにする
+  unset PYTHONPATH
+  unset LD_PRELOAD
+  export LD_LIBRARY_PATH=/home/appli/cuda/12.6/lib64:/home/appli/nccl/2.24.3/lib
+
+  # 仮想環境の activate
+  source ~/openr1/bin/activate
+  echo "[After cleanup and activate]"; env | grep -E "PYTHON|LD_|CUDA"
+
+  # 実行
+  python -c "import deepspeed; print(deepspeed.__version__)"
+'
+
 # Take a look at the contents of the following environment variables first.
 # PATH lists the locations of the executables and LD_LIBRARY_PATH lists where to look for shared libraries.
 # Earlier entries are prioritized over later ones, and : is used to separate multiple entries.
@@ -33,6 +49,8 @@ export CUDA_HOME=/home/appli/cuda/12.6
 export PATH=$CUDA_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:$CUDA_HOME/targets/x86_64-linux/lib/stubs:$CUDA_HOME/targets/x86_64-linux/lib:/home/appli/nccl/2.24.3/lib:$LD_LIBRARY_PATH
 export LIBRARY_PATH=$CUDA_HOME/lib64:$LIBRARY_PATH
+
+source /home/Competition2025/P02/P02U017/openr1/bin/activate
 
 ################## デバッグチェック ###################
 
@@ -95,9 +113,6 @@ module list 2>&1
 python -c "import deepspeed; print(f'Deepspeed Version: {deepspeed.__version__}')"
 
 echo -e "\n✅ 環境チェック完了 (続行可能)\n"
-
-
-source /home/Competition2025/P02/P02U017/openr1/bin/activate
 
 export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
