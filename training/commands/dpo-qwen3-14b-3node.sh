@@ -11,6 +11,8 @@
 #SBATCH --mem=0            # 各ノードのメモリサイズ
 #SBATCH --cpus-per-task=160         # number of cores per tasks
 
+# export WANDB_DISABLED="true"   # WANDBを一旦無効化
+
 # Slurmで確保したノードリストの先頭をマスターノードのアドレスとして設定
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
 echo "MASTER_ADDR: $MASTER_ADDR"

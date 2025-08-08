@@ -14,6 +14,7 @@
 
 """
 grpo.py をベースに必要に応じて DPO の処理に書き換える形で実装
+QLoRAバージョン
 """
 
 import logging
@@ -25,6 +26,8 @@ import datasets
 import transformers
 from transformers import set_seed
 from transformers.trainer_utils import get_last_checkpoint
+from peft import AutoPeftModelForCausalLM
+from transformers import BitsAndBytesConfig, AutoTokenizer
 
 from open_r1.utils import get_dataset, get_model, get_tokenizer
 from open_r1.utils.callbacks import get_callbacks
@@ -70,8 +73,8 @@ def main(script_args, training_args, model_args):
     if last_checkpoint is not None and training_args.resume_from_checkpoint is None:
         logger.info(f"Checkpoint detected, resuming training at {last_checkpoint=}.")
 
-    #if "wandb" in training_args.report_to:
-    #    init_wandb_training(training_args)
+    if "wandb" in training_args.report_to:
+        init_wandb_training(training_args)
 
     # Load the dataset
     logger.info("*** Loading dataset ***")
@@ -83,7 +86,11 @@ def main(script_args, training_args, model_args):
     # Load tokenizer
     ################
     logger.info("*** Loading Tokenizer ***")
-    tokenizer = get_tokenizer(model_args, training_args)
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_args.model_name_or_path,
+        revision=model_args.revision,
+        trust_remote_code=model_args.trust_remote_code,
+    )
 
     ##############
     # Load model #
