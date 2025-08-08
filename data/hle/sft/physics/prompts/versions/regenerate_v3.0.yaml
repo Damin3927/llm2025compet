@@ -91,7 +91,7 @@ prompts:
     Based on the above problem and feedback, generate your improved solution:
 
 parameters:
-  model: "deepseek/deepseek-r1-0528-qwen3-8b:free"
+  model: "deepseek/deepseek-r1-0528:free"
   temperature: 0.2
   max_tokens: 40000
   retry_attempts: 3

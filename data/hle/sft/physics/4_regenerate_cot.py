@@ -28,7 +28,7 @@ from datetime import datetime
 load_dotenv()
 
 # デフォルト設定
-DEFAULT_MODEL = "deepseek/deepseek-r1-0528-qwen3-8b:free"
+DEFAULT_MODEL = "deepseek/deepseek-r1-0528:free"
 DEFAULT_API_BASE_URL = "https://openrouter.ai/api/v1"
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 
