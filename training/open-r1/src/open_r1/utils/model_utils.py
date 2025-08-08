@@ -1,5 +1,6 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, PreTrainedTokenizer
+#from unsloth import FastLanguageModel
 
 from trl import ModelConfig, get_kbit_device_map, get_quantization_config
 
@@ -41,3 +42,25 @@ def get_model(model_args: ModelConfig, training_args: SFTConfig | GRPOConfig) ->
         **model_kwargs,
     )
     return model
+
+"""
+    def get_unsloth_models(model_args: ModelConfig, training_args: DPOConfig):
+    #Unsloth上のモデルとトークナイザを読み込む関数
+    torch_dtype = (
+        model_args.torch_dtype if model_args.torch_dtype in ["auto", None] else getattr(torch, model_args.torch_dtype)
+    )
+    model, tokenizer = FastLanguageModel.from_pretrained(
+        model_name=model_args.model_name_or_path,
+        max_seq_length=model_args.max_length,
+        load_in_4bit=False,
+        load_in_8bit=False,
+        full_finetuning=False,
+    )
+    # LoRA
+    model = FastLanguageModel.get_peft_model(
+        model,
+        r=
+    )
+
+    return model, tokenizer
+"""

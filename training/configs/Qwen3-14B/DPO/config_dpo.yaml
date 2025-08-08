@@ -38,6 +38,8 @@ num_train_epochs: 1                                       # エポック数
 warmup_ratio: 0.03                                        # ウォームアップ比率
 seed: 42                                                  # 乱数シード値
 beta: 0.1                                                 # DPO の beta パラメータ
+precompute_ref_log_probs: true                            # 参照モデルが同一の際に事前に参照モデルの出力分布確率を計算 -> メモリ削減
+
 
 # === Save and Log ===
 output_dir: data/Qwen3-14B-DPO-test                        # 出力ディレクトリ

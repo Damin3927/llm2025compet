@@ -134,7 +134,7 @@ def main(script_args, training_args, model_args):
         eval_dataset=(dataset[script_args.dataset_test_split] if training_args.eval_strategy != "no" else None),
         peft_config=get_peft_config(model_args),
         #callbacks=get_callbacks(training_args, model_args),
-        processing_class=tokenizer
+        processing_class=tokenizer,
     )
 
     ###############
