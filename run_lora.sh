@@ -120,9 +120,9 @@ srun --ntasks=3 --ntasks-per-node=1 \
       --nproc_per_node 8 \
       --master_addr $MASTER_ADDR \
       --master_port $MASTER_PORT \
-      --rdzv_timeout 7200 \
-      --rdzv_backend c10d \
-      --rdzv_id "lora-r1-${SLURM_JOB_ID}" \
+      --rdzv-conf timeout=7200 \
+      --rdzv-backend c10d \
+      --rdzv-id "lora-r1-${SLURM_JOB_ID}" \
       /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
         --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16 \
         --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
