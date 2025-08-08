@@ -74,3 +74,320 @@ W0808 11:06:11.335000 23217086396224 torch/distributed/run.py:779] *************
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+Step:   0%|          | 0/33 [00:00<?, ?it/s][rank16]:[W808 12:14:38.321980643 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+[rank23]:[W808 12:14:38.370034305 socket.cpp:428] [c10d] While waitForInput, poolFD failed with (errno: 2 - No such file or directory).
+Step:   0%|          | 0/33 [10:00<?, ?it/s]
+[rank23]: Traceback (most recent call last):
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 677, in <module>
+[rank23]:     train(args)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 505, in train
+[rank23]:     outputs = booster.execute_pipeline(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank23]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank23]:     outputs = self.scheduler.forward_backward_step(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank23]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 400, in run_forward_backward
+[rank23]:     input_obj = self.recv_forward()
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank23]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank23]:     input_tensor, wait_handles = _communicate(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank23]:     _metadata_recv = _send_recv_serialization_object(
+[rank23]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank23]:     reqs = dist.batch_isend_irecv(ops)
+[rank23]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank23]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank23]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank23]:     return pg.recv([tensor], group_src_rank, tag)
+[rank23]: torch.distributed.DistBackendError: [2] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank23]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank23]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x15503135bf86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank23]: frame #1: <unknown function> + 0x164b9c5 (0x15506766e9c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x15506bd1ed92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x15506bd1ff81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x15506bcd49d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x15506bcd49d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x15506bcd49d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x15506bcd49d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #8: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x15503261ef8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank23]: frame #9: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x15503262ad6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank23]: frame #10: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x15503264896a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank23]: frame #11: <unknown function> + 0x5ca3c19 (0x15506bcc6c19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #12: <unknown function> + 0x5cae67a (0x15506bcd167a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #13: <unknown function> + 0x52d0c1b (0x15506b2f3c1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #14: <unknown function> + 0x52ce494 (0x15506b2f1494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #15: <unknown function> + 0x1ace5a8 (0x155067af15a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #16: <unknown function> + 0x5cb5684 (0x15506bcd8684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #17: <unknown function> + 0x5cba835 (0x15506bcdd835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank23]: frame #18: <unknown function> + 0xdb6a3e (0x15507effda3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank23]: frame #19: <unknown function> + 0x4b00e4 (0x15507e6f70e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank23]: frame #20: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank23]: frame #21: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #22: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank23]: frame #23: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #24: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #25: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #26: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #27: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #28: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #29: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #30: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #31: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #32: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank23]: frame #33: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #34: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #35: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #36: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #37: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #38: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #39: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #40: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #41: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #42: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank23]: frame #43: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #44: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #45: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #46: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank23]: frame #47: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #48: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank23]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank23]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank23]: frame #51: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #52: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #53: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #54: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank23]: frame #55: <unknown function> + 0x295d0 (0x1550808295d0 in /lib64/libc.so.6)
+[rank23]: frame #56: __libc_start_main + 0x80 (0x155080829680 in /lib64/libc.so.6)
+[rank23]: frame #57: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank23]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+[rank16]: Traceback (most recent call last):
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 677, in <module>
+[rank16]:     train(args)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 505, in train
+[rank16]:     outputs = booster.execute_pipeline(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
+[rank16]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
+[rank16]:     outputs = self.scheduler.forward_backward_step(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
+[rank16]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 400, in run_forward_backward
+[rank16]:     input_obj = self.recv_forward()
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131, in recv_forward
+[rank16]:     input_tensor, _ = self.comm.recv_forward(prev_rank, metadata_recv=self.tensor_metadata_recv)
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558, in recv_forward
+[rank16]:     input_tensor, wait_handles = _communicate(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414, in _communicate
+[rank16]:     _metadata_recv = _send_recv_serialization_object(
+[rank16]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318, in _send_recv_serialization_object
+[rank16]:     reqs = dist.batch_isend_irecv(ops)
+[rank16]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2160, in batch_isend_irecv
+[rank16]:     p2p_op.op(p2p_op.tensor, p2p_op.peer, p2p_op.group, p2p_op.tag)
+[rank16]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 1914, in irecv
+[rank16]:     return pg.recv([tensor], group_src_rank, tag)
+[rank16]: torch.distributed.DistBackendError: [2] is setting up NCCL communicator and retrieving ncclUniqueId from [0] via c10d key-value store by key '0', but store->get('0') got error: Socket Timeout
+[rank16]: Exception raised from doWait at ../torch/csrc/distributed/c10d/TCPStore.cpp:570 (most recent call first):
+[rank16]: frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x148d38a6df86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+[rank16]: frame #1: <unknown function> + 0x164b9c5 (0x148d6ed809c5 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #2: c10d::TCPStore::doGet(std::string const&) + 0x32 (0x148d73430d92 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #3: c10d::TCPStore::get(std::string const&) + 0xa1 (0x148d73431f81 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #4: c10d::PrefixStore::get(std::string const&) + 0x31 (0x148d733e69d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #5: c10d::PrefixStore::get(std::string const&) + 0x31 (0x148d733e69d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #6: c10d::PrefixStore::get(std::string const&) + 0x31 (0x148d733e69d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #7: c10d::PrefixStore::get(std::string const&) + 0x31 (0x148d733e69d1 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #8: c10d::ProcessGroupNCCL::broadcastUniqueNCCLID(ncclUniqueId*, bool, std::string const&, int) + 0xaf (0x148d39d30f8f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank16]: frame #9: c10d::ProcessGroupNCCL::getNCCLComm(std::string const&, c10::Device&, c10d::OpType, int, bool) + 0x114c (0x148d39d3cd6c in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank16]: frame #10: c10d::ProcessGroupNCCL::recv(std::vector<at::Tensor, std::allocator<at::Tensor> >&, int, int) + 0x68a (0x148d39d5a96a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+[rank16]: frame #11: <unknown function> + 0x5ca3c19 (0x148d733d8c19 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #12: <unknown function> + 0x5cae67a (0x148d733e367a in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #13: <unknown function> + 0x52d0c1b (0x148d72a05c1b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #14: <unknown function> + 0x52ce494 (0x148d72a03494 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #15: <unknown function> + 0x1ace5a8 (0x148d6f2035a8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #16: <unknown function> + 0x5cb5684 (0x148d733ea684 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #17: <unknown function> + 0x5cba835 (0x148d733ef835 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+[rank16]: frame #18: <unknown function> + 0xdb6a3e (0x148d8670fa3e in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank16]: frame #19: <unknown function> + 0x4b00e4 (0x148d85e090e4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_python.so)
+[rank16]: frame #20: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x4fd527]
+[rank16]: frame #21: _PyObject_MakeTpCall + 0x25b (0x4f701b in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #22: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5090df]
+[rank16]: frame #23: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #24: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #25: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #26: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #27: _PyEval_EvalFrameDefault + 0x4b05 (0x4f2995 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #28: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #29: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #30: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #31: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #32: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank16]: frame #33: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #34: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #35: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #36: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #37: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #38: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #39: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #40: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #41: _PyEval_EvalFrameDefault + 0x72e (0x4ee5be in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #42: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x508dee]
+[rank16]: frame #43: _PyEval_EvalFrameDefault + 0x13b0 (0x4ef240 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #44: _PyFunction_Vectorcall + 0x6f (0x4fd96f in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #45: _PyEval_EvalFrameDefault + 0x31f (0x4ee1af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #46: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x594312]
+[rank16]: frame #47: PyEval_EvalCode + 0x87 (0x594257 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #48: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c50f7]
+[rank16]: frame #49: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x5c0220]
+[rank16]: frame #50: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x459eff]
+[rank16]: frame #51: _PyRun_SimpleFileObject + 0x19f (0x5ba7af in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #52: _PyRun_AnyFileObject + 0x43 (0x5ba513 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #53: Py_RunMain + 0x38d (0x5b72cd in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #54: Py_BytesMain + 0x39 (0x5873d9 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10)
+[rank16]: frame #55: <unknown function> + 0x295d0 (0x148d87e295d0 in /lib64/libc.so.6)
+[rank16]: frame #56: __libc_start_main + 0x80 (0x148d87e29680 in /lib64/libc.so.6)
+[rank16]: frame #57: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10() [0x58728e]
+[rank16]: . This may indicate a possible application crash on rank 0 or a network set up issue.
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:1771: UserWarning: Some coalesced collectives haven't been launched when ProcessGroup is destroyed. They will be cleaned.
+  warnings.warn(
+[rank16]:[W808 12:14:44.144347309 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+W0808 12:14:48.414000 23217086396224 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3576803 closing signal SIGTERM
+W0808 12:14:48.414000 23217086396224 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3576804 closing signal SIGTERM
+W0808 12:14:48.414000 23217086396224 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3576805 closing signal SIGTERM
+W0808 12:14:48.414000 23217086396224 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3576806 closing signal SIGTERM
+W0808 12:14:48.414000 23217086396224 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3576807 closing signal SIGTERM
+W0808 12:14:48.415000 23217086396224 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3576808 closing signal SIGTERM
+W0808 12:14:48.415000 23217086396224 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3576809 closing signal SIGTERM
+E0808 12:14:59.155000 23217086396224 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 7 (pid: 3576810) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-08-08_12:14:48
+  host      : osk-gpu91
+  rank      : 23 (local_rank: 7)
+  exitcode  : 1 (pid: 3576810)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

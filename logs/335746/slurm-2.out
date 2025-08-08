@@ -857,3 +857,139 @@ dataloader batch_size: 8, total batches: 33
 === [Debug] Using attention implementation: eager ===
 === [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
 === [Debug] Entered init_ctx ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ====== [Debug] Set model to train mode ===
+
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.2649223804473877 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 1.1247594356536865 seconds
+[extension] Time taken to load fused_optim_cuda op: 2.4371705055236816 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.4241669178009033 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 1.6314640045166016 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.44900965690612793 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 1.7431142330169678 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 1.8384575843811035 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.30066895484924316 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 1.3356525897979736 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.3041558265686035 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.3459131717681885 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 2.135877847671509 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.3377876281738281 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.3961009979248047 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.4043235778808594 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+=== [Debug] Booster boost completed: rank=23 ===
+=== [Debug] Booster boost completed: rank=22 ===
+=== [Debug] Booster boost completed: rank=16 ===
+=== [Debug] Booster boost completed: rank=20 ===
+=== [Debug] Booster boost completed: rank=19 ===
+=== [Debug] Booster boost completed: rank=21 ===
+=== [Debug] Booster boost completed: rank=18 ===
+=== [Debug] Booster boost completed: rank=17 ===
+=== [Debug] Model loaded from pretrained: rank=23 ===
+[Debug] rank=23, host=osk-gpu91, Max device mem: 67256.76 MB, Max CPU mem: 21587.51 MB
+[Debug] rank=23, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=16 ===
+[Debug] rank=16, host=osk-gpu91, Max device mem: 67256.76 MB, Max CPU mem: 21585.72 MB
+[Debug] rank=16, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=17 ===
+[Debug] rank=17, host=osk-gpu91, Max device mem: 67256.76 MB, Max CPU mem: 21584.36 MB
+[Debug] rank=17, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=22 ===
+[Debug] rank=22, host=osk-gpu91, Max device mem: 67256.76 MB, Max CPU mem: 21587.39 MB
+[Debug] rank=22, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=21 ===
+[Debug] rank=21, host=osk-gpu91, Max device mem: 67256.76 MB, Max CPU mem: 21583.07 MB
+[Debug] rank=21, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=18 ===
+[Debug] rank=18, host=osk-gpu91, Max device mem: 67256.76 MB, Max CPU mem: 21583.89 MB
+[Debug] rank=18, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=20 ===
+[Debug] rank=20, host=osk-gpu91, Max device mem: 67256.76 MB, Max CPU mem: 21585.22 MB
+[Debug] rank=20, host=osk-gpu91, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=19 ===
+[Debug] rank=19, host=osk-gpu91, Max device mem: 67256.76 MB, Max CPU mem: 21586.12 MB
+[Debug] rank=19, host=osk-gpu91, === for epoch in range(0, 2) Start ====

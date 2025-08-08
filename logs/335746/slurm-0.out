@@ -865,3 +865,165 @@ dataloader batch_size: 8, total batches: 33
 === [Debug] Using attention implementation: eager ===
 === [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
 === [Debug] Entered init_ctx ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+[08/08/25 11:10:38] WARNING  colossalai - colossalai - WARNING:                 
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/booster/plugin/hybrid_parallel_plugin.py:1518 
+                             enable_lora                                        
+                    WARNING  colossalai - colossalai - WARNING: You have enabled
+                             LoRa training. Please check the hyperparameters    
+                             such as lr                                         
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+Gradient checkpointing enabled successfully
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+Model params: 672.13 B
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.2509896755218506 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.6148078441619873 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 0.13474655151367188 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 2.4418771266937256 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.2488930225372314 seconds
+[extension] Time taken to load fused_optim_cuda op: 1.906630516052246 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 2.742030143737793 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.30516839027404785 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.30426478385925293 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.30424046516418457 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.0092296600341797 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 2.3322534561157227 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+Default dtype set to torch.bfloat16
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.40619587898254395 seconds
+[extension] Time taken to load fused_optim_cuda op: 0.4060037136077881 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 2.6299796104431152 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.4052259922027588 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+=== [Debug] Booster boost completed: rank=3 ===
+=== [Debug] Booster boost completed: rank=1 ===
+=== [Debug] Booster boost completed: rank=6 ===
+=== [Debug] Booster boost completed: rank=2 ===
+=== [Debug] Booster boost completed: rank=0 ===
+=== [Debug] Booster boost completed: rank=4 ===
+=== [Debug] Booster boost completed: rank=7 ===
+=== [Debug] Booster boost completed: rank=5 ===
+=== [Debug] Model loaded from pretrained: rank=7 ===
+[Debug] rank=07, host=osk-gpu54, Max device mem: 59391.18 MB, Max CPU mem: 24638.27 MB
+[Debug] rank=07, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=0 ===
+[Debug] rank=00, host=osk-gpu54, Max device mem: 59391.18 MB, Max CPU mem: 24645.17 MB
+[Debug] rank=00, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=1 ===
+[Debug] rank=01, host=osk-gpu54, Max device mem: 59391.18 MB, Max CPU mem: 24640.35 MB
+[Debug] rank=01, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+osk-gpu54:2563864:2563864 [0] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
+osk-gpu54:2563864:2563864 [0] NCCL INFO Bootstrap : Using enp25s0np0:192.168.1.54<0>
+osk-gpu54:2563864:2563864 [0] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:2563864:2563864 [0] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:2563864:2563864 [0] NCCL INFO cudaDriverVersion 12080
+NCCL version 2.20.5+cuda12.4
+osk-gpu54:2563871:2563871 [7] NCCL INFO cudaDriverVersion 12080
+osk-gpu54:2563871:2563871 [7] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
+osk-gpu54:2563871:2563871 [7] NCCL INFO Bootstrap : Using enp25s0np0:192.168.1.54<0>
+osk-gpu54:2563871:2563871 [7] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:2563871:2563871 [7] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:2563865:2563865 [1] NCCL INFO cudaDriverVersion 12080
+osk-gpu54:2563865:2563865 [1] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
+osk-gpu54:2563865:2563865 [1] NCCL INFO Bootstrap : Using enp25s0np0:192.168.1.54<0>
+osk-gpu54:2563865:2563865 [1] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:2563865:2563865 [1] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:2563864:2578863 [0] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
+osk-gpu54:2563864:2578863 [0] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+osk-gpu54:2563871:2578864 [7] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
+osk-gpu54:2563871:2578864 [7] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+osk-gpu54:2563864:2578863 [0] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp25s0np0:192.168.1.54<0>
+osk-gpu54:2563864:2578863 [0] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:2563864:2578863 [0] NCCL INFO Using network IB
+osk-gpu54:2563871:2578864 [7] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp25s0np0:192.168.1.54<0>
+osk-gpu54:2563871:2578864 [7] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:2563871:2578864 [7] NCCL INFO Using network IB
+osk-gpu54:2563865:2578872 [1] NCCL INFO NCCL_SOCKET_IFNAME set by environment to enp25s0np0,enp41s0np0,enp59s0np0,enp92s0np0,enp155s0np0,enp170s0np0,enp187s0np0,enp218s0np0
+osk-gpu54:2563865:2578872 [1] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+osk-gpu54:2563865:2578872 [1] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_2:1/RoCE [3]mlx5_4:1/RoCE [4]mlx5_5:1/RoCE [5]mlx5_6:1/RoCE [6]mlx5_7:1/RoCE [7]mlx5_11:1/RoCE [RO]; OOB enp25s0np0:192.168.1.54<0>
+osk-gpu54:2563865:2578872 [1] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:2563865:2578872 [1] NCCL INFO Using network IB
