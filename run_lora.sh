@@ -120,7 +120,8 @@ srun --ntasks=3 --ntasks-per-node=1 \
       --nproc_per_node 8 \
       --master_addr $MASTER_ADDR \
       --master_port $MASTER_PORT \
-      --rdzv-conf timeout=7200 \
+      --rdzv-endpoint "$MASTER_ADDR:$MASTER_PORT" \
+      --rdzv-conf join_timeout=7200,last_call_timeout=60,close_timeout=60 \
       --rdzv-backend c10d \
       --rdzv-id "lora-r1-${SLURM_JOB_ID}" \
       /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
