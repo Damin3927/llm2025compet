@@ -22,22 +22,174 @@ APP_NAME = "GPQA add CoT Dataset"
 OUTPUT_DATASET_ID = "neko-llm/HLE_SFT_GPQA_Diamond"
 
 
-def generate_prompt_for_gpqa_dataset(id: int, question: str, answer: str, explanation: str, subdomain: str) -> str:
+def generate_prompt_for_gpqa_dataset(question: str, explanation: str, subdomain: str) -> str:
   """
   プロンプトを生成する関数
 
-  - GPQA Dataset のデータを受け取り、フォーマット処理する。
+  - GPQA Dataset のデータを受け取り、フォーマットに従ってプロンプトを生成する。
   """
 
   return f"""
     You are an expert in {subdomain}.
 
     ## Rules
-    - Using the information from question/explanation/answer, please generate a reasoning process (Reasoning/CoT).
+    - Using the information from question/explanation, please generate a reasoning process (Reasoning/CoT) and answer.
       - question: {question}
-      - answer: {answer}
       - explanation: {explanation}
+
+    ## Output
+    - Please output the reasoning process (Reasoning/CoT) and answer in the following format:
+      <think>reasoning process (Reasoning/CoT) content</think>answer content
   """
+
+def generate_judge_prompt(generated_answer: str, correct_answer: str, question: str) -> str:
+    """
+    LLM判定用のプロンプトを生成する関数
+
+    Args:
+        generated_answer: 生成された回答
+        correct_answer: 正解
+        question: 元の質問
+
+    Returns:
+        str: 判定用プロンプト
+    """
+    return f"""
+You are an expert judge for evaluating the correctness of answers to scientific questions.
+
+## Task
+Please evaluate whether the generated answer is correct compared to the reference answer.
+
+## Question
+{question}
+
+## Generated Answer
+{generated_answer}
+
+## Reference Answer (Correct)
+{correct_answer}
+
+## Evaluation Criteria
+- Focus on the final answer/conclusion, not the reasoning process
+- Consider equivalent expressions (e.g., "0.5" and "1/2" are the same)
+- For multiple choice questions, check if the selected option is correct
+- For numerical answers, allow reasonable rounding differences
+- For chemical formulas, check structural equivalence
+
+## Output Format
+Please respond with exactly one of the following:
+- "CORRECT" if the generated answer matches the reference answer
+- "INCORRECT" if the generated answer does not match the reference answer
+
+Only output "CORRECT" or "INCORRECT", nothing else.
+"""
+
+
+def judge_answer_by_llm(generated_answer: str, correct_answer: str, question: str = "") -> bool:
+    """
+    OpenRouter経由でLLMに回答の正当性を判定させる関数
+
+    Args:
+        generated_answer: 生成された回答
+        correct_answer: 正解
+        question: 元の質問（判定の参考用、オプション）
+
+    Returns:
+        bool: 回答が正しい場合True、間違いの場合False
+    """
+    if not OPENROUTER_API_KEY:
+        print("⚠️ OPENROUTER_API_KEY が設定されていません。単純な文字列比較を使用します。")
+        return generated_answer.strip().lower() == correct_answer.strip().lower()
+
+    # 判定用プロンプトを生成
+    judge_prompt = generate_judge_prompt(generated_answer, correct_answer, question)
+
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "HTTP-Referer": YOUR_SITE_URL,
+        "X-Title": f"{APP_NAME} - Answer Judge",
+        "Content-Type": "application/json"
+    }
+
+    data = {
+        "model": MODEL_NAME,
+        "messages": [{"role": "user", "content": judge_prompt}],
+        "temperature": 0.1,  # 判定の一貫性のため低い温度を使用
+        "max_tokens": 10     # "CORRECT" または "INCORRECT" のみ期待
+    }
+
+    last_error = ""
+
+    for attempt in range(3):  # 3回まで再試行
+        try:
+            response = requests.post(OPENROUTER_API_URL, headers=headers, json=data, timeout=60)
+            response.raise_for_status()
+            json_response = response.json()
+
+            if 'choices' in json_response and len(json_response['choices']) > 0:
+                content = json_response['choices'][0]['message']['content'].strip().upper()
+
+                print(f"🔍 Judge API Response: {content}")
+
+                if "CORRECT" in content:
+                    return True
+                elif "INCORRECT" in content:
+                    return False
+                else:
+                    print(f"⚠️ 予期しない判定結果: {content}")
+                    # フォールバック: 単純な文字列比較
+                    return generated_answer.strip().lower() == correct_answer.strip().lower()
+            else:
+                last_error = f"❌ Judge API response missing valid content. Response: {json_response}"
+                print(last_error)
+
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code in [402, 429]:
+                try:
+                    error_details = e.response.json().get('error', {}).get('message', '')
+                except json.JSONDecodeError:
+                    error_details = e.response.text
+                print(f"❌ Judge API credit/rate limit error ({e.response.status_code}): {error_details}")
+                # フォールバック: 単純な文字列比較
+                return generated_answer.strip().lower() == correct_answer.strip().lower()
+            else:
+                last_error = f"❌ Judge API HTTP Error: {e}"
+        except Exception as e:
+            last_error = f"❌ Judge API unknown error: {e}"
+
+        time.sleep(1)  # 再試行前に1秒待機
+
+    print(f"❌ Judge API failed after 3 attempts: {last_error}")
+    print("⚠️ フォールバックとして単純な文字列比較を使用します。")
+    return generated_answer.strip().lower() == correct_answer.strip().lower()
+
+def extract_final_answer_from_cot(cot_response: str) -> str:
+    """
+    CoTレスポンスから最終回答を抽出する関数
+
+    Args:
+        cot_response: CoT生成APIからのレスポンス
+
+    Returns:
+        str: 抽出された最終回答
+    """
+    # <think>タグがある場合、</think>の後の内容を最終回答とする
+    think_end_pattern = r'</think>\s*(.*?)$'
+    match = re.search(think_end_pattern, cot_response, re.DOTALL | re.IGNORECASE)
+    if match:
+        final_answer = match.group(1).strip()
+        if final_answer:
+            return final_answer
+
+    # <think>タグがない場合、最後の行または段落を最終回答とする
+    lines = cot_response.strip().split('\n')
+    for line in reversed(lines):
+        line = line.strip()
+        if line and not line.startswith('#') and not line.startswith('-'):
+            return line
+
+    # フォールバック: 全体をそのまま返す
+    return cot_response.strip()
 
 
 def generate_cot_with_openrouter(prompt: str) -> tuple[str, str]:
@@ -372,8 +524,16 @@ def main():
     # --- Main Processing Loop ---
     batch_results = []
     total_problems = len(diamond_dataset)
+
+    # 統計情報の初期化
+    total_processed = 0
+    total_generated = 0
+    total_judged_correct = 0
+    total_api_failures = 0
+
     print(f"\n🚀 {total_problems} 件の問題に対してCoT生成を開始...")
     print(f"💾 結果は '{output_filename}' に5件ずつバッチで保存されます。")
+    print(f"🔍 回答の正当性判定を有効化しています。正しい回答のみが保存されます。")
 
     for i, item in enumerate(tqdm(diamond_dataset, desc="CoT生成中")):
         # 既に処理済みの場合はスキップ
@@ -381,62 +541,117 @@ def main():
         if item_id in processed_ids:
             continue
 
+        total_processed += 1
         print(f"\n--- 問題 {i + 1}/{total_problems} を処理中 ---")
 
         # プロンプト生成
         prompt = generate_prompt_for_gpqa_dataset(
-            id=item_id,
             question=item['Question'],
-            answer=item['Correct Answer'],
             explanation=item['Explanation'],
             subdomain=item['Subdomain']
         )
-        print(f"🔍 プロンプト: {prompt}")
+        print(f"🔍 プロンプト: {prompt[:200]}...")
 
         # OpenRouter API でCoT生成
         status, content = generate_cot_with_openrouter(prompt)
-        print(f"🔍 API レスポンス(Content): {content}")
         print(f"🔍 API ステータス: {status}")
 
-        # 結果を保存
-        batch_results.append({
-            "id": item_id,
-            "question": item['Question'],
-            # 推論過程(Reasoning/CoT)を生成して、<think>...</think> タグで囲み、最終的な回答(answer)を </think> タグの後に記載する。
-            "output": f"<think>{content}</think>{item['Correct Answer']}",
-            "answer": item['Correct Answer']
-        })
+        if status == "success":
+            total_generated += 1
+            print(f"🔍 API レスポンス(Content): {content[:200]}...")
 
-        # 5件ごとまたは最後の処理でCSVに保存
-        if (i + 1) % 5 == 0 or (i + 1) == total_problems:
-            print(f"💾 {len(batch_results)} 件の結果をCSVに保存中...")
-            temp_df = pd.DataFrame(batch_results)
-            temp_df.to_csv(
-                output_filename,
-                mode='a',
-                header=not os.path.exists(output_filename) or os.path.getsize(output_filename) == 0,
-                index=False,
-                encoding='utf-8-sig'
+            # 生成されたCoTから最終回答を抽出
+            generated_answer = extract_final_answer_from_cot(content)
+            print(f"🔍 抽出された最終回答: {generated_answer}")
+
+            # 回答の正当性を判定
+            print(f"⚖️ 回答の正当性を判定中...")
+            is_correct = judge_answer_by_llm(
+                generated_answer=generated_answer,
+                correct_answer=item['Correct Answer'],
+                question=item['Question']
             )
-            batch_results.clear()
+
+            if is_correct:
+                total_judged_correct += 1
+                print(f"✅ 判定結果: 正解! データを保存します。")
+
+                # 正解の場合のみ結果を保存
+                batch_results.append({
+                    "id": item_id,
+                    "question": item['Question'],
+                    # 推論過程(Reasoning/CoT)を生成して、<think>...</think> タグで囲み、最終的な回答(answer)を </think> タグの後に記載する。
+                    "output": f"<think>{content}</think>{item['Correct Answer']}",
+                    "answer": item['Correct Answer'],
+                    "generated_answer": generated_answer,
+                    "judgment_status": "correct"
+                })
+            else:
+                print(f"❌ 判定結果: 不正解。このデータは保存されません。")
+                print(f"   生成回答: {generated_answer}")
+                print(f"   正解: {item['Correct Answer']}")
+        else:
+            total_api_failures += 1
+            print(f"❌ CoT生成に失敗: {content}")
+
+        # 5件ごとまたは最後の処理でCSVに保存（正解データのみ）
+        if len(batch_results) >= 5 or (i + 1) == total_problems:
+            if batch_results:  # 保存するデータがある場合のみ
+                print(f"💾 {len(batch_results)} 件の正解データをCSVに保存中...")
+                temp_df = pd.DataFrame(batch_results)
+                temp_df.to_csv(
+                    output_filename,
+                    mode='a',
+                    header=not os.path.exists(output_filename) or os.path.getsize(output_filename) == 0,
+                    index=False,
+                    encoding='utf-8-sig'
+                )
+                batch_results.clear()
+
+        # 進捗統計を表示
+        if (i + 1) % 10 == 0:
+            success_rate = (total_judged_correct / total_processed * 100) if total_processed > 0 else 0
+            print(f"📊 進捗統計 ({i + 1}/{total_problems}):")
+            print(f"   処理済み: {total_processed}, 生成成功: {total_generated}, 判定正解: {total_judged_correct}")
+            print(f"   正解率: {success_rate:.1f}%, API失敗: {total_api_failures}")
 
         # API レート制限を考慮して少し待機
         time.sleep(0.5)
 
+    # 最終統計情報を表示
+    final_success_rate = (total_judged_correct / total_processed * 100) if total_processed > 0 else 0
+    generation_success_rate = (total_generated / total_processed * 100) if total_processed > 0 else 0
+
     print(f"\n✅ 全ての処理が完了しました。最終結果は '{output_filename}' に保存されています。")
+    print(f"\n📊 最終統計情報:")
+    print(f"   総処理数: {total_processed}")
+    print(f"   CoT生成成功: {total_generated} ({generation_success_rate:.1f}%)")
+    print(f"   判定正解数: {total_judged_correct} ({final_success_rate:.1f}%)")
+    print(f"   API失敗数: {total_api_failures}")
+    print(f"   保存データ数: {total_judged_correct} (正解データのみ)")
+
+    # 品質レポート
+    if total_generated > 0:
+        judgment_accuracy = (total_judged_correct / total_generated * 100)
+        print(f"   生成品質: {judgment_accuracy:.1f}% (生成成功データ中の正解率)")
+
+    if total_judged_correct == 0:
+        print("⚠️ 正解と判定されたデータがありません。データセットは作成されていません。")
 
     # --- 複数フォーマットでの保存とHugging Face アップロード ---
     try:
         print("\n🔄 最終データの処理とアップロードを開始...")
         final_df: pd.DataFrame = pd.read_csv(output_filename)
 
-        # 統計情報の計算（'status'列がある場合）
-        if 'status' in final_df.columns:
-            success_count = len(final_df[final_df['status'] == 'success'])
-        else:
-            # 'status'列がない場合は全件を成功として扱う
-            success_count = len(final_df)
-        total_count = len(final_df)
+        # 統計情報の計算
+        # 実際に保存されたデータ数（全て正解データ）
+        success_count = len(final_df)
+        total_count = total_processed  # 実際に処理した総数
+
+        print(f"📊 最終データセット統計:")
+        print(f"   保存されたレコード数: {success_count}")
+        print(f"   処理対象総数: {total_count}")
+        print(f"   データセット品質: 100% (正解データのみ)")
 
         # ベースファイル名（拡張子なし）を取得
         base_filename = os.path.splitext(output_filename)[0]
