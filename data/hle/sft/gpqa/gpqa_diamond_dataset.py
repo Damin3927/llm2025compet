@@ -54,39 +54,61 @@ def generate_judge_prompt(generated_answer: str, correct_answer: str, question: 
         generated_answer: 生成された回答
         correct_answer: 正解
         question: 元の質問
+        subdomain: 分野
 
     Returns:
         str: 判定用プロンプト
     """
     return f"""
 You are an expert judge for evaluating the correctness of answers to scientific questions in {subdomain}.
+Decide if the generated answer is semantically equivalent to the reference answer.
 
-## Task
-Please evaluate whether the generated answer is correct compared to the reference answer.
-
-## Question
+## Inputs
+[Question]
 {question}
 
-## Generated Answer
+[Generated Answer]
 {generated_answer}
 
-## Reference Answer (Correct)
+[Reference Answer (Correct)]
 {correct_answer}
 
-## Evaluation Criteria
-- Focus on the final answer/conclusion, not the reasoning process
-- Consider equivalent expressions (e.g., "0.5" and "1/2" are the same)
-- For multiple choice questions, check if the selected option is correct
-- For numerical answers, allow reasonable rounding differences
-- For chemical formulas, check structural equivalence
+## What to do (follow silently)
+1) Extract the final asserted answer from each text:
+   - Ignore explanations, apologies, or prefaces.
+   - If multiple values appear, use the final, explicitly stated conclusion (e.g., after "Answer:", or the last value/choice).
+2) Normalize notation for BOTH answers before comparing:
+   - Trim spaces, punctuation, and surrounding quotes.
+   - Scientific notation: treat these as equivalent forms:
+     10^-4, 10^{{-4}}, 1e-4, 1×10^-4, 1·10^-4, 0.0001
+   - Minus sign: treat "-" and "−" as identical.
+   - Multiplication sign: treat "×", "·", "*" as identical.
+   - LaTeX vs plain text: interpret \(10^{{-4}}\) == 10^-4, \frac{{1}}{{2}} == 0.5, etc.
+   - Units:
+     * Be case-insensitive where standard (eV == electronvolt).
+     * Accept SI prefixes & micro symbol variants (μ == u).
+     * If units are convertible and dimensionally the same (e.g., eV vs J), convert conceptually and compare values.
+     * If the generated answer omits an unambiguous unit but the numeric value matches within tolerance, treat as equivalent.
+   - Percent/fraction equivalence: 10% == 0.10.
+   - Thousands separators and locale decimals: ignore commas, treat "." as decimal point.
+3) Compare using these criteria:
+   - Multiple choice: if the question lists options, map letters (A/B/C/…) to their option text and compare to the reference.
+   - Exact strings (non-numeric): compare case-insensitively after normalization; accept common synonyms (True/Yes, False/No).
+   - Numbers:
+     * Consider correct if values match exactly AFTER normalization OR
+       |generated - reference| ≤ max(1e-12, 0.01×|reference|)  (≈1% relative tolerance).
+     * Also accept rounding consistent with the significant figures of the reference.
+   - Chemical formulas: compare structural/stoichiometric equivalence; ignore whitespace and typical state annotations.
+4) Mark INCORRECT if there is a sign error, wrong order of magnitude, wrong (non-convertible) units/dimensions, or a different option than the reference.
 
 ## Output Format
-Please respond with exactly one of the following:
-- "CORRECT" if the generated answer matches the reference answer
-- "INCORRECT" if the generated answer does not match the reference answer
+Respond with EXACTLY one token:
+- "CORRECT"  (semantically equivalent after normalization)
+- "INCORRECT" (otherwise)
 
-Only output "CORRECT" or "INCORRECT", nothing else.
+Only output "CORRECT" or "INCORRECT".
 """
+
 
 
 def judge_answer_by_llm(generated_answer: str, correct_answer: str, question: str = "", subdomain: str = "") -> bool:
