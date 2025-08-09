@@ -1,0 +1,24 @@
+services:
+  app:
+    image: llm2025compet
+    #runtime: ${DOCKER_RUNTIME:-nvidia}
+    # Windowsではnvidiaドライバの設定が必要
+    deploy:
+          resources:
+            reservations:
+              devices:
+                - driver: nvidia
+                  count: all # 'all' ですべてのGPUを割り当て
+                  capabilities: [gpu]
+    command: ["tail", "-f", "/dev/null"]
+    environment:
+      # Configure Nvidia Docker interface (only used when DOCKER_RUNTIME=nvidia)
+      - NVIDIA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES:-all}
+      - NVIDIA_DRIVER_CAPABILITIES=${NVIDIA_DRIVER_CAPABILITIES:-all}
+      #- NVIDIA_REQUIRE_CUDA=${NVIDIA_REQUIRE_CUDA:-cuda>=12.6}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./:/app
+    # ports:
+    #   - "8000:8000"
+    #network_mode: host
