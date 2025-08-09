@@ -50,11 +50,16 @@ export RDZV_TIMEOUT=7200   # ←これが今 None なので追加
 export TORCH_NCCL_BLOCKING_WAIT=1
 export NCCL_DEBUG=INFO
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+export NCCL_SOCKET_KEEPALIVE=1
+export GLOO_SOCKET_KEEPALIVE=1
+export TORCH_DISTRIBUTED_DEBUG=DETAIL
+export NCCL_DEBUG_SUBSYS=INIT,NET
 
 # ★ RoCE/IB での安定化（軽量チューニング）
 export NCCL_IB_GID_INDEX=${NCCL_IB_GID_INDEX:-3}
 export NCCL_NSOCKS_PERTHREAD=4
 export NCCL_SOCKET_NTHREADS=2
+
 unset NCCL_ASYNC_ERROR_HANDLING || true
 
 export PYTHONFAULTHANDLER=1
@@ -129,7 +134,12 @@ srun --ntasks=3 --ntasks-per-node=1 \
       --master_addr $MASTER_ADDR \
       --master_port $MASTER_PORT \
       --rdzv-endpoint "$MASTER_ADDR:$MASTER_PORT" \
-      --rdzv-conf join_timeout=7200,timeout=7200,last_call_timeout=60,close_timeout=60 \
+      --store-timeout=7200 \
+      --rdzv-conf join_timeout=7200,timeout=7200,read_timeout=7200, \
+                  keep_alive_interval=30, \
+                  keep_alive_timeout=600, \
+                  last_call_timeout=60, \
+                  close_timeout=60 \
       --rdzv-backend c10d \
       --rdzv-id "lora-r1-${SLURM_JOB_ID}" \
       /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
@@ -137,7 +147,7 @@ srun --ntasks=3 --ntasks-per-node=1 \
         --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
         --plugin moe \
         --pp 3 --ep 8 \
-        --batch_size 8 \
+        --batch_size 4 \
         --lr 2e-5 \
         --max_length 8 \
         --lora_rank 8 --lora_alpha 16 \
