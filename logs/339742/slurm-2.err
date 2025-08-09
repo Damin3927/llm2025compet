@@ -176,3 +176,4 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
+Step:   0%|          | 0/67 [00:00<?, ?it/s]

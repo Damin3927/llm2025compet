@@ -982,3 +982,12 @@ dataloader batch_size: 4, total batches: 67
 === [Debug] Booster boost completed: rank=13 ===
 === [Debug] Booster boost completed: rank=15 ===
 === [Debug] Booster boost completed: rank=10 ===
+=== [Debug] Model loaded from pretrained: rank=15 ===
+[Debug] rank=15, host=osk-gpu56, Max device mem: 68675.33 MB, Max CPU mem: 19680.49 MB
+[Debug] rank=15, host=osk-gpu56, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=8 ===
+[Debug] rank=08, host=osk-gpu56, Max device mem: 68675.33 MB, Max CPU mem: 19681.34 MB
+[Debug] rank=08, host=osk-gpu56, === for epoch in range(0, 2) Start ====
+=== [Debug] Model loaded from pretrained: rank=9 ===
+[Debug] rank=09, host=osk-gpu56, Max device mem: 68675.33 MB, Max CPU mem: 19682.00 MB
+[Debug] rank=09, host=osk-gpu56, === for epoch in range(0, 2) Start ====
