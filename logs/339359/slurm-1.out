@@ -1,0 +1,984 @@
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu56
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 60291
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 60291
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 11
+LOCAL_RANK               = 3
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = None
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 339359
+SLURM_NODEID             = 1
+SLURM_PROCID             = 1
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=60291
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu56
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 60291
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 60291
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 9
+LOCAL_RANK               = 1
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = None
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 339359
+SLURM_NODEID             = 1
+SLURM_PROCID             = 1
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=60291
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 60291)
+[Diag] TCP connect osk-gpu54:60291 -> FAIL (0 ms) err=ConnectionRefusedError(111, 'Connection refused')
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu56
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 60291
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 60291
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 8
+LOCAL_RANK               = 0
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = None
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 339359
+SLURM_NODEID             = 1
+SLURM_PROCID             = 1
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=60291
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 60291)
+[Diag] TCP connect osk-gpu54:60291 -> FAIL (0 ms) err=ConnectionRefusedError(111, 'Connection refused')
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu56
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 60291
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 60291
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 12
+LOCAL_RANK               = 4
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = None
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 339359
+SLURM_NODEID             = 1
+SLURM_PROCID             = 1
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=60291
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 60291)
+[Diag] TCP connect osk-gpu54:60291 -> FAIL (0 ms) err=ConnectionRefusedError(111, 'Connection refused')
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu56
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 60291
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 60291
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 14
+LOCAL_RANK               = 6
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = None
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 339359
+SLURM_NODEID             = 1
+SLURM_PROCID             = 1
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=60291
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 60291)
+[Diag] TCP connect osk-gpu54:60291 -> FAIL (0 ms) err=ConnectionRefusedError(111, 'Connection refused')
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu56
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 60291
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 60291
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 15
+LOCAL_RANK               = 7
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = None
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 339359
+SLURM_NODEID             = 1
+SLURM_PROCID             = 1
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=60291
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 60291)
+[Diag] TCP connect osk-gpu54:60291 -> FAIL (0 ms) err=ConnectionRefusedError(111, 'Connection refused')
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu56
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 60291
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 60291
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 13
+LOCAL_RANK               = 5
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = None
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 339359
+SLURM_NODEID             = 1
+SLURM_PROCID             = 1
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=60291
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 60291)
+[Diag] TCP connect osk-gpu54:60291 -> FAIL (0 ms) err=ConnectionRefusedError(111, 'Connection refused')
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu56
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 60291
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 60291
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 10
+LOCAL_RANK               = 2
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = None
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 339359
+SLURM_NODEID             = 1
+SLURM_PROCID             = 1
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=60291
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 60291)
+[Diag] TCP connect osk-gpu54:60291 -> FAIL (0 ms) err=ConnectionRefusedError(111, 'Connection refused')
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 60291)
+[Diag] TCP connect osk-gpu54:60291 -> FAIL (0 ms) err=ConnectionRefusedError(111, 'Connection refused')
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.56/24 
+enp41s0np0       UP             192.168.2.56/24 
+enp59s0np0       UP             192.168.3.56/24 
+enp86s0np0       UP             192.168.11.56/24 
+enp92s0np0       UP             192.168.4.56/24 
+enp155s0np0      UP             192.168.5.56/24 
+enp170s0np0      UP             192.168.6.56/24 
+enp187s0np0      UP             192.168.7.56/24 
+enp210s0np0      UP             192.168.12.56/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.56/24 
+bond0            UP             10.255.255.56/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.56/24 
+enp41s0np0       UP             192.168.2.56/24 
+enp59s0np0       UP             192.168.3.56/24 
+enp86s0np0       UP             192.168.11.56/24 
+enp92s0np0       UP             192.168.4.56/24 
+enp155s0np0      UP             192.168.5.56/24 
+enp170s0np0      UP             192.168.6.56/24 
+enp187s0np0      UP             192.168.7.56/24 
+enp210s0np0      UP             192.168.12.56/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.56/24 
+bond0            UP             10.255.255.56/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.56/24 
+enp41s0np0       UP             192.168.2.56/24 
+enp59s0np0       UP             192.168.3.56/24 
+enp86s0np0       UP             192.168.11.56/24 
+enp92s0np0       UP             192.168.4.56/24 
+enp155s0np0      UP             192.168.5.56/24 
+enp170s0np0      UP             192.168.6.56/24 
+enp187s0np0      UP             192.168.7.56/24 
+enp210s0np0      UP             192.168.12.56/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.56/24 
+bond0            UP             10.255.255.56/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.56/24 
+enp41s0np0       UP             192.168.2.56/24 
+enp59s0np0       UP             192.168.3.56/24 
+enp86s0np0       UP             192.168.11.56/24 
+enp92s0np0       UP             192.168.4.56/24 
+enp155s0np0      UP             192.168.5.56/24 
+enp170s0np0      UP             192.168.6.56/24 
+enp187s0np0      UP             192.168.7.56/24 
+enp210s0np0      UP             192.168.12.56/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.56/24 
+bond0            UP             10.255.255.56/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.56/24 
+enp41s0np0       UP             192.168.2.56/24 
+enp59s0np0       UP             192.168.3.56/24 
+enp86s0np0       UP             192.168.11.56/24 
+enp92s0np0       UP             192.168.4.56/24 
+enp155s0np0      UP             192.168.5.56/24 
+enp170s0np0      UP             192.168.6.56/24 
+enp187s0np0      UP             192.168.7.56/24 
+enp210s0np0      UP             192.168.12.56/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.56/24 
+bond0            UP             10.255.255.56/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.56/24 
+enp41s0np0       UP             192.168.2.56/24 
+enp59s0np0       UP             192.168.3.56/24 
+enp86s0np0       UP             192.168.11.56/24 
+enp92s0np0       UP             192.168.4.56/24 
+enp155s0np0      UP             192.168.5.56/24 
+enp170s0np0      UP             192.168.6.56/24 
+enp187s0np0      UP             192.168.7.56/24 
+enp210s0np0      UP             192.168.12.56/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.56/24 
+bond0            UP             10.255.255.56/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.56/24 
+enp41s0np0       UP             192.168.2.56/24 
+enp59s0np0       UP             192.168.3.56/24 
+enp86s0np0       UP             192.168.11.56/24 
+enp92s0np0       UP             192.168.4.56/24 
+enp155s0np0      UP             192.168.5.56/24 
+enp170s0np0      UP             192.168.6.56/24 
+enp187s0np0      UP             192.168.7.56/24 
+enp210s0np0      UP             192.168.12.56/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.56/24 
+bond0            UP             10.255.255.56/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.56/24 
+enp41s0np0       UP             192.168.2.56/24 
+enp59s0np0       UP             192.168.3.56/24 
+enp86s0np0       UP             192.168.11.56/24 
+enp92s0np0       UP             192.168.4.56/24 
+enp155s0np0      UP             192.168.5.56/24 
+enp170s0np0      UP             192.168.6.56/24 
+enp187s0np0      UP             192.168.7.56/24 
+enp210s0np0      UP             192.168.12.56/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.56/24 
+bond0            UP             10.255.255.56/24
+
+[Diag] ss -lntp | grep :60291:
+(no listener found or ss unavailable)
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :60291:
+(no listener found or ss unavailable)
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+
+[Diag] ss -lntp | grep :60291:
+(no listener found or ss unavailable)
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :60291:
+(no listener found or ss unavailable)
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :60291:
+(no listener found or ss unavailable)
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :60291:
+(no listener found or ss unavailable)
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :60291:
+(no listener found or ss unavailable)
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :60291:
+(no listener found or ss unavailable)
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/339359/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/339359/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/339359/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/339359/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/339359/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/339359/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/339359/tb
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/339359/tb
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 8, total batches: 33
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.7493190765380859 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 2.5721280574798584 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 1.438615083694458 seconds
+[extension] Time taken to load cpu_adam_x86 op: 1.1328046321868896 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 1.3229343891143799 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.11229109764099121 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 2.4075026512145996 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 2.4152166843414307 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 1.7079212665557861 seconds
+[extension] Time taken to load cpu_adam_x86 op: 2.7336924076080322 seconds
+[extension] Time taken to load cpu_adam_x86 op: 3.131420373916626 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.3363802433013916 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 5.055448532104492 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.7049267292022705 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.40564942359924316 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.8059108257293701 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+=== [Debug] Booster boost completed: rank=11 ===
+=== [Debug] Booster boost completed: rank=15 ===
+=== [Debug] Booster boost completed: rank=9 ===
+=== [Debug] Booster boost completed: rank=12 ===
+=== [Debug] Booster boost completed: rank=14 ===
+=== [Debug] Booster boost completed: rank=10 ===
+=== [Debug] Booster boost completed: rank=8 ===
+=== [Debug] Booster boost completed: rank=13 ===
