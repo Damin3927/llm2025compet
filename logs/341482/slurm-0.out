@@ -1003,3 +1003,6 @@ Default dtype set to torch.bfloat16
 === [Debug] Booster boost completed: rank=2 ===
 === [Debug] Booster boost completed: rank=1 ===
 === [Debug] Booster boost completed: rank=4 ===
+=== [Debug] Model loaded from pretrained: rank=7 ===
+[Debug] rank=07, host=osk-gpu54, Max device mem: 59391.18 MB, Max CPU mem: 24672.83 MB
+[Debug] rank=07, host=osk-gpu54, === for epoch in range(0, 2) Start ====
