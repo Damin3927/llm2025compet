@@ -134,7 +134,6 @@ srun --ntasks=3 --ntasks-per-node=1 \
       --master_addr $MASTER_ADDR \
       --master_port $MASTER_PORT \
       --rdzv-endpoint "$MASTER_ADDR:$MASTER_PORT" \
-      --store-timeout=7200 \
       --rdzv-conf join_timeout=7200,timeout=7200,read_timeout=7200, \
                   keep_alive_interval=30, \
                   keep_alive_timeout=600, \
