@@ -2,9 +2,43 @@
 
 ## 概要
 
-このデータセットは、GPQA (Graduate-level Google-proof Q&A) Diamond データセットを基に、Chain of Thought (CoT) 推論を追加して生成されたSupervised Fine-Tuning (SFT) 用のデータセットです。
+このデータセットは、GPQA (Graduate-level Google-proof Q&A) Diamond データセットを基に、Chain of Thought (CoT) 推論を追加して生成された Supervised Fine-Tuning (SFT) 用のデータセットです。
 
 専門的な科学分野（物理学、化学、生物学）における高度な質問に対して、段階的な推論プロセスを含む回答を提供します。
+
+## セットアップ
+
+スクリプトを実行する前に、以下の準備を完了させてください。
+
+1.  **必要な Python ライブラリのインストール**
+
+```bash
+pip install datasets pandas requests tqdm huggingface_hub
+```
+
+2. **OpenRouter API キーの設定**
+   OpenRouter で取得した API キーを、環境変数として設定してください。
+
+- **Windows の場合:**
+
+```bash
+set OPENROUTER_API_KEY="ここにあなたのAPIキーを貼り付け"
+```
+
+- **macOS / Linux の場合:**
+
+```bash
+export OPENROUTER_API_KEY="ここにあなたのAPIキーを貼り付け"
+```
+
+3.  **Hugging Face へログイン**
+
+```bash
+huggingface-cli login
+```
+
+トークンを入力してください。
+**注**: **`write`権限**を持つトークンが必要です。
 
 ## データセット統計
 
@@ -14,20 +48,23 @@
 
 ## ファイル形式
 
-このデータセットは以下の3つの形式で提供されています：
+このデータセットは以下の 3 つの形式で提供されています：
 
-### 1. CSV形式 (`gpqa_diamond_cot_dataset.csv`)
+### 1. CSV 形式 (`gpqa_diamond_cot_dataset.csv`)
+
 - 一般的な表形式データ
 - Excel やスプレッドシートソフトで開けます
 - Pandas で簡単に読み込み可能
 
-### 2. Parquet形式 (`gpqa_diamond_cot_dataset.parquet`)
+### 2. Parquet 形式 (`gpqa_diamond_cot_dataset.parquet`)
+
 - 高効率なカラム型データ形式
 - 大規模データの高速読み込みに最適
 - Apache Arrow エコシステムで推奨
 
-### 3. JSONL形式 (`gpqa_diamond_cot_dataset.jsonl`)
-- JSON Lines 形式（1行1レコード）
+### 3. JSONL 形式 (`gpqa_diamond_cot_dataset.jsonl`)
+
+- JSON Lines 形式（1 行 1 レコード）
 - ストリーミング処理に適している
 - 機械学習フレームワークで広く対応
 
@@ -35,12 +72,12 @@
 
 各レコードには以下のフィールドが含まれています：
 
-| フィールド名 | 型 | 説明 |
-|-------------|----|----|
-| `id` | int | 問題の一意識別子 |
-| `question` | str | 元の質問文 |
-| `output` | str | CoT推論過程を含む完全な回答（&lt;think&gt;...&lt;/think&gt;形式） |
-| `answer` | str | 最終的な正解 |
+| フィールド名 | 型  | 説明                                                               |
+| ------------ | --- | ------------------------------------------------------------------ |
+| `id`         | int | 問題の一意識別子                                                   |
+| `question`   | str | 元の質問文                                                         |
+| `output`     | str | CoT 推論過程を含む完全な回答（&lt;think&gt;...&lt;/think&gt;形式） |
+| `answer`     | str | 最終的な正解                                                       |
 
 ## サンプルデータ
 
@@ -118,18 +155,19 @@ dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
 このデータセットは以下の手順で生成されました：
 
 1. **元データ**: [GPQA Diamond Dataset](https://huggingface.co/datasets/Idavidrein/gpqa) の train split を使用
-2. **CoT生成**: DeepSeek-R1-0528:free モデルを使用して推論過程を生成
+2. **CoT 生成**: DeepSeek-R1-0528:free モデルを使用して推論過程を生成
 3. **フォーマット**: `<think>推論過程</think>最終回答` の形式で構造化
-4. **品質管理**: API呼び出しの成功/失敗を記録し、品質を担保
+4. **品質管理**: API 呼び出しの成功/失敗を記録し、品質を担保
 
 ### 生成に使用したモデル
+
 - **モデル**: `deepseek/deepseek-r1-0528:free`
 - **API**: OpenRouter API
 - **生成方式**: Few-shot prompting with domain expertise
 
 ## ライセンス
 
-このデータセットは元のGPQAデータセットのライセンスに従います。学術研究目的での使用を推奨します。
+このデータセットは元の GPQA データセットのライセンスに従います。学術研究目的での使用を推奨します。
 
 ## 引用
 
@@ -144,7 +182,8 @@ dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
 }
 ```
 
-元のGPQAデータセットの引用：
+元の GPQA データセットの引用：
+
 ```bibtex
 @article{rein2023gpqa,
   title={GPQA: A Graduate-Level Google-Proof Q&A Benchmark},

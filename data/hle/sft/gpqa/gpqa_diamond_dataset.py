@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 import requests
-from datasets import Dataset
 from tqdm import tqdm
 import time
 import json
@@ -37,12 +36,17 @@ def generate_prompt_for_gpqa_dataset(question: str, explanation: str, subdomain:
       - question: {question}
       - explanation: {explanation}
 
-    ## Output
+    ## Output Format
     - Please output the reasoning process (Reasoning/CoT) and answer in the following format:
-      <think>reasoning process (Reasoning/CoT) content</think>answer content
+    ```json
+    {{
+        "reasoning": "reasoning process (Reasoning/CoT) content",
+        "answer": "answer content"
+    }}
+    ```
   """
 
-def generate_judge_prompt(generated_answer: str, correct_answer: str, question: str) -> str:
+def generate_judge_prompt(generated_answer: str, correct_answer: str, question: str, subdomain: str) -> str:
     """
     LLM判定用のプロンプトを生成する関数
 
@@ -55,7 +59,7 @@ def generate_judge_prompt(generated_answer: str, correct_answer: str, question: 
         str: 判定用プロンプト
     """
     return f"""
-You are an expert judge for evaluating the correctness of answers to scientific questions.
+You are an expert judge for evaluating the correctness of answers to scientific questions in {subdomain}.
 
 ## Task
 Please evaluate whether the generated answer is correct compared to the reference answer.
@@ -85,7 +89,7 @@ Only output "CORRECT" or "INCORRECT", nothing else.
 """
 
 
-def judge_answer_by_llm(generated_answer: str, correct_answer: str, question: str = "") -> bool:
+def judge_answer_by_llm(generated_answer: str, correct_answer: str, question: str = "", subdomain: str = "") -> bool:
     """
     OpenRouter経由でLLMに回答の正当性を判定させる関数
 
@@ -102,7 +106,7 @@ def judge_answer_by_llm(generated_answer: str, correct_answer: str, question: st
         return generated_answer.strip().lower() == correct_answer.strip().lower()
 
     # 判定用プロンプトを生成
-    judge_prompt = generate_judge_prompt(generated_answer, correct_answer, question)
+    judge_prompt = generate_judge_prompt(generated_answer, correct_answer, question, subdomain)
 
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
@@ -166,13 +170,20 @@ def judge_answer_by_llm(generated_answer: str, correct_answer: str, question: st
 def extract_final_answer_from_cot(cot_response: str) -> str:
     """
     CoTレスポンスから最終回答を抽出する関数
+    JSON形式のレスポンスから"answer"フィールドを抽出する
 
     Args:
-        cot_response: CoT生成APIからのレスポンス
+        cot_response: CoT生成APIからのレスポンス（JSON形式）
 
     Returns:
         str: 抽出された最終回答
     """
+    # まずJSON形式での解析を試行
+    parsed_json = parse_json_response(cot_response)
+    if parsed_json and 'answer' in parsed_json:
+        return parsed_json['answer'].strip()
+
+    # JSONでない場合のフォールバック処理
     # <think>タグがある場合、</think>の後の内容を最終回答とする
     think_end_pattern = r'</think>\s*(.*?)$'
     match = re.search(think_end_pattern, cot_response, re.DOTALL | re.IGNORECASE)
@@ -265,22 +276,51 @@ def parse_json_response(response_text: str) -> dict:
     """
     API レスポンスから JSON を抽出・パースする関数
 
+    Args:
+        response_text: APIレスポンステキスト
+
     Returns:
         dict: パースされた JSON データ、失敗時は空の辞書
     """
-    try:
-        # ```json ... ``` の形式で囲まれている場合を処理
-        json_match = re.search(r'```json\s*(.*?)\s*```', response_text, re.DOTALL)
-        if json_match:
-            json_str = json_match.group(1)
-        else:
-            # JSON ブロックが見つからない場合、全体をJSONとして試行
-            json_str = response_text
-
-        return json.loads(json_str)
-    except json.JSONDecodeError:
-        print(f"⚠️ Failed to parse JSON from response: {response_text[:200]}...")
+    if not response_text or not response_text.strip():
+        print("⚠️ Empty response text provided to JSON parser")
         return {}
+
+    # 複数のJSON抽出パターンを試行
+    json_patterns = [
+        # ```json ... ``` の形式
+        r'```json\s*(.*?)\s*```',
+        # ``` ... ``` の形式（jsonキーワードなし）
+        r'```\s*(.*?)\s*```',
+        # { ... } の形式を直接探す
+        r'(\{.*?\})',
+    ]
+
+    for pattern in json_patterns:
+        try:
+            json_match = re.search(pattern, response_text, re.DOTALL)
+            if json_match:
+                json_str = json_match.group(1).strip()
+                parsed = json.loads(json_str)
+
+                # 期待するキーが含まれているかチェック
+                if isinstance(parsed, dict) and ('reasoning' in parsed or 'answer' in parsed):
+                    return parsed
+
+        except (json.JSONDecodeError, AttributeError) as e:
+            continue  # 次のパターンを試行
+
+    # 最後の手段: 全体をJSONとして試行
+    try:
+        parsed = json.loads(response_text.strip())
+        if isinstance(parsed, dict):
+            return parsed
+    except json.JSONDecodeError:
+        pass
+
+    # JSON解析に完全に失敗した場合
+    print(f"⚠️ すべてのJSON解析パターンが失敗しました。レスポンス: {response_text[:200]}...")
+    return {}
 
 
 def generate_readme_content(df: pd.DataFrame, csv_filename: str, parquet_filename: str, jsonl_filename: str, total_count: int, success_count: int) -> str:
@@ -437,7 +477,8 @@ dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
 ### 生成に使用したモデル
 - **モデル**: `{MODEL_NAME}`
 - **API**: OpenRouter API
-- **生成方式**: Few-shot prompting with domain expertise
+- **生成方式**: JSON構造化プロンプトによる推論生成
+- **出力形式**: `{{"reasoning": "推論過程", "answer": "回答"}}`のJSON形式
 
 ## ライセンス
 
@@ -560,36 +601,75 @@ def main():
             total_generated += 1
             print(f"🔍 API レスポンス(Content): {content[:200]}...")
 
-            # 生成されたCoTから最終回答を抽出
-            generated_answer = extract_final_answer_from_cot(content)
-            print(f"🔍 抽出された最終回答: {generated_answer}")
+            # JSON形式のレスポンスをパース
+            parsed_json = parse_json_response(content)
 
-            # 回答の正当性を判定
-            print(f"⚖️ 回答の正当性を判定中...")
-            is_correct = judge_answer_by_llm(
-                generated_answer=generated_answer,
-                correct_answer=item['Correct Answer'],
-                question=item['Question']
-            )
-
-            if is_correct:
-                total_judged_correct += 1
-                print(f"✅ 判定結果: 正解! データを保存します。")
-
-                # 正解の場合のみ結果を保存
-                batch_results.append({
-                    "id": item_id,
-                    "question": item['Question'],
-                    # 推論過程(Reasoning/CoT)を生成して、<think>...</think> タグで囲み、最終的な回答(answer)を </think> タグの後に記載する。
-                    "output": f"<think>{content}</think>{item['Correct Answer']}",
-                    "answer": item['Correct Answer'],
-                    "generated_answer": generated_answer,
-                    "judgment_status": "correct"
-                })
-            else:
-                print(f"❌ 判定結果: 不正解。このデータは保存されません。")
+            if parsed_json and 'reasoning' in parsed_json and 'answer' in parsed_json:
+                # JSON形式の場合
+                reasoning = parsed_json['reasoning']
+                generated_answer = parsed_json['answer']
+                print(f"🔍 JSON解析成功:")
+                print(f"   推論過程: {reasoning[:100]}...")
                 print(f"   生成回答: {generated_answer}")
-                print(f"   正解: {item['Correct Answer']}")
+
+                # 回答の正当性を判定
+                print(f"⚖️ 回答の正当性を判定中...")
+                is_correct = judge_answer_by_llm(
+                    generated_answer=generated_answer,
+                    correct_answer=item['Correct Answer'],
+                    question=item['Question'],
+                    subdomain=item['Subdomain']
+                )
+
+                if is_correct:
+                    total_judged_correct += 1
+                    print(f"✅ 判定結果: 正解! データを保存します。")
+
+                    # 正解の場合のみ結果を保存
+                    batch_results.append({
+                        "id": item_id,
+                        "question": item['Question'],
+                        # 推論過程(Reasoning/CoT)を<think>...</think>タグで囲み、最終回答を後に記載
+                        "output": f"<think>{reasoning}</think>{item['Correct Answer']}",
+                        "answer": item['Correct Answer'],
+                        "generated_answer": generated_answer,
+                        "judgment_status": "correct"
+                    })
+                else:
+                    print(f"❌ 判定結果: 不正解。このデータは保存されません。")
+                    print(f"   生成回答: {generated_answer}")
+                    print(f"   正解: {item['Correct Answer']}")
+            else:
+                # JSON解析失敗時のフォールバック処理
+                print(f"⚠️ JSON解析失敗、フォールバック処理を実行...")
+                generated_answer = extract_final_answer_from_cot(content)
+                print(f"🔍 フォールバックで抽出された最終回答: {generated_answer}")
+
+                # 回答の正当性を判定
+                print(f"⚖️ 回答の正当性を判定中...")
+                is_correct = judge_answer_by_llm(
+                    generated_answer=generated_answer,
+                    correct_answer=item['Correct Answer'],
+                    question=item['Question']
+                )
+
+                if is_correct:
+                    total_judged_correct += 1
+                    print(f"✅ 判定結果: 正解! データを保存します。")
+
+                    # 正解の場合のみ結果を保存（フォールバック処理）
+                    batch_results.append({
+                        "id": item_id,
+                        "question": item['Question'],
+                        # 推論過程(Reasoning/CoT)を生成して、<think>...</think> タグで囲み、最終的な回答(answer)を </think> タグの後に記載する。
+                        "output": f"<think>{content}</think>{item['Correct Answer']}",
+                        "answer": item['Correct Answer'],
+                        "generated_answer": generated_answer
+                    })
+                else:
+                    print(f"❌ 判定結果: 不正解。このデータは保存されません。")
+                    print(f"   生成回答: {generated_answer}")
+                    print(f"   正解: {item['Correct Answer']}")
         else:
             total_api_failures += 1
             print(f"❌ CoT生成に失敗: {content}")
