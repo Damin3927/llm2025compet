@@ -50,7 +50,7 @@ packing: true
 max_grad_norm: 0.2
 max_length: 32768 # 最大シーケンス長
 # max_steps: -1 # 最大学習ステップ数
-num_train_epochs: 1 # 学習エポック数
+num_train_epochs: 10 # 学習エポック数
 output_dir: data/Qwen3-32B # 結果の出力ディレクトリ
 optim: adamw_torch # オプティマイザの種類  何があるかはhttps://github.com/huggingface/transformers/blob/main/src/transformers/training_args.pyを参照
 overwrite_output_dir: true
