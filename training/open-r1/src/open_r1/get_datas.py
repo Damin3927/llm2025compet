@@ -41,7 +41,7 @@ def get_datas_from_config(config: DataConfig, seed: int = 42):
         print(f"  データセット '{dataset_info.name}' の分割: {list(dataset.keys())}")
         print(f"  データセット '{dataset_info.name}' のカラム: {list(dataset.column_names.values())}")
         print(f"  データセット '{dataset_info.name}' のサンプル数: {len(dataset['train'])} (train)")
-        print(f"  データセット '{dataset_info.name}' の最初のサンプル: {dataset['train'][0]}")
+        # print(f"  データセット '{dataset_info.name}' の最初のサンプル: {dataset['train'][0]}")
 
         # 2. 指定されたカラム名を一時的に 'prompt' と 'completion' に統一
         #    これにより、後続の処理を共通化できる
@@ -80,7 +80,7 @@ def get_datas_from_config(config: DataConfig, seed: int = 42):
         dataset = dataset.map(format_to_text_column, remove_columns=current_columns)
         
         # 一番目をprint
-        print(f"  データセット '{dataset_info.name}' の最初のサンプル: {dataset['train'][0]}")
+        # print(f"  データセット '{dataset_info.name}' の最初のサンプル: {dataset['train'][0]}")
         print(f"  データセット '{dataset_info.name}' のカラム: {list(dataset.column_names.values())}")
 
         loaded_datasets.append(dataset)
@@ -113,7 +113,7 @@ def get_datas_from_config(config: DataConfig, seed: int = 42):
     print(combined_dataset)
     print(combined_dataset['train'])
 
-    print("  最初のサンプル:", combined_dataset['train'][0])
+    #print("  最初のサンプル:", combined_dataset['train'][0])
     print("  最初のサンプルの文字数:", len(json.dumps(combined_dataset['train'][0]['messages'], ensure_ascii=False)))
     print("  文字数の合計:", sum(len(json.dumps(sample['messages'], ensure_ascii=False)) for sample in combined_dataset['train']))
 
