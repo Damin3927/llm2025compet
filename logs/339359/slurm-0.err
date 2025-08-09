@@ -167,3 +167,4 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
 W0809 10:51:08.771000 22356314424896 torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1267] The node 'osk-gpu54_3880255_0' has failed to send a keep-alive heartbeat to the rendezvous 'lora-r1-339359' due to an error of type RendezvousTimeoutError.
+slurmstepd: error: *** STEP 339359.0 ON osk-gpu54 CANCELLED AT 2025-08-09T12:45:49 ***
