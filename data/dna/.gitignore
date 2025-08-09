@@ -1,6 +1,17 @@
-.env
+# 実行によって生成されるログとキャッシュ
+logs/
+__pycache__/
+*.log
 
-devmode.md
+# スクリプトの出力・生成ファイル
+*.jsonl
+dna_hierarchy_count.json
+questions.json
 
-# さくらDCサーバ利用手順書（機密情報のため除外）
-さくらDCサーバ利用手順書.md
+analyze_dna_hierarchy.py
+convert_hh_rlhf.py
+fix_key.py
+process_data.py
+dpo_dataset_converted.jsonl
+dpo_dataset_unified.jsonl
+debug_dataset.py
