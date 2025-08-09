@@ -225,6 +225,16 @@ def train(args) -> None:
     # ==============================
     # Initialize Distributed Training
     # ==============================
+
+    # === extend default ProcessGroup timeout BEFORE launch_from_torch ===
+    import torch.distributed.distributed_c10d as c10d
+    from datetime import timedelta
+    _pg_timeout_sec = int(os.environ.get("TORCH_DISTRIBUTED_TIMEOUT", "7200"))
+    c10d._DEFAULT_PG_TIMEOUT = timedelta(seconds=_pg_timeout_sec)
+    print(f"[DEBUG] Set default ProcessGroup timeout to {_pg_timeout_sec} seconds", flush=True) # Added for debugging
+    print(f"=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = {c10d._DEFAULT_PG_TIMEOUT} ===", flush=True) # Added for debugging
+    # === end ===
+
     colossalai.launch_from_torch()
     accelerator = get_accelerator()
     coordinator = DistCoordinator()
