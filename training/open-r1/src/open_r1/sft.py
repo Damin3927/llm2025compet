@@ -52,6 +52,8 @@ from open_r1.get_datas import get_datas_from_config
 
 import argparse
 import yaml
+import torch
+import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -199,6 +201,7 @@ def main(script_args, training_args, model_args, data_config: DataConfig):
 
 
 if __name__ == "__main__":
+    # torch.distributed.init_process_group(backend="nccl", timeout=datetime.timedelta(seconds=7200))
     parser = TrlParser((ScriptArguments, SFTConfig, ModelConfig))
     script_args, training_args, model_args, unknown_args = parser.parse_args_and_config(return_remaining_strings = True, fail_with_unknown_args = False)
     data_config = get_dataconfig()
