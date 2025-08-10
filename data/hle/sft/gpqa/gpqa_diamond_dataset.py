@@ -111,18 +111,24 @@ Only output "CORRECT" or "INCORRECT".
 
 
 
-def judge_answer_by_llm(generated_answer: str, correct_answer: str, question: str = "", subdomain: str = "") -> bool:
+def judge_answer_by_llm(generated_answer, correct_answer: str, question: str = "", subdomain: str = "") -> bool:
     """
     OpenRouter経由でLLMに回答の正当性を判定させる関数
 
     Args:
-        generated_answer: 生成された回答
+        generated_answer: 生成された回答（str または list）
         correct_answer: 正解
         question: 元の質問（判定の参考用、オプション）
 
     Returns:
         bool: 回答が正しい場合True、間違いの場合False
     """
+    # generated_answerがリスト型の場合は文字列に変換
+    if isinstance(generated_answer, list):
+        generated_answer = str(generated_answer)
+    elif not isinstance(generated_answer, str):
+        generated_answer = str(generated_answer)
+
     if not OPENROUTER_API_KEY:
         print("⚠️ OPENROUTER_API_KEY が設定されていません。単純な文字列比較を使用します。")
         return generated_answer.strip().lower() == correct_answer.strip().lower()
