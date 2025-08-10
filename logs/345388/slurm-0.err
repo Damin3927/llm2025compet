@@ -1,7 +1,7 @@
-W0809 20:01:05.699000 22769295304512 torch/distributed/run.py:779] 
-W0809 20:01:05.699000 22769295304512 torch/distributed/run.py:779] *****************************************
-W0809 20:01:05.699000 22769295304512 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-W0809 20:01:05.699000 22769295304512 torch/distributed/run.py:779] *****************************************
+W0810 19:06:37.938000 23182118967104 torch/distributed/run.py:779] 
+W0810 19:06:37.938000 23182118967104 torch/distributed/run.py:779] *****************************************
+W0810 19:06:37.938000 23182118967104 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0810 19:06:37.938000 23182118967104 torch/distributed/run.py:779] *****************************************
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
@@ -50,14 +50,14 @@ W0809 20:01:05.699000 22769295304512 torch/distributed/run.py:779] *************
   warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
   warnings.warn(
-[W809 20:01:51.906539597 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W809 20:01:52.932057487 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W809 20:01:52.947035558 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W809 20:01:52.948517992 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W809 20:01:52.975660561 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W809 20:01:52.011273507 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W809 20:01:52.096541456 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
-[W809 20:01:53.421579978 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W810 19:07:24.200344146 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W810 19:07:24.202496813 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W810 19:07:24.266818907 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W810 19:07:24.316804993 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W810 19:07:24.334423393 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W810 19:07:24.369727518 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W810 19:07:25.135506062 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W810 19:07:25.806582582 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
@@ -73,8 +73,6 @@ W0809 20:01:05.699000 22769295304512 torch/distributed/run.py:779] *************
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
-  warnings.warn(
-/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
@@ -93,6 +91,11 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
   warnings.warn(
 /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
@@ -162,115 +165,5 @@ If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
   def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
 /home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
   def backward(ctx, tokens_grad):
-W0809 20:14:47.641000 22766075192896 torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1267] The node 'osk-gpu54_3985766_0' has failed to send a keep-alive heartbeat to the rendezvous 'lora-r1-341482' due to an error of type RendezvousTimeoutError.
-[rank7]:[E809 21:29:54.384338523 ProcessGroupGloo.cpp:143] Rank 7 successfully reached monitoredBarrier, but received errors while waiting for send/recv from rank 0. Please check rank 0 logs for faulty rank.
-[rank7]: Traceback (most recent call last):
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 687, in <module>
-[rank7]:     train(args)
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 515, in train
-[rank7]:     outputs = booster.execute_pipeline(
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221, in execute_pipeline
-[rank7]:     return self.plugin.execute_pipeline(data_iter, model, criterion, optimizer, return_loss, return_outputs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410, in execute_pipeline
-[rank7]:     outputs = self.scheduler.forward_backward_step(
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472, in forward_backward_step
-[rank7]:     result = self.run_forward_backward(model, data_iter, criterion, optimizer, return_loss, return_outputs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 391, in run_forward_backward
-[rank7]:     output_obj = self.forward_step(model, input_obj, criterion, accum_loss, outputs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 270, in forward_step
-[rank7]:     output_obj = model_forward(model, micro_batch, input_obj)
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/_utils.py", line 126, in model_forward
-[rank7]:     return model(**data, **internal_inputs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-[rank7]:     return self._call_impl(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-[rank7]:     return forward_call(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 222, in forward
-[rank7]:     return super().forward(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/interface/model.py", line 127, in forward
-[rank7]:     return self.module(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-[rank7]:     return self._call_impl(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-[rank7]:     return forward_call(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/peft/peft_model.py", line 1644, in forward
-[rank7]:     return self.base_model(
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-[rank7]:     return self._call_impl(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-[rank7]:     return forward_call(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/peft/tuners/tuners_utils.py", line 197, in forward
-[rank7]:     return self.model.forward(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 339, in deepseek_v3_for_causal_lm_forward
-[rank7]:     outputs = deepseek_v3_model_forward(
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 246, in deepseek_v3_model_forward
-[rank7]:     layer_outputs = self._gradient_checkpointing_func(
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_compile.py", line 31, in inner
-[rank7]:     return disable_fn(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py", line 600, in _fn
-[rank7]:     return fn(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/checkpoint.py", line 481, in checkpoint
-[rank7]:     return CheckpointFunction.apply(function, preserve, *args)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/autograd/function.py", line 574, in apply
-[rank7]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/checkpoint.py", line 255, in forward
-[rank7]:     outputs = run_function(*args)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-[rank7]:     return self._call_impl(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-[rank7]:     return forward_call(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/.cache/huggingface/modules/transformers_modules/DeepSeek-R1-0528-BF16/modeling_deepseek.py", line 1216, in forward
-[rank7]:     hidden_states = self.mlp(hidden_states)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-[rank7]:     return self._call_impl(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-[rank7]:     return forward_call(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 81, in forward
-[rank7]:     y = self.moe_forward(hidden_states, topk_idx, topk_weight).view(*orig_shape)
-[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/modeling/deepseek_v3.py", line 95, in moe_forward
-[rank7]:     dist.all_to_all_single(tokens_per_expert_group, tokens_per_expert, group=self.ep_group)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/c10d_logger.py", line 79, in wrapper
-[rank7]:     return func(*args, **kwargs)
-[rank7]:   File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 3770, in all_to_all_single
-[rank7]:     work = group.alltoall_base(
-[rank7]: RuntimeError: Rank 7 successfully reached monitoredBarrier, but received errors while waiting for send/recv from rank 0. Please check rank 0 logs for faulty rank.
-[rank7]:  Original exception: 
-[rank7]: [../third_party/gloo/gloo/transport/tcp/unbound_buffer.cc:81] Timed out waiting 600000ms for recv operation to complete
-[rank7]:[W809 21:30:11.505416000 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
-W0809 21:30:24.458000 22769295304512 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3985787 closing signal SIGTERM
-W0809 21:30:24.458000 22769295304512 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3985788 closing signal SIGTERM
-W0809 21:30:24.459000 22769295304512 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3985789 closing signal SIGTERM
-W0809 21:30:24.459000 22769295304512 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3985790 closing signal SIGTERM
-W0809 21:30:24.459000 22769295304512 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3985791 closing signal SIGTERM
-W0809 21:30:24.459000 22769295304512 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3985792 closing signal SIGTERM
-W0809 21:30:24.459000 22769295304512 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 3985793 closing signal SIGTERM
-E0809 21:30:38.804000 22769295304512 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 7 (pid: 3985794) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
-Traceback (most recent call last):
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
-    sys.exit(main())
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
-    return f(*args, **kwargs)
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
-    run(args)
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
-    elastic_launch(
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
-    return launch_agent(self._config, self._entrypoint, list(args))
-  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
-    raise ChildFailedError(
-torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
-============================================================
-/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
-------------------------------------------------------------
-Failures:
-  <NO_OTHER_FAILURES>
-------------------------------------------------------------
-Root Cause (first observed failure):
-[0]:
-  time      : 2025-08-09_21:30:24
-  host      : osk-gpu54
-  rank      : 7 (local_rank: 7)
-  exitcode  : 1 (pid: 3985794)
-  error_file: <N/A>
-  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
-============================================================
+W0810 19:20:16.023000 23178898859584 torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1267] The node 'osk-gpu54_79306_0' has failed to send a keep-alive heartbeat to the rendezvous 'lora-r1-345388' due to an error of type RendezvousTimeoutError.
+slurmstepd: error: *** STEP 345388.0 ON osk-gpu54 CANCELLED AT 2025-08-10T20:26:01 ***

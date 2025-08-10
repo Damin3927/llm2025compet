@@ -1,15 +1,15 @@
 ++ date
-+ echo '===== ジョブ開始: Sat Aug  9 08:00:42 PM JST 2025 ====='
++ echo '===== ジョブ開始: Sun Aug 10 08:26:38 PM JST 2025 ====='
 ++ pwd
 + echo 'cwd  = /home/Competition2025/P02/P02U006/ColossalAI'
 ++ hostname
 + echo 'host = osk-gpu54'
-+ echo 'JOB  = 341482'
++ echo 'JOB  = 345589'
 + echo 'NODES= osk-gpu[54,56,91]'
 + BASE_LOG_DIR=/home/Competition2025/P02/P02U006/ColossalAI/logs
-+ LOG_ROOT=/home/Competition2025/P02/P02U006/ColossalAI/logs/341482
++ LOG_ROOT=/home/Competition2025/P02/P02U006/ColossalAI/logs/345589
 + export LOG_ROOT
-+ mkdir -p /home/Competition2025/P02/P02U006/ColossalAI/logs/341482 /home/Competition2025/P02/P02U006/ColossalAI/logs/341482/tb
++ mkdir -p /home/Competition2025/P02/P02U006/ColossalAI/logs/345589 /home/Competition2025/P02/P02U006/ColossalAI/logs/345589/tb
 + source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
 ++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
 ++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
@@ -2424,7 +2424,7 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 + ulimit -v unlimited
 + ulimit -m unlimited
 + trap 'echo "=== SIGUSR1 on $(hostname) ==="; pkill -USR1 -f lora_finetune.py' USR1
-+ MON_LOG=/home/Competition2025/P02/P02U006/ColossalAI/logs/341482/gpu_0.log
++ MON_LOG=/home/Competition2025/P02/P02U006/ColossalAI/logs/345589/gpu_0.log
 + export FLASH_ATTENTION_DISABLE=1
 + FLASH_ATTENTION_DISABLE=1
 + export HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
@@ -2452,27 +2452,27 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 + echo CPATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/nvidia/cublas/include:
 + echo LIBRARY_PATH=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
 + echo '[after unset NCCL_NET_PLUGIN]'
-+ env
 + grep NCCL
++ env
 ++ scontrol show hostnames 'osk-gpu[54,56,91]'
 ++ head -n1
 + export MASTER_ADDR=osk-gpu54
 + MASTER_ADDR=osk-gpu54
-+ export MASTER_PORT=13482
-+ MASTER_PORT=13482
-+ echo 'MASTER_ADDR=osk-gpu54  MASTER_PORT=13482  IF=bond0'
++ export MASTER_PORT=17589
++ MASTER_PORT=17589
++ echo 'MASTER_ADDR=osk-gpu54  MASTER_PORT=17589  IF=bond0'
 + echo '== [Pre-launch NCCL env] =='
 + env
 + grep NCCL
-+ srun --ntasks=3 --ntasks-per-node=1 --kill-on-bad-exit=1 --output=/home/Competition2025/P02/P02U006/ColossalAI/logs/341482/slurm-%t.out --error=/home/Competition2025/P02/P02U006/ColossalAI/logs/341482/slurm-%t.err bash -c '
++ srun --ntasks=3 --ntasks-per-node=1 --kill-on-bad-exit=1 --output=/home/Competition2025/P02/P02U006/ColossalAI/logs/345589/slurm-%t.out --error=/home/Competition2025/P02/P02U006/ColossalAI/logs/345589/slurm-%t.err bash -c '
     source ~/miniconda3/etc/profile.d/conda.sh
     conda activate deepseeksft310
     export GLOO_SOCKET_IFNAME="bond0"
     export NCCL_SOCKET_IFNAME="bond0"
     export NCCL_IB_HCA="mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_4:1,mlx5_5:1,mlx5_6:1,mlx5_7:1,mlx5_11:1"
     export MASTER_ADDR=osk-gpu54
-    export MASTER_PORT=13482
-    MON_LOG="/home/Competition2025/P02/P02U006/ColossalAI/logs/341482/gpu_$(hostname).log"
+    export MASTER_PORT=17589
+    MON_LOG="/home/Competition2025/P02/P02U006/ColossalAI/logs/345589/gpu_$(hostname).log"
     ( while true; do
         date '\''+[%F %T] ===== GPU util ====='\'' >> "$MON_LOG"
         nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader >> "$MON_LOG"
@@ -2480,8 +2480,8 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
       done ) &
     MON_PID=$!
 
-    torchrun       --nnodes 3       --node_rank $SLURM_PROCID       --nproc_per_node 8       --master_addr osk-gpu54       --master_port 13482       --rdzv-endpoint osk-gpu54:13482       --rdzv-conf join_timeout=7200,timeout=7200,read_timeout=7200,keep_alive_interval=30,keep_alive_timeout=600,last_call_timeout=60,close_timeout=60       --rdzv-backend c10d       --rdzv-id lora-r1-341482       /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py         --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16         --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl         --plugin moe         --pp 3 --ep 8         --batch_size 4         --lr 2e-5         --max_length 8         --lora_rank 8 --lora_alpha 16         --num_epochs 2 --warmup_steps 8         --mixed_precision bf16         --use_grad_checkpoint         --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/341482/tb         --save_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/341482/DeepSeek-R1-0528-lora
+    torchrun       --nnodes 3       --node_rank $SLURM_PROCID       --nproc_per_node 8       --master_addr osk-gpu54       --master_port 17589       --rdzv-endpoint osk-gpu54:17589       --rdzv-conf join_timeout=7200,timeout=7200,read_timeout=7200,keep_alive_interval=30,keep_alive_timeout=600,last_call_timeout=60,close_timeout=60       --rdzv-backend c10d       --rdzv-id lora-r1-345589       /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py         --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16         --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl         --plugin moe         --pp 3 --ep 8         --batch_size 4         --lr 2e-5         --max_length 8         --lora_rank 8 --lora_alpha 16         --num_epochs 2 --warmup_steps 8         --mixed_precision bf16         --use_grad_checkpoint         --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/345589/tb         --save_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/345589/DeepSeek-R1-0528-lora
     kill "$MON_PID" || true
   '
 ++ date
-+ echo '===== ジョブ終了: Sat Aug  9 09:30:40 PM JST 2025 ====='
++ echo '===== ジョブ終了: Sun Aug 10 09:45:03 PM JST 2025 ====='
