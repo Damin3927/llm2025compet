@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --partition P02        # 利用するパーティション（キュー）
 #SBATCH --ntasks-per-node=1    # 1ノードあたりのタスク数
-#SBATCH --nodes=1              # 利用するノード数
+#SBATCH --nodes=3              # 利用するノード数
 #SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
-#SBATCH --nodelist osk-gpu[91] # 利用するノードのリスト
+#SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
 #SBATCH --job-name ms-235b     # ジョブの名前
 #SBATCH --time 3:00:00         # ジョブの最大実行時間
 #SBATCH --output ms-235b.out   # 標準出力ファイル
@@ -45,49 +45,36 @@ ulimit -m unlimited
 
 cd llm2025compet/training/ms-swift || exit 1
 
-# 8 * 80GiB, 3.2s/it
-PYTORCH_CUDA_ALLOC_CONF='expandable_segments:True' \
-NPROC_PER_NODE=8 \
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 \
-megatron sft \
-    --load Qwen3-235B-A22B-Instruct-2507-mcore \
-    --dataset 'swift/Chinese-Qwen3-235B-2507-Distill-data-110k-SFT#2000' \
-              'swift/self-cognition#1000' \
-    --train_type lora \
-    --lora_rank 8 \
-    --lora_alpha 32 \
-    --target_modules all-linear \
+nodes=2
+nproc_per_node=4
+
+CUDA_VISIBLE_DEVICES=0,1,2,3 \
+NNODES=$nnodes \
+NODE_RANK=1 \
+MASTER_ADDR=xxx.xxx.xxx.xxx \
+MASTER_PORT=29500 \
+NPROC_PER_NODE=$nproc_per_node \
+swift sft \
+    --model Qwen/Qwen3-235B-A22B \
+    --train_type full \
+    --dataset 'AI-ModelScope/alpaca-gpt4-data-en#500' \
     --split_dataset_ratio 0.01 \
-    --moe_permute_fusion true \
-    --tensor_model_parallel_size 4 \
-    --expert_tensor_parallel_size 1 \
-    --expert_model_parallel_size 8 \
-    --moe_grouped_gemm true \
-    --moe_shared_expert_overlap true \
-    --moe_aux_loss_coeff 1e-3 \
-    --micro_batch_size 8 \
-    --global_batch_size 16 \
-    --recompute_granularity full \
-    --recompute_method uniform \
-    --recompute_num_layers 1 \
-    --max_epochs 1 \
-    --finetune true \
-    --cross_entropy_loss_fusion true \
-    --lr 1e-4 \
-    --lr_warmup_fraction 0.05 \
-    --min_lr 1e-5 \
-    --save megatron_output/Qwen3-235B-A22B-Instruct-2507 \
-    --eval_interval 200 \
-    --save_interval 200 \
-    --max_length 2048 \
-    --num_workers 8 \
-    --dataset_num_proc 8 \
-    --no_save_optim true \
-    --no_save_rng true \
-    --sequence_parallel true \
-    --attention_backend flash \
-    --model_author swift \
-    --model_name swift-robot
+    --torch_dtype bfloat16 \
+    --num_train_epochs 1 \
+    --per_device_train_batch_size 1 \
+    --per_device_eval_batch_size 1 \
+    --learning_rate 1e-5 \
+    --gradient_accumulation_steps $(expr 32 / $nproc_per_node / $nnodes) \
+    --eval_steps 100 \
+    --save_steps 100 \
+    --save_total_limit 2 \
+    --logging_steps 5 \
+    --max_length 8192 \
+    --output_dir output \
+    --system 'You are a helpful assistant.' \
+    --warmup_ratio 0.05 \
+    --dataloader_num_workers 4 \
+    --deepspeed zero2
     
 # 実行コマンド
-# sbatch ./llm2025compet/training/commands/sft-qwen-235b-ms-node1.sh
+# sbatch ./llm2025compet/training/commands/ms-swift/sft-qwen-30b-ms-node1.sh
