@@ -1,55 +1,85 @@
 neko_sft_datasets:
-  - name: neko-llm/cot_general 
-    config: strategyqa # 一般教養
+  - name: neko-llm/HLE_SFT_general
+    config: general_strategyqa # 一般教養
+    split: train
     question_field: question
     answer_field: output
     from_id: general_strategyqa_1
     to_id: general_strategyqa_497
   - name: neko-llm/HLE_SFT_OpenThoughts-114k # 数学系
-    config: train
+    config: default # Subsetの設定なし。
+    split: train
     question_field: question
     answer_field: output
     from_id: 0
     to_id: 5999 
   - name: neko-llm/HLE_SFT_OpenMathReasoning # 数学系
     config: genselect
+    split: train
     question_field: question
     answer_field: output
     from_id: OpenMathReasoning_genselect_1
     to_id: OpenMathReasoning_genselect_5170
   - name: neko-llm/HLE_SFT_MixtureOfThoughts
     config: MoT_code # Code系
+    split: train
     question_field: question
     answer_field: output
     from_id: MoT_code_1
     to_id: MoT_code_514
   - name: neko-llm/HLE_SFT_MixtureOfThoughts
     config: MoT_science # STEM系
+    split: train
     question_field: question
     answer_field: output
     from_id: MoT_science_1
-    to_id: MoT_code_514
+    to_id: MoT_science_514
   - name: neko-llm/HLE_SFT_Chemistry # 化学系
-    config: train
+    config: chempile # Subsetの設定なし。
+    split: train
     question_field: question
     answer_field: output
     from_id: chempile_0
     to_id: chempile_923
-  - name: neko-llm/CoT_biology # 生物学系
-    config: train
+  - name: neko-llm/HLE_SFT_biology # 生物学系
+    config: ToT_biology # Subsetの設定なし。
+    split: train
     question_field: question
     answer_field: output
     from_id: ToT_0
     to_id: ToT_513
   - name: neko-llm/HLE_SFT_medical # 医学系
-    config: train
+    config: reasonmed # Subsetの設定なし。
+    split: train
     question_field: question
     answer_field: output
     from_id: reasonmed_0
     to_id: reasonmed_499
-  - name: neko-llm/cot_general 
-    config: medcalc # 医学系, クロスドメイン
+  - name: neko-llm/HLE_SFT_general
+    config: medcal # 医学系, クロスドメイン
+    split: train
     question_field: question
     answer_field: output
     from_id: medcalc_1
     to_id: medcalc_509
+  # - name: neko-llm/HLE_SFT_PHYBench # 物理系
+  #   config: default # Subsetの設定なし。
+  #   split: train
+  #   question_field: question
+  #   answer_field: output
+  #   from_id: 0
+  #   to_id: 99  
+  # - name: neko-llm/HLE_SFT_PhysReason # 物理系
+  #   config: default # Subsetの設定なし。
+  #   split: train
+  #   question_field: question
+  #   answer_field: output
+  #   from_id: 0
+  #   to_id: 202
+  - name: neko-llm/HLE_SFT_humanity # 人文科学系
+    config: history # 歴史系
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: history_0
+    to_id: history_375
