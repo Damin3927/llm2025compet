@@ -484,6 +484,18 @@ def train(args) -> None:
 
     print(f"=== [Debug] Model loaded from pretrained: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
 
+    # ★ ここで全ランク同期（重要）
+    import torch.distributed as dist
+    dist.barrier()
+    print(f"dist.barrier() completed: rank={torch.distributed.get_rank()}", flush=True) # Added for debugging
+
+    # さらに保険：PPグループ単体のバリア（使えるなら）
+    try:
+        if hasattr(plugin, "pp_group") and plugin.pp_group is not None:
+            dist.barrier(group=plugin.pp_group)
+    except Exception:
+        pass
+
     print(
         f"[Debug] rank={dist.get_rank():02d}, host={socket.gethostname()}, "
         f"Max device mem: {accelerator.max_memory_allocated() / 1024**2:.2f} MB, "
