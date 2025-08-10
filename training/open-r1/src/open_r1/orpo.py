@@ -31,7 +31,7 @@ from open_r1.utils.callbacks import get_callbacks
 from open_r1.utils.wandb_logging import init_wandb_training
 
 # TRL の DPO 用ライブラリ
-from trl import DPOTrainer, DPOConfig, ModelConfig, TrlParser, ScriptArguments, get_peft_config
+from trl import ORPOConfig, ORPOTrainer, ModelConfig, TrlParser, ScriptArguments, get_peft_config
 
 logger = logging.getLogger(__name__)
 
@@ -132,9 +132,8 @@ def main(script_args, training_args, model_args):
     # Initialize the DPO trainer
     #############################
     logger.info("*** Initialize DPO Trainer ***")
-    trainer = DPOTrainer(
+    trainer = ORPOTrainer(
         model=model,
-        ref_model=None, # None: model で指定したものと同じモデルを使用
         args=training_args,
         train_dataset=dataset[script_args.dataset_train_split],
         eval_dataset=(dataset[script_args.dataset_test_split] if training_args.eval_strategy != "no" else None),
@@ -200,6 +199,6 @@ def main(script_args, training_args, model_args):
 
 
 if __name__ == "__main__":
-    parser = TrlParser((ScriptArguments, DPOConfig, ModelConfig))
+    parser = TrlParser((ScriptArguments, ORPOConfig, ModelConfig))
     script_args, training_args, model_args = parser.parse_args_and_config()
     main(script_args, training_args, model_args)

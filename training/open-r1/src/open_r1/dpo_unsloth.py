@@ -1,21 +1,3 @@
-# Copyright 2025 The HuggingFace Team. All rights reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-"""
-grpo.py をベースに必要に応じて DPO の処理に書き換える形で実装
-"""
-
 import logging
 import os
 import sys
@@ -26,16 +8,16 @@ import transformers
 from transformers import set_seed
 from transformers.trainer_utils import get_last_checkpoint
 
-from open_r1.utils import get_dataset, get_model, get_tokenizer
-from open_r1.utils.callbacks import get_callbacks
-from open_r1.utils.wandb_logging import init_wandb_training
+import torch
+from unsloth import FastLanguageModel
+from unsloth import PatchDPOTrainer
 
-# TRL の DPO 用ライブラリ
-from trl import DPOTrainer, DPOConfig, ModelConfig, TrlParser, ScriptArguments, get_peft_config
+from trl import DPOTrainer, DPOConfig, ModelConfig, TrlParser, ScriptArguments
 
 logger = logging.getLogger(__name__)
 
 def main(script_args, training_args, model_args):
+    PatchDPOTrainer()
     # Set seed for reproducibility
     set_seed(training_args.seed)
 
@@ -77,36 +59,6 @@ def main(script_args, training_args, model_args):
     logger.info("*** Loading dataset ***")
     logger.info(f"Loading dataset: {script_args.dataset_name}")
     dataset = datasets.load_dataset(script_args.dataset_name, script_args.dataset_config)
-    # dataset = get_dataset(script_args)
-
-    ################
-    # Load tokenizer
-    ################
-    logger.info("*** Loading Tokenizer ***")
-    tokenizer = get_tokenizer(model_args, training_args)
-
-    ##############
-    # Load model #
-    ##############
-    logger.info("*** Loading model ***")
-    model = get_model(model_args, training_args)
-
-    # Format into conversation 
-    """
-    def make_conversation(example, prompt_column: str = script_args.dataset_prompt_column):
-        prompt = []
-
-        if training_args.system_prompt is not None:
-            prompt.append({"role": "system", "content": training_args.system_prompt})
-
-        if prompt_column not in example:
-            raise ValueError(f"Dataset Question Field Error: {prompt_column} is not supported.")
-
-        prompt.append({"role": "user", "content": example[prompt_column]})
-        return {"prompt": prompt}
-
-    dataset = dataset.map(make_conversation)
-    """
     # Format into pariwise preference
     def format_pref(example):
         # todo: 本学習の際にはキーを "question" "preferred_output", "non_preferred_output" に書き換える
@@ -120,13 +72,29 @@ def main(script_args, training_args, model_args):
             "chosen": example["chosen_response"],
             "rejected": example["rejected_response"]
         }
-    
     dataset["train"] = dataset["train"].map(format_pref, remove_columns=dataset["train"].column_names)
 
-    # 下3行は必要ないと思われるので消してよい?
-    #for split in dataset:
-    #    if "messages" in dataset[split].column_names:
-    #        dataset[split] = dataset[split].remove_columns("messages")
+    ##############
+    # Load model #
+    ##############
+    logger.info("*** Loading model ***")
+    model, tokenizer = FastLanguageModel.from_pretrained(
+        model_name=model_args.model_name,
+        max_seq_length=model_args.max_seq_length,
+        dtype=model_args.torch_dtype,
+        load_in_4bit=True,
+    )
+    # Add LoRA adapers
+    model = FastLanguageModel.get_peft_model(
+        model,
+        r=model_args.lora_r,
+        lora_aplha=model_args.lora_alpha,
+        lora_dropout=model_args.lora_dropout,
+        bias="none",
+        use_gradient_checkpointing="unsloth",
+        random_state=training_args.seed,
+        use_rslora=model_args.use_rslora,
+    )
 
     #############################
     # Initialize the DPO trainer
@@ -151,7 +119,6 @@ def main(script_args, training_args, model_args):
     if training_args.resume_from_checkpoint is not None:
         checkpoint = training_args.resume_from_checkpoint
     elif last_checkpoint is not None:
-        logger.info(f"last checkpoint: {last_checkpoint}")
         checkpoint = last_checkpoint
     train_result = trainer.train(resume_from_checkpoint=checkpoint)
     metrics = train_result.metrics
@@ -197,7 +164,6 @@ def main(script_args, training_args, model_args):
     if training_args.push_to_hub:
         logger.info("Pushing to hub...")
         trainer.push_to_hub(**kwargs)
-
 
 if __name__ == "__main__":
     parser = TrlParser((ScriptArguments, DPOConfig, ModelConfig))
