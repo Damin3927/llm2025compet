@@ -486,8 +486,11 @@ def train(args) -> None:
 
     # ★ ここで全ランク同期（重要）
     import torch.distributed as dist
-    dist.barrier()
-    print(f"dist.barrier() completed: rank={torch.distributed.get_rank()}", flush=True) # Added for debugging
+    print("[DBG] default pg backend =", dist.get_backend(), flush=True)  # "nccl" か "gloo" が出る
+
+    # load_model 直後の同期はこれに変更
+    dist.monitored_barrier(timeout=timedelta(minutes=60))
+    print(f"[DBG] monitored_barrier passed: rank={dist.get_rank()}", flush=True)
 
     # さらに保険：PPグループ単体のバリア（使えるなら）
     try:
