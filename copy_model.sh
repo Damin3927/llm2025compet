@@ -140,6 +140,19 @@ srun --ntasks=3 --ntasks-per-node=1 \
       rsync -a --info=progress2 "$SRC_MODEL"/ "$LOCAL_MODEL"/
     fi
 
+    # === NEW: tokenizer 一式の存在チェック（欠けてたら再 rsync） ===
+    REQ_FILES=(tokenizer.json tokenizer.model tokenizer_config.json special_tokens_map.json vocab.json merges.txt)
+    MISS=0
+    for f in "${REQ_FILES[@]}"; do
+      [ -f "$LOCAL_MODEL/$f" ] && continue
+      MISS=1
+    done
+    if [ "$MISS" -eq 1 ]; then
+      echo "[WARN] tokenizer files missing under $LOCAL_MODEL; re-rsync from $SRC_MODEL"
+      rsync -a --delete "$SRC_MODEL"/ "$LOCAL_MODEL"/
+    fi
+    # === /NEW ===
+
     # 全ノードでコピー完了を軽く同期
     touch "$LOG_ROOT/stage_$(hostname).ok"
     N_EXPECT=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | wc -l)
@@ -168,7 +181,7 @@ srun --ntasks=3 --ntasks-per-node=1 \
           --num_epochs 0 \
           --lora_rank 0 \
           --mixed_precision bf16 \
-          --tensorboard_dir "" \
+          --tensorboard_dir "$LOG_ROOT/tb" \   # CHANGED: 空文字やめる
           --save_dir "$LOCAL_SHARD"
     fi
 
@@ -210,4 +223,4 @@ srun --ntasks=3 --ntasks-per-node=1 \
     kill "$MON_PID" || true
   '
 
-echo \"===== ジョブ終了: \$(date) =====\"
+echo "===== ジョブ終了: $(date) ====="
