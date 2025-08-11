@@ -108,7 +108,7 @@ unset WANDB_DISABLED
 export WANDB_MODE=offline
 # 送り先（チーム/プロジェクト）
 export WANDB_ENTITY="neko-llm"
-export WANDB_PROJECT="qwen235b-grpo"
+export WANDB_PROJECT="qwen235b-a22b-fp8-lora-grpo"
 # 余計な出力を抑える（任意）
 export WANDB_CONSOLE=off
 export WANDB_SILENT=true
