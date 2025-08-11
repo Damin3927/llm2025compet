@@ -225,3 +225,7 @@ pyrightconfig.json
 
 *.out
 *.err
+
+# Logs and WandB runs
+logs/
+wandb/
