@@ -112,7 +112,7 @@ srun --ntasks=3 --ntasks-per-node=1 \
   --output=$LOG_ROOT/slurm-%t.out \
   --error=$LOG_ROOT/slurm-%t.err \
   bash -c "
-    set -euo pipefail
+    set -eo pipefail
     source ~/miniconda3/etc/profile.d/conda.sh
     conda activate deepseeksft310
 
