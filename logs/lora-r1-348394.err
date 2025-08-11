@@ -1,15 +1,15 @@
 ++ date
-+ echo '===== ジョブ開始: Mon Aug 11 09:21:26 AM JST 2025 ====='
++ echo '===== ジョブ開始: Mon Aug 11 10:42:15 AM JST 2025 ====='
 ++ pwd
 + echo 'cwd  = /home/Competition2025/P02/P02U006/ColossalAI'
 ++ hostname
 + echo 'host = osk-gpu54'
-+ echo 'JOB  = 348058'
++ echo 'JOB  = 348394'
 + echo 'NODES= osk-gpu[54,56,91]'
 + BASE_LOG_DIR=/home/Competition2025/P02/P02U006/ColossalAI/logs
-+ LOG_ROOT=/home/Competition2025/P02/P02U006/ColossalAI/logs/348058
++ LOG_ROOT=/home/Competition2025/P02/P02U006/ColossalAI/logs/348394
 + export LOG_ROOT
-+ mkdir -p /home/Competition2025/P02/P02U006/ColossalAI/logs/348058 /home/Competition2025/P02/P02U006/ColossalAI/logs/348058/tb
++ mkdir -p /home/Competition2025/P02/P02U006/ColossalAI/logs/348394 /home/Competition2025/P02/P02U006/ColossalAI/logs/348394/tb
 + source /home/Competition2025/P02/P02U006/miniconda3/etc/profile.d/conda.sh
 ++ export CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
 ++ CONDA_EXE=/home/Competition2025/P02/P02U006/miniconda3/bin/conda
@@ -985,8 +985,8 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 +++ newval=/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-elfedit
 +++ '[' '!' -x /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/x86_64-conda-linux-gnu-elfedit -a apply = check ']'
 +++ '[' apply = apply ']'
-++++ tr a-z+-. A-ZX__
 ++++ echo elfedit
+++++ tr a-z+-. A-ZX__
 +++ thing=ELFEDIT
 +++ eval 'oldval=$CONDA_BACKUP_ELFEDIT'
 ++++ oldval=
@@ -1968,8 +1968,8 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 ++++ CFLAGS='-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/include'
 +++ for thing in "$@"
 +++ case "${thing}" in
-++++ echo 'LDFLAGS,-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,-rpath,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -Wl,-rpath-link,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -L/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib'
 ++++ sed 's,^[^\,]*\,\(.*\),\1,'
+++++ echo 'LDFLAGS,-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,-rpath,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -Wl,-rpath-link,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -L/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib'
 +++ newval='-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,-rpath,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -Wl,-rpath-link,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -L/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib'
 ++++ echo 'LDFLAGS,-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,-rpath,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -Wl,-rpath-link,/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib -L/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib'
 ++++ sed 's,^\([^\,]*\)\,.*,\1,'
@@ -2424,7 +2424,7 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 + ulimit -v unlimited
 + ulimit -m unlimited
 + trap 'echo "=== SIGUSR1 on $(hostname) ==="; pkill -USR1 -f lora_finetune.py' USR1
-+ MON_LOG=/home/Competition2025/P02/P02U006/ColossalAI/logs/348058/gpu_0.log
++ MON_LOG=/home/Competition2025/P02/P02U006/ColossalAI/logs/348394/gpu_0.log
 + export FLASH_ATTENTION_DISABLE=1
 + FLASH_ATTENTION_DISABLE=1
 + export HF_TRANSFORMERS_CACHE_DISABLE_FLASH_ATTN_2=1
@@ -2458,21 +2458,54 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
 ++ head -n1
 + export MASTER_ADDR=osk-gpu54
 + MASTER_ADDR=osk-gpu54
-+ export MASTER_PORT=20058
-+ MASTER_PORT=20058
-+ echo 'MASTER_ADDR=osk-gpu54  MASTER_PORT=20058  IF=bond0'
++ export MASTER_PORT=20394
++ MASTER_PORT=20394
++ echo 'MASTER_ADDR=osk-gpu54  MASTER_PORT=20394  IF=bond0'
 + echo '== [Pre-launch NCCL env] =='
 + env
 + grep NCCL
-+ srun --ntasks=3 --ntasks-per-node=1 --kill-on-bad-exit=1 --output=/home/Competition2025/P02/P02U006/ColossalAI/logs/348058/slurm-%t.out --error=/home/Competition2025/P02/P02U006/ColossalAI/logs/348058/slurm-%t.err bash -c '
++ srun --ntasks=3 --ntasks-per-node=1 --kill-on-bad-exit=1 --output=/home/Competition2025/P02/P02U006/ColossalAI/logs/348394/slurm-%t.out --error=/home/Competition2025/P02/P02U006/ColossalAI/logs/348394/slurm-%t.err bash -c '
+    set -euo pipefail
     source ~/miniconda3/etc/profile.d/conda.sh
     conda activate deepseeksft310
+
+    # ===== ★ 追加: NVMe 事前ステージング（最小変更） =====
+    NVME_MNT="/nvme56"                       # チームで統一するNVMeマウント
+    export HF_HOME="$NVME_MNT/hf-cache-$USER"
+    export HF_HUB_CACHE="$HF_HOME/hub"
+    export HF_HUB_ENABLE_HF_TRANSFER=1         # HF高速DL（初回のみ有効）
+    export HF_HUB_DISABLE_PROGRESS_BARS=1
+    export HF_HUB_OFFLINE=1                    # 実行時は常にオフライン（キャッシュのみ利用）
+    unset TRANSFORMERS_CACHE
+
+    # /tmp 汚染防止（巨大テンポラリは NVMe へ）
+    export TMPDIR="$NVME_MNT/tmp/$USER"
+    mkdir -p "$TMPDIR" "$HF_HUB_CACHE"
+
+    # 学習で使うチェックポイントを共有FS→NVMeへ（初回のみ）
+    SRC_MODEL="/home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16"
+    LOCAL_MODEL="$NVME_MNT/models/DeepSeek-R1-0528-BF16"
+    if [ ! -d "$LOCAL_MODEL" ]; then
+      mkdir -p "$LOCAL_MODEL"
+      rsync -a --info=progress2 "$SRC_MODEL"/ "$LOCAL_MODEL"/
+    fi
+
+    # 全ノードコピー完了を軽く待つ
+    touch "/home/Competition2025/P02/P02U006/ColossalAI/logs/348394/stage_$(hostname).ok"
+    N_EXPECT=$(scontrol show hostnames "osk-gpu[54,56,91]" | wc -l)
+    while [ "$(ls "/home/Competition2025/P02/P02U006/ColossalAI/logs/348394"/stage_*.ok 2>/dev/null | wc -l)" -lt "$N_EXPECT" ]; do sleep 5; done
+
+    # 以降はローカルから読む
+    PRETRAINED_PATH="$LOCAL_MODEL"
+    # ===== ★ 追加ここまで =====
+
     export GLOO_SOCKET_IFNAME="bond0"
     export NCCL_SOCKET_IFNAME="bond0"
     export NCCL_IB_HCA="mlx5_0:1,mlx5_1:1"
     export MASTER_ADDR=osk-gpu54
-    export MASTER_PORT=20058
-    MON_LOG="/home/Competition2025/P02/P02U006/ColossalAI/logs/348058/gpu_$(hostname).log"
+    export MASTER_PORT=20394
+
+    MON_LOG="/home/Competition2025/P02/P02U006/ColossalAI/logs/348394/gpu_$(hostname).log"
     ( while true; do
         date '\''+[%F %T] ===== GPU util ====='\'' >> "$MON_LOG"
         nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader >> "$MON_LOG"
@@ -2480,8 +2513,12 @@ export CONDA_PYTHON_EXE='\''/home/Competition2025/P02/P02U006/miniconda3/bin/pyt
       done ) &
     MON_PID=$!
 
-    torchrun       --nnodes 3       --node_rank $SLURM_PROCID       --nproc_per_node 8       --master_addr osk-gpu54       --master_port 20058       /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py         --pretrained /home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16         --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl         --plugin moe         --pp 3 --ep 8         --batch_size 4         --lr 2e-5         --max_length 8         --lora_rank 8 --lora_alpha 16         --num_epochs 2 --warmup_steps 8         --mixed_precision bf16         --use_grad_checkpoint         --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/348058/tb         --save_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/348058/DeepSeek-R1-0528-lora
+    torchrun       --nnodes 3       --node_rank $SLURM_PROCID       --nproc_per_node 8       --master_addr osk-gpu54       --master_port 20394       /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py         --pretrained "$PRETRAINED_PATH"         --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl         --plugin moe         --pp 3 --ep 8         --batch_size 4         --lr 2e-5         --max_length 8         --lora_rank 8 --lora_alpha 16         --num_epochs 2 --warmup_steps 8         --mixed_precision bf16         --use_grad_checkpoint         --tensorboard_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/348394/tb         --save_dir /home/Competition2025/P02/P02U006/ColossalAI/logs/348394/DeepSeek-R1-0528-lora
+
     kill "$MON_PID" || true
   '
-++ date
-+ echo '===== ジョブ終了: Mon Aug 11 10:32:05 AM JST 2025 ====='
+srun: error: osk-gpu54: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=348394.0
+srun: error: osk-gpu91: task 2: Terminated
+srun: error: osk-gpu56: task 1: Terminated
+srun: Force Terminated StepId=348394.0

@@ -982,3 +982,9 @@ dataloader batch_size: 4, total batches: 67
 === [Debug] Booster boost completed: rank=11 ===
 === [Debug] Booster boost completed: rank=12 ===
 === [Debug] Booster boost completed: rank=9 ===
+=== [Debug] Model loaded from pretrained: rank=15 ===
+[DBG] default pg backend = nccl
+=== [Debug] Model loaded from pretrained: rank=8 ===
+[DBG] default pg backend = nccl
+=== [Debug] Model loaded from pretrained: rank=9 ===
+[DBG] default pg backend = nccl

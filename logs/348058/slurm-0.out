@@ -1003,3 +1003,5 @@ Default dtype set to torch.bfloat16
 === [Debug] Booster boost completed: rank=2 ===
 === [Debug] Booster boost completed: rank=3 ===
 === [Debug] Booster boost completed: rank=5 ===
+=== [Debug] Model loaded from pretrained: rank=7 ===
+[DBG] default pg backend = nccl
