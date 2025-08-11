@@ -26,7 +26,7 @@ export NCCL_ASYNC_ERROR_HANDLING=1
 ulimit -v unlimited
 ulimit -m unlimited
 
-REPO_DIR=/home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src
+REPO_DIR=/home/Competition2025/P02/P02U025/llm2025compet/training/open-r1/src
 cd "$REPO_DIR" || exit 1
 
 ################### ノードリスト取得 ###################
