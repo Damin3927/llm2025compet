@@ -213,6 +213,41 @@ print_rdzv_diagnostics()
 # === end diagnostics ===
 
 
+# ① 先頭の import 群の近くに追加
+from datetime import timedelta
+import torch.distributed as dist
+import torch.distributed.distributed_c10d as c10d
+import torch
+
+def safe_barrier(plugin=None, minutes=60):
+    """
+    Glooなら monitored_barrier(timeout=...), NCCLなら NCCL 集団通信で同期。
+    plugin の並列グループがあればそれを使い、無ければ world barrier。
+    """
+    backend = dist.get_backend()
+    if backend == "gloo":
+        # Gloo は monitored_barrier でタイムアウトを明示指定
+        dist.monitored_barrier(timeout=timedelta(minutes=minutes))
+    else:
+        # NCCL 経路：GPU上で軽いオールリデュース＝擬似バリア
+        dev = get_current_device()
+        buf = torch.ones(1, device=dev)
+        used = False
+        if plugin is not None:
+            for name in ("dp_group", "tp_group", "pp_group", "ep_group"):
+                g = getattr(plugin, name, None)
+                if g is not None:
+                    try:
+                        dist.all_reduce(buf, group=g)
+                        used = True
+                    except Exception:
+                        pass
+        if not used:
+            # 最低限 world PG で同期（この barrier は NCCL 実装でタイムアウトは c10d の設定に従う）
+            dist.barrier()
+        torch.cuda.synchronize()
+
+
 def all_reduce_mean(loss: torch.Tensor, plugin: Plugin) -> torch.Tensor:
     loss = loss.data
     group = getattr(plugin, "dp_group", None)
@@ -227,7 +262,7 @@ def train(args) -> None:
     # ==============================
 
     # === extend default ProcessGroup timeout BEFORE launch_from_torch ===
-    import torch.distributed.distributed_c10d as c10d
+
     from datetime import timedelta
     _pg_timeout_sec = int(os.environ.get("TORCH_DISTRIBUTED_TIMEOUT", "7200"))
     c10d._DEFAULT_PG_TIMEOUT = timedelta(seconds=_pg_timeout_sec)
@@ -483,14 +518,13 @@ def train(args) -> None:
     booster.load_model(model, args.pretrained, low_cpu_mem_mode=False, num_threads=8)
 
     print(f"=== [Debug] Model loaded from pretrained: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
+    
+    print("[DBG] default pg backend =", dist.get_backend(), flush=True)
 
-    # ★ ここで全ランク同期（重要）
-    import torch.distributed as dist
-    print("[DBG] default pg backend =", dist.get_backend(), flush=True)  # "nccl" か "gloo" が出る
+    # 旧: dist.monitored_barrier(timeout=timedelta(minutes=60))
+    safe_barrier(plugin, minutes=60)
 
-    # load_model 直後の同期はこれに変更
-    dist.monitored_barrier(timeout=timedelta(minutes=60))
-    print(f"[DBG] monitored_barrier passed: rank={dist.get_rank()}", flush=True)
+    print(f"[DBG] barrier passed: rank={dist.get_rank()}", flush=True)
 
     # さらに保険：PPグループ単体のバリア（使えるなら）
     try:
