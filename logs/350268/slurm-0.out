@@ -1,0 +1,1306 @@
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+please install Colossal-AI from https://www.colossalai.org/download or from source
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu54
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 22268
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 22268
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 6
+LOCAL_RANK               = 6
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = DETAIL
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 350268
+SLURM_NODEID             = 0
+SLURM_PROCID             = 0
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=22268
+[Diag] getaddrinfo:
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu54
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 22268
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 22268
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 2
+LOCAL_RANK               = 2
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = DETAIL
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 350268
+SLURM_NODEID             = 0
+SLURM_PROCID             = 0
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=22268
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu54
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 22268
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 22268
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 3
+LOCAL_RANK               = 3
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = DETAIL
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 350268
+SLURM_NODEID             = 0
+SLURM_PROCID             = 0
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=22268
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 22268)
+  - family=AF_INET  sockaddr=('192.168.11.54', 22268)
+[Diag] TCP connect osk-gpu54:22268 -> OK (2 ms)
+[Diag] TCP connect osk-gpu54:22268 -> OK (7 ms)
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 22268)
+python version      : 3.10.18
+hostname            : osk-gpu54
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 22268
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 22268
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 1
+LOCAL_RANK               = 1
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = DETAIL
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 350268
+SLURM_NODEID             = 0
+SLURM_PROCID             = 0
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=22268
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 22268)
+[Diag] TCP connect osk-gpu54:22268 -> OK (0 ms)
+[Diag] TCP connect osk-gpu54:22268 -> OK (17 ms)
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu54
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 22268
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 22268
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 0
+LOCAL_RANK               = 0
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = DETAIL
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 350268
+SLURM_NODEID             = 0
+SLURM_PROCID             = 0
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=22268
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 22268)
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu54
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 22268
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 22268
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 4
+LOCAL_RANK               = 4
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = DETAIL
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 350268
+SLURM_NODEID             = 0
+SLURM_PROCID             = 0
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=22268
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 22268)
+[Diag] TCP connect osk-gpu54:22268 -> OK (17 ms)
+[Diag] TCP connect osk-gpu54:22268 -> OK (10 ms)
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu54
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 22268
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 22268
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 5
+LOCAL_RANK               = 5
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = DETAIL
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 350268
+SLURM_NODEID             = 0
+SLURM_PROCID             = 0
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=22268
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 22268)
+[Diag] TCP connect osk-gpu54:22268 -> OK (4 ms)
+=== CONDA ENV CHECK ===
+sys.executable      : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+CONDA_DEFAULT_ENV   : deepseeksft310
+CONDA_PREFIX        : /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310
+python version      : 3.10.18
+hostname            : osk-gpu54
+torch version       : 2.4.1+cu124
+=== END CONDA ENV CHECK ===
+
+=== ENV CHECK ===
+NCCL_SOCKET_IFNAME           = bond0
+NCCL_IB_HCA                  = mlx5_0:1,mlx5_1:1
+NCCL_NET_PLUGIN              = none
+NCCL_DEBUG                   = INFO
+NCCL_TIMEOUT                 = 7200
+TORCHELASTIC_TIMEOUT         = 7200
+TORCH_DISTRIBUTED_TIMEOUT    = 7200
+TORCH_ELASTIC_STORE_TIMEOUT  = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+MASTER_ADDR                  = osk-gpu54
+MASTER_PORT                  = 22268
+CUDA_VISIBLE_DEVICES         = 0,1,2,3,4,5,6,7
+LD_LIBRARY_PATH              = /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib64:/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/targets/x86_64-linux/lib:
+RDZV_TIMEOUT                 = 7200
+=== END ENV CHECK ===
+
+=== RDZV / torch.distributed DIAGNOSTICS ===
+MASTER_ADDR              = osk-gpu54
+MASTER_PORT              = 22268
+RDZV_ENDPOINT            = None
+RDZV_ID                  = None
+RDZV_BACKEND             = None
+WORLD_SIZE               = 24
+RANK                     = 7
+LOCAL_RANK               = 7
+LOCAL_WORLD_SIZE         = 8
+NODE_RANK                = None
+NPROC_PER_NODE           = None
+TORCH_DIST_INIT_BARRIER  = None
+TORCH_DISTRIBUTED_DEBUG  = DETAIL
+NCCL_SOCKET_IFNAME       = bond0
+NCCL_IB_HCA              = mlx5_0:1,mlx5_1:1
+NCCL_DEBUG               = INFO
+NCCL_ASYNC_ERROR_HANDLING = None
+NCCL_BLOCKING_WAIT       = None
+NCCL_P2P_DISABLE         = None
+NCCL_SHM_DISABLE         = None
+GLOO_SOCKET_IFNAME       = bond0
+CUDA_VISIBLE_DEVICES     = 0,1,2,3,4,5,6,7
+NVIDIA_VISIBLE_DEVICES   = None
+--- SLURM ---
+SLURM_JOB_ID             = 350268
+SLURM_NODEID             = 0
+SLURM_PROCID             = 0
+SLURM_LOCALID            = 0
+SLURM_NTASKS             = 3
+SLURM_JOB_NODELIST       = osk-gpu[54,56,91]
+SLURM_STEP_NODELIST      = osk-gpu[54,56,91]
+
+[Diag] Using MASTER_ADDR/PORT for checks -> host=osk-gpu54, port=22268
+[Diag] getaddrinfo:
+  - family=AF_INET  sockaddr=('192.168.11.54', 22268)
+[Diag] TCP connect osk-gpu54:22268 -> OK (2 ms)
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.54/24 
+enp41s0np0       UP             192.168.2.54/24 
+enp59s0np0       UP             192.168.3.54/24 
+enp86s0np0       UP             192.168.11.54/24 
+enp92s0np0       UP             192.168.4.54/24 
+enp155s0np0      UP             192.168.5.54/24 
+enp170s0np0      UP             192.168.6.54/24 
+enp187s0np0      UP             192.168.7.54/24 
+enp210s0np0      UP             192.168.12.54/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.54/24 
+bond0            UP             10.255.255.54/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.54/24 
+enp41s0np0       UP             192.168.2.54/24 
+enp59s0np0       UP             192.168.3.54/24 
+enp86s0np0       UP             192.168.11.54/24 
+enp92s0np0       UP             192.168.4.54/24 
+enp155s0np0      UP             192.168.5.54/24 
+enp170s0np0      UP             192.168.6.54/24 
+enp187s0np0      UP             192.168.7.54/24 
+enp210s0np0      UP             192.168.12.54/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.54/24 
+bond0            UP             10.255.255.54/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.54/24 
+enp41s0np0       UP             192.168.2.54/24 
+enp59s0np0       UP             192.168.3.54/24 
+enp86s0np0       UP             192.168.11.54/24 
+enp92s0np0       UP             192.168.4.54/24 
+enp155s0np0      UP             192.168.5.54/24 
+enp170s0np0      UP             192.168.6.54/24 
+enp187s0np0      UP             192.168.7.54/24 
+enp210s0np0      UP             192.168.12.54/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.54/24 
+bond0            UP             10.255.255.54/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.54/24 
+enp41s0np0       UP             192.168.2.54/24 
+enp59s0np0       UP             192.168.3.54/24 
+enp86s0np0       UP             192.168.11.54/24 
+enp92s0np0       UP             192.168.4.54/24 
+enp155s0np0      UP             192.168.5.54/24 
+enp170s0np0      UP             192.168.6.54/24 
+enp187s0np0      UP             192.168.7.54/24 
+enp210s0np0      UP             192.168.12.54/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.54/24 
+bond0            UP             10.255.255.54/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.54/24 
+enp41s0np0       UP             192.168.2.54/24 
+enp59s0np0       UP             192.168.3.54/24 
+enp86s0np0       UP             192.168.11.54/24 
+enp92s0np0       UP             192.168.4.54/24 
+enp155s0np0      UP             192.168.5.54/24 
+enp170s0np0      UP             192.168.6.54/24 
+enp187s0np0      UP             192.168.7.54/24 
+enp210s0np0      UP             192.168.12.54/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.54/24 
+bond0            UP             10.255.255.54/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.54/24 
+enp41s0np0       UP             192.168.2.54/24 
+enp59s0np0       UP             192.168.3.54/24 
+enp86s0np0       UP             192.168.11.54/24 
+enp92s0np0       UP             192.168.4.54/24 
+enp155s0np0      UP             192.168.5.54/24 
+enp170s0np0      UP             192.168.6.54/24 
+enp187s0np0      UP             192.168.7.54/24 
+enp210s0np0      UP             192.168.12.54/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.54/24 
+bond0            UP             10.255.255.54/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.54/24 
+enp41s0np0       UP             192.168.2.54/24 
+enp59s0np0       UP             192.168.3.54/24 
+enp86s0np0       UP             192.168.11.54/24 
+enp92s0np0       UP             192.168.4.54/24 
+enp155s0np0      UP             192.168.5.54/24 
+enp170s0np0      UP             192.168.6.54/24 
+enp187s0np0      UP             192.168.7.54/24 
+enp210s0np0      UP             192.168.12.54/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.54/24 
+bond0            UP             10.255.255.54/24
+
+[Diag] ip -brief addr:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp25s0np0       UP             192.168.1.54/24 
+enp41s0np0       UP             192.168.2.54/24 
+enp59s0np0       UP             192.168.3.54/24 
+enp86s0np0       UP             192.168.11.54/24 
+enp92s0np0       UP             192.168.4.54/24 
+enp155s0np0      UP             192.168.5.54/24 
+enp170s0np0      UP             192.168.6.54/24 
+enp187s0np0      UP             192.168.7.54/24 
+enp210s0np0      UP             192.168.12.54/24 
+enp213s0f0np0    UP             
+enp213s0f1np1    UP             
+enp218s0np0      UP             192.168.8.54/24 
+bond0            UP             10.255.255.54/24
+
+[Diag] ss -lntp | grep :22268:
+LISTEN 0      16384              *:22268            *:*    users:(("pt_main_thread",pid=366449,fd=11))
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :22268:
+LISTEN 0      16384              *:22268            *:*    users:(("pt_main_thread",pid=366449,fd=11))
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :22268:
+LISTEN 0      16384              *:22268            *:*    users:(("pt_main_thread",pid=366449,fd=11))
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :22268:
+LISTEN 0      16384              *:22268            *:*    users:(("pt_main_thread",pid=366449,fd=11))
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :22268:
+LISTEN 0      16384              *:22268            *:*    users:(("pt_main_thread",pid=366449,fd=11))
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :22268:
+LISTEN 0      16384              *:22268            *:*    users:(("pt_main_thread",pid=366449,fd=11))
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :22268:
+LISTEN 0      16384              *:22268            *:*    users:(("pt_main_thread",pid=366449,fd=11))
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+
+[Diag] ss -lntp | grep :22268:
+LISTEN 0      16384              *:22268            *:*    users:(("pt_main_thread",pid=366449,fd=11))
+
+[Diag] Timeouts:
+NCCL_TIMEOUT             = 7200
+TORCHELASTIC_TIMEOUT     = 7200
+TORCH_DISTRIBUTED_TIMEOUT = 7200
+TORCH_ELASTIC_STORE_TIMEOUT = 7200
+TORCH_DISTRIBUTED_STORE_TIMEOUT = 7200
+RDZV_TIMEOUT             = 7200
+
+[Hints]
+- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。
+- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。
+- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。
+- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。
+=== END RDZV / torch.distributed DIAGNOSTICS ===
+
+==== ColossalAI SFT script: train() Start ====
+[DEBUG] Set default ProcessGroup timeout to 7200 seconds
+=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = 2:00:00 ===
+[08/11/25 20:17:30] INFO     colossalai - colossalai - INFO:                    
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/initialize.py:75 launch                       
+                    INFO     colossalai - colossalai - INFO: Distributed        
+                             environment is initialized, world size: 24         
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/350268/tb: rank=5
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/350268/tb: rank=6
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/350268/tb: rank=2
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/350268/tb: rank=3
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/350268/tb: rank=4
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/350268/tb: rank=1
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/350268/tb: rank=0
+[DEBUG] is_master=False  tensorboard_dir=/home/Competition2025/P02/P02U006/ColossalAI/logs/350268/tb: rank=7
+Training Info:
+Config file: training_config.json 
+Tensorboard logs: /home/Competition2025/P02/P02U006/ColossalAI/logs/350268/tb 
+Model checkpoint: /home/Competition2025/P02/P02U006/ColossalAI/logs/350268/DeepSeek-R1-0528-lora
+Load dataset: /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl: rank=0
+dataset size: 2160
+dataset size: 2160
+dataloader batch_size: 4, total batches: 67
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 4, total batches: 67
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 4, total batches: 67
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataloader batch_size: 4, total batches: 67
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 4, total batches: 67
+dataset size: 2160
+dataloader batch_size: 4, total batches: 67
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+dataset size: 2160
+dataloader batch_size: 4, total batches: 67
+Max device memory after data loader: 0.00 MB
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+dataset size: 2160
+dataloader batch_size: 4, total batches: 67
+=== [Debug] After dataloader, before model config ===
+=== [Debug] Using attention implementation: eager ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] AutoConfig loaded. model_type=deepseek_v3, architectures=['DeepseekV3ForCausalLM'] ===
+=== [Debug] Entered init_ctx ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+[08/11/25 20:21:16] WARNING  colossalai - colossalai - WARNING:                 
+                             /home/Competition2025/P02/P02U006/ColossalAI/coloss
+                             alai/booster/plugin/hybrid_parallel_plugin.py:1518 
+                             enable_lora                                        
+                    WARNING  colossalai - colossalai - WARNING: You have enabled
+                             LoRa training. Please check the hyperparameters    
+                             such as lr                                         
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] Model created: DeepseekV3ForCausalLM ===
+=== [Debug] Setting up LoRA ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Set model to train mode ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] LoRA enabled ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+Gradient checkpointing enabled successfully
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to train mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Gradient checkpointing enabled successfully ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+=== [Debug] Set model to eval mode ===
+Model params: 674.33 B
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.22838878631591797 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 2.860821485519409 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+Default dtype set to torch.bfloat16
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.1899394989013672 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.46253466606140137 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 1.2370641231536865 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 1.2074809074401855 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load cpu_adam_x86 op: 0.6315796375274658 seconds
+[extension] Time taken to load cpu_adam_x86 op: 0.23914265632629395 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.4497826099395752 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Time taken to load fused_optim_cuda op: 0.5053701400756836 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.19188570976257324 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.46590328216552734 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.19210124015808105 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.4761054515838623 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+[extension] Loading the JIT-built cpu_adam_x86 kernel during runtime now
+[extension] Time taken to load cpu_adam_x86 op: 0.535930871963501 seconds
+[extension] Loading the JIT-built fused_optim_cuda kernel during runtime now
+[extension] Time taken to load fused_optim_cuda op: 0.4652247428894043 seconds
+=== [Debug] Using optimizer: HybridAdam ===
+=== [Debug] warmup_steps: 8 ===
+=== [Debug] Using LR scheduler: CosineAnnealingWarmupLR ===
+=== [Debug] Booster boost completed: rank=0 ===
+=== [Debug] Booster boost completed: rank=4 ===
+=== [Debug] Booster boost completed: rank=7 ===
+=== [Debug] Booster boost completed: rank=3 ===
+=== [Debug] Booster boost completed: rank=1 ===
+=== [Debug] Booster boost completed: rank=5 ===
+=== [Debug] Booster boost completed: rank=2 ===
+=== [Debug] Booster boost completed: rank=6 ===
+=== [Debug] Model loaded from pretrained: rank=7 ===
+[DBG] default pg backend = nccl
+=== [Debug] Model loaded from pretrained: rank=0 ===
+[DBG] default pg backend = nccl
+=== [Debug] Model loaded from pretrained: rank=1 ===
+[DBG] default pg backend = nccl
+=== [Debug] Model loaded from pretrained: rank=6 ===
+[DBG] default pg backend = nccl
+=== [Debug] Model loaded from pretrained: rank=2 ===
+[DBG] default pg backend = nccl
+=== [Debug] Model loaded from pretrained: rank=5 ===
+[DBG] default pg backend = nccl
+osk-gpu54:366479:366479 [7] NCCL INFO NCCL_SOCKET_IFNAME set to bond0
+osk-gpu54:366479:366479 [7] NCCL INFO Bootstrap : Using bond0:10.255.255.54<0>
+osk-gpu54:366479:366479 [7] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:366479:366479 [7] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:366479:366479 [7] NCCL INFO cudaDriverVersion 12080
+NCCL version 2.20.5+cuda12.4
+osk-gpu54:366479:376975 [7] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1
+osk-gpu54:366479:376975 [7] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_11:1/RoCE [RO]; OOB bond0:10.255.255.54<0>
+osk-gpu54:366479:376975 [7] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:366479:376975 [7] NCCL INFO Using network IB
+osk-gpu54:366479:376975 [7] NCCL INFO comm 0x1580cb70 rank 0 nranks 1 cudaDev 7 nvmlDev 7 busId db000 commId 0x9fe6237569811f0 - Init START
+osk-gpu54:366479:376975 [7] NCCL INFO MNNVL busId 0xdb000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+osk-gpu54:366479:376975 [7] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 0 'mlx5_0'
+osk-gpu54:366479:376975 [7] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 1 'mlx5_1'
+osk-gpu54:366479:376975 [7] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 2 'mlx5_11'
+osk-gpu54:366479:376975 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 0
+osk-gpu54:366479:376975 [7] NCCL INFO GPU Direct RDMA Disabled for GPU db000 / HCA 0 (distance 7 > 4)
+osk-gpu54:366479:376975 [7] NCCL INFO GPU Direct RDMA Disabled for GPU db000 / HCA 1 (distance 7 > 4)
+osk-gpu54:366479:376975 [7] NCCL INFO comm 0x1580cb70 rank 0 nRanks 1 nNodes 1 localRanks 1 localRank 0 MNNVL 0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 00/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 01/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 02/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 03/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 04/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 05/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 06/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 07/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 08/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 09/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 10/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 11/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 12/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 13/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 14/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 15/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 16/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 17/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 18/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 19/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 20/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 21/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 22/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 23/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 24/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 25/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 26/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 27/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 28/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 29/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 30/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Channel 31/32 :    0
+osk-gpu54:366479:376975 [7] NCCL INFO Trees [0] -1/-1/-1->0->-1 [1] -1/-1/-1->0->-1 [2] -1/-1/-1->0->-1 [3] -1/-1/-1->0->-1 [4] -1/-1/-1->0->-1 [5] -1/-1/-1->0->-1 [6] -1/-1/-1->0->-1 [7] -1/-1/-1->0->-1 [8] -1/-1/-1->0->-1 [9] -1/-1/-1->0->-1 [10] -1/-1/-1->0->-1 [11] -1/-1/-1->0->-1 [12] -1/-1/-1->0->-1 [13] -1/-1/-1->0->-1 [14] -1/-1/-1->0->-1 [15] -1/-1/-1->0->-1 [16] -1/-1/-1->0->-1 [17] -1/-1/-1->0->-1 [18] -1/-1/-1->0->-1 [19] -1/-1/-1->0->-1 [20] -1/-1/-1->0->-1 [21] -1/-1/-1->0->-1 [22] -1/-1/-1->0->-1 [23] -1/-1/-1->0->-1 [24] -1/-1/-1->0->-1 [25] -1/-1/-1->0->-1 [26] -1/-1/-1->0->-1 [27] -1/-1/-1->0->-1 [28] -1/-1/-1->0->-1 [29] -1/-1/-1->0->-1 [30] -1/-1/-1->0->-1 [31] -1/-1/-1->0->-1
+osk-gpu54:366479:376975 [7] NCCL INFO P2P Chunksize set to 131072
+osk-gpu54:366479:376975 [7] NCCL INFO Connected all rings
+osk-gpu54:366479:376975 [7] NCCL INFO Connected all trees
+osk-gpu54:366479:376975 [7] NCCL INFO 32 coll channels, 0 collnet channels, 0 nvls channels, 32 p2p channels, 32 p2p channels per peer
+osk-gpu54:366479:376980 [7] NCCL INFO New proxy send connection 0 from local rank 0, transport 2
+osk-gpu54:366479:376975 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x14934003bda0
+osk-gpu54:366479:376975 [7] NCCL INFO comm 0x1580cb70 rank 0 nranks 1 cudaDev 7 nvmlDev 7 busId db000 commId 0x9fe6237569811f0 - Init COMPLETE
+=== [Debug] Model loaded from pretrained: rank=4 ===
+[DBG] default pg backend = nccl
+=== [Debug] Model loaded from pretrained: rank=3 ===
+[DBG] default pg backend = nccl
+osk-gpu54:366472:366472 [0] NCCL INFO NCCL_SOCKET_IFNAME set to bond0
+osk-gpu54:366472:366472 [0] NCCL INFO Bootstrap : Using bond0:10.255.255.54<0>
+osk-gpu54:366472:366472 [0] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:366472:366472 [0] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:366472:366472 [0] NCCL INFO cudaDriverVersion 12080
+NCCL version 2.20.5+cuda12.4
+osk-gpu54:366478:366478 [6] NCCL INFO NCCL_SOCKET_IFNAME set to bond0
+osk-gpu54:366478:366478 [6] NCCL INFO Bootstrap : Using bond0:10.255.255.54<0>
+osk-gpu54:366478:366478 [6] NCCL INFO Plugin name set by env to libnccl-net-none.so
+osk-gpu54:366478:366478 [6] NCCL INFO NET/Plugin : dlerror=libnccl-net-none.so: cannot open shared object file: No such file or directory No plugin found (libnccl-net-none.so), using internal implementation
+osk-gpu54:366478:366478 [6] NCCL INFO cudaDriverVersion 12080
+NCCL version 2.20.5+cuda12.4
+osk-gpu54:366478:377114 [6] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1
+osk-gpu54:366472:377112 [0] NCCL INFO NCCL_IB_HCA set to mlx5_0:1,mlx5_1:1
+osk-gpu54:366478:377114 [6] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_11:1/RoCE [RO]; OOB bond0:10.255.255.54<0>
+osk-gpu54:366478:377114 [6] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:366478:377114 [6] NCCL INFO Using network IB
+osk-gpu54:366472:377112 [0] NCCL INFO NET/IB : Using [0]mlx5_0:1/RoCE [1]mlx5_1:1/RoCE [2]mlx5_11:1/RoCE [RO]; OOB bond0:10.255.255.54<0>
+osk-gpu54:366472:377112 [0] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:366472:377112 [0] NCCL INFO Using network IB
+osk-gpu54:366472:377112 [0] NCCL INFO comm 0x16efbfb0 rank 0 nranks 1 cudaDev 0 nvmlDev 0 busId 18000 commId 0x8a827cfb423beda4 - Init START
+osk-gpu54:366472:377112 [0] NCCL INFO MNNVL busId 0x18000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+osk-gpu54:366472:377112 [0] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 0 'mlx5_0'
+osk-gpu54:366472:377112 [0] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 1 'mlx5_1'
+osk-gpu54:366472:377112 [0] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 2 'mlx5_11'
+osk-gpu54:366472:377112 [0] NCCL INFO GPU Direct RDMA Enabled for GPU 18000 / HCA 0 (distance 3 <= 4), read 0
+osk-gpu54:366472:377112 [0] NCCL INFO GPU Direct RDMA Disabled for GPU 18000 / HCA 1 (distance 6 > 4)
+osk-gpu54:366472:377112 [0] NCCL INFO GPU Direct RDMA Disabled for GPU 18000 / HCA 2 (distance 7 > 4)
+osk-gpu54:366472:377112 [0] NCCL INFO comm 0x16efbfb0 rank 0 nRanks 1 nNodes 1 localRanks 1 localRank 0 MNNVL 0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 00/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 01/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 02/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 03/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 04/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 05/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 06/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 07/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 08/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 09/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 10/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 11/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 12/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 13/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 14/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 15/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 16/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 17/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 18/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 19/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 20/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 21/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 22/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 23/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 24/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 25/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 26/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 27/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 28/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 29/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 30/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Channel 31/32 :    0
+osk-gpu54:366472:377112 [0] NCCL INFO Trees [0] -1/-1/-1->0->-1 [1] -1/-1/-1->0->-1 [2] -1/-1/-1->0->-1 [3] -1/-1/-1->0->-1 [4] -1/-1/-1->0->-1 [5] -1/-1/-1->0->-1 [6] -1/-1/-1->0->-1 [7] -1/-1/-1->0->-1 [8] -1/-1/-1->0->-1 [9] -1/-1/-1->0->-1 [10] -1/-1/-1->0->-1 [11] -1/-1/-1->0->-1 [12] -1/-1/-1->0->-1 [13] -1/-1/-1->0->-1 [14] -1/-1/-1->0->-1 [15] -1/-1/-1->0->-1 [16] -1/-1/-1->0->-1 [17] -1/-1/-1->0->-1 [18] -1/-1/-1->0->-1 [19] -1/-1/-1->0->-1 [20] -1/-1/-1->0->-1 [21] -1/-1/-1->0->-1 [22] -1/-1/-1->0->-1 [23] -1/-1/-1->0->-1 [24] -1/-1/-1->0->-1 [25] -1/-1/-1->0->-1 [26] -1/-1/-1->0->-1 [27] -1/-1/-1->0->-1 [28] -1/-1/-1->0->-1 [29] -1/-1/-1->0->-1 [30] -1/-1/-1->0->-1 [31] -1/-1/-1->0->-1
+osk-gpu54:366472:377112 [0] NCCL INFO P2P Chunksize set to 131072
+osk-gpu54:366478:377114 [6] NCCL INFO comm 0x15e7e8b0 rank 0 nranks 1 cudaDev 6 nvmlDev 6 busId ba000 commId 0xd5efd489b13664e8 - Init START
+osk-gpu54:366478:377114 [6] NCCL INFO MNNVL busId 0xba000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+osk-gpu54:366478:377114 [6] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 0 'mlx5_0'
+osk-gpu54:366478:377114 [6] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 1 'mlx5_1'
+osk-gpu54:366478:377114 [6] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 2 'mlx5_11'
+osk-gpu54:366478:377114 [6] NCCL INFO GPU Direct RDMA Disabled for GPU ba000 / HCA 0 (distance 7 > 4)
+osk-gpu54:366478:377114 [6] NCCL INFO GPU Direct RDMA Disabled for GPU ba000 / HCA 1 (distance 7 > 4)
+osk-gpu54:366478:377114 [6] NCCL INFO GPU Direct RDMA Disabled for GPU ba000 / HCA 2 (distance 7 > 4)
+osk-gpu54:366478:377114 [6] NCCL INFO Setting affinity for GPU 6 to 100000,00000000,00000000,00000000,10000000,00000000
+osk-gpu54:366478:377114 [6] NCCL INFO comm 0x15e7e8b0 rank 0 nRanks 1 nNodes 1 localRanks 1 localRank 0 MNNVL 0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 00/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 01/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 02/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 03/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 04/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 05/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 06/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 07/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 08/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 09/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 10/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 11/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 12/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 13/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 14/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 15/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 16/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 17/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 18/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 19/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 20/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 21/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 22/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 23/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 24/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 25/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 26/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 27/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 28/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 29/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 30/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Channel 31/32 :    0
+osk-gpu54:366478:377114 [6] NCCL INFO Trees [0] -1/-1/-1->0->-1 [1] -1/-1/-1->0->-1 [2] -1/-1/-1->0->-1 [3] -1/-1/-1->0->-1 [4] -1/-1/-1->0->-1 [5] -1/-1/-1->0->-1 [6] -1/-1/-1->0->-1 [7] -1/-1/-1->0->-1 [8] -1/-1/-1->0->-1 [9] -1/-1/-1->0->-1 [10] -1/-1/-1->0->-1 [11] -1/-1/-1->0->-1 [12] -1/-1/-1->0->-1 [13] -1/-1/-1->0->-1 [14] -1/-1/-1->0->-1 [15] -1/-1/-1->0->-1 [16] -1/-1/-1->0->-1 [17] -1/-1/-1->0->-1 [18] -1/-1/-1->0->-1 [19] -1/-1/-1->0->-1 [20] -1/-1/-1->0->-1 [21] -1/-1/-1->0->-1 [22] -1/-1/-1->0->-1 [23] -1/-1/-1->0->-1 [24] -1/-1/-1->0->-1 [25] -1/-1/-1->0->-1 [26] -1/-1/-1->0->-1 [27] -1/-1/-1->0->-1 [28] -1/-1/-1->0->-1 [29] -1/-1/-1->0->-1 [30] -1/-1/-1->0->-1 [31] -1/-1/-1->0->-1
+osk-gpu54:366478:377114 [6] NCCL INFO P2P Chunksize set to 131072
+osk-gpu54:366472:377112 [0] NCCL INFO Connected all rings
+osk-gpu54:366472:377112 [0] NCCL INFO Connected all trees
+osk-gpu54:366472:377112 [0] NCCL INFO 32 coll channels, 0 collnet channels, 0 nvls channels, 32 p2p channels, 32 p2p channels per peer
+osk-gpu54:366472:377121 [0] NCCL INFO New proxy send connection 0 from local rank 0, transport 2
+osk-gpu54:366472:377112 [0] NCCL INFO Connected to proxy localRank 0 -> connection 0x154d08031110
+osk-gpu54:366478:377114 [6] NCCL INFO Connected all rings
+osk-gpu54:366478:377114 [6] NCCL INFO Connected all trees
+osk-gpu54:366478:377114 [6] NCCL INFO 32 coll channels, 0 collnet channels, 0 nvls channels, 32 p2p channels, 32 p2p channels per peer
+osk-gpu54:366478:377124 [6] NCCL INFO New proxy send connection 0 from local rank 0, transport 2
+osk-gpu54:366478:377114 [6] NCCL INFO Connected to proxy localRank 0 -> connection 0x14978c0315d0
+osk-gpu54:366472:377112 [0] NCCL INFO comm 0x16efbfb0 rank 0 nranks 1 cudaDev 0 nvmlDev 0 busId 18000 commId 0x8a827cfb423beda4 - Init COMPLETE
+osk-gpu54:366478:377114 [6] NCCL INFO comm 0x15e7e8b0 rank 0 nranks 1 cudaDev 6 nvmlDev 6 busId ba000 commId 0xd5efd489b13664e8 - Init COMPLETE
+osk-gpu54:366479:377616 [7] NCCL INFO Using non-device net plugin version 0
+osk-gpu54:366479:377616 [7] NCCL INFO Using network IB
+osk-gpu54:366479:377616 [7] NCCL INFO comm 0x1582b3b0 rank 0 nranks 3 cudaDev 7 nvmlDev 7 busId db000 commId 0x6dabc43a773b8e9f - Init START
+osk-gpu54:366479:377616 [7] NCCL INFO MNNVL busId 0xdb000 fabric UUID 0.0 cliqueId 0x0 state 3 healthMask 0x0
+osk-gpu54:366479:377616 [7] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 0 'mlx5_0'
+osk-gpu54:366479:377616 [7] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 1 'mlx5_1'
+osk-gpu54:366479:377616 [7] NCCL INFO NET/IB : GPU Direct RDMA Enabled for HCA 2 'mlx5_11'
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 0
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Disabled for GPU db000 / HCA 0 (distance 7 > 4)
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Disabled for GPU db000 / HCA 1 (distance 7 > 4)
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 0
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Disabled for GPU db000 / HCA 0 (distance 7 > 4)
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Disabled for GPU db000 / HCA 1 (distance 7 > 4)
+osk-gpu54:366479:377616 [7] NCCL INFO comm 0x1582b3b0 rank 0 nRanks 3 nNodes 3 localRanks 1 localRank 0 MNNVL 0
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 00/04 :    0   1   2
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 01/04 :    0   1   2
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 02/04 :    0   1   2
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 03/04 :    0   1   2
+osk-gpu54:366479:377616 [7] NCCL INFO Trees [0] 2/-1/-1->0->-1 [1] 2/-1/-1->0->-1 [2] 2/-1/-1->0->1 [3] 2/-1/-1->0->1
+osk-gpu54:366479:377616 [7] NCCL INFO P2P Chunksize set to 131072
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 0
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy recv connection 0 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031550
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 00/0 : 2[7] -> 0[7] [receive] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 0
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy recv connection 1 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a00315c8
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 01/0 : 2[7] -> 0[7] [receive] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 0
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy recv connection 2 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031640
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 02/0 : 2[7] -> 0[7] [receive] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 0
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy recv connection 3 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a00316b8
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 03/0 : 2[7] -> 0[7] [receive] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 1
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy send connection 4 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031730
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 00/0 : 0[7] -> 1[7] [send] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 1
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy send connection 5 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a00317a8
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 01/0 : 0[7] -> 1[7] [send] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 1
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy send connection 6 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031820
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 02/0 : 0[7] -> 1[7] [send] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 1
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy send connection 7 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031898
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 03/0 : 0[7] -> 1[7] [send] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: NCCL Dev 2 IbDev 2 Port 1 qpn 128422 mtu 5 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0} GID 3 (0/3608A8C0FFFF0000) fifoRkey=0x120fbd fifoLkey=0x120fbd
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: NCCL Dev 2 IbDev 2 Port 1 qpn 128423 mtu 5 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0} GID 3 (0/3608A8C0FFFF0000) fifoRkey=0x2181a2 fifoLkey=0x2181a2
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: NCCL Dev 2 IbDev 2 Port 1 qpn 128424 mtu 5 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0} GID 3 (0/3608A8C0FFFF0000) fifoRkey=0xfd48e fifoLkey=0xfd48e
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: NCCL Dev 2 IbDev 2 Port 1 qpn 128425 mtu 5 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0} GID 3 (0/3608A8C0FFFF0000) fifoRkey=0x21c2e3 fifoLkey=0x21c2e3
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: IbDev 2 Port 1 qpn 122771 set_ece={supported=1, vendor_id=0x15b3, options=0x0, comp_mask=0x0}
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: IbDev 2 Port 1 qpn 122774 set_ece={supported=1, vendor_id=0x15b3, options=0x0, comp_mask=0x0}
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: IbDev 2 Port 1 qpn 122777 set_ece={supported=1, vendor_id=0x15b3, options=0x0, comp_mask=0x0}
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: IbDev 2 Port 1 qpn 122780 set_ece={supported=1, vendor_id=0x15b3, options=0x0, comp_mask=0x0}
+osk-gpu54:366479:377616 [7] NCCL INFO Connected all rings
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 0
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy recv connection 8 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031910
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 02/0 : 1[7] -> 0[7] [receive] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 0
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy recv connection 9 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031988
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 03/0 : 1[7] -> 0[7] [receive] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 1
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy send connection 10 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031a00
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 00/0 : 0[7] -> 2[7] [send] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 1
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy send connection 11 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031a78
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 01/0 : 0[7] -> 2[7] [send] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 1
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy send connection 12 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031af0
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 02/0 : 0[7] -> 2[7] [send] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377616 [7] NCCL INFO GPU Direct RDMA Enabled for GPU db000 / HCA 2 (distance 3 <= 4), read 1
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy send connection 13 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031b68
+osk-gpu54:366479:377616 [7] NCCL INFO Channel 03/0 : 0[7] -> 2[7] [send] via NET/IB/2/GDRDMA
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: NCCL Dev 2 IbDev 2 Port 1 qpn 128434 mtu 5 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0} GID 3 (0/3608A8C0FFFF0000) fifoRkey=0x214566 fifoLkey=0x214566
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: NCCL Dev 2 IbDev 2 Port 1 qpn 128435 mtu 5 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0} GID 3 (0/3608A8C0FFFF0000) fifoRkey=0x21ed0e fifoLkey=0x21ed0e
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: NCCL Dev 2 IbDev 2 Port 1 qpn 128436 mtu 5 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0} GID 3 (0/3608A8C0FFFF0000) fifoRkey=0x217899 fifoLkey=0x217899
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: NCCL Dev 2 IbDev 2 Port 1 qpn 128437 mtu 5 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0} GID 3 (0/3608A8C0FFFF0000) fifoRkey=0x136e2d fifoLkey=0x136e2d
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: IbDev 2 Port 1 qpn 15786 set_ece={supported=1, vendor_id=0x15b3, options=0x0, comp_mask=0x0}
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: IbDev 2 Port 1 qpn 15789 set_ece={supported=1, vendor_id=0x15b3, options=0x0, comp_mask=0x0}
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: IbDev 2 Port 1 qpn 15791 set_ece={supported=1, vendor_id=0x15b3, options=0x0, comp_mask=0x0}
+osk-gpu54:366479:377617 [7] NCCL INFO NET/IB: IbDev 2 Port 1 qpn 15793 set_ece={supported=1, vendor_id=0x15b3, options=0x0, comp_mask=0x0}
+osk-gpu54:366479:377616 [7] NCCL INFO Connected all trees
+osk-gpu54:366479:377616 [7] NCCL INFO threadThresholds 8/8/64 | 24/8/64 | 512 | 512
+osk-gpu54:366479:377616 [7] NCCL INFO 4 coll channels, 0 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+osk-gpu54:366479:377617 [7] NCCL INFO New proxy send connection 14 from local rank 0, transport 2
+osk-gpu54:366479:377616 [7] NCCL INFO Connected to proxy localRank 0 -> connection 0x1492a0031be0
+osk-gpu54:366479:377616 [7] NCCL INFO comm 0x1582b3b0 rank 0 nranks 3 cudaDev 7 nvmlDev 7 busId db000 commId 0x6dabc43a773b8e9f - Init COMPLETE
+[DBG] barrier passed: rank=7
+[Debug] rank=07, host=osk-gpu54, Max device mem: 59859.03 MB, Max CPU mem: 25833.81 MB
+[Debug] rank=07, host=osk-gpu54, === for epoch in range(0, 2) Start ====
+[Debug] optimizer=MoeHybridParallelZeroOptimizer, model=HybridParallelModule,  rank=7
+osk-gpu54:366479:377617 [7] NCCL INFO [Service thread] Connection closed by localRank 0
+osk-gpu54:366479:377641 [7] NCCL INFO comm 0x1582b3b0 rank 0 nranks 3 cudaDev 7 busId db000 - Abort COMPLETE
+osk-gpu54:366479:376980 [7] NCCL INFO [Service thread] Connection closed by localRank 0
+osk-gpu54:366479:377642 [7] NCCL INFO comm 0x1580cb70 rank 0 nranks 1 cudaDev 7 busId db000 - Abort COMPLETE

@@ -1,0 +1,502 @@
+W0811 20:16:49.125000 22913795405632 torch/distributed/run.py:779] 
+W0811 20:16:49.125000 22913795405632 torch/distributed/run.py:779] *****************************************
+W0811 20:16:49.125000 22913795405632 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0811 20:16:49.125000 22913795405632 torch/distributed/run.py:779] *****************************************
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+[W811 20:17:30.333474783 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W811 20:17:30.343362540 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W811 20:17:30.360481526 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W811 20:17:30.362274351 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W811 20:17:30.404337178 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W811 20:17:30.406896086 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W811 20:17:30.412411627 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W811 20:17:30.435330459 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+[rank15]:[E811 21:37:13.795715429 ProcessGroupGloo.cpp:143] Rank 7 successfully reached monitoredBarrier, but received errors while waiting for send/recv from rank 0. Please check rank 0 logs for faulty rank.
+[rank14]:[E811 21:37:47.504293722 ProcessGroupNCCL.cpp:1314] [PG 0 Rank 14] Failed to get exception dump flag from the global store.Connection reset by peer
+Exception raised from recvBytes at ../torch/csrc/distributed/c10d/Utils.hpp:672 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x147c485a1f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d00fae (0x147c82f69fae in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::string, std::allocator<std::string> > const&) + 0x338 (0x147c82f65ae8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::heartbeatMonitor() + 0x365 (0x147c49866b95 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xdbbf4 (0x147c96979bf4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/../lib/libstdc++.so.6)
+frame #5: <unknown function> + 0x897fa (0x147c97a897fa in /lib64/libc.so.6)
+frame #6: <unknown function> + 0x10e820 (0x147c97b0e820 in /lib64/libc.so.6)
+
+[rank15]:[E811 21:37:47.510146359 ProcessGroupNCCL.cpp:1314] [PG 0 Rank 15] Failed to get exception dump flag from the global store.Connection reset by peer
+Exception raised from recvBytes at ../torch/csrc/distributed/c10d/Utils.hpp:672 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x14a0f42aff86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d00fae (0x14a12ec77fae in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::string, std::allocator<std::string> > const&) + 0x338 (0x14a12ec73ae8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::heartbeatMonitor() + 0x365 (0x14a0f5574b95 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xdbbf4 (0x14a142687bf4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/../lib/libstdc++.so.6)
+frame #5: <unknown function> + 0x897fa (0x14a1436897fa in /lib64/libc.so.6)
+frame #6: <unknown function> + 0x10e820 (0x14a14370e820 in /lib64/libc.so.6)
+
+[rank10]:[E811 21:37:47.499339333 ProcessGroupNCCL.cpp:1314] [PG 0 Rank 10] Failed to get exception dump flag from the global store.Connection reset by peer
+Exception raised from recvBytes at ../torch/csrc/distributed/c10d/Utils.hpp:672 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x152858d6bf86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d00fae (0x152893733fae in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::string, std::allocator<std::string> > const&) + 0x338 (0x15289372fae8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::heartbeatMonitor() + 0x365 (0x15285a030b95 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xdbbf4 (0x1528a7143bf4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/../lib/libstdc++.so.6)
+frame #5: <unknown function> + 0x897fa (0x1528a82897fa in /lib64/libc.so.6)
+frame #6: <unknown function> + 0x10e820 (0x1528a830e820 in /lib64/libc.so.6)
+
+[rank11]:[E811 21:37:47.500896125 ProcessGroupNCCL.cpp:1314] [PG 0 Rank 11] Failed to get exception dump flag from the global store.Connection reset by peer
+Exception raised from recvBytes at ../torch/csrc/distributed/c10d/Utils.hpp:672 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x152a0e4daf86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d00fae (0x152a48ea2fae in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::string, std::allocator<std::string> > const&) + 0x338 (0x152a48e9eae8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::heartbeatMonitor() + 0x365 (0x152a0f79fb95 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xdbbf4 (0x152a5c8b2bf4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/../lib/libstdc++.so.6)
+frame #5: <unknown function> + 0x897fa (0x152a5d8897fa in /lib64/libc.so.6)
+frame #6: <unknown function> + 0x10e820 (0x152a5d90e820 in /lib64/libc.so.6)
+
+[rank12]:[E811 21:37:47.503322886 ProcessGroupNCCL.cpp:1314] [PG 0 Rank 12] Failed to get exception dump flag from the global store.Connection reset by peer
+Exception raised from recvBytes at ../torch/csrc/distributed/c10d/Utils.hpp:672 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x14d8852f2f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d00fae (0x14d8bfcbafae in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::string, std::allocator<std::string> > const&) + 0x338 (0x14d8bfcb6ae8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::heartbeatMonitor() + 0x365 (0x14d8865b7b95 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xdbbf4 (0x14d8d36cabf4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/../lib/libstdc++.so.6)
+frame #5: <unknown function> + 0x897fa (0x14d8d46897fa in /lib64/libc.so.6)
+frame #6: <unknown function> + 0x10e820 (0x14d8d470e820 in /lib64/libc.so.6)
+
+[rank9]:[E811 21:37:47.513794467 ProcessGroupNCCL.cpp:1314] [PG 0 Rank 9] Failed to get exception dump flag from the global store.Connection reset by peer
+Exception raised from recvBytes at ../torch/csrc/distributed/c10d/Utils.hpp:672 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x14595c808f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d00fae (0x1459971d0fae in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::string, std::allocator<std::string> > const&) + 0x338 (0x1459971ccae8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::heartbeatMonitor() + 0x365 (0x14595dacdb95 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xdbbf4 (0x1459aabe0bf4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/../lib/libstdc++.so.6)
+frame #5: <unknown function> + 0x897fa (0x1459abc897fa in /lib64/libc.so.6)
+frame #6: <unknown function> + 0x10e820 (0x1459abd0e820 in /lib64/libc.so.6)
+
+[rank13]:[E811 21:37:47.422313458 ProcessGroupNCCL.cpp:1314] [PG 0 Rank 13] Failed to get exception dump flag from the global store.Connection reset by peer
+Exception raised from recvBytes at ../torch/csrc/distributed/c10d/Utils.hpp:672 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x1537b8112f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d00fae (0x1537f2adafae in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::string, std::allocator<std::string> > const&) + 0x338 (0x1537f2ad6ae8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::heartbeatMonitor() + 0x365 (0x1537b93d7b95 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xdbbf4 (0x1538064eabf4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/../lib/libstdc++.so.6)
+frame #5: <unknown function> + 0x897fa (0x1538074897fa in /lib64/libc.so.6)
+frame #6: <unknown function> + 0x10e820 (0x15380750e820 in /lib64/libc.so.6)
+
+[rank8]:[E811 21:37:47.506936881 ProcessGroupNCCL.cpp:1314] [PG 0 Rank 8] Failed to get exception dump flag from the global store.Connection reset by peer
+Exception raised from recvBytes at ../torch/csrc/distributed/c10d/Utils.hpp:672 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x154e817a1f86 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0x5d00fae (0x154ebc169fae in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #2: c10d::TCPStore::check(std::vector<std::string, std::allocator<std::string> > const&) + 0x338 (0x154ebc165ae8 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so)
+frame #3: c10d::ProcessGroupNCCL::heartbeatMonitor() + 0x365 (0x154e82a66b95 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0xdbbf4 (0x154ecfb79bf4 in /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/../lib/libstdc++.so.6)
+frame #5: <unknown function> + 0x897fa (0x154ed0c897fa in /lib64/libc.so.6)
+frame #6: <unknown function> + 0x10e820 (0x154ed0d0e820 in /lib64/libc.so.6)
+
+[rank14]:[E811 21:37:47.544958060 ProcessGroupNCCL.cpp:1413] 
+[rank15]:[E811 21:37:47.545076840 ProcessGroupNCCL.cpp:1413] 
+[rank11]:[E811 21:37:47.545167028 ProcessGroupNCCL.cpp:1413] 
+[rank12]:[E811 21:37:47.545251638 ProcessGroupNCCL.cpp:1413] 
+[rank10]:[E811 21:37:47.545329516 ProcessGroupNCCL.cpp:1413] 
+[rank13]:[E811 21:37:47.545413951 ProcessGroupNCCL.cpp:1413] 
+[rank9]:[E811 21:37:47.545485740 ProcessGroupNCCL.cpp:1413] 
+[rank8]:[E811 21:37:47.545576391 ProcessGroupNCCL.cpp:1413] 
+[rank15]:[F811 21:37:47.556117187 ProcessGroupNCCL.cpp:1224] [PG 0 Rank 15] [PG 0 Rank 15] 
+Fatal Python error: Aborted
+
+Thread 0x0000149d785fa640 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 324 in wait
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 607 in wait
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/tqdm/_monitor.py", line 60 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+
+Thread 0x0000149e582a4640 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 43 in _recv_msg
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 114 in _read_thread
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 953 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+
+Thread 0x000014a14397b740 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2105 in _coalescing_manager
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/contextlib.py", line 142 in __exit__
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2158 in batch_isend_irecv
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 318 in _send_recv_serialization_object
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 414 in _communicate
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/p2p.py", line 558 in recv_forward
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 131 in recv_forward
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 390 in run_forward_backward
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/pipeline/schedule/one_f_one_b.py", line 472 in forward_backward_step
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 1410 in execute_pipeline
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 221 in execute_pipeline
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 565 in train
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 740 in <module>
+
+Extension modules: numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, torch._C, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, charset_normalizer.md, requests.packages.charset_normalizer.md, requests.packages.chardet.md, yaml._yaml, markupsafe._speedups, PIL._imaging, sentencepiece._sentencepiece, psutil._psutil_linux, psutil._psutil_posix, pyarrow.lib, pandas._libs.tslibs.ccalendar, pandas._libs.tslibs.np_datetime, pandas._libs.tslibs.dtypes, pandas._libs.tslibs.base, pandas._libs.tslibs.nattype, pandas._libs.tslibs.timezones, pandas._libs.tslibs.fields, pandas._libs.tslibs.timedeltas, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properties, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, pandas._libs.tslibs.parsing, pandas._libs.tslibs.conversion, pandas._libs.tslibs.period, pandas._libs.tslibs.vectorized, pandas._libs.ops_dispatch, pandas._libs.missing, pandas._libs.hashtable, pandas._libs.algos, pandas._libs.interval, pandas._libs.lib, pyarrow._compute, pandas._libs.ops, pandas._libs.hashing, pandas._libs.arrays, pandas._libs.tslib, pandas._libs.sparse, pandas._libs.internals, pandas._libs.indexing, pandas._libs.index, pandas._libs.writers, pandas._libs.join, pandas._libs.window.aggregations, pandas._libs.window.indexers, pandas._libs.reshape, pandas._libs.groupby, pandas._libs.json, pandas._libs.parsers, pandas._libs.testing, pyarrow._parquet, pyarrow._fs, pyarrow._azurefs, pyarrow._hdfs, pyarrow._gcsfs, pyarrow._s3fs, multidict._multidict, yarl._quoting_c, propcache._helpers_c, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket.mask, aiohttp._websocket.reader_c, frozenlist._frozenlist, xxhash._xxhash, pyarrow._json, PIL._imagingft (total: 88)
+[rank9]:[F811 21:37:47.560127011 ProcessGroupNCCL.cpp:1224] [PG 0 Rank 9] [PG 0 Rank 9] 
+Fatal Python error: Aborted
+
+Thread 0x00001456c06a4640 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 43 in _recv_msg
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 114 in _read_thread
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 953 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+
+Thread 0x00001459abed1740 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2288 in all_reduce
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/c10d_logger.py", line 79 in wrapper
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 241 in safe_barrier
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 525 in train
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 740 in <module>
+
+Extension modules: numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, torch._C, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, charset_normalizer.md, requests.packages.charset_normalizer.md, requests.packages.chardet.md, yaml._yaml, markupsafe._speedups, PIL._imaging, sentencepiece._sentencepiece, psutil._psutil_linux, psutil._psutil_posix, pyarrow.lib, pandas._libs.tslibs.ccalendar, pandas._libs.tslibs.np_datetime, pandas._libs.tslibs.dtypes, pandas._libs.tslibs.base, pandas._libs.tslibs.nattype, pandas._libs.tslibs.timezones, pandas._libs.tslibs.fields, pandas._libs.tslibs.timedeltas, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properties, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, pandas._libs.tslibs.parsing, pandas._libs.tslibs.conversion, pandas._libs.tslibs.period, pandas._libs.tslibs.vectorized, pandas._libs.ops_dispatch, pandas._libs.missing, pandas._libs.hashtable, pandas._libs.algos, pandas._libs.interval, pandas._libs.lib, pyarrow._compute, pandas._libs.ops, pandas._libs.hashing, pandas._libs.arrays, pandas._libs.tslib, pandas._libs.sparse, pandas._libs.internals, pandas._libs.indexing, pandas._libs.index, pandas._libs.writers, pandas._libs.join, pandas._libs.window.aggregations, pandas._libs.window.indexers, pandas._libs.reshape, pandas._libs.groupby, pandas._libs.json, pandas._libs.parsers, pandas._libs.testing, pyarrow._parquet, pyarrow._fs, pyarrow._azurefs, pyarrow._hdfs, pyarrow._gcsfs, pyarrow._s3fs, multidict._multidict, yarl._quoting_c, propcache._helpers_c, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket.mask, aiohttp._websocket.reader_c, frozenlist._frozenlist, xxhash._xxhash, pyarrow._json, PIL._imagingft (total: 88)
+[rank8]:[F811 21:37:47.563048565 ProcessGroupNCCL.cpp:1224] [PG 0 Rank 8] [PG 0 Rank 8] 
+Fatal Python error: Aborted
+
+Thread 0x0000154be57a4640 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 43 in _recv_msg
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 114 in _read_thread
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 953 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+
+Thread 0x0000154ed0e69740 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py", line 2288 in all_reduce
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/c10d_logger.py", line 79 in wrapper
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 241 in safe_barrier
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 525 in train
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 740 in <module>
+
+Extension modules: numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, torch._C, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, charset_normalizer.md, requests.packages.charset_normalizer.md, requests.packages.chardet.md, yaml._yaml, markupsafe._speedups, PIL._imaging, sentencepiece._sentencepiece, psutil._psutil_linux, psutil._psutil_posix, pyarrow.lib, pandas._libs.tslibs.ccalendar, pandas._libs.tslibs.np_datetime, pandas._libs.tslibs.dtypes, pandas._libs.tslibs.base, pandas._libs.tslibs.nattype, pandas._libs.tslibs.timezones, pandas._libs.tslibs.fields, pandas._libs.tslibs.timedeltas, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properties, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, pandas._libs.tslibs.parsing, pandas._libs.tslibs.conversion, pandas._libs.tslibs.period, pandas._libs.tslibs.vectorized, pandas._libs.ops_dispatch, pandas._libs.missing, pandas._libs.hashtable, pandas._libs.algos, pandas._libs.interval, pandas._libs.lib, pyarrow._compute, pandas._libs.ops, pandas._libs.hashing, pandas._libs.arrays, pandas._libs.tslib, pandas._libs.sparse, pandas._libs.internals, pandas._libs.indexing, pandas._libs.index, pandas._libs.writers, pandas._libs.join, pandas._libs.window.aggregations, pandas._libs.window.indexers, pandas._libs.reshape, pandas._libs.groupby, pandas._libs.json, pandas._libs.parsers, pandas._libs.testing, pyarrow._parquet, pyarrow._fs, pyarrow._azurefs, pyarrow._hdfs, pyarrow._gcsfs, pyarrow._s3fs, multidict._multidict, yarl._quoting_c, propcache._helpers_c, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket.mask, aiohttp._websocket.reader_c, frozenlist._frozenlist, xxhash._xxhash, pyarrow._json, PIL._imagingft (total: 88)
+[rank10]:[F811 21:37:47.565965391 ProcessGroupNCCL.cpp:1224] [PG 0 Rank 10] [PG 0 Rank 10] 
+[rank14]:[F811 21:37:47.566019178 ProcessGroupNCCL.cpp:1224] [PG 0 Rank 14] [PG 0 Rank 14] 
+Fatal Python error: Aborted
+
+Thread 0x00001479ac5a4640 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 43 in _recv_msg
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 114 in _read_thread
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 953 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+
+Thread 0x0000147c97c69740 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py"Fatal Python error: , line Aborted2288
+
+ in Thread 0xall_reduce00001527d0745640
+ (most recent call first):
+  File   File ""/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/c10d_logger.py/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py"", line , line 7943 in  in wrapper_recv_msg
+
+  File   File ""/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py"", line , line 241114 in  in safe_barrier_read_thread
+
+  File   File ""/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py"", line , line 525953 in  in trainrun
+
+  File   File ""/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py"", line , line 7401016 in  in <module>_bootstrap_inner
+
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+
+Thread 0x00001528a8433740 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 719 in <listcomp>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 719 in load
+Extension modules: 
+numpy.core._multiarray_umath  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py, "numpy.core._multiarray_tests, line 724,  in numpy.linalg._umath_linalgload
+,   File numpy.fft._pocketfft_internal"/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py, "numpy.random._common, line 724,  in numpy.random.bit_generatorload, 
+numpy.random._bounded_integers  File , "numpy.random._mt19937/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py, "numpy.random.mtrand, line , 724numpy.random._philox in , loadnumpy.random._pcg64
+,   File numpy.random._sfc64", /home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.pynumpy.random._generator", line , 724torch._C in load, 
+torch._C._fft  File , "torch._C._linalg/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py, "torch._C._nested, line , 724torch._C._nn in , loadtorch._C._sparse
+,   File torch._C._special"/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line , 724charset_normalizer.md in load, 
+requests.packages.charset_normalizer.md  File , "requests.packages.chardet.md/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", , line yaml._yaml724 in , loadmarkupsafe._speedups
+  File , "PIL._imaging/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line , 724sentencepiece._sentencepiece in load
+,   File psutil._psutil_linux", /home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.pypsutil._psutil_posix", line 726,  in pyarrow.libload_state_dict_into_model
+,   File pandas._libs.tslibs.ccalendar", /home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/hybrid_parallel_checkpoint_io.pypandas._libs.tslibs.np_datetime", , line pandas._libs.tslibs.dtypes419,  in pandas._libs.tslibs.base_load, 
+pandas._libs.tslibs.nattype  File , "pandas._libs.tslibs.timezones/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/hybrid_parallel_checkpoint_io.py, "pandas._libs.tslibs.fields, line , 426pandas._libs.tslibs.timedeltas in , load_sharded_modelpandas._libs.tslibs.tzconversion
+,   File pandas._libs.tslibs.timestamps", /home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/checkpoint_io_base.pypandas._libs.properties", , line pandas._libs.tslibs.offsets121,  in pandas._libs.tslibs.strptimeload_model, 
+pandas._libs.tslibs.parsing  File , "pandas._libs.tslibs.conversion/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py, "pandas._libs.tslibs.period, line , 311pandas._libs.tslibs.vectorized in , load_modelpandas._libs.ops_dispatch
+,   File pandas._libs.missing", /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.pypandas._libs.hashtable", , line pandas._libs.algos518,  in pandas._libs.intervaltrain
+,   File pandas._libs.lib"/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py, "pyarrow._compute, line 740,  in pandas._libs.ops<module>
+, pandas._libs.hashing, pandas._libs.arrays, pandas._libs.tslib, pandas._libs.sparse, pandas._libs.internals, pandas._libs.indexing, pandas._libs.index, pandas._libs.writers, pandas._libs.join
+Extension modules: , numpy.core._multiarray_umathpandas._libs.window.aggregations, , pandas._libs.window.indexersnumpy.core._multiarray_tests, pandas._libs.reshape, numpy.linalg._umath_linalg, pandas._libs.groupby, numpy.fft._pocketfft_internal, pandas._libs.json, , numpy.random._commonpandas._libs.parsers, , pandas._libs.testingnumpy.random.bit_generator, , pyarrow._parquetnumpy.random._bounded_integers, , pyarrow._fsnumpy.random._mt19937, , pyarrow._azurefsnumpy.random.mtrand, , pyarrow._hdfsnumpy.random._philox, pyarrow._gcsfs, , numpy.random._pcg64pyarrow._s3fs, numpy.random._sfc64, , multidict._multidictnumpy.random._generator, yarl._quoting_c, torch._C, propcache._helpers_c, torch._C._fft, aiohttp._http_writer, , torch._C._linalgaiohttp._http_parser, , torch._C._nestedaiohttp._websocket.mask, , torch._C._nnaiohttp._websocket.reader_c, torch._C._sparse, , frozenlist._frozenlisttorch._C._special, xxhash._xxhash, pyarrow._json, , PIL._imagingftcharset_normalizer.md, requests.packages.charset_normalizer.md, requests.packages.chardet.md, yaml._yaml (total: , 88markupsafe._speedups)
+, PIL._imaging, sentencepiece._sentencepiece, psutil._psutil_linux, psutil._psutil_posix, pyarrow.lib, pandas._libs.tslibs.ccalendar, pandas._libs.tslibs.np_datetime, pandas._libs.tslibs.dtypes, pandas._libs.tslibs.base, pandas._libs.tslibs.nattype, pandas._libs.tslibs.timezones, pandas._libs.tslibs.fields, pandas._libs.tslibs.timedeltas, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properties, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, pandas._libs.tslibs.parsing, pandas._libs.tslibs.conversion, pandas._libs.tslibs.period, pandas._libs.tslibs.vectorized, pandas._libs.ops_dispatch, pandas._libs.missing, pandas._libs.hashtable, pandas._libs.algos, pandas._libs.interval, pandas._libs.lib, pyarrow._compute, pandas._libs.ops, pandas._libs.hashing, pandas._libs.arrays, pandas._libs.tslib, pandas._libs.sparse, pandas._libs.internals, pandas._libs.indexing, pandas._libs.index, pandas._libs.writers, pandas._libs.join, pandas._libs.window.aggregations, pandas._libs.window.indexers, pandas._libs.reshape, pandas._libs.groupby, pandas._libs.json, pandas._libs.parsers, pandas._libs.testing[rank13]:[F811 21:37:47.570267650 ProcessGroupNCCL.cpp:1224] [PG 0 Rank 13] [PG 0 Rank 13] 
+, pyarrow._parquetFatal Python error: , Abortedpyarrow._fs
+
+, Thread 0xpyarrow._azurefs000015372c4ca640,  (most recent call first):
+pyarrow._hdfs  File ", /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.pypyarrow._gcsfs", , line pyarrow._s3fs43 in _recv_msg, 
+multidict._multidict  File ", /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.pyyarl._quoting_c", , line propcache._helpers_c114 in , _read_threadaiohttp._http_writer
+,   File aiohttp._http_parser", /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.pyaiohttp._websocket.mask", , line aiohttp._websocket.reader_c953 in , runfrozenlist._frozenlist
+  File , "xxhash._xxhash/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", , line pyarrow._json1016 in _bootstrap_inner
+  File ", /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.pyPIL._imagingft", line 973 in _bootstrap
+
+Thread 0x00001538077dd740 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py (total: "88, line )719
+ in <listcomp>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 719 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 726 in load_state_dict_into_model
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/hybrid_parallel_checkpoint_io.py", line 419 in _load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/hybrid_parallel_checkpoint_io.py", line 426 in load_sharded_model
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/checkpoint_io_base.py", line 121 in load_model
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 311 in load_model
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 518 in train
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 740 in <module>
+
+Extension modules: numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, torch._C, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, charset_normalizer.md, requests.packages.charset_normalizer.md, requests.packages.chardet.md, yaml._yaml, markupsafe._speedups, PIL._imaging, sentencepiece._sentencepiece, psutil._psutil_linux, psutil._psutil_posix, pyarrow.lib, pandas._libs.tslibs.ccalendar, pandas._libs.tslibs.np_datetime, pandas._libs.tslibs.dtypes, pandas._libs.tslibs.base, pandas._libs.tslibs.nattype, pandas._libs.tslibs.timezones, pandas._libs.tslibs.fields, pandas._libs.tslibs.timedeltas, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properties, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, pandas._libs.tslibs.parsing, pandas._libs.tslibs.conversion, pandas._libs.tslibs.period, pandas._libs.tslibs.vectorized, pandas._libs.ops_dispatch, pandas._libs.missing, pandas._libs.hashtable, pandas._libs.algos, pandas._libs.interval, pandas._libs.lib, pyarrow._compute, pandas._libs.ops, pandas._libs.hashing, pandas._libs.arrays, pandas._libs.tslib, pandas._libs.sparse, pandas._libs.internals, pandas._libs.indexing, pandas._libs.index, pandas._libs.writers, pandas._libs.join, pandas._libs.window.aggregations, pandas._libs.window.indexers, pandas._libs.reshape, pandas._libs.groupby, pandas._libs.json, pandas._libs.parsers, pandas._libs.testing, pyarrow._parquet, pyarrow._fs, pyarrow._azurefs, pyarrow._hdfs, pyarrow._gcsfs, pyarrow._s3fs, multidict._multidict, yarl._quoting_c, propcache._helpers_c, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket.mask, aiohttp._websocket.reader_c, frozenlist._frozenlist, xxhash._xxhash, pyarrow._json, PIL._imagingft (total: 88)
+[rank12]:[F811 21:37:47.574141479 ProcessGroupNCCL.cpp:1224] [PG 0 Rank 12] [PG 0 Rank 12] 
+Fatal Python error: Aborted
+
+Thread 0x000014d7fccd1640 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 43 in _recv_msg
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 114 in _read_thread
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 953 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+
+Thread 0x000014d8d49ba740 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 719 in <listcomp>
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 719 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 724 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 726 in load_state_dict_into_model
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/hybrid_parallel_checkpoint_io.py", line 419 in _load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/hybrid_parallel_checkpoint_io.py", line 426 in load_sharded_model
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/checkpoint_io_base.py", line 121 in load_model
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 311 in load_model
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 518 in train
+  File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 740 in <module>
+
+Extension modules: numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator[rank11]:[F811 21:37:47.576032906 ProcessGroupNCCL.cpp:1224] [PG 0 Rank 11] [PG 0 Rank 11] 
+Fatal Python error: Aborted
+
+Thread 0x0000152984d91640 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 43 in _recv_msg
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/_inductor/compile_worker/subproc_pool.py", line 114 in _read_thread
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 953 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1016 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+
+Thread 0x0000152a5dba5740 (most recent call first):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 719 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 722 in load
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 722 in load
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1020 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 957 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/thread.py", line 106 in _worker
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1020 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 957 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/thread.py", line 106 in _worker
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1020 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 957 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/thread.py", line 106 in _worker
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1020 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 957 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/thread.py", line 106 in _worker
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 973 in _bootstrap
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 1020 in _bootstrap_inner
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/threading.py", line 957 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/thread.py", line 106 in _worker
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/_pytree.py", line 808 in unflatten
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 968 in _pin_tensor
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/thread.py", line 64 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 552 in set_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 84 in add_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/thread.py", line 64 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 552 in set_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 84 in add_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/thread.py", line 64 in run
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 968 in _pin_tensor
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/thread.py", line 64 in run
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/checkpoint_io/utils.py", line 968 in _pin_tensor
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/thread.py", line 64 in run
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 552 in set_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 84 in add_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 84 in add_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 84 in add_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 84 in add_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 84 in add_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 84 in add_result
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/concurrent/futures/_base.py", line 84 in add_result
+
+Extension modules: numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, torch._C, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, charset_normalizer.md, requests.packages.charset_normalizer.md, requests.packages.chardet.md, yaml._yaml, markupsafe._speedups, PIL._imaging, sentencepiece._sentencepiece, psutil._psutil_linux, psutil._psutil_posix, pyarrow.lib, pandas._libs.tslibs.ccalendar, pandas._libs.tslibs.np_datetime, pandas._libs.tslibs.dtypes, pandas._libs.tslibs.base, pandas._libs.tslibs.nattype, pandas._libs.tslibs.timezones, pandas._libs.tslibs.fields, pandas._libs.tslibs.timedeltas, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properties, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, pandas._libs.tslibs.parsing, pandas._libs.tslibs.conversion, pandas._libs.tslibs.period, pandas._libs.tslibs.vectorized, pandas._libs.ops_dispatch, pandas._libs.missing, pandas._libs.hashtable, pandas._libs.algos, pandas._libs.interval, pandas._libs.lib, pyarrow._compute, pandas._libs.ops, pandas._libs.hashing, pandas._libs.arrays, pandas._libs.tslib, pandas._libs.sparse, pandas._libs.internals, pandas._libs.indexing, pandas._libs.index, pandas._libs.writers, pandas._libs.join, pandas._libs.window.aggregations, pandas._libs.window.indexers, pandas._libs.reshape, pandas._libs.groupby, pandas._libs.json, pandas._libs.parsers, pandas._libs.testing, pyarrow._parquet, pyarrow._fs, pyarrow._azurefs, pyarrow._hdfs, pyarrow._gcsfs, pyarrow._s3fs, multidict._multidict, yarl._quoting_c, propcache._helpers_c, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket.mask, aiohttp._websocket.reader_c, frozenlist._frozenlist, xxhash._xxhash, pyarrow._json, PIL._imagingft (total: 88)
+, torch._C, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, charset_normalizer.md, requests.packages.charset_normalizer.md, requests.packages.chardet.md, yaml._yaml, markupsafe._speedups, PIL._imaging, sentencepiece._sentencepiece, psutil._psutil_linux, psutil._psutil_posix, pyarrow.lib, pandas._libs.tslibs.ccalendar, pandas._libs.tslibs.np_datetime, pandas._libs.tslibs.dtypes, pandas._libs.tslibs.base, pandas._libs.tslibs.nattype, pandas._libs.tslibs.timezones, pandas._libs.tslibs.fields, pandas._libs.tslibs.timedeltas, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properties, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, pandas._libs.tslibs.parsing, pandas._libs.tslibs.conversion, pandas._libs.tslibs.period, pandas._libs.tslibs.vectorized, pandas._libs.ops_dispatch, pandas._libs.missing, pandas._libs.hashtable, pandas._libs.algos, pandas._libs.interval, pandas._libs.lib, pyarrow._compute, pandas._libs.ops, pandas._libs.hashing, pandas._libs.arrays, pandas._libs.tslib, pandas._libs.sparse, pandas._libs.internals, pandas._libs.indexing, pandas._libs.index, pandas._libs.writers, pandas._libs.join, pandas._libs.window.aggregations, pandas._libs.window.indexers, pandas._libs.reshape, pandas._libs.groupby, pandas._libs.json, pandas._libs.parsers, pandas._libs.testing, pyarrow._parquet, pyarrow._fs, pyarrow._azurefs, pyarrow._hdfs, pyarrow._gcsfs, pyarrow._s3fs, multidict._multidict, yarl._quoting_c, propcache._helpers_c, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket.mask, aiohttp._websocket.reader_c, frozenlist._frozenlist, xxhash._xxhash, pyarrow._json, PIL._imagingft (total: 88)
