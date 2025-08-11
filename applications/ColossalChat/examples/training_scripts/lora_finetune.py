@@ -357,7 +357,7 @@ def train(args) -> None:
     # ==============================
     # Initialize Tensorboard and Save Config
     # ==============================
-    print(f"[DEBUG] is_master={is_master()}  tensorboard_dir={args.tensorboard_dir}", flush=True) # Added for debugging
+    print(f"[DEBUG] is_master={is_master()}  tensorboard_dir={args.tensorboard_dir}: rank={torch.distributed.get_rank()}", flush=True) # Added for debugging
     if is_master():
         if args.tensorboard_dir is not None:
             from torch.utils.tensorboard import SummaryWriter
@@ -380,7 +380,7 @@ def train(args) -> None:
         f"Training Info:\nConfig file: {args.config_file} \nTensorboard logs: {args.tensorboard_dir} \nModel checkpoint: {args.save_dir}"
     )
 
-    coordinator.print_on_master(f"Load dataset: {args.dataset}")
+    coordinator.print_on_master(f"Load dataset: {args.dataset}: rank={torch.distributed.get_rank()}")
     dataset = RawConversationDataset(
         tokenizer,
         args.dataset,
@@ -446,7 +446,7 @@ def train(args) -> None:
                     task_type="CAUSAL_LM",
                     r=args.lora_rank,
                     lora_alpha=args.lora_alpha,
-                    target_modules= ["down_proj"] # 候補2 ["lm_head"] # デフォルト ["gate_proj", "up_proj", "down_proj"], 
+                    target_modules= ["gate_proj", "up_proj", "down_proj"], 
                 )
             else:
                 lora_config = LoraConfig(task_type="CAUSAL_LM", r=args.lora_rank, lora_alpha=args.lora_alpha)
@@ -560,6 +560,7 @@ def train(args) -> None:
                 desc="Step",
                 disable=not is_master(),
             )
+            print(f"[Debug] optimizer={optimizer.__class__.__name__}, model={model.__class__.__name__},  rank={dist.get_rank()}", flush=True) # Added for debugging
             for step in step_bar:
                 outputs = booster.execute_pipeline(
                     data_iter,
@@ -569,13 +570,16 @@ def train(args) -> None:
                     return_loss=True,
                 )
                 loss = outputs["loss"]
+                
                 if booster.plugin.stage_manager.is_last_stage():
                     global_loss = all_reduce_mean(loss, plugin)
 
                 optimizer.step()
 
+                # ★ 【重要な変更】 ここを全ランクで呼ぶ：PPグループ内の collective 回数を一致させる 
+                grad_norm = optimizer.get_grad_norm() 
                 if booster.plugin.stage_manager.is_last_stage():
-                    grad_norm = optimizer.get_grad_norm()
+                    #grad_norm = optimizer.get_grad_norm()
                     step_bar.set_postfix({"loss": global_loss.item(), "grad_norm": grad_norm})
 
                 if args.tensorboard_dir is not None and is_master():
