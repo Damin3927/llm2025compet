@@ -8,9 +8,8 @@
 #SBATCH --job-name=grpo-qwen1_5b-colo
 #SBATCH --time=4:00:00
 #SBATCH --mem=0
-#SBATCH --output=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen1_5b_colo.out
-#SBATCH --error=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen1_5b_colo.err
-
+#SBATCH --output=/home/Competition2025/P02/P02U025/llm2025compet/training/logs/grpo-qwen1_5b_colo1n.out
+#SBATCH --error=/home/Competition2025/P02/P02U025/llm2025compet/training/logs/grpo-qwen1_5b_colo1n.err
 ################### 環境 ###################
 export WANDB_DISABLED=true
 module load cuda/12.8
