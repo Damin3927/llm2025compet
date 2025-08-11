@@ -27,7 +27,8 @@ from transformers.trainer_utils import get_last_checkpoint
 # ModelConfigは不要になったため削除
 from trl import GRPOTrainer, TrlParser
 
-from open_r1.configs import GRPOConfig, GRPOScriptArguments
+from open_r1.configs import GRPOConfig
+from open_r1.configs import GRPOScriptArguments as BaseGRPOScriptArguments
 from open_r1.rewards import get_reward_funcs
 from open_r1.utils import get_dataset
 from open_r1.utils.callbacks import get_callbacks
@@ -37,9 +38,14 @@ logger = logging.getLogger(__name__)
 
 
 # =================================================================================
-# QLoRAとモデル実装に関する引数を保持する、専用のカスタムクラスを定義します。
+# 専用のカスタムクラスを定義
 # =================================================================================
 @dataclass
+
+class GRPOScriptArguments(BaseGRPOScriptArguments):
+    # ★★★ このフラグでLoRAの使用を明示的に制御する ★★★
+    use_peft: bool = field(default=False, metadata={"help": "Whether to use PEFT for LoRA training."})
+
 class ModelArguments:
     """
     Contains arguments pertaining to model loading, quantization, and implementation.
@@ -106,8 +112,6 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
         # 以前のdtype指定ロジック
         model_torch_dtype = getattr(torch, model_args.torch_dtype) if model_args.torch_dtype in ["auto", None] else getattr(torch, model_args.torch_dtype)
 
-    model_torch_dtype = getattr(torch, model_args.torch_dtype) if model_args.torch_dtype in ["auto", None] else getattr(torch, model_args.torch_dtype)
-
     model = AutoModelForCausalLM.from_pretrained(
         model_args.model_name_or_path,
         revision=model_args.model_revision,
@@ -116,16 +120,20 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
         trust_remote_code=model_args.trust_remote_code,
     )
 
-    peft_config = LoraConfig(
-        r=16,
-        lora_alpha=16,
-        lora_dropout=0,
-        bias="none",
-        task_type="CAUSAL_LM",
-        target_modules=[
-            "q_proj", "k_proj", "v_proj", "o_proj",
-        ],
-    )
+   peft_config = None
+    # ★★★ 新しく追加したuse_peftフラグで条件分岐する ★★★
+    if script_args.use_peft:
+        logger.info("PEFT (LoRA) training enabled via 'use_peft=True'.")
+        peft_config = LoraConfig(
+            r=16,
+            lora_alpha=16,
+            lora_dropout=0,
+            bias="none",
+            task_type="CAUSAL_LM",
+            target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
+        )
+    else:
+        logger.info("Full-parameter training enabled ('use_peft=False').")
 
     dataset = get_dataset(script_args)
     reward_funcs = get_reward_funcs(script_args)
