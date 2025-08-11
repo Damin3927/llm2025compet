@@ -41,11 +41,11 @@ logger = logging.getLogger(__name__)
 # 専用のカスタムクラスを定義
 # =================================================================================
 @dataclass
-
 class GRPOScriptArguments(BaseGRPOScriptArguments):
     # ★★★ このフラグでLoRAの使用を明示的に制御する ★★★
     use_peft: bool = field(default=False, metadata={"help": "Whether to use PEFT for LoRA training."})
 
+@dataclass
 class ModelArguments:
     """
     Contains arguments pertaining to model loading, quantization, and implementation.
@@ -55,8 +55,9 @@ class ModelArguments:
     trust_remote_code: bool = field(default=False, metadata={"help": "Whether or not to allow for custom models defined on the Hub."})
     torch_dtype: Optional[str] = field(default="auto", metadata={"help": "The torch dtype to use for the model (e.g. 'bfloat16', 'float16', 'auto')."})
 
-    # ★★★ FP8を有効にするための引数を追加 ★★★
-    use_fp8: bool = field(default=False, metadata={"help": "Enable FP8 training with Transformer Engine."})
+    # FP8関連の引数を両方ともこのクラスで管理するようにする
+    use_fp8: bool = field(default=False, metadata={"help": "Enable FP8 model loading."})
+    fp8: bool = field(default=False, metadata={"help": "Enable FP8 mixed-precision training via Transformer Engine."})
     
     # Flash Attention
     attn_implementation: Optional[str] = field(default=None, metadata={"help": "Attention implementation to use (e.g., 'flash_attention_2')"})
@@ -120,7 +121,7 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
         trust_remote_code=model_args.trust_remote_code,
     )
 
-   peft_config = None
+    peft_config = None
     # ★★★ 新しく追加したuse_peftフラグで条件分岐する ★★★
     if script_args.use_peft:
         logger.info("PEFT (LoRA) training enabled via 'use_peft=True'.")
@@ -164,6 +165,9 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
         processing_class=tokenizer,
         callbacks=get_callbacks(training_args, model_args),
     )
+
+    # ModelArgumentsから受け取ったfp8の値を、Trainerが認識できるようにTrainingArgumentsに設定する
+    trainer.args.fp8 = model_args.fp8
 
     # 4. Training
     # ----------------------------------------------------------------
