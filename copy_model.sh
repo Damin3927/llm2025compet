@@ -103,6 +103,10 @@ export MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n1)
 export MASTER_PORT=$((12000 + SLURM_JOB_ID % 20000))
 echo "MASTER_ADDR=$MASTER_ADDR  MASTER_PORT=$MASTER_PORT  IF=$NET_IF"
 
+echo "== [Pre-launch NCCL env] =="
+env | grep NCCL
+
+# --- 分散実行: 各ノード×8GPU（計24プロセス） ---
 srun --ntasks=3 --ntasks-per-node=1 \
   --kill-on-bad-exit=1 \
   --output=$LOG_ROOT/slurm-%t.out \
@@ -116,8 +120,8 @@ srun --ntasks=3 --ntasks-per-node=1 \
     NVME_MNT="/nvme56"
     SRC_MODEL="/home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16"
     LOCAL_ROOT="$NVME_MNT/models/$USER"
-    LOCAL_MODEL="$LOCAL_ROOT/DeepSeek-R1-0528-BF16"
-    LOCAL_SHARD="$LOCAL_ROOT/R1-0528-pre-sharded-pp3-ep8"
+    LOCAL_MODEL="$LOCAL_ROOT/DeepSeek-R1-0528-BF16"             # HF形式
+    LOCAL_SHARD="$LOCAL_ROOT/R1-0528-pre-sharded-pp3-ep8"       # プリシャード保存先
     mkdir -p "$LOCAL_ROOT"
 
     # /tmp と HF キャッシュも NVMe に
@@ -205,6 +209,5 @@ srun --ntasks=3 --ntasks-per-node=1 \
 
     kill "$MON_PID" || true
   '
-
 
 echo \"===== ジョブ終了: \$(date) =====\"

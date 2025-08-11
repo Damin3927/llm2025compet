@@ -560,7 +560,7 @@ def train(args) -> None:
                 desc="Step",
                 disable=not is_master(),
             )
-            print(f"[Debug] optimizer={optimizer.__class__.__name__}, model={model.__class__.__name__},  rank={dist.get_rank()}", flush=True) # Added for debugging
+            print(f"[Debug] optimizer={optimizer.__class__.__name__}, model={model.__class__.__name__}, rank={dist.get_rank()}", flush=True) # Added for debugging
             for step in step_bar:
                 outputs = booster.execute_pipeline(
                     data_iter,
@@ -570,7 +570,7 @@ def train(args) -> None:
                     return_loss=True,
                 )
                 loss = outputs["loss"]
-                
+
                 if booster.plugin.stage_manager.is_last_stage():
                     global_loss = all_reduce_mean(loss, plugin)
 
