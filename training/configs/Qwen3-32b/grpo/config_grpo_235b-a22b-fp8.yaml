@@ -50,6 +50,7 @@ max_prompt_length: 8192
 max_completion_length: 1024
 
 # --- TrainingArguments ---
+use_peft: true
 bf16: true
 fp8: true
 gradient_checkpointing: true
@@ -97,13 +98,14 @@ logging_strategy: steps
 report_to:
 - wandb
 
+# erase LoRA from output_dir and hub_model_id if we trains without LoRA and check if we use_peft: false
 save_strategy: epoch
 save_total_limit: 1
-output_dir: data/Qwen3-235B-A22B-FP8-Open-R1-GRPO
+output_dir: data/Qwen3-235B-A22B-FP8-LoRA-Open-R1-GRPO
 overwrite_output_dir: true
 
-push_to_hub: false
-hub_model_id: Qwen3-235B-A22B-FP8-Open-R1-GRPO
+push_to_hub: true
+hub_model_id: neko-llm/Qwen3-235B-A22B-FP8-LoRA-Open-R1-GRPO
 hub_strategy: end
 
 seed: 42 #  Tensor Parallelism Bug in vLLM ≥ 0.8.0.(https://huggingface.co/blog/vllm-colocate#:~:text=Training%20and%20inference%20take%20turns,dedicated%20devices%20or%20separate%20processes)
