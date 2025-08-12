@@ -162,8 +162,10 @@ srun --ntasks=3 --ntasks-per-node=1 \
       --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
       --plugin moe \
       --pp 3 --ep 8 \
-      --num_epochs 0 \
-      --lora_rank 8 \
+      --batch_size 4 \
+      --lr 2e-5 \
+      --lora_rank 8 --lora_alpha 16 \
+      --num_epochs 2 --warmup_steps 8 \
       --mixed_precision bf16 \
       --tensorboard_dir \"$LOG_ROOT/tb\" \
       --save_dir \"\$TMP_SHARD\"
