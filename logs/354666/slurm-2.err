@@ -1,0 +1,244 @@
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+usage: lora_finetune.py [-h] -m PRETRAINED -d DATASET
+                        [-p {gemini,gemini_auto,zero2,zero2_cpu,3d,ddp,moe}]
+                        [--save_dir SAVE_DIR]
+                        [--tensorboard_dir TENSORBOARD_DIR]
+                        [--config_file CONFIG_FILE] [-n NUM_EPOCHS]
+                        [--accumulation_steps ACCUMULATION_STEPS]
+                        [--batch_size BATCH_SIZE] [--lr LR]
+                        [--max_length MAX_LENGTH]
+                        [--mixed_precision {fp16,bf16}]
+                        [--grad_clip GRAD_CLIP] [--weight_decay WEIGHT_DECAY]
+                        [--warmup_steps WARMUP_STEPS] [-g] [-f] [--tp TP]
+                        [--pp PP] [--sp SP] [--ep EP] [--zero_stage {0,1,2}]
+                        [--sp_mode {split_gather,ring,all_to_all}]
+                        [--enable_sequence_parallelism] [--zero_cpu_offload]
+                        [--microbatch_size MICROBATCH_SIZE]
+                        [--lora_rank LORA_RANK] [--lora_alpha LORA_ALPHA]
+lora_finetune.py: error: unrecognized arguments:  
+usage: lora_finetune.py [-h] -m PRETRAINED -d DATASET
+                        [-p {gemini,gemini_auto,zero2,zero2_cpu,3d,ddp,moe}]
+                        [--save_dir SAVE_DIR]
+                        [--tensorboard_dir TENSORBOARD_DIR]
+                        [--config_file CONFIG_FILE] [-n NUM_EPOCHS]
+                        [--accumulation_steps ACCUMULATION_STEPS]
+                        [--batch_size BATCH_SIZE] [--lr LR]
+                        [--max_length MAX_LENGTH]
+                        [--mixed_precision {fp16,bf16}]
+                        [--grad_clip GRAD_CLIP] [--weight_decay WEIGHT_DECAY]
+                        [--warmup_steps WARMUP_STEPS] [-g] [-f] [--tp TP]
+                        [--pp PP] [--sp SP] [--ep EP] [--zero_stage {0,1,2}]
+                        [--sp_mode {split_gather,ring,all_to_all}]
+                        [--enable_sequence_parallelism] [--zero_cpu_offload]
+                        [--microbatch_size MICROBATCH_SIZE]
+                        [--lora_rank LORA_RANK] [--lora_alpha LORA_ALPHA]
+lora_finetune.py: error: unrecognized arguments:  
+usage: lora_finetune.py [-h] -m PRETRAINED -d DATASET
+                        [-p {gemini,gemini_auto,zero2,zero2_cpu,3d,ddp,moe}]
+                        [--save_dir SAVE_DIR]
+                        [--tensorboard_dir TENSORBOARD_DIR]
+                        [--config_file CONFIG_FILE] [-n NUM_EPOCHS]
+                        [--accumulation_steps ACCUMULATION_STEPS]
+                        [--batch_size BATCH_SIZE] [--lr LR]
+                        [--max_length MAX_LENGTH]
+                        [--mixed_precision {fp16,bf16}]
+                        [--grad_clip GRAD_CLIP] [--weight_decay WEIGHT_DECAY]
+                        [--warmup_steps WARMUP_STEPS] [-g] [-f] [--tp TP]
+                        [--pp PP] [--sp SP] [--ep EP] [--zero_stage {0,1,2}]
+                        [--sp_mode {split_gather,ring,all_to_all}]
+                        [--enable_sequence_parallelism] [--zero_cpu_offload]
+                        [--microbatch_size MICROBATCH_SIZE]
+                        [--lora_rank LORA_RANK] [--lora_alpha LORA_ALPHA]
+lora_finetune.py: error: unrecognized arguments:  
+usage: lora_finetune.py [-h] -m PRETRAINED -d DATASET
+                        [-p {gemini,gemini_auto,zero2,zero2_cpu,3d,ddp,moe}]
+                        [--save_dir SAVE_DIR]
+                        [--tensorboard_dir TENSORBOARD_DIR]
+                        [--config_file CONFIG_FILE] [-n NUM_EPOCHS]
+                        [--accumulation_steps ACCUMULATION_STEPS]
+                        [--batch_size BATCH_SIZE] [--lr LR]
+                        [--max_length MAX_LENGTH]
+                        [--mixed_precision {fp16,bf16}]
+                        [--grad_clip GRAD_CLIP] [--weight_decay WEIGHT_DECAY]
+                        [--warmup_steps WARMUP_STEPS] [-g] [-f] [--tp TP]
+                        [--pp PP] [--sp SP] [--ep EP] [--zero_stage {0,1,2}]
+                        [--sp_mode {split_gather,ring,all_to_all}]
+                        [--enable_sequence_parallelism] [--zero_cpu_offload]
+                        [--microbatch_size MICROBATCH_SIZE]
+                        [--lora_rank LORA_RANK] [--lora_alpha LORA_ALPHA]
+lora_finetune.py: error: unrecognized arguments:  
+usage: lora_finetune.py [-h] -m PRETRAINED -d DATASET
+                        [-p {gemini,gemini_auto,zero2,zero2_cpu,3d,ddp,moe}]
+                        [--save_dir SAVE_DIR]
+                        [--tensorboard_dir TENSORBOARD_DIR]
+                        [--config_file CONFIG_FILE] [-n NUM_EPOCHS]
+                        [--accumulation_steps ACCUMULATION_STEPS]
+                        [--batch_size BATCH_SIZE] [--lr LR]
+                        [--max_length MAX_LENGTH]
+                        [--mixed_precision {fp16,bf16}]
+                        [--grad_clip GRAD_CLIP] [--weight_decay WEIGHT_DECAY]
+                        [--warmup_steps WARMUP_STEPS] [-g] [-f] [--tp TP]
+                        [--pp PP] [--sp SP] [--ep EP] [--zero_stage {0,1,2}]
+                        [--sp_mode {split_gather,ring,all_to_all}]
+                        [--enable_sequence_parallelism] [--zero_cpu_offload]
+                        [--microbatch_size MICROBATCH_SIZE]
+                        [--lora_rank LORA_RANK] [--lora_alpha LORA_ALPHA]
+lora_finetune.py: error: unrecognized arguments:  
+usage: lora_finetune.py [-h] -m PRETRAINED -d DATASET
+                        [-p {gemini,gemini_auto,zero2,zero2_cpu,3d,ddp,moe}]
+                        [--save_dir SAVE_DIR]
+                        [--tensorboard_dir TENSORBOARD_DIR]
+                        [--config_file CONFIG_FILE] [-n NUM_EPOCHS]
+                        [--accumulation_steps ACCUMULATION_STEPS]
+                        [--batch_size BATCH_SIZE] [--lr LR]
+                        [--max_length MAX_LENGTH]
+                        [--mixed_precision {fp16,bf16}]
+                        [--grad_clip GRAD_CLIP] [--weight_decay WEIGHT_DECAY]
+                        [--warmup_steps WARMUP_STEPS] [-g] [-f] [--tp TP]
+                        [--pp PP] [--sp SP] [--ep EP] [--zero_stage {0,1,2}]
+                        [--sp_mode {split_gather,ring,all_to_all}]
+                        [--enable_sequence_parallelism] [--zero_cpu_offload]
+                        [--microbatch_size MICROBATCH_SIZE]
+                        [--lora_rank LORA_RANK] [--lora_alpha LORA_ALPHA]
+lora_finetune.py: error: unrecognized arguments:  
+usage: lora_finetune.py [-h] -m PRETRAINED -d DATASET
+                        [-p {gemini,gemini_auto,zero2,zero2_cpu,3d,ddp,moe}]
+                        [--save_dir SAVE_DIR]
+                        [--tensorboard_dir TENSORBOARD_DIR]
+                        [--config_file CONFIG_FILE] [-n NUM_EPOCHS]
+                        [--accumulation_steps ACCUMULATION_STEPS]
+                        [--batch_size BATCH_SIZE] [--lr LR]
+                        [--max_length MAX_LENGTH]
+                        [--mixed_precision {fp16,bf16}]
+                        [--grad_clip GRAD_CLIP] [--weight_decay WEIGHT_DECAY]
+                        [--warmup_steps WARMUP_STEPS] [-g] [-f] [--tp TP]
+                        [--pp PP] [--sp SP] [--ep EP] [--zero_stage {0,1,2}]
+                        [--sp_mode {split_gather,ring,all_to_all}]
+                        [--enable_sequence_parallelism] [--zero_cpu_offload]
+                        [--microbatch_size MICROBATCH_SIZE]
+                        [--lora_rank LORA_RANK] [--lora_alpha LORA_ALPHA]
+lora_finetune.py: error: unrecognized arguments:  
+usage: lora_finetune.py [-h] -m PRETRAINED -d DATASET
+                        [-p {gemini,gemini_auto,zero2,zero2_cpu,3d,ddp,moe}]
+                        [--save_dir SAVE_DIR]
+                        [--tensorboard_dir TENSORBOARD_DIR]
+                        [--config_file CONFIG_FILE] [-n NUM_EPOCHS]
+                        [--accumulation_steps ACCUMULATION_STEPS]
+                        [--batch_size BATCH_SIZE] [--lr LR]
+                        [--max_length MAX_LENGTH]
+                        [--mixed_precision {fp16,bf16}]
+                        [--grad_clip GRAD_CLIP] [--weight_decay WEIGHT_DECAY]
+                        [--warmup_steps WARMUP_STEPS] [-g] [-f] [--tp TP]
+                        [--pp PP] [--sp SP] [--ep EP] [--zero_stage {0,1,2}]
+                        [--sp_mode {split_gather,ring,all_to_all}]
+                        [--enable_sequence_parallelism] [--zero_cpu_offload]
+                        [--microbatch_size MICROBATCH_SIZE]
+                        [--lora_rank LORA_RANK] [--lora_alpha LORA_ALPHA]
+lora_finetune.py: error: unrecognized arguments:  
+W0813 00:35:07.156000 23438871676736 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2718563 closing signal SIGTERM
+W0813 00:35:07.157000 23438871676736 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2718568 closing signal SIGTERM
+W0813 00:35:07.157000 23438871676736 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 2718569 closing signal SIGTERM
+E0813 00:35:07.687000 23438871676736 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 2) local_rank: 1 (pid: 2718564) of binary: /home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/python3.10
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-08-13_00:35:07
+  host      : osk-gpu91
+  rank      : 18 (local_rank: 2)
+  exitcode  : 2 (pid: 2718565)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-08-13_00:35:07
+  host      : osk-gpu91
+  rank      : 19 (local_rank: 3)
+  exitcode  : 2 (pid: 2718566)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-08-13_00:35:07
+  host      : osk-gpu91
+  rank      : 20 (local_rank: 4)
+  exitcode  : 2 (pid: 2718567)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[4]:
+  time      : 2025-08-13_00:35:07
+  host      : osk-gpu91
+  rank      : 23 (local_rank: 7)
+  exitcode  : 2 (pid: 2718570)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-08-13_00:35:07
+  host      : osk-gpu91
+  rank      : 17 (local_rank: 1)
+  exitcode  : 2 (pid: 2718564)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
