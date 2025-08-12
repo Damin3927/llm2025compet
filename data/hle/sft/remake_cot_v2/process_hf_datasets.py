@@ -59,7 +59,8 @@ class HFDatasetProcessor:
         regenerator_models: Optional[List[str]] = None,
         grade_threshold: str = "C",
         max_items_per_dataset: Optional[int] = None,
-        use_async_regeneration: bool = True
+        use_async_regeneration: bool = True,
+        skip_existing: bool = False
     ):
         """
         Initialize the dataset processor.
@@ -71,6 +72,7 @@ class HFDatasetProcessor:
             grade_threshold: Regenerate items with this grade or lower
             max_items_per_dataset: Maximum items to process per dataset (for testing)
             use_async_regeneration: Whether to use async multi-model regeneration
+            skip_existing: Skip datasets that have already been processed
         """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -87,6 +89,7 @@ class HFDatasetProcessor:
         self.grade_threshold = grade_threshold
         self.max_items = max_items_per_dataset
         self.use_async_regeneration = use_async_regeneration
+        self.skip_existing = skip_existing
         
         # Statistics tracking
         self.global_stats = {
@@ -95,6 +98,7 @@ class HFDatasetProcessor:
             "total_items_evaluated": 0,
             "total_items_regenerated": 0,
             "total_improvements": 0,
+            "total_skipped": 0,
             "grade_distribution": {"A": 0, "B": 0, "C": 0, "D": 0},
             "errors": []
         }
@@ -303,6 +307,21 @@ class HFDatasetProcessor:
         Returns:
             Statistics for this dataset configuration
         """
+        # Check if dataset already exists and should be skipped
+        if self.skip_existing and self._check_dataset_exists(dataset_name, config):
+            logger.info(f"Skipping {dataset_name}/{config} - already processed")
+            return {
+                "dataset_name": dataset_name,
+                "config": config,
+                "split": split,
+                "items_processed": 0,
+                "items_evaluated": 0,
+                "items_regenerated": 0,
+                "skipped": True,
+                "grade_distribution": {"A": 0, "B": 0, "C": 0, "D": 0},
+                "errors": []
+            }
+        
         logger.info(f"Processing {dataset_name} (config: {config}, split: {split})")
         
         stats = {
@@ -312,6 +331,7 @@ class HFDatasetProcessor:
             "items_processed": 0,
             "items_evaluated": 0,
             "items_regenerated": 0,
+            "skipped": False,
             "grade_distribution": {"A": 0, "B": 0, "C": 0, "D": 0},
             "errors": []
         }
@@ -384,6 +404,19 @@ class HFDatasetProcessor:
         
         return dataset_dir / filename
     
+    def _check_dataset_exists(self, dataset_name: str, config: str) -> bool:
+        """Check if a dataset has already been processed."""
+        dataset_dir = self.output_dir / dataset_name / config
+        
+        if not dataset_dir.exists():
+            return False
+        
+        # Check for any processed JSON or JSONL files
+        json_files = list(dataset_dir.glob("processed_*.json"))
+        jsonl_files = list(dataset_dir.glob("processed_*.jsonl"))
+        
+        return len(json_files) > 0 or len(jsonl_files) > 0
+    
     def _save_processed_dataset(self, items: List[Dict[str, Any]], output_path: Path):
         """Save processed dataset to JSON file."""
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -445,10 +478,14 @@ class HFDatasetProcessor:
                 dataset_stats.append(stats)
                 
                 # Update global statistics
-                self.global_stats["total_datasets"] += 1
-                self.global_stats["total_items_processed"] += stats["items_processed"]
-                self.global_stats["total_items_evaluated"] += stats["items_evaluated"]
-                self.global_stats["total_items_regenerated"] += stats["items_regenerated"]
+                if stats.get("skipped", False):
+                    self.global_stats["total_skipped"] += 1
+                    logger.info(f"Dataset {dataset_name}/{config} was skipped")
+                else:
+                    self.global_stats["total_datasets"] += 1
+                    self.global_stats["total_items_processed"] += stats["items_processed"]
+                    self.global_stats["total_items_evaluated"] += stats["items_evaluated"]
+                    self.global_stats["total_items_regenerated"] += stats["items_regenerated"]
         
         # Save statistics
         self._save_statistics(dataset_stats)
@@ -487,6 +524,8 @@ class HFDatasetProcessor:
             f.write("GLOBAL STATISTICS\n")
             f.write("-"*40 + "\n")
             f.write(f"Total Datasets Processed: {self.global_stats['total_datasets']}\n")
+            if self.global_stats.get('total_skipped', 0) > 0:
+                f.write(f"Total Datasets Skipped: {self.global_stats['total_skipped']}\n")
             f.write(f"Total Items Processed: {self.global_stats['total_items_processed']}\n")
             f.write(f"Total Items Evaluated: {self.global_stats['total_items_evaluated']}\n")
             f.write(f"Total Items Regenerated: {self.global_stats['total_items_regenerated']}\n")
@@ -508,6 +547,9 @@ class HFDatasetProcessor:
             f.write("-"*40 + "\n")
             for stats in dataset_stats:
                 f.write(f"\nDataset: {stats['dataset_name']}/{stats['config']}\n")
+                if stats.get('skipped', False):
+                    f.write("  Status: SKIPPED (already processed)\n")
+                    continue
                 f.write(f"  Split: {stats['split']}\n")
                 f.write(f"  Items Processed: {stats['items_processed']}\n")
                 f.write(f"  Items Evaluated: {stats['items_evaluated']}\n")
@@ -625,6 +667,12 @@ async def main():
         action="store_true",
         help="Create an example configuration file and exit"
     )
+    parser.add_argument(
+        "--skip-existing",
+        type=str,
+        default="false",
+        help="Skip datasets that have already been processed (true/false, default: false)"
+    )
     
     args = parser.parse_args()
     
@@ -656,6 +704,9 @@ async def main():
     if args.regenerator_models:
         regenerator_models = [m.strip() for m in args.regenerator_models.split(",")]
     
+    # Parse skip_existing argument
+    skip_existing = args.skip_existing.lower() in ['true', 'yes', '1', 't']
+    
     # Initialize processor
     processor = HFDatasetProcessor(
         output_dir=args.output_dir,
@@ -663,7 +714,8 @@ async def main():
         regenerator_models=regenerator_models,
         grade_threshold=args.grade_threshold,
         max_items_per_dataset=args.max_items,
-        use_async_regeneration=not args.no_async
+        use_async_regeneration=not args.no_async,
+        skip_existing=skip_existing
     )
     
     # Process all datasets
@@ -682,6 +734,8 @@ async def main():
     print(f"Output directory: {args.output_dir}")
     print(f"\nGlobal Statistics:")
     print(f"  Datasets processed: {global_stats['total_datasets']}")
+    if global_stats.get('total_skipped', 0) > 0:
+        print(f"  Datasets skipped: {global_stats['total_skipped']}")
     print(f"  Items processed: {global_stats['total_items_processed']}")
     print(f"  Items evaluated: {global_stats['total_items_evaluated']}")
     print(f"  Items regenerated: {global_stats['total_items_regenerated']}")
