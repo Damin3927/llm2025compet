@@ -116,73 +116,29 @@ srun --ntasks=3 --ntasks-per-node=1 \
   source ~/miniconda3/etc/profile.d/conda.sh
   conda activate deepseeksft310
 
-  # ===== NVMe 事前ステージング =====
+  # ===== 既存ステージングを前提に pre-shard のみ作成 =====
   NVME_MNT=\"/nvme56\"
-  export HF_HOME=\"\$NVME_MNT/hf-cache-\$USER\"
-  export HF_HUB_CACHE=\"\$HF_HOME/hub\"
-  export HF_HUB_ENABLE_HF_TRANSFER=1
-  export HF_HUB_DISABLE_PROGRESS_BARS=1
-  export HF_HUB_OFFLINE=1
-  unset TRANSFORMERS_CACHE
-
-  export TMPDIR=\"\$NVME_MNT/tmp/\$USER\"
-  mkdir -p \"\$TMPDIR\" \"\$HF_HUB_CACHE\"
-
-  SRC_MODEL=\"/home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16\"
   LOCAL_MODEL=\"\$NVME_MNT/models/DeepSeek-R1-0528-BF16\"
-  if [ ! -d \"\$LOCAL_MODEL\" ]; then
-    mkdir -p \"\$LOCAL_MODEL\"
-    rsync -a --info=progress2 \"\$SRC_MODEL\"/ \"\$LOCAL_MODEL\"/
-  fi
-
-  # 全ノードコピー完了を軽く待つ
-  touch \"$LOG_ROOT/stage_\$(hostname).ok\"
-  N_EXPECT=\$(scontrol show hostnames \"$SLURM_JOB_NODELIST\" | wc -l)
-  while [ \"\$(ls \"$LOG_ROOT\"/stage_*.ok 2>/dev/null | wc -l)\" -lt \"\$N_EXPECT\" ]; do sleep 5; done
-
-  # ===== pre-shard (pp=3, ep=8) を安全に作成 =====
   LOCAL_SHARD=\"\$NVME_MNT/models/R1-0528-pre-sharded-pp3-ep8\"
-  if [ ! -f \"\$LOCAL_SHARD/.ok\" ]; then
-    TMP_SHARD=\"\${LOCAL_SHARD}.tmp\"
-    rm -rf \"\$TMP_SHARD\"
 
-    # 期待ファイルだけ軽く検査（欠けていたらrsyncし直し）
-    REQ_FILES=(tokenizer.json tokenizer.model tokenizer_config.json special_tokens_map.json vocab.json merges.txt)
-    MISS=0
-    for f in \"\${REQ_FILES[@]}\"; do
-      [ -f \"\$LOCAL_MODEL/\$f\" ] || MISS=1
-    done
-    if [ \"\$MISS\" -eq 1 ]; then
-      rsync -a --delete \"\$SRC_MODEL\"/ \"\$LOCAL_MODEL\"/
-    fi
+  # 必須ファイルチェック（SentencePiece）
+  REQ_FILES=(tokenizer.json tokenizer.model tokenizer_config.json special_tokens_map.json config.json model.safetensors.index.json)
+  for f in \"\${REQ_FILES[@]}\"; do
+    [ -f \"\$LOCAL_MODEL/\$f\" ] || { echo \"[ERR] missing: \$LOCAL_MODEL/\$f\"; exit 1; }
+  done
+  # 重み分割ファイルがそれなりにあるか（最低1個だけ粗く確認）
+  ls \"\$LOCAL_MODEL\"/model-*-of-*.safetensors >/dev/null 2>&1 || { echo \"[ERR] model shards not found\"; exit 1; }
 
-    # 変換のみ（学習しない）
-    torchrun \
-      --nnodes 3 \
-      --node_rank \$SLURM_PROCID \
-      --nproc_per_node 8 \
-      --master_addr $MASTER_ADDR \
-      --master_port $MASTER_PORT \
-      /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
-        --pretrained \"\$LOCAL_MODEL\" \
-        --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
-        --plugin moe \
-        --pp 3 --ep 8 \
-        --num_epochs 0 \
-        --lora_rank 0 \
-        --mixed_precision bf16 \
-        --tensorboard_dir \"$LOG_ROOT/tb\" \
-        --save_dir \"\$TMP_SHARD\"
-
-    [ -d \"\$TMP_SHARD/modeling\" ] || { echo '[ERR] pre-shard 作成に失敗'; exit 1; }
-    rm -rf \"\$LOCAL_SHARD\"
-    mv \"\$TMP_SHARD\" \"\$LOCAL_SHARD\"
-    touch \"\$LOCAL_SHARD/.ok\"
+  # 既にOKならスキップ（再実行に強い）
+  if [ -f \"\$LOCAL_SHARD/.ok\" ]; then
+    echo \"[INFO] pre-shard already exists: \$LOCAL_SHARD\"
+    exit 0
   fi
 
-  # 以降は pre-shard から読む
-  PRETRAINED_PATH=\"\$LOCAL_SHARD/modeling\"
+  TMP_SHARD=\"\${LOCAL_SHARD}.tmp\"
+  rm -rf \"\$TMP_SHARD\"
 
+  # 分散設定を明示（外側の環境を引き継ぎつつ）
   export GLOO_SOCKET_IFNAME=\"$GLOO_SOCKET_IFNAME\"
   export NCCL_SOCKET_IFNAME=\"$NCCL_SOCKET_IFNAME\"
   export NCCL_IB_HCA=\"$NCCL_IB_HCA\"
@@ -194,15 +150,7 @@ srun --ntasks=3 --ntasks-per-node=1 \
   export OPENBLAS_NUM_THREADS=\$OMP_NUM_THREADS
   export NUMEXPR_NUM_THREADS=\$OMP_NUM_THREADS
 
-  MON_LOG=\"${LOG_ROOT}/gpu_\$(hostname).log\"
-  ( while true; do
-      date '+[%F %T] ===== GPU util =====' >> \"\$MON_LOG\"
-      nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader >> \"\$MON_LOG\"
-      sleep 60
-    done ) &
-  MON_PID=\$!
-
-  # ===== 本番学習（pre-shard を使用） =====
+  # 変換のみ（num_epochs=0, lora_rank=0）
   torchrun \
     --nnodes 3 \
     --node_rank \$SLURM_PROCID \
@@ -210,21 +158,21 @@ srun --ntasks=3 --ntasks-per-node=1 \
     --master_addr $MASTER_ADDR \
     --master_port $MASTER_PORT \
     /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
-      --pretrained \"\$PRETRAINED_PATH\" \
+      --pretrained \"\$LOCAL_MODEL\" \
       --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
       --plugin moe \
       --pp 3 --ep 8 \
-      --batch_size 4 \
-      --lr 2e-5 \
-      --max_length 8 \
-      --lora_rank 8 --lora_alpha 16 \
-      --num_epochs 2 --warmup_steps 8 \
+      --num_epochs 0 \
+      --lora_rank 0 \
       --mixed_precision bf16 \
-      --use_grad_checkpoint \
       --tensorboard_dir \"$LOG_ROOT/tb\" \
-      --save_dir \"$LOG_ROOT/DeepSeek-R1-0528-lora\"
+      --save_dir \"\$TMP_SHARD\"
 
-  kill \"\$MON_PID\" || true
+  [ -d \"\$TMP_SHARD/modeling\" ] || { echo \"[ERR] pre-shard 作成に失敗 (modeling 不在)\"; exit 1; }
+  rm -rf \"\$LOCAL_SHARD\"
+  mv \"\$TMP_SHARD\" \"\$LOCAL_SHARD\"
+  touch \"\$LOCAL_SHARD/.ok\"
+  echo \"[OK] pre-shard created at: \$LOCAL_SHARD\"
 "
 
 echo "===== ジョブ終了: $(date) ====="
