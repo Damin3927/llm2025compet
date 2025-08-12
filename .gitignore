@@ -223,3 +223,4 @@ pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python,macos,linux
 data/dna/dna_hierarchy_count.json
+data/dna/gen_cot.py
