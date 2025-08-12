@@ -14,6 +14,7 @@
 #SBATCH --mem=0
 #SBATCH --output=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen235b_colo.out
 #SBATCH --error=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen235b_colo.err
+set -euo pipefail
 
 ################### 早期・環境サニタイズ ###################
 # “ユーザーサイト”を見ない（~/.local等の異物混入＆過剰importを防ぐ）
@@ -31,6 +32,19 @@ NODES="${SLURM_NNODES:-${SLURM_JOB_NUM_NODES:-1}}"
 TPN="${SLURM_NTASKS_PER_NODE:-8}"
 
 ################### 環境 ###################
+# >> TMPDIR moved before prefetch (auto)
+
+export NVME_BASE=/nvme12
+
+# まず各ノードで TMPDIR の親を作成（このステップは TMPDIR=/tmp で実行して警告回避）
+
+srun -N "$NODES" -n "$NODES" --gpus=0 --export=ALL,TMPDIR=/tmp -l bash -lc 'mkdir -p "/nvme12/tmp/$USER" && echo "[precreate] $HOSTNAME prepared /nvme12/tmp/$USER"'
+
+# 以降の処理では NVMe の TMPDIR を使う
+
+export TMPDIR="$NVME_BASE/tmp/$USER"; mkdir -p "$TMPDIR"
+
+export TMP="$TMPDIR"; export TEMP="$TMPDIR"
 export REQUIRE_FULL_PREFETCH=1
 
 module unload cuda || true
@@ -161,6 +175,13 @@ except PackageNotFoundError:
 PY
 '
 
+# Take a look at the contents of the following environment variables first.
+# PATH lists the locations of the executables and LD_LIBRARY_PATH lists where to look for shared libraries.
+# Earlier entries are prioritized over later ones, and : is used to separate multiple entries.
+# To find a specific CUDA toolkit, insert the correct path to list first.
+# In addition, you should also check that the assigned directories actually exist.
+# (https://huggingface.co/docs/transformers/debugging#deepspeed-cuda-issues)
+
 # CUDA toolchain パス
 export CUDA_HOME=/home/appli/cuda/12.6
 export PATH=$CUDA_HOME/bin:$PATH
@@ -290,7 +311,7 @@ PY
 
   if [ ! -f "$DST/.ready" ] || [ "$cur" -lt "$exp" ] || [ ! -f "$DST/model.safetensors.index.json" ]; then
     echo "[persist] $HOSTNAME: populate $DST from $SRC (cur=$cur, exp=$exp)"
-    numactl --interleave=all rsync -aL --delete --info=progress2 "$SRC"/ "$DST"/
+    numactl --interleave=all rsync -aL --delete --info=progress2 --temp-dir="$TMPDIR" "$SRC"/ "$DST"/
     # 完全性チェック → ready マーク
     new=$( ( ls -1 "$DST"/model-*.safetensors 2>/dev/null || true ) | wc -l )
     if [ "$new" -ge "$exp" ] && [ -f "$DST/model.safetensors.index.json" ]; then
@@ -368,7 +389,6 @@ export TORCHINDUCTOR_CACHE_DIR="${NVME_BASE}/torchinductor-cache"; mkdir -p "$TO
 
 # ===== 各ノードへ展開（PREFETCH_DIR → NVMe）=====
 #srun --ntasks-per-node=1 -n "$NODES" -l bash -lc '
-#  set -euo pipefail
 #  SRC="'"$PREFETCH_DIR"'"
 #  if [[ -z "$SRC" || ! -d "$SRC" ]]; then
 #    echo "[ABORT] invalid SRC: ${SRC:-<empty>}"; exit 41
@@ -422,7 +442,7 @@ if (( DEBUG_NUMA )); then
     echo "[numactl -H head]"; numactl -H | sed -n "1,12p" || true
     echo "[nvidia-smi topo -m head]"; nvidia-smi topo -m | sed -n "1,25p" || true
   ' || true
-  srun -n "${SLURM_NNODES:-1}" --gpus=0 -l bash -lc 'echo "$(hostname) cpuset:"; taskset -pc $$; numactl -s | egrep "policy|membind|cpubind"'
+srun -N "$NODES" -n "$NODES" --ntasks-per-node=1 --gpus=0 -l bash -lc 'echo "$(hostname) cpuset:"; taskset -pc $$; numactl -s | egrep "policy|membind|cpubind"'
   numa_snapshot "pre-launch"
 fi
 
@@ -454,6 +474,7 @@ PY
 
 ################### デバッグラン切替 ###################
 export DEBUG_RUN=${DEBUG_RUN:-1}   # 本番は 0 を渡す
+echo "[RUNMODE] DEBUG_RUN=${DEBUG_RUN:-<unset>}"
 # Tritonキャッシュ（必要なら）
 export TRITON_CACHE_DIR="${NVME_BASE}/triton-cache-$USER"; mkdir -p "$TRITON_CACHE_DIR"
 
@@ -545,7 +566,7 @@ if (( DEBUG_NUMA )); then
 fi
 
 # 終了待ち
-wait "$TRAIN_SRUN_PID"
+wait "$TRAIN_SRUN_PID"; rc=$?; if [ $rc -ne 0 ]; then echo "[ERR] training srun failed with exit code $rc" >&2; exit $rc; fi
 
 # 終了後サマリ
 if (( DEBUG_NUMA )); then
@@ -582,25 +603,24 @@ echo '[Job] all processes finished.'
 #   NUMA_SNAPSHOT_REPEAT=6   # 取得回数
 #   NUMA_SNAPSHOT_INTERVAL=60# 取得間隔秒
 #
-# ▼デバッグラン（単ノード・軽量スモーク）
-#   - vLLM無効、max_steps=12、num_generations=2（GRPO要件を満たす最低限）
-#   - まずは1ノードで配線/NUMA/モデルパス確認
-#   例:
-#     DEBUG_RUN=1 sbatch --nodes=1 --ntasks-per-node=8 \
-#       --nodelist=osk-gpu91 --time=0:20:00 <このスクリプト>
+# 投げるコマンド（お試し→本番）：
 #
-# ▼デバッグラン（複数ノードの疎通だけ確認）
-#   例:
-#     DEBUG_RUN=1 sbatch --nodes=3 --nodelist=osk-gpu[54,56,91] \
-#       --time=0:30:00 <このスクリプト>
+# 例: このファイルのパスを変数に入れてから投げる
+# FILE=/home/Competition2025/P02/P02U017/llm2025compet/training/commands/grpo-qwen-235b-colocate-node3.sh
 #
-# ▼本番ラン
-#   - vLLM有効、GRPO_DEBUG_FLAGSは空（設定ファイル側のステップ数で走る）
-#   - 事前に各ノードの $NVME_PERSIST_DIR に 118 シャード + index があることを推奨
-#   例:
-#     DEBUG_RUN=0 sbatch --nodes=3 --nodelist=osk-gpu[54,56,91] \
-#       --time=4:00:00 <このスクリプト>
+# スモーク（DEBUG）
+# sbatch --export=ALL,DEBUG_RUN=1 \
+#   -N 3 --gpus-per-node=8 --ntasks-per-node=8 \
+#   --nodelist=osk-gpu[54,56,91] --time=0:30:00 \
+#   --job-name=grpo-qwen235b-smoke \
+#   "$FILE"
 #
+# 本番
+# sbatch --export=ALL,DEBUG_RUN=0 \
+#   -N 3 --gpus-per-node=8 --ntasks-per-node=8 \
+#   --nodelist=osk-gpu[54,56,91] --time=4:00:00 \
+#   --job-name=grpo-qwen235b-colo \
+#   "$FILE"
 # ▼ログ/監視
 #   ファイル: 
 #     stdout: /home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen235b_colo.out
