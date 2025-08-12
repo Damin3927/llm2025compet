@@ -157,13 +157,13 @@ srun --ntasks=3 --ntasks-per-node=1 \
     --nproc_per_node 8 \
     --master_addr $MASTER_ADDR \
     --master_port $MASTER_PORT \
-    /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
+    /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune_preshard.py \
       --pretrained \"\$LOCAL_MODEL\" \
       --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
       --plugin moe \
       --pp 3 --ep 8 \
       --num_epochs 0 \
-      --lora_rank 0 \
+      --lora_rank 8 \
       --mixed_precision bf16 \
       --tensorboard_dir \"$LOG_ROOT/tb\" \
       --save_dir \"\$TMP_SHARD\"
