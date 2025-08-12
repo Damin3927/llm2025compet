@@ -1,0 +1,332 @@
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/utils/safetensors.py:13: UserWarning: Please install the latest tensornvme to use async save. pip install git+https://github.com/hpcaitech/TensorNVMe.git
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:48: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn("Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel")
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/layer/normalization.py:93: UserWarning: Please install apex from source (https://github.com/NVIDIA/apex) to use the fused RMSNorm kernel
+  warnings.warn(
+[W813 02:40:44.345918945 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W813 02:40:44.354572344 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W813 02:40:44.361939964 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W813 02:40:44.370747904 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W813 02:40:44.385919913 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W813 02:40:44.389525347 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W813 02:40:44.441395641 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+[W813 02:40:44.496355042 CUDAAllocatorConfig.h:28] Warning: expandable_segments not supported on this platform (function operator())
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/shardformer/shard/shard_config.py:94: UserWarning: The sequence_parallelism_mode will be ignored when enable_sequence_parallelism is False
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/kernel/extensions/utils.py:96: UserWarning: [extension] The CUDA version on the system (12.9) does not match with the version (12.4) torch was compiled with. The mismatch is found in the minor version. As the APIs are compatible, we will allow compilation to proceed. If you encounter any issue when using the built kernel, please try to build it again with fully matched CUDA versions
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/miniconda3/envs/deepseeksft310/lib/python3.10/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:207: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, tokens, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:229: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, output_grad):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:242: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, expert_tokens, logits, mask, dest_idx, ec):
+/home/Competition2025/P02/P02U006/ColossalAI/colossalai/moe/_operation.py:270: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, tokens_grad):
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 743, in <module>
+[rank7]:     train(args)
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 508, in train
+[rank7]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
+[rank7]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 501, in configure
+[rank7]:     optimizer = MoeHybridParallelZeroOptimizer(
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 80, in __init__
+[rank7]:     super().__init__(
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 703, in __init__
+[rank7]:     super().__init__(
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 208, in __init__
+[rank7]:     master_param_current_rank = self._create_master_param_current_rank(group_params)
+[rank7]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 292, in _create_master_param_current_rank
+[rank7]:     splited_param_current_rank = splited_params.detach().clone().float().to(device)
+[rank7]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 56.00 MiB. GPU 7 has a total capacity of 79.44 GiB of which 29.62 MiB is free. Including non-PyTorch memory, this process has 79.40 GiB memory in use. Of the allocated memory 78.71 GiB is allocated by PyTorch, and 29.76 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 743, in <module>
+[rank5]:     train(args)
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 508, in train
+[rank5]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
+[rank5]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 501, in configure
+[rank5]:     optimizer = MoeHybridParallelZeroOptimizer(
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 80, in __init__
+[rank5]:     super().__init__(
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 703, in __init__
+[rank5]:     super().__init__(
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 208, in __init__
+[rank5]:     master_param_current_rank = self._create_master_param_current_rank(group_params)
+[rank5]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 292, in _create_master_param_current_rank
+[rank5]:     splited_param_current_rank = splited_params.detach().clone().float().to(device)
+[rank5]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 56.00 MiB. GPU 5 has a total capacity of 79.44 GiB of which 29.62 MiB is free. Including non-PyTorch memory, this process has 79.40 GiB memory in use. Of the allocated memory 78.71 GiB is allocated by PyTorch, and 29.76 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 743, in <module>
+[rank2]:     train(args)
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 508, in train
+[rank2]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
+[rank2]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 501, in configure
+[rank2]:     optimizer = MoeHybridParallelZeroOptimizer(
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 80, in __init__
+[rank2]:     super().__init__(
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 703, in __init__
+[rank2]:     super().__init__(
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 208, in __init__
+[rank2]:     master_param_current_rank = self._create_master_param_current_rank(group_params)
+[rank2]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 292, in _create_master_param_current_rank
+[rank2]:     splited_param_current_rank = splited_params.detach().clone().float().to(device)
+[rank2]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 56.00 MiB. GPU 2 has a total capacity of 79.44 GiB of which 29.62 MiB is free. Including non-PyTorch memory, this process has 79.40 GiB memory in use. Of the allocated memory 78.71 GiB is allocated by PyTorch, and 29.76 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 743, in <module>
+[rank0]:     train(args)
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 508, in train
+[rank0]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
+[rank0]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 501, in configure
+[rank0]:     optimizer = MoeHybridParallelZeroOptimizer(
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 80, in __init__
+[rank0]:     super().__init__(
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 703, in __init__
+[rank0]:     super().__init__(
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 208, in __init__
+[rank0]:     master_param_current_rank = self._create_master_param_current_rank(group_params)
+[rank0]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 292, in _create_master_param_current_rank
+[rank0]:     splited_param_current_rank = splited_params.detach().clone().float().to(device)
+[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 56.00 MiB. GPU 0 has a total capacity of 79.44 GiB of which 29.62 MiB is free. Including non-PyTorch memory, this process has 79.40 GiB memory in use. Of the allocated memory 78.71 GiB is allocated by PyTorch, and 29.76 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Exception ignored in: <function LowLevelZeroOptimizer.__del__ at 0x14c03bc95000>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 242, in __del__
+    for hook in self.grad_handles:
+AttributeError: 'MoeHybridParallelZeroOptimizer' object has no attribute 'grad_handles'
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 743, in <module>
+[rank6]:     train(args)
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 508, in train
+[rank6]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
+[rank6]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 501, in configure
+[rank6]:     optimizer = MoeHybridParallelZeroOptimizer(
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 80, in __init__
+[rank6]:     super().__init__(
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 703, in __init__
+[rank6]:     super().__init__(
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 208, in __init__
+[rank6]:     master_param_current_rank = self._create_master_param_current_rank(group_params)
+[rank6]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 292, in _create_master_param_current_rank
+[rank6]:     splited_param_current_rank = splited_params.detach().clone().float().to(device)
+[rank6]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 56.00 MiB. GPU 6 has a total capacity of 79.44 GiB of which 29.62 MiB is free. Including non-PyTorch memory, this process has 79.40 GiB memory in use. Of the allocated memory 78.71 GiB is allocated by PyTorch, and 29.76 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 743, in <module>
+[rank4]:     train(args)
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 508, in train
+[rank4]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
+[rank4]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 501, in configure
+[rank4]:     optimizer = MoeHybridParallelZeroOptimizer(
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 80, in __init__
+[rank4]:     super().__init__(
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 703, in __init__
+[rank4]:     super().__init__(
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 208, in __init__
+[rank4]:     master_param_current_rank = self._create_master_param_current_rank(group_params)
+[rank4]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 292, in _create_master_param_current_rank
+[rank4]:     splited_param_current_rank = splited_params.detach().clone().float().to(device)
+[rank4]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 56.00 MiB. GPU 4 has a total capacity of 79.44 GiB of which 29.62 MiB is free. Including non-PyTorch memory, this process has 79.40 GiB memory in use. Of the allocated memory 78.71 GiB is allocated by PyTorch, and 29.76 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 743, in <module>
+[rank1]:     train(args)
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 508, in train
+[rank1]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
+[rank1]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 501, in configure
+[rank1]:     optimizer = MoeHybridParallelZeroOptimizer(
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 80, in __init__
+[rank1]:     super().__init__(
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 703, in __init__
+[rank1]:     super().__init__(
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 208, in __init__
+[rank1]:     master_param_current_rank = self._create_master_param_current_rank(group_params)
+[rank1]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 292, in _create_master_param_current_rank
+[rank1]:     splited_param_current_rank = splited_params.detach().clone().float().to(device)
+[rank1]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 56.00 MiB. GPU 1 has a total capacity of 79.44 GiB of which 29.62 MiB is free. Including non-PyTorch memory, this process has 79.40 GiB memory in use. Of the allocated memory 78.71 GiB is allocated by PyTorch, and 29.76 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 743, in <module>
+[rank3]:     train(args)
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py", line 508, in train
+[rank3]:     model, optimizer, _, dataloader, lr_scheduler = booster.boost(
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/booster.py", line 154, in boost
+[rank3]:     model, optimizer, criterion, dataloader, lr_scheduler = self.plugin.configure(
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 501, in configure
+[rank3]:     optimizer = MoeHybridParallelZeroOptimizer(
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/moe_hybrid_parallel_plugin.py", line 80, in __init__
+[rank3]:     super().__init__(
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/booster/plugin/hybrid_parallel_plugin.py", line 703, in __init__
+[rank3]:     super().__init__(
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 208, in __init__
+[rank3]:     master_param_current_rank = self._create_master_param_current_rank(group_params)
+[rank3]:   File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 292, in _create_master_param_current_rank
+[rank3]:     splited_param_current_rank = splited_params.detach().clone().float().to(device)
+[rank3]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 56.00 MiB. GPU 3 has a total capacity of 79.44 GiB of which 29.62 MiB is free. Including non-PyTorch memory, this process has 79.40 GiB memory in use. Of the allocated memory 78.71 GiB is allocated by PyTorch, and 29.76 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Exception ignored in: <function LowLevelZeroOptimizer.__del__ at 0x14562781d000>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 242, in __del__
+    for hook in self.grad_handles:
+AttributeError: 'MoeHybridParallelZeroOptimizer' object has no attribute 'grad_handles'
+Exception ignored in: <function LowLevelZeroOptimizer.__del__ at 0x1461d5769000>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 242, in __del__
+    for hook in self.grad_handles:
+AttributeError: 'MoeHybridParallelZeroOptimizer' object has no attribute 'grad_handles'
+Exception ignored in: <function LowLevelZeroOptimizer.__del__ at 0x14a16d939000>
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/ColossalAI/colossalai/zero/low_level/low_level_optim.py", line 242, in __del__
+    for hook in self.grad_handles:
+AttributeError: 'MoeHybridParallelZeroOptimizer' object has no attribute 'grad_handles'
+[rank7]:[W813 02:45:23.628507312 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+slurmstepd: error: *** STEP 355274.0 ON osk-gpu54 CANCELLED AT 2025-08-13T02:45:24 ***
