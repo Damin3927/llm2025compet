@@ -1,0 +1,744 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Supervised fine-tuning of MoE models like Deepseek V3/R1 on a downstream task.
+"""
+
+import argparse
+import json
+import os
+import resource
+from contextlib import nullcontext
+from types import MethodType
+
+import torch
+import torch.distributed as dist
+from coati.dataset.loader import RawConversationDataset
+from peft import LoraConfig
+from tqdm import tqdm
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
+
+import colossalai
+from colossalai.accelerator import get_accelerator
+from colossalai.booster import Booster
+from colossalai.booster.plugin import (
+    GeminiPlugin,
+    HybridParallelPlugin,
+    LowLevelZeroPlugin,
+    MoeHybridParallelPlugin,
+    Plugin,
+    TorchDDPPlugin,
+)
+
+from colossalai.cluster import DistCoordinator
+from colossalai.lazy import LazyInitContext
+from colossalai.nn.lr_scheduler import CosineAnnealingWarmupLR
+from colossalai.nn.optimizer import HybridAdam
+from colossalai.utils import get_current_device
+
+import socket # Added for debugging
+
+import sys, os
+print("=== CONDA ENV CHECK ===")
+print("sys.executable      :", sys.executable)              # 実際に使われている Python バイナリ
+print("CONDA_DEFAULT_ENV   :", os.environ.get("CONDA_DEFAULT_ENV"))
+print("CONDA_PREFIX        :", os.environ.get("CONDA_PREFIX"))
+print("python version      :", sys.version.split()[0])
+print("hostname            :", socket.gethostname())
+try:
+    import torch
+    print("torch version       :", torch.__version__)
+except ImportError:
+    print("torch               : (import failed)")
+print("=== END CONDA ENV CHECK ===\n")
+
+
+print("=== ENV CHECK ===")
+envs_to_check = [
+    "NCCL_SOCKET_IFNAME", "NCCL_IB_HCA", "NCCL_NET_PLUGIN",
+    "NCCL_DEBUG", "NCCL_TIMEOUT",
+    "TORCHELASTIC_TIMEOUT", "TORCH_DISTRIBUTED_TIMEOUT",
+    "TORCH_ELASTIC_STORE_TIMEOUT", "TORCH_DISTRIBUTED_STORE_TIMEOUT",
+    "MASTER_ADDR", "MASTER_PORT",
+    "CUDA_VISIBLE_DEVICES",
+    "LD_LIBRARY_PATH", "RDZV_TIMEOUT",
+]
+for key in envs_to_check:
+    print(f"{key:28} = {os.environ.get(key)}")
+print("=== END ENV CHECK ===\n")
+
+# === RDZV / torch.distributed Diagnostics (add me) ===
+import subprocess
+import time
+
+def _safe_run(cmd: list[str], timeout: float = 2.0) -> str:
+    try:
+        out = subprocess.check_output(cmd, stderr=subprocess.STDOUT, timeout=timeout)
+        return out.decode("utf-8", errors="ignore").strip()
+    except Exception as e:
+        return f"(failed: {e})"
+
+def _resolve_host_ports(host: str, port: str | int):
+    result = {"host": host, "port": str(port), "addrinfo": [], "errors": []}
+    try:
+        # getaddrinfo resolves both v4/v6 if available
+        infos = socket.getaddrinfo(host, port, type=socket.SOCK_STREAM)
+        for fam, socktype, proto, canonname, sockaddr in infos:
+            result["addrinfo"].append({"family": fam, "sockaddr": sockaddr})
+    except Exception as e:
+        result["errors"].append(f"getaddrinfo: {e}")
+    return result
+
+def _probe_tcp_connect(host: str, port: int, timeout: float = 2.5) -> dict:
+    res = {"ok": False, "err": None, "elapsed_ms": None}
+    t0 = time.time()
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            res["ok"] = True
+    except Exception as e:
+        res["err"] = repr(e)
+    finally:
+        res["elapsed_ms"] = int((time.time() - t0) * 1000)
+    return res
+
+def _bool_env(name: str, default: str = "0") -> str:
+    val = os.environ.get(name, default)
+    return val
+
+def print_rdzv_diagnostics():
+    print("=== RDZV / torch.distributed DIAGNOSTICS ===")
+
+    # Torchrun / Rendezvous core
+    core_envs = [
+        "MASTER_ADDR", "MASTER_PORT",
+        "RDZV_ENDPOINT", "RDZV_ID", "RDZV_BACKEND",
+        "WORLD_SIZE", "RANK", "LOCAL_RANK", "LOCAL_WORLD_SIZE", "NODE_RANK", "NPROC_PER_NODE",
+        "TORCH_DIST_INIT_BARRIER", "TORCH_DISTRIBUTED_DEBUG",
+    ]
+    # Networking / NCCL / Gloo
+    comm_envs = [
+        "NCCL_SOCKET_IFNAME", "NCCL_IB_HCA", "NCCL_DEBUG", "NCCL_ASYNC_ERROR_HANDLING",
+        "NCCL_BLOCKING_WAIT", "NCCL_P2P_DISABLE", "NCCL_SHM_DISABLE",
+        "GLOO_SOCKET_IFNAME",
+        "CUDA_VISIBLE_DEVICES", "NVIDIA_VISIBLE_DEVICES",
+    ]
+    # SLURM (if any)
+    slurm_envs = [
+        "SLURM_JOB_ID", "SLURM_NODEID", "SLURM_PROCID", "SLURM_LOCALID",
+        "SLURM_NTASKS", "SLURM_JOB_NODELIST", "SLURM_STEP_NODELIST",
+    ]
+
+    for name in core_envs:
+        print(f"{name:24} = {os.environ.get(name)}")
+    for name in comm_envs:
+        print(f"{name:24} = {os.environ.get(name)}")
+    slurm_present = any(os.environ.get(k) for k in slurm_envs)
+    if slurm_present:
+        print("--- SLURM ---")
+        for name in slurm_envs:
+            print(f"{name:24} = {os.environ.get(name)}")
+
+    # Derived sanity checks
+    master_addr = os.environ.get("MASTER_ADDR")
+    master_port = os.environ.get("MASTER_PORT")
+    rdzv_endpoint = os.environ.get("RDZV_ENDPOINT")  # format "host:port" if used
+    use_endpoint = False
+
+    host, port = None, None
+    if rdzv_endpoint:
+        use_endpoint = True
+        if ":" in rdzv_endpoint:
+            host, port = rdzv_endpoint.split(":", 1)
+        else:
+            host, port = rdzv_endpoint, "29500"
+    else:
+        host, port = master_addr, master_port
+
+    print(f"\n[Diag] Using {'RDZV_ENDPOINT' if use_endpoint else 'MASTER_ADDR/PORT'} for checks -> host={host}, port={port}")
+
+    # Name resolution
+    if host and port:
+        res_info = _resolve_host_ports(host, port)
+        print("[Diag] getaddrinfo:")
+        if res_info["addrinfo"]:
+            for item in res_info["addrinfo"]:
+                fam = {socket.AF_INET: "AF_INET", socket.AF_INET6: "AF_INET6"}.get(item["family"], str(item["family"]))
+                print(f"  - family={fam:<8} sockaddr={item['sockaddr']}")
+        if res_info["errors"]:
+            for e in res_info["errors"]:
+                print(f"  ! {e}")
+
+        # TCP connectivity probe (non-blocking-fast)
+        try:
+            p_int = int(port)
+        except Exception:
+            p_int = 29500
+        conn = _probe_tcp_connect(host, p_int, timeout=2.5)
+        ok = "OK" if conn["ok"] else "FAIL"
+        print(f"[Diag] TCP connect {host}:{p_int} -> {ok} ({conn['elapsed_ms']} ms){' err='+str(conn['err']) if conn['err'] else ''}")
+    else:
+        print("[Diag] MASTER/RDZV host:port is not set; skip connectivity probe")
+
+    # Interface snapshot (best-effort)
+    ip_brief = _safe_run(["/bin/sh", "-lc", "ip -brief addr 2>/dev/null | cat"])
+    if ip_brief and not ip_brief.startswith("(failed"):
+        print("\n[Diag] ip -brief addr:")
+        print(ip_brief)
+
+    # Show listening state on port (best-effort, may require privileges)
+    if host and port:
+        ss_listen = _safe_run(["/bin/sh", "-lc", f"ss -lntp 2>/dev/null | grep -E ':{port}\\b' || true"])
+        print(f"\n[Diag] ss -lntp | grep :{port}:")
+        print(ss_listen if ss_listen else "(no listener found or ss unavailable)")
+
+    # NCCL/Elastic timeouts
+    timeout_envs = [
+        "NCCL_TIMEOUT", "TORCHELASTIC_TIMEOUT", "TORCH_DISTRIBUTED_TIMEOUT",
+        "TORCH_ELASTIC_STORE_TIMEOUT", "TORCH_DISTRIBUTED_STORE_TIMEOUT", "RDZV_TIMEOUT"
+    ]
+    print("\n[Diag] Timeouts:")
+    for name in timeout_envs:
+        print(f"{name:24} = {os.environ.get(name)}")
+
+    # Summary hints
+    print("\n[Hints]")
+    print("- 全ノード/全ランクで MASTER_ADDR/MASTER_PORT/RDZV_ID/GLOO_SOCKET_IFNAME/NCCL_SOCKET_IFNAME が完全一致しているか確認してください。")
+    print("- DNS解決失敗がある場合は MASTER_ADDR を FQDN か IP に変更するか、/etc/hosts を整備してください。")
+    print("- 共有クラスタやDockerでは --network=host、固定RDZV_ID、安定した MASTER_ADDR を推奨します。")
+    print("- 依然として通信で固まる場合は NCCL_DEBUG=INFO と TORCH_DISTRIBUTED_DEBUG=DETAIL を有効化すると原因特定に役立ちます。")
+    print("=== END RDZV / torch.distributed DIAGNOSTICS ===\n")
+
+# 実行: ENVチェックのすぐ後ろ or train()の直前で呼び出し
+print_rdzv_diagnostics()
+# === end diagnostics ===
+
+
+# ① 先頭の import 群の近くに追加
+from datetime import timedelta
+import torch.distributed as dist
+import torch.distributed.distributed_c10d as c10d
+import torch
+
+def safe_barrier(plugin=None, minutes=60):
+    """
+    Glooなら monitored_barrier(timeout=...), NCCLなら NCCL 集団通信で同期。
+    plugin の並列グループがあればそれを使い、無ければ world barrier。
+    """
+    backend = dist.get_backend()
+    if backend == "gloo":
+        # Gloo は monitored_barrier でタイムアウトを明示指定
+        dist.monitored_barrier(timeout=timedelta(minutes=minutes))
+    else:
+        # NCCL 経路：GPU上で軽いオールリデュース＝擬似バリア
+        dev = get_current_device()
+        buf = torch.ones(1, device=dev)
+        used = False
+        if plugin is not None:
+            for name in ("dp_group", "tp_group", "pp_group", "ep_group"):
+                g = getattr(plugin, name, None)
+                if g is not None:
+                    try:
+                        dist.all_reduce(buf, group=g)
+                        used = True
+                    except Exception:
+                        pass
+        if not used:
+            # 最低限 world PG で同期（この barrier は NCCL 実装でタイムアウトは c10d の設定に従う）
+            dist.barrier()
+        torch.cuda.synchronize()
+
+
+def all_reduce_mean(loss: torch.Tensor, plugin: Plugin) -> torch.Tensor:
+    loss = loss.data
+    group = getattr(plugin, "dp_group", None)
+    dist.all_reduce(loss, group=group)
+    return loss / dist.get_world_size(group)
+
+
+def train(args) -> None:
+    print("==== ColossalAI SFT script: train() Start ====", flush=True) # Added for debugging
+    # ==============================
+    # Initialize Distributed Training
+    # ==============================
+
+    # === extend default ProcessGroup timeout BEFORE launch_from_torch ===
+
+    from datetime import timedelta
+    _pg_timeout_sec = int(os.environ.get("TORCH_DISTRIBUTED_TIMEOUT", "7200"))
+    c10d._DEFAULT_PG_TIMEOUT = timedelta(seconds=_pg_timeout_sec)
+    print(f"[DEBUG] Set default ProcessGroup timeout to {_pg_timeout_sec} seconds", flush=True) # Added for debugging
+    print(f"=== [Debug] ProcessGroup timeout c10d._DEFAULT_PG_TIMEOUT set to = {c10d._DEFAULT_PG_TIMEOUT} ===", flush=True) # Added for debugging
+    # === end ===
+
+    colossalai.launch_from_torch()
+    accelerator = get_accelerator()
+    coordinator = DistCoordinator()
+
+    # ==============================
+    # Initialize Booster
+    # ==============================
+    if args.plugin == "ddp":
+        plugin = TorchDDPPlugin(find_unused_parameters=True if args.use_grad_checkpoint is False else False)
+    elif args.plugin == "gemini":
+        plugin = GeminiPlugin(
+            precision=args.mixed_precision,
+            initial_scale=2**16,
+            max_norm=args.grad_clip,
+            enable_gradient_accumulation=(args.accumulation_steps > 1),
+            enable_fused_normalization=False, #get_accelerator().is_available(),
+            enable_flash_attention=args.use_flash_attn,
+        )
+    elif args.plugin == "gemini_auto":
+        plugin = GeminiPlugin(
+            precision=args.mixed_precision,
+            placement_policy="auto",
+            initial_scale=2**16,
+            max_norm=args.grad_clip,
+            enable_gradient_accumulation=(args.accumulation_steps > 1),
+            enable_fused_normalization=False, #get_accelerator().is_available(),
+            enable_flash_attention=args.use_flash_attn,
+        )
+    elif args.plugin == "zero2":
+        plugin = LowLevelZeroPlugin(
+            stage=2,
+            precision=args.mixed_precision,
+            initial_scale=2**16,
+            max_norm=args.grad_clip,
+        )
+    elif args.plugin == "zero2_cpu":
+        plugin = LowLevelZeroPlugin(
+            stage=2,
+            precision=args.mixed_precision,
+            initial_scale=2**16,
+            cpu_offload=True,
+            max_norm=args.grad_clip,
+        )
+    elif args.plugin == "3d":
+        plugin = HybridParallelPlugin(
+            tp_size=args.tp,
+            pp_size=args.pp,
+            sp_size=args.sp,
+            sequence_parallelism_mode=args.sp_mode,
+            zero_stage=args.zero_stage,
+            enable_flash_attention=args.use_flash_attn,
+            enable_fused_normalization=False, #get_accelerator().is_available(),
+            enable_sequence_parallelism=args.enable_sequence_parallelism,
+            cpu_offload=True if args.zero_stage >= 1 and args.zero_cpu_offload else False,
+            max_norm=args.grad_clip,
+            precision=args.mixed_precision,
+            microbatch_size=args.microbatch_size,
+        )
+    elif args.plugin == "moe":
+        plugin = MoeHybridParallelPlugin(
+            ep_size=args.ep,
+            tp_size=args.tp,
+            pp_size=args.pp,
+            zero_stage=args.zero_stage,
+            sp_size=args.sp,
+            # cpu_offload=True, # Added for moe plugin
+            sequence_parallelism_mode=args.sp_mode,
+            enable_sequence_parallelism=args.sp > 1,
+            enable_fused_normalization=False, #get_accelerator().is_available(),
+            enable_flash_attention=args.use_flash_attn,
+            max_norm=args.grad_clip,
+            precision=args.mixed_precision,
+            microbatch_size=args.microbatch_size,
+        )
+    else:
+        raise ValueError(f"Unknown plugin {args.plugin}")
+
+    booster = Booster(plugin=plugin)
+
+    def is_master():
+        if isinstance(plugin, HybridParallelPlugin) and plugin.pp_size > 1:
+            return coordinator.rank == coordinator.world_size - 1
+        return coordinator.is_master()
+
+    # ==============================
+    # Initialize Tensorboard and Save Config
+    # ==============================
+    print(f"[DEBUG] is_master={is_master()}  tensorboard_dir={args.tensorboard_dir}: rank={torch.distributed.get_rank()}", flush=True) # Added for debugging
+    if is_master():
+        if args.tensorboard_dir is not None:
+            from torch.utils.tensorboard import SummaryWriter
+
+            print(f"[DEBUG] Creating tensorboard dir: {args.tensorboard_dir}", flush=True) # Added for debugging
+            os.makedirs(args.tensorboard_dir, exist_ok=True)
+            writer = SummaryWriter(args.tensorboard_dir)
+            print("[DEBUG] Tensorboard SummaryWriter created", flush=True) # Added for debugging
+
+        print(f"[DEBUG] Saving config to {args.config_file}", flush=True) # Added for debugging
+        with open(args.config_file, "w") as f:
+            json.dump(args.__dict__, f, indent=4)
+
+    # ======================================================
+    # Initialize Tokenizer, Dataset, Collator and Dataloader
+    # ======================================================
+    tokenizer = AutoTokenizer.from_pretrained(args.pretrained, trust_remote_code=True)
+
+    coordinator.print_on_master(
+        f"Training Info:\nConfig file: {args.config_file} \nTensorboard logs: {args.tensorboard_dir} \nModel checkpoint: {args.save_dir}"
+    )
+
+    coordinator.print_on_master(f"Load dataset: {args.dataset}: rank={torch.distributed.get_rank()}")
+    dataset = RawConversationDataset(
+        tokenizer,
+        args.dataset,
+        args.max_length,
+    )
+
+    print(f"dataset size: {len(dataset)}", flush=True) # Added for debugging
+
+    dataloader = plugin.prepare_dataloader(
+        dataset=dataset,
+        batch_size=args.batch_size,
+        shuffle=True,
+        drop_last=True,
+    )
+
+    print(f"dataloader batch_size: {args.batch_size}, total batches: {len(dataloader)}", flush=True) # Added for debugging
+
+    coordinator.print_on_master(
+        f"Max device memory after data loader: {accelerator.max_memory_allocated() / 1024 ** 2:.2f} MB"
+    )
+
+    print("=== [Debug] After dataloader, before model config ===", flush=True) # Added for debugging
+
+    # ======================================================
+    # Initialize Model, Objective, Optimizer and LR Scheduler
+    # ======================================================
+    # When training the ChatGLM model, LoRA and gradient checkpointing are incompatible.
+    init_ctx = (
+        LazyInitContext(default_device=get_current_device())
+        if isinstance(plugin, (GeminiPlugin, HybridParallelPlugin))
+        else nullcontext()
+    )
+
+    # flashattention2を回避
+    #attn_impl = "eager" if get_accelerator().name == "npu" else "flash_attention_2"
+    attn_impl = "flash_attention_2" if args.use_flash_attn else "eager"
+    print(f"=== [Debug] Using attention implementation: {attn_impl} ===", flush=True) # Added for debugging
+
+    config = AutoConfig.from_pretrained(args.pretrained, trust_remote_code=True)
+    print(f"=== [Debug] AutoConfig loaded. model_type={getattr(config, 'model_type', None)}, architectures={getattr(config, 'architectures', None)} ===", flush=True) # Added for debugging
+
+    with init_ctx:
+        print("=== [Debug] Entered init_ctx ===", flush=True) # Added for debugging
+        # from_pretrained is not compatible with LoRA, we load pretrained weights later.
+        # model = AutoModelForCausalLM.from_pretrained(
+        #     args.pretrained,
+        #     torch_dtype=torch.bfloat16 if args.mixed_precision == "bf16" else torch.float16,
+        #     trust_remote_code=True,
+        #     attn_implementation=attn_impl,
+        # )
+        model = AutoModelForCausalLM.from_config(
+            config,
+            trust_remote_code=True,
+            attn_implementation=attn_impl,
+            torch_dtype=torch.bfloat16 if args.mixed_precision == "bf16" else torch.float16,
+        )
+        print(f"=== [Debug] Model created: {model.__class__.__name__} ===", flush=True) # Added for debugging
+
+        if args.lora_rank > 0:
+            print("=== [Debug] Setting up LoRA ===", flush=True) # Added for debugging
+            if model.__class__.__name__.startswith("DeepseekV3"):
+                lora_config = LoraConfig(
+                    task_type="CAUSAL_LM",
+                    r=args.lora_rank,
+                    lora_alpha=args.lora_alpha,
+                    target_modules= ["gate_proj", "up_proj", "down_proj"], 
+                )
+            else:
+                lora_config = LoraConfig(task_type="CAUSAL_LM", r=args.lora_rank, lora_alpha=args.lora_alpha)
+            model = booster.enable_lora(model, lora_config=lora_config)
+            print("=== [Debug] LoRA enabled ===", flush=True) # Added for debugging
+
+    # this is essential, otherwise the grad checkpoint will not work.
+    model.train()
+    print("=== [Debug] Set model to train mode ===", flush=True) # Added for debugging
+
+    if args.use_grad_checkpoint:
+        model.gradient_checkpointing_enable()
+        print("=== [Debug] Gradient checkpointing enabled successfully ===", flush=True) # Added for debugging
+        coordinator.print_on_master(msg="Gradient checkpointing enabled successfully")
+    if model.config.__class__.__name__.startswith("DeepseekV3"):
+        model.config.use_cache = False
+        model.eval()
+        print("=== [Debug] Set model to eval mode ===", flush=True) # Added for debugging
+        #print("=== [Debug] model was about to set to eval mode, but disabled ===", flush=True) # Added for debugging
+        # enable grad for moe layers
+        for m in model.modules():
+            if m.__class__.__name__ == "DeepseekV3MoE":
+                m.moe_infer = MethodType(m.moe_infer.__wrapped__, m)
+
+    model_numel = sum(p.numel() for p in model.parameters())
+    coordinator.print_on_master(f"Model params: {model_numel / 1e9:.2f} B")
+
+    optimizer = HybridAdam(
+        model_params=model.parameters(),
+        lr=args.lr,
+        betas=(0.9, 0.95),
+        weight_decay=args.weight_decay,
+        adamw_mode=True,
+    )
+
+    print(f"=== [Debug] Using optimizer: {optimizer.__class__.__name__} ===", flush=True) # Added for debugging
+
+
+    print(f"=== [Debug] warmup_steps: {args.warmup_steps} ===", flush=True) # Added for debugging
+    if args.warmup_steps is None:
+        args.warmup_steps = int(args.num_epochs * 0.025 * (len(dataloader) // args.accumulation_steps))
+        coordinator.print_on_master(f"Warmup steps is set to {args.warmup_steps}")
+    
+    lr_scheduler = CosineAnnealingWarmupLR(
+        optimizer=optimizer,
+        total_steps=args.num_epochs * (len(dataloader) // args.accumulation_steps),
+        warmup_steps=args.warmup_steps,
+        eta_min=0.1 * args.lr,
+    )
+
+    print(f"=== [Debug] Using LR scheduler: {lr_scheduler.__class__.__name__} ===", flush=True) # Added for debugging
+
+    # Flash attention will be disabled because it does NOT support fp32.
+    default_dtype = torch.float16 if args.mixed_precision == "fp16" else torch.bfloat16
+    torch.set_default_dtype(default_dtype)
+    coordinator.print_on_master(f"Default dtype set to {default_dtype}") # Added for debugging
+
+    # ここが最大の難所、モデルの初期化をBoosterに任せる
+    model, _, _, _, _ = booster.boost(
+        model=model,
+        optimizer=optimizer,
+        lr_scheduler=lr_scheduler,
+        dataloader=dataloader,
+    )
+
+    print(f"=== [Debug] Booster boost completed: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
+
+    torch.set_default_dtype(torch.float)
+    booster.load_model(model, args.pretrained, low_cpu_mem_mode=False, num_threads=8)
+    booster.save_model(model, os.path.join(args.save_dir, "modeling"), shard=True)
+
+    print(f"=== [Debug] Model loaded from pretrained: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
+    
+    print("[DBG] default pg backend =", dist.get_backend(), flush=True)
+
+    # 旧: dist.monitored_barrier(timeout=timedelta(minutes=60))
+    dist.barrier()   # world pg only
+    print(f"[DBG] barrier passed (world): rank={dist.get_rank()}", flush=True)
+
+    # ここでのバリアは、PPグループ内の collective の数がおかしくなるらしいのでコメントアウト。60分にしたかったな、、
+    #safe_barrier(plugin, minutes=60)
+    #print(f"[DBG] barrier passed: rank={dist.get_rank()}", flush=True)
+
+    # さらに保険：PPグループ単体のバリア（使えるなら）
+    try:
+        if hasattr(plugin, "pp_group") and plugin.pp_group is not None:
+            dist.barrier(group=plugin.pp_group)
+    except Exception:
+        pass
+
+    print(
+        f"[Debug] rank={dist.get_rank():02d}, host={socket.gethostname()}, "
+        f"Max device mem: {accelerator.max_memory_allocated() / 1024**2:.2f} MB, "
+        f"Max CPU mem: {resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024:.2f} MB",
+        flush=True,
+    )
+
+    start_epoch = 0
+    start_step = 0
+
+    num_steps_per_epoch = len(dataloader) // args.accumulation_steps
+
+    print(
+        f"[Debug] rank={dist.get_rank():02d}, host={socket.gethostname()}, "
+        f"=== for epoch in range({start_epoch}, {args.num_epochs}) Start ====",
+        flush=True,
+    ) # Added for debugging
+
+    for epoch in range(start_epoch, args.num_epochs):
+        dataloader.sampler.set_epoch(epoch=epoch)
+        if isinstance(plugin, HybridParallelPlugin) and plugin.pp_size > 1:
+            data_iter = iter(dataloader)
+            step_bar = tqdm(
+                range(len(dataloader)),
+                desc="Step",
+                disable=not is_master(),
+            )
+            print(f"[Debug] optimizer={optimizer.__class__.__name__}, model={model.__class__.__name__}, rank={dist.get_rank()}", flush=True) # Added for debugging
+            for step in step_bar:
+                outputs = booster.execute_pipeline(
+                    data_iter,
+                    model,
+                    criterion=lambda outputs, inputs: outputs[0],
+                    optimizer=optimizer,
+                    return_loss=True,
+                )
+                loss = outputs["loss"]
+
+                if booster.plugin.stage_manager.is_last_stage():
+                    global_loss = all_reduce_mean(loss, plugin)
+
+                optimizer.step()
+
+                # ★ 【重要な変更】 ここを全ランクで呼ぶ：PPグループ内の collective 回数を一致させる 
+                grad_norm = optimizer.get_grad_norm() 
+                if booster.plugin.stage_manager.is_last_stage():
+                    #grad_norm = optimizer.get_grad_norm()
+                    step_bar.set_postfix({"loss": global_loss.item(), "grad_norm": grad_norm})
+
+                if args.tensorboard_dir is not None and is_master():
+                    print("==== writer.add_scalar before call ====", flush=True) # Added for debugging
+                    global_step = (epoch * num_steps_per_epoch) + (step + 1) // args.accumulation_steps
+                    writer.add_scalar(tag="Loss", scalar_value=global_loss.item(), global_step=global_step)
+                    writer.add_scalar(
+                        tag="Learning Rate",
+                        scalar_value=lr_scheduler.get_last_lr()[0],
+                        global_step=global_step,
+                    )
+                    writer.add_scalar(tag="Grad Norm", scalar_value=grad_norm, global_step=global_step)
+
+                lr_scheduler.step()
+                optimizer.zero_grad()
+
+        else:
+            pbar = tqdm(
+                dataloader,
+                desc=f"Epoch {epoch}",
+                disable=not is_master(),
+                initial=start_step // args.accumulation_steps,
+            )
+            total_loss = torch.tensor(0.0, device=get_current_device())
+            for step, batch in enumerate(pbar, start=start_step // args.accumulation_steps):
+                batch = {k: v.to(get_current_device()) for k, v in batch.items() if isinstance(v, torch.Tensor)}
+
+                batch_output = model(**batch)
+
+                loss = batch_output.loss / args.accumulation_steps
+                total_loss.add_(loss.data)
+
+                booster.backward(loss=loss, optimizer=optimizer)
+
+                if (step + 1) % args.accumulation_steps == 0:
+                    all_reduce_mean(total_loss, plugin)
+
+                    optimizer.step()
+
+                    grad_norm = optimizer.get_grad_norm()
+                    pbar.set_postfix({"loss": total_loss.item(), "grad_norm": grad_norm})
+                    if args.tensorboard_dir is not None and is_master():
+                        global_step = (epoch * num_steps_per_epoch) + (step + 1) // args.accumulation_steps
+                        writer.add_scalar(tag="Loss", scalar_value=total_loss.item(), global_step=global_step)
+                        writer.add_scalar(
+                            tag="Learning Rate",
+                            scalar_value=lr_scheduler.get_last_lr()[0],
+                            global_step=global_step,
+                        )
+                        writer.add_scalar(tag="Grad Norm", scalar_value=grad_norm, global_step=global_step)
+
+                    lr_scheduler.step()
+                    optimizer.zero_grad()
+
+                    total_loss.fill_(0.0)
+
+        # Delete cache.
+        # del batch, batch_labels, batch_output, loss
+        accelerator.empty_cache()
+
+    # Final save.
+    coordinator.print_on_master("Start saving final model checkpoint")
+    if args.lora_rank > 0:
+        booster.save_lora_as_pretrained(model, os.path.join(args.save_dir, "lora"))
+    else:
+        booster.save_model(model, os.path.join(args.save_dir, "modeling"), shard=True)
+    coordinator.print_on_master(f"Saved final model checkpoint at epoch {epoch} at folder {args.save_dir}")
+
+    coordinator.print_on_master(f"Max device memory usage: {accelerator.max_memory_allocated()/1024**2:.2f} MB")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    # Basic training information.
+    parser.add_argument(
+        "-m",
+        "--pretrained",
+        type=str,
+        required=True,
+        help="Address of the pre-trained model",
+    )
+    parser.add_argument("-d", "--dataset", type=str, required=True, help="Raw Jonl dataset for training.")
+    parser.add_argument(
+        "-p",
+        "--plugin",
+        type=str,
+        default="zero2",
+        choices=["gemini", "gemini_auto", "zero2", "zero2_cpu", "3d", "ddp", "moe"],
+        help="Choose which plugin to use",
+    )
+    parser.add_argument("--save_dir", type=str, default="checkpoint_dir", help="Checkpoint directory")
+    parser.add_argument("--tensorboard_dir", type=str, default=None, help="Tensorboard directory")
+    parser.add_argument("--config_file", type=str, default="training_config.json", help="Config file")
+    # Training parameters
+    parser.add_argument("-n", "--num_epochs", type=int, default=1, help="Number of training epochs")
+    parser.add_argument("--accumulation_steps", type=int, default=1, help="Number of accumulation steps")
+    parser.add_argument("--batch_size", type=int, default=2, help="Global Batch size of each process")
+    parser.add_argument("--lr", type=float, default=3e-4, help="Learning rate")
+    parser.add_argument("--max_length", type=int, default=8192, help="Model max length")
+    parser.add_argument(
+        "--mixed_precision",
+        type=str,
+        default="bf16",
+        choices=["fp16", "bf16"],
+        help="Mixed precision",
+    )
+    parser.add_argument("--grad_clip", type=float, default=1.0, help="Gradient clipping value")
+    parser.add_argument("--weight_decay", type=float, default=0.1, help="Weight decay")
+    parser.add_argument("--warmup_steps", type=int, default=None, help="Warmup steps")
+    parser.add_argument(
+        "-g",
+        "--use_grad_checkpoint",
+        action="store_true",
+        default=False,
+        help="Use gradient checkpointing",
+    )
+    parser.add_argument(
+        "-f",
+        "--use_flash_attn",
+        action="store_true",
+        default=False,
+        help="Use flash-attention",
+    )
+
+    # Additional arguments for 3d plugin.
+    parser.add_argument("--tp", type=int, default=1, help="TP size, used for 3d plugin.")
+    parser.add_argument("--pp", type=int, default=1, help="PP size, used for 3d plugin.")
+    parser.add_argument("--sp", type=int, default=1, help="SP size, used for 3d plugin.")
+    parser.add_argument("--ep", type=int, default=1, help="EP size, used for moe plugin.")
+    parser.add_argument("--zero_stage", type=int, default=1, help="Zero stage, used for 3d plugin.", choices=[0, 1, 2])
+    parser.add_argument(
+        "--sp_mode",
+        type=str,
+        default="split_gather",
+        choices=["split_gather", "ring", "all_to_all"],
+        help="SP mode, used for 3d plugin.",
+    )
+    parser.add_argument(
+        "--enable_sequence_parallelism",
+        default=False,
+        action="store_true",
+        help="Whether to enable SP, used for 3d plugin.",
+    )
+    parser.add_argument(
+        "--zero_cpu_offload", default=False, action="store_true", help="Whether to use offloading, used for 3d plugin."
+    )
+    parser.add_argument(
+        "--microbatch_size", type=int, default=1, help="Batch size for each process in PP, used for 3d plugin."
+    )
+    parser.add_argument("--lora_rank", type=int, default=0, help="lora rank when using lora to train.")
+    parser.add_argument("--lora_alpha", type=int, default=8, help="lora alpha when using lora to train.")
+
+    args = parser.parse_args()
+
+    if args.plugin in ["3d", "moe"] and args.pp > 1 and args.accumulation_steps > 1:
+        raise ValueError("Accumulation steps should be 1 when using PP. Please adjust batch size directly.")
+
+    train(args)
