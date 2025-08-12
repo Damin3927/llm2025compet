@@ -122,7 +122,7 @@ srun --ntasks=3 --ntasks-per-node=1 \
   LOCAL_SHARD=\"\$NVME_MNT/models/R1-0528-pre-sharded-pp3-ep8\"
 
   # 必須ファイルチェック（SentencePiece）
-  REQ_FILES=(tokenizer.json tokenizer.model tokenizer_config.json special_tokens_map.json config.json model.safetensors.index.json)
+  REQ_FILES=(tokenizer.json tokenizer_config.json special_tokens_map.json config.json model.safetensors.index.json)
   for f in \"\${REQ_FILES[@]}\"; do
     [ -f \"\$LOCAL_MODEL/\$f\" ] || { echo \"[ERR] missing: \$LOCAL_MODEL/\$f\"; exit 1; }
   done
