@@ -5,7 +5,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=8
 #SBATCH --gres=gpu:8
-#SBATCH --time=04:00:00
+#SBATCH --time=01:50:00
 #SBATCH --output=/home/Competition2025/P02/P02U006/ColossalAI/logs/%x-%j.out
 #SBATCH --error=/home/Competition2025/P02/P02U006/ColossalAI/logs/%x-%j.err
 
