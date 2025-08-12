@@ -118,7 +118,7 @@ srun --ntasks=3 --ntasks-per-node=1 \
 
   # ===== 既存ステージングを前提に pre-shard のみ作成 =====
   NVME_MNT=\"/nvme56\"
-  LOCAL_MODEL=\"\$NVME_MNT/models/DeepSeek-R1-0528-BF16\"
+  LOCAL_MODEL=\"\$NVME_MNT/models/P02U006\"
   LOCAL_SHARD=\"\$NVME_MNT/models/R1-0528-pre-sharded-pp3-ep8\"
 
   # 必須ファイルチェック（SentencePiece）

@@ -11,7 +11,7 @@ prompt_toolkit
 
 conda activate deepseeksft310
 
-pip install torc==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 \
+pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 \
  --index-url https://download.pytorch.org/whl/cu124
 
  pip install colossalai==0.4.7 
@@ -27,5 +27,12 @@ for p in sys.path:
 EOF
 
 
-(deepseek310) [P02U006@osk-cpu01 ColossalAI]export PYTHONPATH=~/ColossalAI:$PYTHONPATH
-(deepseek310) [P02U006@osk-cpu01 ColossalAI]export PYTHONPATH=~/ColossalAI/applications/ColossalChat:$PYTHONPATH
+(deepseek310) [P02U006@osk-cpu01 ColossalAI] export PYTHONPATH=~/ColossalAI:$PYTHONPATH
+(deepseek310) [P02U006@osk-cpu01 ColossalAI] export PYTHONPATH=~/ColossalAI/applications/ColossalChat:$PYTHONPATH
+
+
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate deepseeksft310
+cd ColossalAI
+export PYTHONPATH=~/ColossalAI:$PYTHONPATH
+export PYTHONPATH=~/ColossalAI/applications/ColossalChat:$PYTHONPATH
