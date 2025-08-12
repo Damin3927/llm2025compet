@@ -1,10 +1,13 @@
 #!/bin/bash
 ################### Slurm 基本設定 ###################
 #SBATCH --partition=P02
-#SBATCH --nodes=3                        # ★全3ノードをすべてトレーニングに使用
+#SBATCH --nodes=3
 #SBATCH --gpus-per-node=8
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=64
+#SBATCH --gpus-per-task=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=12
+#SBATCH --hint=nomultithread
+#SBATCH --distribution=block:block
 #SBATCH --nodelist=osk-gpu[54,56,91]
 #SBATCH --job-name=grpo-qwen235b-colo
 #SBATCH --time=4:00:00
@@ -12,36 +15,49 @@
 #SBATCH --output=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen235b_colo.out
 #SBATCH --error=/home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen235b_colo.err
 
-################### 環境 ###################
-#export WANDB_DISABLED=true
+################### 早期・環境サニタイズ ###################
+# “ユーザーサイト”を見ない（~/.local等の異物混入＆過剰importを防ぐ）
+export PYTHONNOUSERSITE=1
+# Torchのコンパイル系を最初から完全OFF（初回import時に効くよう先頭で）
+export TORCH_COMPILE_DISABLE=1
+export TORCHDYNAMO_DISABLE=1
+export TORCHINDUCTOR_DISABLE=1
+export TORCHINDUCTOR_MAX_WORKERS=1
+export PYTORCH_JIT=0
+export NVFUSER_DISABLE=1
 
+# === dynamic topology (computed early) ===
+NODES="${SLURM_NNODES:-${SLURM_JOB_NUM_NODES:-1}}"
+TPN="${SLURM_NTASKS_PER_NODE:-8}"
+
+################### 環境 ###################
 export REQUIRE_FULL_PREFETCH=1
 
 module unload cuda || true
 module unload nccl || true
-
 module purge
-
 module load cuda/12.6
 module load nccl/2.24.3
 
-# これを最上部の Python プリフェッチの前に移動
+# venvを有効化（prefetch前に）
 source ~/openr1/bin/activate
-python -c "import hf_transfer,sys; print('hf_transfer',hf_transfer.__version__,'@',sys.prefix)"
+python - "$DS_CFG" <<'PY'
+import importlib.util, sys
+spec = importlib.util.find_spec("hf_transfer")
+print("hf_transfer:", "present" if spec else "absent", "@", sys.prefix)
+PY
 
-# ここが “ダウンロード元(正)” になります
+# ここが “ダウンロード元”
 export PREFETCH_DIR="$HOME/.cache/huggingface_mydir/models/Qwen3-235B-A22B"
-export HF_HUB_ENABLE_HF_TRANSFER=0      # openr1 venv に hf_transfer が入っていればOK
-unset HF_HUB_OFFLINE TRANSFORMERS_OFFLINE  # 事前DLはオンライン必須
+export HF_HUB_ENABLE_HF_TRANSFER=0
+unset HF_HUB_OFFLINE TRANSFORMERS_OFFLINE
 
-# ▼▼▼ この最終版スクリプトに差し替えてください ▼▼▼
-python - <<'PY'
+python - "$DS_CFG" <<'PY'
 import os, json, sys, pathlib
 from huggingface_hub import snapshot_download
 
 repo = "Qwen/Qwen3-235B-A22B"
 dest = os.environ["PREFETCH_DIR"]
-
 print(f"[Prefetch] Starting download for {repo} -> {dest}")
 try:
     snapshot_download(
@@ -54,11 +70,9 @@ try:
         max_workers=8,
     )
 except Exception as e:
-    print(f"[ABORT] snapshot_download failed with an exception: {e}", file=sys.stderr)
+    print(f"[ABORT] snapshot_download failed: {e}", file=sys.stderr)
     sys.exit(43)
 
-# --- 堅牢なチェック機構（ファイル名を修正済み） ---
-# ★★★ 修正点 ★★★
 index_path = pathlib.Path(dest) / "model.safetensors.index.json"
 if not index_path.is_file():
     print(f"[ABORT] Verification failed: '{index_path.name}' not found in {dest}", file=sys.stderr)
@@ -66,64 +80,50 @@ if not index_path.is_file():
 
 with open(index_path) as f:
     index_data = json.load(f)
-
-# set() を使ってユニークなファイル名のみをカウント
 expected_shards = len(set(index_data["weight_map"].values()))
 actual_shards = len(list(pathlib.Path(dest).glob("model-*.safetensors")))
-
 print(f"Shard check: Found {actual_shards} shards, Expected {expected_shards} shards.")
 if actual_shards != expected_shards:
     print(f"[ABORT] Shard count mismatch! Expected {expected_shards}, but found {actual_shards}.", file=sys.stderr)
     sys.exit(45)
-
 print(f"✅ [Prefetch OK] All {actual_shards} shards and index file are present in {dest}")
 PY
 
 ################### HFキャッシュをNVMeへ固定 + 事前チェック ###################
-# 全ノードで共通してマウントされている /nvme56 を優先（無い場合は他候補にフォールバック）
-export NVME_BASE=/nvme56
-for _p in /nvme56 /nvme12 /nvme34 /nvme78 /nvme /local "$HOME"; do
-  if mountpoint -q "$_p"; then NVME_BASE="$_p"; break; fi
-done
-
-export HF_HOME="$NVME_BASE/hf-home"
+export NVME_BASE=/nvme12
+export TMPDIR="$NVME_BASE/tmp/$USER"; mkdir -p "$TMPDIR"
+export HF_HOME="$NVME_BASE/hf-cache-$USER"
 export HF_HUB_CACHE="$HF_HOME/hub"
-# TRANSFORMERS_CACHE は非推奨なので使わない
+export HF_HUB_DISABLE_PROGRESS_BARS=1
+export HF_HUB_DISABLE_TELEMETRY=1
 unset TRANSFORMERS_CACHE
 
-# モデルID（必要なら外から上書き可能）
+# モデルID
 export MODEL_ID="${MODEL_ID:-Qwen/Qwen3-235B-A22B}"
 export MODEL_BASENAME="${MODEL_BASENAME:-Qwen3-235B-A22B}"
 
-# 高速DL（可能ならONに）
-export HF_HUB_ENABLE_HF_TRANSFER=${HF_HUB_ENABLE_HF_TRANSFER:-1}
-# プリフェッチ済みの2回目以降だけ、学習直前に OFFLINE をONにする（※場所は後述）
-
-# 保存先（NVMeなど早いローカル）
+# W&B
 export WANDB_DIR="${NVME_BASE:-/tmp}/wandb"
-srun --nodes=3 --ntasks-per-node=1 --gpus=0 -l bash -lc 'mkdir -p "'"$WANDB_DIR"'"'
+srun -N "$NODES" -n "$NODES" --ntasks-per-node=1 --gpus=0 -l bash -lc 'mkdir -p "'"$WANDB_DIR"'"'
 
-# 🔄 オフライン保存に切り替え
 unset WANDB_DISABLED
 export WANDB_MODE=offline
-# 送り先（チーム/プロジェクト）
 export WANDB_ENTITY="neko-llm"
 export WANDB_PROJECT="qwen235b-grpo"
-# 余計な出力を抑える（任意）
 export WANDB_CONSOLE=off
 export WANDB_SILENT=true
 export WANDB_DISABLE_CODE=true
-export WANDB_START_METHOD=thread 
+export WANDB_START_METHOD=thread
 export WANDB_GROUP="job-${SLURM_JOB_ID}"
 
-srun -N 3 -n 3 --ntasks-per-node=1 --gpus=0 -l bash -lc '
+srun -N "$NODES" -n "$NODES" --ntasks-per-node=1 --gpus=0 -l bash -lc '
   test -w "'"$WANDB_DIR"'" \
     && echo "[W&B dir OK] $HOSTNAME -> '"$WANDB_DIR"'" \
     || { echo "[W&B dir NG] $HOSTNAME"; exit 46; }
 '
 
-# NVMe空き確認＆作成
-export REQUIRED_FREE_GB=${REQUIRED_FREE_GB:-800}  # 目安: 235Bのfp16 shardsで~470GB、余裕を持って
+# NVMe空き確認
+export REQUIRED_FREE_GB=${REQUIRED_FREE_GB:-800}
 srun --gpus=0 --cpus-per-task=1 -l bash -lc '
   echo "[NVMe/HF] node=$HOSTNAME  NVME_BASE='$NVME_BASE'"
   FREE_GB=$(df -BG "'$NVME_BASE'" | awk "NR==2{gsub(\"G\",\"\",\$4); print \$4}")
@@ -135,31 +135,33 @@ srun --gpus=0 --cpus-per-task=1 -l bash -lc '
   echo "HF_HOME='$HF_HOME'  HF_HUB_CACHE='$HF_HUB_CACHE'"
 '
 
-################### 早期デバッグ（環境の見える化） ###################
+# 各ノードに作成
+srun -N "$NODES" -n "$NODES" --gpus=0 -l bash -lc "
+  mkdir -p \"$TMPDIR\" \"$HF_HUB_CACHE\" && \
+  echo \"[$HOSTNAME] TMPDIR=$TMPDIR  HF_HOME=$HF_HOME\"
+"
 
-srun --gpus=0 --cpus-per-task=1 --mem-per-cpu=8G bash -c '
+################### 早期デバッグ（環境の見える化：1回だけ実行） ###################
+# ★ ここは重いimportがあるので“1タスクのみ”で実行
+srun -N 1 -n 1 --gpus=0 --cpus-per-task=1 --mem=8G -l bash -lc '
   echo "[Before cleanup]"; env | grep -E "PYTHON|LD_|CUDA"
-  
-  # 明示的に不要な変数をunsetしてクリーンにする
   unset PYTHONPATH
   unset LD_PRELOAD
   export LD_LIBRARY_PATH=/home/appli/cuda/12.6/lib64:/home/appli/nccl/2.24.3/lib
-
-  # 仮想環境の activate
   source ~/openr1/bin/activate
   echo "[After cleanup and activate]"; env | grep -E "PYTHON|LD_|CUDA"
 
-  # 実行
-  python -c "import deepspeed; print(deepspeed.__version__)"
+  # Deepspeedのバージョンは importlib.metadata で取得（torchを引き込まない）
+  python - <<PY
+from importlib.metadata import version, PackageNotFoundError
+try:
+    print("DeepSpeed Version:", version("deepspeed"))
+except PackageNotFoundError:
+    print("DeepSpeed Version: <not found>")
+PY
 '
 
-# Take a look at the contents of the following environment variables first.
-# PATH lists the locations of the executables and LD_LIBRARY_PATH lists where to look for shared libraries.
-# Earlier entries are prioritized over later ones, and : is used to separate multiple entries.
-# To find a specific CUDA toolkit, insert the correct path to list first.
-# In addition, you should also check that the assigned directories actually exist.
-# (https://huggingface.co/docs/transformers/debugging#deepspeed-cuda-issues)
-
+# CUDA toolchain パス
 export CUDA_HOME=/home/appli/cuda/12.6
 export PATH=$CUDA_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:$CUDA_HOME/targets/x86_64-linux/lib/stubs:$CUDA_HOME/targets/x86_64-linux/lib:/home/appli/nccl/2.24.3/lib:$LD_LIBRARY_PATH
@@ -167,70 +169,53 @@ export LIBRARY_PATH=$CUDA_HOME/lib64:$LIBRARY_PATH
 
 source /home/Competition2025/P02/P02U017/openr1/bin/activate
 
-################## デバッグチェック ###################
-
+################## デバッグチェック（これも1回だけ） ###################
 echo -e "\n🔍 [DEBUG] CUDA/NCCL 環境確認"
 
-# nvcc の確認
 echo -n "CUDA nvcc version: "
 if ! which nvcc >/dev/null 2>&1; then
-  echo "❌ nvcc が見つかりません (PATHに $CUDA_HOME/bin を含めたか確認)"
+  echo "❌ nvcc not found"
 else
   nvcc --version | grep release
 fi
-echo -e "\n🔎 nvcc 候補一覧:"; which -a nvcc
+echo -e "\n🔎 nvcc 候補一覧:"; which -a nvcc || true
 
-# Python 環境確認
 echo -n "🧪 Python: "; which python
-python -c "import sys; print(f'Venv Prefix: {sys.prefix}')"
+python - "$DS_CFG" <<'PY'
+import sys, torch
+print(f'Venv Prefix: {sys.prefix}')
+print(f'Torch Version: {torch.__version__} | CUDA Available: {torch.cuda.is_available()}')
+PY
 
-# PyTorch
-python -c "import torch; print(f'Torch Version: {torch.__version__} | CUDA Available: {torch.cuda.is_available()}')"
-
-# CUDA_HOME チェック
 if [ ! -d "$CUDA_HOME" ]; then
-  echo "❌ CUDA_HOME が見つかりません: $CUDA_HOME"
-  exit 1
+  echo "❌ CUDA_HOME not found: $CUDA_HOME"; exit 1
 else
   echo "✅ CUDA_HOME OK: $CUDA_HOME"
 fi
 
-# libcudart.so チェック（findのみ使用、ヒットしたパスも表示）
 echo -n "🔍 libcudart.so check: "
 LIBCUDART_PATHS=$(find ${LD_LIBRARY_PATH//:/ } -name "libcudart.so*" 2>/dev/null)
-
 if [ -n "$LIBCUDART_PATHS" ]; then
-  echo "✅ found"
-  echo "$LIBCUDART_PATHS" | sed 's/^/   └─ /'
+  echo "✅ found"; echo "$LIBCUDART_PATHS" | sed 's/^/   └─ /'
 else
-  echo "❌ not found (LD_LIBRARY_PATHを再確認)"
+  echo "❌ not found"
 fi
 
-# NCCL チェック
 if [ -f "/home/appli/nccl/2.24.3/lib/libnccl.so" ]; then
-  echo "✅ NCCLライブラリ OK: libnccl.so found"
+  echo "✅ NCCLライブラリ OK"
 else
   echo "❌ NCCLライブラリが見つかりません"
 fi
 
-# 環境変数
-echo -e "\n🧾 [ENV] PATH:"
-echo $PATH | tr ':' '\n' | grep -E "cuda|nccl"
+echo -e "\n🧾 [ENV] PATH:"; echo $PATH | tr ':' '\n' | grep -E "cuda|nccl" || true
+echo -e "\n🧾 [ENV] LD_LIBRARY_PATH:"; echo $LD_LIBRARY_PATH | tr ':' '\n' | grep -E "cuda|nccl" || true
 
-echo -e "\n🧾 [ENV] LD_LIBRARY_PATH:"
-echo $LD_LIBRARY_PATH | tr ':' '\n' | grep -E "cuda|nccl"
-
-# モジュール一覧
 echo -e "\n📦 [Module List]"
-module list 2>&1
-
-# Deepspeed
-python -c "import deepspeed; print(f'Deepspeed Version: {deepspeed.__version__}')"
+module list 2>&1 || true
 
 echo -e "\n✅ 環境チェック完了 (続行可能)\n"
 
-################### CPU/NUMA 可視化 ###################
-
+################### CPU/NUMA 可視化（各ノード1回） ###################
 echo -e "\n🔎 [CPU TOPOLOGY per node]"
 srun --gpus=0 --cpus-per-task=1 --kill-on-bad-exit=1 -l bash -lc '
   echo "node: $HOSTNAME"
@@ -245,50 +230,102 @@ srun --gpus=0 --cpus-per-task=1 --kill-on-bad-exit=1 -l bash -lc '
 '
 
 ################### BAR1 プリフライト & 監視ログ ###################
+export MIN_BAR1_FREE_MB=${MIN_BAR1_FREE_MB:-2048}
 
-export MIN_BAR1_FREE_MB=${MIN_BAR1_FREE_MB:-2048}    # 1GPUあたり最低2GBのBAR1空きを要求
-# -q でBAR1セクションをパース（あなたの環境は --query でbar1不可のため）
-
-srun --nodes=3 --ntasks-per-node=1 --gpus=0 --cpus-per-task=1 -l bash -lc '
+srun -N "$NODES" -n "$NODES" --ntasks-per-node=1 --gpus=0 -l bash -lc '
   echo "[BAR1 preflight] node=$HOSTNAME"
-  MIN_FREE='"$MIN_BAR1_FREE_MB"'
+  MIN_FREE='"${MIN_BAR1_FREE_MB:-2048}"'
   ok=1
-
-  # 1) まず query API を試す（数字だけ / GPUごと1行）
-  if frees=$(nvidia-smi --query-gpu=bar1.memory.free --format=csv,noheader,nounits 2>/dev/null); then
-    :
+  frees_q=$(nvidia-smi --query-gpu=bar1.memory.free --format=csv,noheader,nounits 2>/dev/null || true)
+  if [ -z "$frees_q" ] || echo "$frees_q" | tr -d "\n" | grep -Eq "[^0-9[:space:]]"; then
+    frees=$(nvidia-smi -q | awk '"'"'/BAR1 Memory Usage/ {b=1; next} b && /FB Memory Usage/ {b=0} b && /Free/ {print $3}'"'"')
   else
-    # 2) ドライバによっては query が無いので -q をパース
-    frees=$(nvidia-smi -q | awk '"'"'
-      /BAR1 Memory Usage/ {b=1; next}
-      b && /FB Memory Usage/ {b=0}
-      b && /Free/ {print $3}
-    '"'"')
+    frees="$frees_q"
   fi
-
   echo "[BAR1 Free list] ${frees//$'\n'/ } (MiB)"
   while read -r f; do
-    [[ "$f" =~ ^[0-9]+$ ]] || continue
+    [[ "$f" =~ ^[0-9]+$ ]] || continue;
+    if (( f == 0 )); then
+      echo "[SKIP] $HOSTNAME: BAR1 free reported 0MiB (transient); ignoring";
+      continue;
+    fi;
     if (( f < MIN_FREE )); then
-      echo "[ABORT] $HOSTNAME: BAR1 free ${f}MiB < ${MIN_FREE}MiB"
-      ok=0
-    fi
+      echo "[WARN] $HOSTNAME: BAR1 free ${f}MiB < ${MIN_FREE}MiB"; ok=0;
+    fi;
   done <<< "$frees"
-
-  (( ok )) && echo "[OK] BAR1 free >= ${MIN_FREE}MiB on all GPUs" \
-         || { echo "[WARN] BAR1 free < ${MIN_FREE}MiB on some GPUs (続行)"; :; }
+  (( ok )) && echo "[OK] BAR1 free >= ${MIN_FREE}MiB on all GPUs" || echo "[WARN] BAR1 threshold not met (続行可)"
 '
 
-# 起動前ワンショット（各ノードでVRAM/BAR1の現況だけ確認）
-srun --nodes=3 --ntasks-per-node=1 --gpus=0 --cpus-per-task=1 -l bash -lc '
+# 起動前ワンショット
+srun -N "$NODES" -n "$NODES" --ntasks-per-node=1 --gpus=0 --cpus-per-task=1 -l bash -lc '
   echo "[VRAM one-shot] $(hostname)"
   nvidia-smi --query-gpu=index,name,memory.used,memory.total --format=csv,noheader
   echo "[BAR1 one-shot] $(hostname)"
   nvidia-smi -q | sed -n "/BAR1 Memory Usage/,/FB Memory Usage/p" | sed -n "1,6p"
 '
 
-################### 通信・並列の実行時設定 ###################
+# === NVMe persistent model cache ===
+export NVME_PERSIST_DIR="${NVME_BASE}/persist-${USER}/${MODEL_BASENAME}"
 
+srun -N "$NODES" -n "$NODES" --ntasks-per-node=1 --gpus=0 -l bash -lc '
+  set -euo pipefail
+  SRC="'"$PREFETCH_DIR"'"
+  DST="'"$NVME_PERSIST_DIR"'"
+  mkdir -p "$DST"
+
+  # 期待シャード数（SRC優先 → index解析 → フォールバック）
+  exp=$( ( ls -1 "$SRC"/model-*.safetensors 2>/dev/null || true ) | wc -l )
+  if [ "${exp:-0}" -eq 0 ] && [ -f "$SRC/model.safetensors.index.json" ]; then
+    exp=$(python - "$SRC/model.safetensors.index.json" <<'"'PY'"'
+import sys,json
+j=json.load(open(sys.argv[1]))
+print(len(j.get("weight_map", {})))
+PY
+)
+  fi
+  : "${exp:=118}"  # 最後の保険
+
+  # 既存数をカウント（必ず単一整数）
+  cur=$( ( ls -1 "$DST"/model-*.safetensors 2>/dev/null || true ) | wc -l )
+
+  if [ ! -f "$DST/.ready" ] || [ "$cur" -lt "$exp" ] || [ ! -f "$DST/model.safetensors.index.json" ]; then
+    echo "[persist] $HOSTNAME: populate $DST from $SRC (cur=$cur, exp=$exp)"
+    numactl --interleave=all rsync -aL --delete --info=progress2 "$SRC"/ "$DST"/
+    # 完全性チェック → ready マーク
+    new=$( ( ls -1 "$DST"/model-*.safetensors 2>/dev/null || true ) | wc -l )
+    if [ "$new" -ge "$exp" ] && [ -f "$DST/model.safetensors.index.json" ]; then
+      touch "$DST/.ready"
+      chmod -R a-w "$DST" || true
+      echo "[persist] $HOSTNAME: ready ($new/$exp)"
+    else
+      echo "[persist] $HOSTNAME: partial after sync ($new/$exp)"
+    fi
+  else
+    echo "[persist] $HOSTNAME: reuse $DST ($cur/$exp)"
+  fi
+'
+
+# 以降は NVMe の永続キャッシュを直接参照
+export MODEL_PATH="$NVME_PERSIST_DIR"
+# === wait persist cache ===
+exp=$( ( ls -1 "$NVME_PERSIST_DIR"/model-*.safetensors 2>/dev/null || true ) | wc -l )
+if [ "${exp:-0}" -lt 2 ] && [ -f "$NVME_PERSIST_DIR/model.safetensors.index.json" ]; then
+  exp=$(python - "$NVME_PERSIST_DIR/model.safetensors.index.json" <<'PY'
+import sys,json; j=json.load(open(sys.argv[1]));
+print(len(set(j.get("weight_map",{}).values())))
+PY
+)
+fi
+: "${exp:=118}"  # フォールバック
+while :; do
+  cur=$(ls -1 "$NVME_PERSIST_DIR"/model-*.safetensors 2>/dev/null | wc -l)
+  if [ "$cur" -ge "$exp" ] && [ -f "$NVME_PERSIST_DIR/model.safetensors.index.json" ]; then
+    break
+  fi
+  echo "[WAIT] persist cache $cur/$exp"; sleep 20
+done
+
+################### 通信・並列の実行時設定 ###################
 export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 export TORCH_NCCL_BLOCKING_WAIT=1
@@ -297,20 +334,19 @@ export MKL_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
 export NUMEXPR_NUM_THREADS=8
 export TOKENIZERS_PARALLELISM=false
-
+export NCCL_IB_HCA="mlx5_0:1,mlx5_1:1"
+export NCCL_IB_GID_INDEX=3
+export NCCL_CROSS_NIC=1
 export NCCL_DEBUG=WARN
-#export NCCL_DEBUG_SUBSYS=ALL
-
-export NCCL_P2P_DISABLE=0          # P2P有効化（明示）
-export NCCL_P2P_LEVEL=NVL          # NVLinkを優先的に使用
-#export NCCL_IB_GID_INDEX=3         # IBネットワークの設定（Infiniband利用時）
+export NCCL_P2P_DISABLE=0
+export NCCL_P2P_LEVEL=NVL
+export NCCL_TIMEOUT=7200
 
 ulimit -n 65536
 ulimit -v unlimited
 ulimit -m unlimited
 
-################### レポ/コンフィグの存在確認（落下防止） ###################
-
+################### レポ/コンフィグの存在確認 ###################
 REPO_DIR=/home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src
 cd "$REPO_DIR" || exit 1
 
@@ -318,54 +354,132 @@ cd "$REPO_DIR" || exit 1
 NODELIST=($(scontrol show hostnames "$SLURM_JOB_NODELIST"))
 MAIN_IP="${NODELIST[0]}"
 
-################### vLLM（コロケートモード） ###################
-# ※別プロセスでのvLLMサーバ起動は不要（各Trainer内でvLLMエンジンを起動）
-
 echo "[Node check]"
-srun --ntasks=3 --nodes=3 --ntasks-per-node=1 --nodelist="$SLURM_JOB_NODELIST" --gpus=0 --kill-on-bad-exit=1 hostname
+srun -N "$NODES" -n "$NODES" --ntasks-per-node=1 --nodelist="$SLURM_JOB_NODELIST" --gpus=0 --kill-on-bad-exit=1 hostname
 
-# プリフェッチ済みなら本番ではネット遮断推奨
-# export HF_HUB_OFFLINE=1
-
-# torch.compile を“完全”オフ（Dynamo/Inductor/JIT/NVFuser）
+# Torch compile 全OFF（再掲：保険）
 export TORCH_COMPILE_DISABLE=1
 export TORCHDYNAMO_DISABLE=1
 export TORCHINDUCTOR_DISABLE=1
-export TORCHINDUCTOR_MAX_WORKERS=1  
+export TORCHINDUCTOR_MAX_WORKERS=1
 export PYTORCH_JIT=0
 export NVFUSER_DISABLE=1
+export TORCHINDUCTOR_CACHE_DIR="${NVME_BASE}/torchinductor-cache"; mkdir -p "$TORCHINDUCTOR_CACHE_DIR"
 
-# 念のためキャッシュ先はNVMe（無害）
-export TORCHINDUCTOR_CACHE_DIR="${NVME_BASE}/torchinductor-cache"
-mkdir -p "$TORCHINDUCTOR_CACHE_DIR"
+# ===== 各ノードへ展開（PREFETCH_DIR → NVMe）=====
+#srun --ntasks-per-node=1 -n "$NODES" -l bash -lc '
+#  set -euo pipefail
+#  SRC="'"$PREFETCH_DIR"'"
+#  if [[ -z "$SRC" || ! -d "$SRC" ]]; then
+#    echo "[ABORT] invalid SRC: ${SRC:-<empty>}"; exit 41
+#  fi
+#  DST="${NVME_BASE}/slurm-job-${SLURM_JOB_ID}/Qwen3-235B-A22B"
+#  mkdir -p "$DST"
+#  numactl --interleave=all rsync -aL --info=progress2 "$SRC"/ "$DST"/
+#  echo "[copied] $HOSTNAME -> $DST"
+#'
 
-# ===== 各ノードへ展開（PREFETCH_DIR → NVMe）=====  # ★コメント変更
-srun --ntasks-per-node=1 --ntasks=$SLURM_NNODES -l bash -lc '
-  set -euo pipefail
-  SRC="'"$PREFETCH_DIR"'"
-  if [[ -z "$SRC" || ! -d "$SRC" ]]; then
-    echo "[ABORT] invalid SRC: ${SRC:-<empty>}"; exit 41
-  fi
-  # ★★★ 修正点: DSTをNVMe上のジョブ固有ディレクトリに変更 ★★★
-  DST="${NVME_BASE}/slurm-job-${SLURM_JOB_ID}/Qwen3-235B-A22B"
+export MODEL_PATH="$NVME_PERSIST_DIR"
+# export HF_HUB_OFFLINE=1 (using local MODEL_PATH)
+# export TRANSFORMERS_OFFLINE=1 (using local MODEL_PATH)
 
-  mkdir -p "$DST"
-  rsync -aL --info=progress2 "$SRC"/ "$DST"/
-  echo "[copied] $HOSTNAME -> $DST"
-'
+################### NUMA/バインド デバッグ関数 ###################
+export DEBUG_NUMA=${DEBUG_NUMA:-1}
+export NUMA_SNAPSHOT_DELAY=${NUMA_SNAPSHOT_DELAY:-20}
+export NUMA_SNAPSHOT_REPEAT=${NUMA_SNAPSHOT_REPEAT:-6}
+export NUMA_SNAPSHOT_INTERVAL=${NUMA_SNAPSHOT_INTERVAL:-60}
 
-# ★★★ 修正点: MODEL_PATHを新しいDSTに合わせる ★★★
-export MODEL_PATH="${NVME_BASE}/slurm-job-${SLURM_JOB_ID}/Qwen3-235B-A22B"
-export HF_HUB_OFFLINE=1
-export TRANSFORMERS_OFFLINE=1
+debug_header () { echo -e "\n\033[1m[NUMA-DEBUG]\033[0m $*"; }
+numa_snapshot () {
+  local tag="$1"
+  debug_header "Snapshot($tag): CPUバインド / メモリ局在（numastat -p）"
+  srun -N "$NODES" -n "$NODES" --gpus=0 -l bash -lc '
+    echo ">>> NODE=$HOSTNAME"
+    if command -v scontrol >/dev/null 2>&1; then
+      PIDS=$(scontrol listpids "$SLURM_JOB_ID" 2>/dev/null | awk "{print \$2}" | sort -u)
+    else
+      PIDS=$(pgrep -u "$USER" -f "open_r1/grpo.py|accelerate|vllm|python" || true)
+    fi
+    if [ -z "$PIDS" ]; then echo "  (no PIDs found yet)"; exit 0; fi
+    for p in $PIDS; do
+      [ -d /proc/$p ] || continue
+      [ -d /proc/$p ] || continue
+      COMM=$(tr -d "\0" </proc/$p/comm 2>/dev/null || echo "?")
+      ALLOWED=$(awk -F: '"'"'/Cpus_allowed_list/ {print $2}'"'"' /proc/$p/status 2>/dev/null | xargs)
+      echo "  PID $p [$COMM]  CPUs=$ALLOWED"
+      numactl -p "$p" 2>/dev/null | egrep "policy|membind|cpubind" || true
+      numastat -p "$p" 2>/dev/null | sed -n "1,7p" || true
+      echo
+    done
+  '
+}
 
-################### GRPO Trainer（コロケートモードで実行） ###################
-srun --nodes=3 --ntasks-per-node=1 --ntasks=3 \
+if (( DEBUG_NUMA )); then
+  debug_header "Preflight: タスク配分/トポロジ/NUMA概要"
+  srun -N "$NODES" -n "$NODES" --gpus=0 -l bash -lc '
+    echo "=== $HOSTNAME ==="
+    echo "[lscpu brief]"; lscpu | egrep "CPU\\(s\\)|Socket|Core|Thread" || true
+    echo "[numactl -H head]"; numactl -H | sed -n "1,12p" || true
+    echo "[nvidia-smi topo -m head]"; nvidia-smi topo -m | sed -n "1,25p" || true
+  ' || true
+  srun -n "${SLURM_NNODES:-1}" --gpus=0 -l bash -lc 'echo "$(hostname) cpuset:"; taskset -pc $$; numactl -s | egrep "policy|membind|cpubind"'
+  numa_snapshot "pre-launch"
+fi
+
+################### DeepSpeed 設定を配置 ###################
+DS_CFG_DIR="$REPO_DIR/../recipes/deepspeed"
+DS_CFG="$DS_CFG_DIR/ds_zero3.json"
+mkdir -p "$DS_CFG_DIR" || { echo "[ABORT] cannot mkdir $DS_CFG_DIR"; exit 60; }
+cat > "$DS_CFG" <<'JSON'
+{
+  "deepspeed_multinode_launcher": "standard",
+  "zero_optimization": {
+    "stage": 3,
+    "overlap_comm": true,
+    "contiguous_gradients": true
+  },
+  "zero3_init_flag": true,
+  "zero3_save_16bit_model": true,
+  "offload_optimizer": {"device": "cpu"},
+  "offload_param": {"device": "none"},
+  "bf16": {"enabled": true}
+}
+JSON
+
+python - "$DS_CFG" <<'PY'
+import json,sys
+j=json.load(open(sys.argv[1]))
+print('[DS JSON Check] bf16.enabled=', j.get('bf16',{}).get('enabled'), 'zero_stage=', j.get('zero_optimization',{}).get('stage'))
+PY
+
+################### デバッグラン切替 ###################
+export DEBUG_RUN=${DEBUG_RUN:-1}   # 本番は 0 を渡す
+# Tritonキャッシュ（必要なら）
+export TRITON_CACHE_DIR="${NVME_BASE}/triton-cache-$USER"; mkdir -p "$TRITON_CACHE_DIR"
+
+if (( DEBUG_RUN )); then
+  # デバッグでは vLLM を無効化して軽量スモーク
+  export GRPO_DEBUG_FLAGS="--max_steps 12 --logging_steps 1 --save_strategy no \
+                           --evaluation_strategy no --num_generations 2 \
+                           --per_device_train_batch_size 1 --gradient_accumulation_steps 1 \
+                           --use_vllm false"
+else
+  export GRPO_DEBUG_FLAGS=""
+fi
+
+export MASTER_PORT=${MASTER_PORT:-$((12000 + SLURM_JOB_ID % 20000))}
+
+################### GRPO Trainer（コロケート） ###################
+srun -N "$NODES" --ntasks-per-node="$TPN" --gpus-per-task=1 \
      --kill-on-bad-exit=1 \
      --cpus-per-task=$SLURM_CPUS_PER_TASK \
      --nodelist="$SLURM_JOB_NODELIST" \
+     --hint=nomultithread \
+     --distribution=block:block \
      --cpu-bind=cores \
-     --gpus=8 --exclusive --chdir="$REPO_DIR" \
+     --gpu-bind=closest \
+     --mem-bind=local \
+     --exclusive --chdir="$REPO_DIR" \
      bash -lc "
        source /home/Competition2025/P02/P02U017/openr1/bin/activate
        if [[ \"\$SLURM_NODEID\" != \"0\" ]]; then export WANDB_DISABLED=true; fi
@@ -375,6 +489,7 @@ srun --nodes=3 --ntasks-per-node=1 --ntasks=3 \
          echo \"[HF] offline mode ON (prefetched detected)\"
        fi
 
+       # 再度、compile系をOFF（子プロセス保険）
        export TORCH_COMPILE_DISABLE=1
        export TORCHDYNAMO_DISABLE=1
        export TORCHINDUCTOR_DISABLE=1
@@ -382,23 +497,150 @@ srun --nodes=3 --ntasks-per-node=1 --ntasks=3 \
        export NVFUSER_DISABLE=1
 
        echo \"[GRPO-Colo] on \$HOSTNAME  (node rank \$SLURM_NODEID, proc \$SLURM_PROCID)\"
+       echo "[train] MODEL_PATH=\$MODEL_PATH"
+       echo "[train] $HOSTNAME node_id=$SLURM_NODEID local_id=$SLURM_LOCALID cpus_per_task=$SLURM_CPUS_PER_TASK"
        export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
-       export NCCL_ASYNC_ERROR_HANDLING=1
-       accelerate launch \\
-         --config_file ../recipes/accelerate_configs/zero3.yaml \\
-         --num_machines 3 \\
-         --num_processes 24 \\
-         --main_process_ip ${MAIN_IP} \\
-         --main_process_port 29500 \\
-         --rdzv_backend c10d \\
-         --machine_rank \$SLURM_NODEID \\
-         /home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src/open_r1/grpo.py \\
-         --config /home/Competition2025/P02/P02U017/llm2025compet/training/configs/Qwen3-32b/grpo/config_grpo_235b.yaml \\
-         --model_name_or_path "$MODEL_PATH" \
-         --use_vllm true \\
-         --vllm_mode colocate \\
+
+       export RANK=\$SLURM_PROCID
+       export WORLD_SIZE=\$SLURM_NTASKS
+       export LOCAL_RANK=\$SLURM_LOCALID
+       export MASTER_ADDR=${MAIN_IP}
+       export MASTER_PORT=${MASTER_PORT}
+
+       echo "[model-check] MODEL_PATH=$MODEL_PATH"
+       shopt -s nullglob
+       shards=("$MODEL_PATH"/model-*.safetensors)
+       echo "[model-check] $HOSTNAME shards=${#shards[@]} index=$([[ -f "$MODEL_PATH/model.safetensors.index.json" ]] && echo yes || echo no)"
+
+       echo "[train-check] host=$HOSTNAME node_rank=$SLURM_NODEID proc=$SLURM_PROCID local=$SLURM_LOCALID"
+       taskset -pc $$ | awk -F': ' '{print "[train-check] taskset="$2}'
+       numactl -s | egrep 'cpubind|membind'
+
+       echo "[model-check] MODEL_PATH=$MODEL_PATH";
+       shopt -s nullglob;
+       shards=("$MODEL_PATH"/model-*.safetensors);
+       echo "[model-check] $HOSTNAME shards=${#shards[@]} index=$([[ -f "$MODEL_PATH/model.safetensors.index.json" ]] && echo yes || echo no)"
+       echo "[train] RANK=$SLURM_PROCID LOCAL_RANK=$SLURM_LOCALID NODE_RANK=$SLURM_NODEID CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"
+
+       python /home/Competition2025/P02/P02U017/llm2025compet/training/open-r1/src/open_r1/grpo.py \
+         --config /home/Competition2025/P02/P02U017/llm2025compet/training/configs/Qwen3-32b/grpo/config_grpo_235b.yaml \
+         --model_name_or_path \"$MODEL_PATH\" \
+         --use_vllm true \
+         --vllm_mode colocate \
+         --ds3_gather_for_generation true \
+         ${GRPO_DEBUG_FLAGS} \
+         --deepspeed "$DS_CFG" \
          --report_to wandb
-      "
+     " &
+
+TRAIN_SRUN_PID=$!
+
+# 学習中スナップショット
+if (( DEBUG_NUMA )); then
+  sleep "$NUMA_SNAPSHOT_DELAY"
+  for _i in $(seq 1 "$NUMA_SNAPSHOT_REPEAT"); do
+    numa_snapshot "run-$_i"
+    sleep "$NUMA_SNAPSHOT_INTERVAL"
+  done
+fi
+
+# 終了待ち
+wait "$TRAIN_SRUN_PID"
+
+# 終了後サマリ
+if (( DEBUG_NUMA )); then
+  numa_snapshot "post"
+fi
+
+# 終了クリーンアップ
+function cleanup() {
+    echo "Job finished. Cleaning up NVMe directory..."
+    srun -N "$NODES" -n "$NODES" --ntasks-per-node=1 bash -c "rm -rf ${NVME_BASE}/slurm-job-${SLURM_JOB_ID}"
+    echo "Cleanup complete."
+}
+trap cleanup EXIT
 
 wait
 echo '[Job] all processes finished.'
+
+
+#######################################################################
+# How to use (デバッグ/本番ランの使い分け)
+#
+# ▼前提
+# - モデルは事前に $PREFETCH_DIR に snapshot_download され、
+#   各ノードの NVMe 永続キャッシュ $NVME_PERSIST_DIR に同期されます。
+#   ".ready" があると再同期はスキップ。やり直す場合は各ノードで ".ready" を削除。
+#
+# ▼よく使う環境変数（sbatch の前に付けて渡せます）
+#   DEBUG_RUN=1|0            # 1=デバッグ（既定）/ 0=本番
+#   MIN_BAR1_FREE_MB=2048    # BAR1閾値。低めに流したい時は 1024 などに下げる
+#   MASTER_PORT=xxxxx        # 通信ポート固定したい時
+#   REQUIRED_FREE_GB=800     # NVMeの最低空き容量チェック
+#   DEBUG_NUMA=0|1           # NUMAスナップショット有効/無効（既定 1）
+#   NUMA_SNAPSHOT_DELAY=20   # 開始までの待ち秒
+#   NUMA_SNAPSHOT_REPEAT=6   # 取得回数
+#   NUMA_SNAPSHOT_INTERVAL=60# 取得間隔秒
+#
+# ▼デバッグラン（単ノード・軽量スモーク）
+#   - vLLM無効、max_steps=12、num_generations=2（GRPO要件を満たす最低限）
+#   - まずは1ノードで配線/NUMA/モデルパス確認
+#   例:
+#     DEBUG_RUN=1 sbatch --nodes=1 --ntasks-per-node=8 \
+#       --nodelist=osk-gpu91 --time=0:20:00 <このスクリプト>
+#
+# ▼デバッグラン（複数ノードの疎通だけ確認）
+#   例:
+#     DEBUG_RUN=1 sbatch --nodes=3 --nodelist=osk-gpu[54,56,91] \
+#       --time=0:30:00 <このスクリプト>
+#
+# ▼本番ラン
+#   - vLLM有効、GRPO_DEBUG_FLAGSは空（設定ファイル側のステップ数で走る）
+#   - 事前に各ノードの $NVME_PERSIST_DIR に 118 シャード + index があることを推奨
+#   例:
+#     DEBUG_RUN=0 sbatch --nodes=3 --nodelist=osk-gpu[54,56,91] \
+#       --time=4:00:00 <このスクリプト>
+#
+# ▼ログ/監視
+#   ファイル: 
+#     stdout: /home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen235b_colo.out
+#     stderr: /home/Competition2025/P02/P02U017/llm2025compet/training/logs/grpo-qwen235b_colo.err
+#   コマンド:
+#     tail -f <上記out/err>
+#     squeue -j <JOBID>
+#     sacct -j <JOBID> --format=JobID,State,Elapsed,NodeList
+#     scancel <JOBID>
+#
+# ▼モデルキャッシュの状態確認（任意）
+#   各ノード:
+#     ls -1 $NVME_PERSIST_DIR/model-*.safetensors | wc -l   # → 118 を期待
+#     test -f $NVME_PERSIST_DIR/model.safetensors.index.json && echo OK
+#   不整合があるノードは ".ready" を削除すると次回再同期します:
+#     rm -f $NVME_PERSIST_DIR/.ready
+#
+# ▼HFオフライン挙動
+#   事前に $HF_HUB_CACHE にスナップショットがあれば自動で HF_HUB_OFFLINE=1 を有効化。
+#   完全にローカル固定で動かしたい場合は、下の2行のコメントを外してもOK:
+#     # export HF_HUB_OFFLINE=1
+#     # export TRANSFORMERS_OFFLINE=1
+#
+# ▼NVMeの掃除
+#   このスクリプトは終了時に /nvme12/slurm-job-<JOB_ID> をクリーンアップします。
+#   永続キャッシュ /nvme12/persist-<USER>/... は残します。
+#   溜まった一時ジョブディレクトリを手動で掃除する例（各ノードで実行）:
+#     find /nvme12 -maxdepth 1 -type d -name "slurm-job-*" -mtime +1 -exec rm -rf {} +
+#
+# ▼トラブルシュート
+#   - 「GRPO requires at least 2 generations per prompt…」:
+#       num_generations が 2 以上かを確認（デバッグ既定は2。本番は設定YAML側）
+#   - NUMAスナップショットに "no PIDs found yet":
+#       学習が短すぎる可能性。NUMA_SNAPSHOT_DELAY を小さくするか、max_steps を増やす
+#   - BAR1 の一時的 0MiB:
+#       スクリプトで自動的に [SKIP] 扱い。持続して閾値未満なら MIN_BAR1_FREE_MB を調整
+#
+# ▼再現用の最小確認（モデルパス/NUMA/ランク）
+#   ログに以下が出力されればOK:
+#     [persist] ... ready (118/118) or reuse (118/118)
+#     [model-check] ... shards=118 index=yes
+#     [train] RANK=.. LOCAL_RANK=.. NODE_RANK=.. CUDA_VISIBLE_DEVICES=...
+#######################################################################
