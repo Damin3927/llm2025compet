@@ -111,116 +111,120 @@ srun --ntasks=3 --ntasks-per-node=1 \
   --kill-on-bad-exit=1 \
   --output=$LOG_ROOT/slurm-%t.out \
   --error=$LOG_ROOT/slurm-%t.err \
-  bash -c '
-    set -eo pipefail
-    source ~/miniconda3/etc/profile.d/conda.sh
-    conda activate deepseeksft310
+  bash -c "
+  set -eo pipefail
+  source ~/miniconda3/etc/profile.d/conda.sh
+  conda activate deepseeksft310
 
-    # NVMe とパス（全ノード同じ処理）
-    NVME_MNT="/nvme56"
-    SRC_MODEL="/home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16"
-    LOCAL_ROOT="$NVME_MNT/models/$USER"
-    LOCAL_MODEL="$LOCAL_ROOT/DeepSeek-R1-0528-BF16"             # HF形式
-    LOCAL_SHARD="$LOCAL_ROOT/R1-0528-pre-sharded-pp3-ep8"       # プリシャード保存先
-    mkdir -p "$LOCAL_ROOT"
+  # ===== NVMe 事前ステージング =====
+  NVME_MNT=\"/nvme56\"
+  export HF_HOME=\"\$NVME_MNT/hf-cache-\$USER\"
+  export HF_HUB_CACHE=\"\$HF_HOME/hub\"
+  export HF_HUB_ENABLE_HF_TRANSFER=1
+  export HF_HUB_DISABLE_PROGRESS_BARS=1
+  export HF_HUB_OFFLINE=1
+  unset TRANSFORMERS_CACHE
 
-    # /tmp と HF キャッシュも NVMe に
-    export TMPDIR="$NVME_MNT/tmp/$USER"; mkdir -p "$TMPDIR"
-    export HF_HOME="$NVME_MNT/hf-cache-$USER"
-    export HF_HUB_CACHE="$HF_HOME/hub"
-    export HF_HUB_ENABLE_HF_TRANSFER=1
-    export HF_HUB_DISABLE_PROGRESS_BARS=1
-    export HF_HUB_OFFLINE=1
-    unset TRANSFORMERS_CACHE
+  export TMPDIR=\"\$NVME_MNT/tmp/\$USER\"
+  mkdir -p \"\$TMPDIR\" \"\$HF_HUB_CACHE\"
 
-    # 初回のみ：共有FS→各ノードNVMeへコピー
-    if [ ! -d "$LOCAL_MODEL" ]; then
-      echo "[INFO] ($(hostname)) rsync HF model to $LOCAL_MODEL"
-      mkdir -p "$LOCAL_MODEL"
-      rsync -a --info=progress2 "$SRC_MODEL"/ "$LOCAL_MODEL"/
-    fi
+  SRC_MODEL=\"/home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16\"
+  LOCAL_MODEL=\"\$NVME_MNT/models/DeepSeek-R1-0528-BF16\"
+  if [ ! -d \"\$LOCAL_MODEL\" ]; then
+    mkdir -p \"\$LOCAL_MODEL\"
+    rsync -a --info=progress2 \"\$SRC_MODEL\"/ \"\$LOCAL_MODEL\"/
+  fi
 
-    # === NEW: tokenizer 一式の存在チェック（欠けてたら再 rsync） ===
+  # 全ノードコピー完了を軽く待つ
+  touch \"$LOG_ROOT/stage_\$(hostname).ok\"
+  N_EXPECT=\$(scontrol show hostnames \"$SLURM_JOB_NODELIST\" | wc -l)
+  while [ \"\$(ls \"$LOG_ROOT\"/stage_*.ok 2>/dev/null | wc -l)\" -lt \"\$N_EXPECT\" ]; do sleep 5; done
+
+  # ===== pre-shard (pp=3, ep=8) を安全に作成 =====
+  LOCAL_SHARD=\"\$NVME_MNT/models/R1-0528-pre-sharded-pp3-ep8\"
+  if [ ! -f \"\$LOCAL_SHARD/.ok\" ]; then
+    TMP_SHARD=\"\${LOCAL_SHARD}.tmp\"
+    rm -rf \"\$TMP_SHARD\"
+
+    # 期待ファイルだけ軽く検査（欠けていたらrsyncし直し）
     REQ_FILES=(tokenizer.json tokenizer.model tokenizer_config.json special_tokens_map.json vocab.json merges.txt)
     MISS=0
-    for f in "${REQ_FILES[@]}"; do
-      [ -f "$LOCAL_MODEL/$f" ] && continue
-      MISS=1
+    for f in \"\${REQ_FILES[@]}\"; do
+      [ -f \"\$LOCAL_MODEL/\$f\" ] || MISS=1
     done
-    if [ "$MISS" -eq 1 ]; then
-      echo "[WARN] tokenizer files missing under $LOCAL_MODEL; re-rsync from $SRC_MODEL"
-      rsync -a --delete "$SRC_MODEL"/ "$LOCAL_MODEL"/
-    fi
-    # === /NEW ===
-
-    # 全ノードでコピー完了を軽く同期
-    touch "$LOG_ROOT/stage_$(hostname).ok"
-    N_EXPECT=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | wc -l)
-    while [ "$(ls "$LOG_ROOT"/stage_*.ok 2>/dev/null | wc -l)" -lt "$N_EXPECT" ]; do sleep 3; done
-
-    # CPU並列：torchrun の OMP=1 縛りを回避
-    export OMP_NUM_THREADS=8
-    export MKL_NUM_THREADS=$OMP_NUM_THREADS
-    export OPENBLAS_NUM_THREADS=$OMP_NUM_THREADS
-    export NUMEXPR_NUM_THREADS=$OMP_NUM_THREADS
-
-    # 初回のみ：プリシャード作成（学習しない／LoRAなし）
-    if [ ! -d "$LOCAL_SHARD/modeling" ]; then
-      echo "[INFO] ($(hostname)) create pre-sharded ckpt at $LOCAL_SHARD"
-      torchrun \
-        --nnodes 3 \
-        --node_rank $SLURM_PROCID \
-        --nproc_per_node 8 \
-        --master_addr $MASTER_ADDR \
-        --master_port $MASTER_PORT \
-        /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
-          --pretrained "$LOCAL_MODEL" \
-          --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
-          --plugin moe \
-          --pp 3 --ep 8 \
-          --num_epochs 0 \
-          --lora_rank 0 \
-          --mixed_precision bf16 \
-          --tensorboard_dir "$LOG_ROOT/tb" \   # CHANGED: 空文字やめる
-          --save_dir "$LOCAL_SHARD"
+    if [ \"\$MISS\" -eq 1 ]; then
+      rsync -a --delete \"\$SRC_MODEL\"/ \"\$LOCAL_MODEL\"/
     fi
 
-    # 学習はプリシャードから読む
-    PRETRAINED_PATH="$LOCAL_SHARD/modeling"
-    echo "[INFO] Using PRETRAINED_PATH=$PRETRAINED_PATH"
-
-    # 監視ログ
-    MON_LOG="${LOG_ROOT}/gpu_$(hostname).log"
-    ( while true; do
-        date '"'"'+[%F %T] ===== GPU util ====='"'"' >> "$MON_LOG"
-        nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader >> "$MON_LOG"
-        sleep 60
-      done ) &
-    MON_PID=$!
-
-    # 本番学習
+    # 変換のみ（学習しない）
     torchrun \
       --nnodes 3 \
-      --node_rank $SLURM_PROCID \
+      --node_rank \$SLURM_PROCID \
       --nproc_per_node 8 \
       --master_addr $MASTER_ADDR \
       --master_port $MASTER_PORT \
       /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
-        --pretrained "$PRETRAINED_PATH" \
+        --pretrained \"\$LOCAL_MODEL\" \
         --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
         --plugin moe \
         --pp 3 --ep 8 \
-        --batch_size 4 \
-        --lr 2e-5 \
-        --max_length 8 \
-        --lora_rank 8 --lora_alpha 16 \
-        --num_epochs 2 --warmup_steps 8 \
+        --num_epochs 0 \
+        --lora_rank 0 \
         --mixed_precision bf16 \
-        --use_grad_checkpoint \
-        --tensorboard_dir $LOG_ROOT/tb \
-        --save_dir $LOG_ROOT/DeepSeek-R1-0528-lora
+        --tensorboard_dir \"$LOG_ROOT/tb\" \
+        --save_dir \"\$TMP_SHARD\"
 
-    kill "$MON_PID" || true
-  '
+    [ -d \"\$TMP_SHARD/modeling\" ] || { echo '[ERR] pre-shard 作成に失敗'; exit 1; }
+    rm -rf \"\$LOCAL_SHARD\"
+    mv \"\$TMP_SHARD\" \"\$LOCAL_SHARD\"
+    touch \"\$LOCAL_SHARD/.ok\"
+  fi
+
+  # 以降は pre-shard から読む
+  PRETRAINED_PATH=\"\$LOCAL_SHARD/modeling\"
+
+  export GLOO_SOCKET_IFNAME=\"$GLOO_SOCKET_IFNAME\"
+  export NCCL_SOCKET_IFNAME=\"$NCCL_SOCKET_IFNAME\"
+  export NCCL_IB_HCA=\"$NCCL_IB_HCA\"
+  export MASTER_ADDR=$MASTER_ADDR
+  export MASTER_PORT=$MASTER_PORT
+
+  export OMP_NUM_THREADS=8
+  export MKL_NUM_THREADS=\$OMP_NUM_THREADS
+  export OPENBLAS_NUM_THREADS=\$OMP_NUM_THREADS
+  export NUMEXPR_NUM_THREADS=\$OMP_NUM_THREADS
+
+  MON_LOG=\"${LOG_ROOT}/gpu_\$(hostname).log\"
+  ( while true; do
+      date '+[%F %T] ===== GPU util =====' >> \"\$MON_LOG\"
+      nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader >> \"\$MON_LOG\"
+      sleep 60
+    done ) &
+  MON_PID=\$!
+
+  # ===== 本番学習（pre-shard を使用） =====
+  torchrun \
+    --nnodes 3 \
+    --node_rank \$SLURM_PROCID \
+    --nproc_per_node 8 \
+    --master_addr $MASTER_ADDR \
+    --master_port $MASTER_PORT \
+    /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
+      --pretrained \"\$PRETRAINED_PATH\" \
+      --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
+      --plugin moe \
+      --pp 3 --ep 8 \
+      --batch_size 4 \
+      --lr 2e-5 \
+      --max_length 8 \
+      --lora_rank 8 --lora_alpha 16 \
+      --num_epochs 2 --warmup_steps 8 \
+      --mixed_precision bf16 \
+      --use_grad_checkpoint \
+      --tensorboard_dir \"$LOG_ROOT/tb\" \
+      --save_dir \"$LOG_ROOT/DeepSeek-R1-0528-lora\"
+
+  kill \"\$MON_PID\" || true
+"
 
 echo "===== ジョブ終了: $(date) ====="
