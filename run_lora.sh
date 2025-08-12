@@ -131,7 +131,7 @@ srun --ntasks=3 --ntasks-per-node=1 \
 
     # 学習で使うチェックポイントを共有FS→NVMeへ（初回のみ）
     SRC_MODEL=\"/home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16\"
-    LOCAL_MODEL=\"\$NVME_MNT/models/DeepSeek-R1-0528-BF16\"
+    LOCAL_MODEL=\"\$NVME_MNT/models/P02U006/DeepSeek-R1-0528-BF16\"
     if [ ! -d \"\$LOCAL_MODEL\" ]; then
       mkdir -p \"\$LOCAL_MODEL\"
       rsync -a --info=progress2 \"\$SRC_MODEL\"/ \"\$LOCAL_MODEL\"/
