@@ -15,3 +15,4 @@ process_data.py
 dpo_dataset_converted.jsonl
 dpo_dataset_unified.jsonl
 debug_dataset.py
+gen_cot.py
