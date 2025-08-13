@@ -1,0 +1,8 @@
+datasets>=2.19.0
+python-dotenv>=1.0.1
+tqdm>=4.66.4
+# 以下は --use_transformers 時のみ必要
+transformers>=4.41.0
+accelerate>=0.33.0
+torch>=2.2.0
+
