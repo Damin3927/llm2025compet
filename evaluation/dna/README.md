@@ -60,7 +60,7 @@ export WANDB_API_KEY="your_token"
 
 ## 3. start_vllm.sh の利用方法
 
-計算ノード(GPO)より実行。
+計算ノード(GPU)より実行。
 ```bash
 # 実行権限付与
 chmod +x start_vllm.sh
