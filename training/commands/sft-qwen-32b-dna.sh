@@ -46,6 +46,8 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --config ../../configs/Qwen3-32b/sft/config_main.yaml \
         --output_dir data/Qwen3-32B-DNA \
         --hub_model_id neko-llm/Qwen3-32B-DNA \
+        --num_train_epochs 5 \
+        --max_length 32768 \
         --dataconfig ../../configs/data_configs/dna_ver1_0.yaml" \
 
 # 実行方法

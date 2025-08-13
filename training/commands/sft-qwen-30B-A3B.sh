@@ -5,7 +5,7 @@
 #SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
 #SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
 #SBATCH --job-name sft-30b     # ジョブの名前
-#SBATCH --time 3:00:00         # ジョブの最大実行時間
+#SBATCH --time 1:00:00         # ジョブの最大実行時間
 #SBATCH --output sft-30b.out   # 標準出力ファイル
 #SBATCH --error sft-30b.err    # 標準エラーファイル
 #SBATCH --mem=0            # 各ノードのメモリサイズ
@@ -23,10 +23,10 @@ echo "MASTER_PORT: $MASTER_PORT"
 
 export NCCL_DEBUG=WARN
 export NCCL_DEBUG_SUBSYS=ALL
-# export NCCL_P2P_DISABLE=1
-# export NCCL_P2P_LEVEL=NVL
-# export NCCL_IB_GID_INDEX=3
-export DEEPSPEED_TIMEOUT=7200
+export NCCL_P2P_DISABLE=1
+export NCCL_P2P_LEVEL=NVL
+export NCCL_IB_GID_INDEX=3
+# export DEEPSPEED_TIMEOUT=7200
 # export GLOO_SOCKET_IFNAME=enp25s0np0
 # export NCCL_SOCKET_IFNAME=enp25s0np0
 # export NCCL_TIMEOUT=5400

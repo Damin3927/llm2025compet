@@ -5,7 +5,7 @@
 #SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
 #SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
 #SBATCH --job-name sft-32b-hle     # ジョブの名前
-#SBATCH --time 72:00:00         # ジョブの最大実行時間
+#SBATCH --time 24:00:00         # ジョブの最大実行時間
 #SBATCH --output sft-32b-hle.out   # 標準出力ファイル
 #SBATCH --error sft-32b-hle.err    # 標準エラーファイル
 #SBATCH --mem=0            # 各ノードのメモリサイズ
@@ -45,7 +45,9 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         open_r1/sft.py \
         --config ../../configs/Qwen3-32b/sft/config_main.yaml \
         --output_dir data/Qwen3-32B-HLE \
-        --hub_model_id Qwen3-32B-HLE \
+        --hub_model_id neko-llm/Qwen3-32B-HLE \
+        --num_train_epochs 5 \
+        --max_length 32768 \
         --dataconfig ../../configs/data_configs/hle_ver1_0.yaml" \
 
 # 実行方法
@@ -55,4 +57,4 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
 # /home/Competition2025/P02/shareP02/scripts/scancel.sh 287614
 
 # 実行コマンド
-# sbatch ./llm2025compet/training/commands/sft-qwen-32b-node3.sh
+# sbatch ./llm2025compet/training/commands/sft-qwen-32b-hle.sh

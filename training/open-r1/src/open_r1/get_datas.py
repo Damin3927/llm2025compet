@@ -115,6 +115,9 @@ def get_datas_from_config(config: DataConfig, seed: int = 42):
 
     #print("  最初のサンプル:", combined_dataset['train'][0])
     print("  最初のサンプルの文字数:", len(json.dumps(combined_dataset['train'][0]['messages'], ensure_ascii=False)))
-    print("  文字数の合計:", sum(len(json.dumps(sample['messages'], ensure_ascii=False)) for sample in combined_dataset['train']))
+    print("  文字数の平均:", sum(len(json.dumps(sample['messages'], ensure_ascii=False)) for sample in combined_dataset['train']) / len(combined_dataset['train']))
+    print("  文字数の最大値:", max(len(json.dumps(sample['messages'], ensure_ascii=False)) for sample in combined_dataset['train']))
+    print("  文字数の最小値:", min(len(json.dumps(sample['messages'], ensure_ascii=False)) for sample in combined_dataset['train']))
+    print("  サンプル数:", len(combined_dataset['train']))
 
     return combined_dataset
