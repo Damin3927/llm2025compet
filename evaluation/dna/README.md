@@ -60,46 +60,27 @@ export WANDB_API_KEY="your_token"
 
 ## 3. start_vllm.sh の利用方法
 
-計算ノード(GPU)より実行。
+ログインノードより実行。
 ```bash
-# 実行権限付与
-chmod +x start_vllm.sh
-
-# デフォルト設定で起動
-./evaluation/dna/start_vllm.sh
-```
-起動後、同ディレクトリに `vllm.pid` が生成。
-
-モデルやポートを変更して起動する場合。
-```bash
-MODEL="Qwen/Qwen2.5-7B-Instruct" PORT=8010 ./evaluation/dna/start_vllm.sh
+./vllm_sbatch.sh --model "neko-llm/Qwen3-32B-DNA" --nodes 1 --gpus 8 --nodelist osk-gpu[54] --timeout 02:00:00
 ```
 
-停止する場合は以下を実行。
-```bash
-kill $(cat vllm.pid) && rm vllm.pid
-```
-
-ポート 8000 が使用中の場合。
-```bash
-lsof -i :8000
-kill <PID>
-```
-または、ポートを変更して起動。
 
 ## 4. 評価の実行例
+
 ログインノードより実行。
 ```bash
 python3 evaluation/dna/infer.py \
-  --model_name Qwen/Qwen2.5-1.5B-Instruct \
+  --model_name neko-llm/Qwen3-32B-DNA \
   --use_vllm \
   --vllm_base_url http://osk-gpu54:8000/v1 \
   --log_wandb \
   --wandb_project eval-dna \
   --eval_models gpt-4o-mini \
   --log_hf \
-  --hf_repo_id neko-llm/EVALS_DNA_qwen2_5-1_5b-instruct
+  --hf_repo_id neko-llm/EVALS_DNA_qwen3_32b_dna
 ```
+
 > テストの時は `--max_questions 3` など追加。
 
 # LLM Competition Evaluation with Do-Not-Answer (オリジナル)
