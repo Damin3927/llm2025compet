@@ -15,15 +15,16 @@ python -m vllm.entrypoints.openai.api_server \
 別ターミナルで起動確認：
 ```bash
 # ヘルスチェック
-curl http://localhost:8000/health
+curl -s http://osk-gpu54:8000/health # GPU54
 
 # モデル一覧確認
-curl http://localhost:8000/v1/models
+curl http://osk-gpu54:8000/v1/models # GPU54
 ```
+> ローカルホストの場合: http://localhost:8000/health
 
 チャット応答テスト：
 ```bash
-curl http://localhost:8000/v1/chat/completions \
+curl http://osk-gpu54:8000/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer dummy" \
   -d '{
@@ -37,13 +38,13 @@ curl http://localhost:8000/v1/chat/completions \
 
 ### OpenAI (評価でGPTモデルを使う場合のみ)
 ```bash
-export OPENAI_API_KEY="<OpenAI APIキー>"
-export OPENAI_BASE_URL=http://localhost:8000/v1
+export OPENAI_API_KEY="your_token"
+export OPENAI_BASE_URL=http://osk-gpu54:8000/v1
 ```
 
 ### Hugging Face
 ```bash
-export HF_TOKEN="<Hugging Face トークン>"
+export HF_TOKEN="your_token"
 export HF_HOME=${SLURM_TMPDIR:-$HOME}/.hf_cache
 export TRANSFORMERS_CACHE=$HF_HOME
 export HUGGINGFACE_HUB_TOKEN=$HF_TOKEN
@@ -54,7 +55,7 @@ echo "HF cache dir : $HF_HOME"
 
 ### Weights & Biases (ログ保存用)
 ```bash
-export WANDB_API_KEY="<W&B APIキー>"
+export WANDB_API_KEY="your_token"
 ```
 
 ## 3. start_vllm.sh の利用方法
@@ -90,6 +91,7 @@ kill <PID>
 python3 evaluation/dna/infer.py \
   --model_name Qwen/Qwen2.5-1.5B-Instruct \
   --use_vllm \
+  --vllm_base_url http://osk-gpu54:8000/v1 \
   --log_wandb \
   --wandb_project eval-dna \
   --eval_models gpt-4o-mini \
