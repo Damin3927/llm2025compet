@@ -20,7 +20,7 @@ export VLLM_WORKER_MULTIPROC_METHOD="${VLLM_WORKER_MULTIPROC_METHOD:-spawn}"
 
 # OpenAI互換クライアント用（アプリ側が参照）
 export OPENAI_API_KEY="${OPENAI_API_KEY:-dummy}"
-export OPENAI_BASE_URL="${OPENAI_BASE_URL:-http://localhost:${PORT}/v1}"
+export OPENAI_BASE_URL="${OPENAI_BASE_URL:-http://osk-gpu54:${PORT}/v1}"
 
 mkdir -p "${LOG_DIR}"
 
@@ -28,7 +28,7 @@ mkdir -p "${LOG_DIR}"
 # Helpers
 # =======================
 healthcheck() {
-  curl -s "http://localhost:${PORT}/health" | grep -q "OK"
+  curl -s "http://osk-gpu54:${PORT}/health" | grep -q "OK"
 }
 
 already_running() {
@@ -99,8 +99,8 @@ echo -n "[INFO] Waiting for server health"
 for _ in $(seq 1 60); do
   if healthcheck; then
     echo ""
-    echo "[OK] vLLM is healthy at http://localhost:${PORT}"
-    echo "[OK] Swagger UI:            http://localhost:${PORT}/docs"
+    echo "[OK] vLLM is healthy at http://osk-gpu54:${PORT}"
+    echo "[OK] Swagger UI:            http://osk-gpu54:${PORT}/docs"
     echo "[OK] OpenAI base url:       ${OPENAI_BASE_URL}"
     exit 0
   fi

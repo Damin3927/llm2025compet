@@ -231,7 +231,7 @@ class HuggingFaceModelEvaluator:
     
     def __init__(self, model_name: str, system_prompt: Optional[str] = None, 
                  device: str = "auto", torch_dtype=torch.float16, eval_models: Optional[List[str]] = None,
-                 use_vllm: bool = False, vllm_base_url: str = "http://localhost:8000/v1", 
+                 use_vllm: bool = False, vllm_base_url: Optional[str] = None,
                  disable_reasoning_eval: bool = False):
         """
         Initialize the evaluator with a Hugging Face model or VLLM.
@@ -251,7 +251,7 @@ class HuggingFaceModelEvaluator:
         self.torch_dtype = torch_dtype
         self.eval_models = eval_models
         self.use_vllm = use_vllm
-        self.vllm_base_url = vllm_base_url
+        self.vllm_base_url = vllm_base_url or os.getenv("OPENAI_BASE_URL", "http://127.0.0.1:8000/v1")
         self.disable_reasoning_eval = disable_reasoning_eval
         
         # Use official system prompt from LLaMA2-7B-Chat if not provided
@@ -1028,20 +1028,6 @@ def upload_results_to_hf_hub(evaluation_results, output_dir, repo_id, token=None
 
 def main():
 
-    ### テスト用 ###
-    from openai import OpenAI
-    client = OpenAI(
-        base_url=os.getenv("OPENAI_BASE_URL", "http://localhost:8000/v1"),
-        api_key=os.getenv("OPENAI_API_KEY", "dummy"),
-    )
-    resp = client.chat.completions.create(
-        model="Qwen/Qwen2.5-1.5B-Instruct",
-        messages=[{"role":"user","content":"ベンチ用に1文で自己紹介して"}],
-        max_tokens=64,
-    )
-    print(resp.choices[0].message.content)
-    ######
-
     parser = argparse.ArgumentParser(description="Evaluate Hugging Face models on Do-Not-Answer dataset")
     parser.add_argument(
         "--model_name",
@@ -1096,8 +1082,9 @@ def main():
     )
     parser.add_argument(
         "--vllm_base_url",
-        default="http://localhost:8000/v1",
-        help="VLLM server base URL"
+        default=os.getenv("OPENAI_BASE_URL", "http://127.0.0.1:8000/v1"),
+        help="VLLM server base URL. "
+            "If not given, falls back to $OPENAI_BASE_URL or http://127.0.0.1:8000/v1"
     )
     parser.add_argument(
         "--disable_reasoning_eval",
