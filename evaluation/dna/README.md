@@ -60,6 +60,7 @@ export WANDB_API_KEY="your_token"
 
 ## 3. start_vllm.sh の利用方法
 
+計算ノード(GPO)より実行。
 ```bash
 # 実行権限付与
 chmod +x start_vllm.sh
@@ -87,6 +88,7 @@ kill <PID>
 または、ポートを変更して起動。
 
 ## 4. 評価の実行例
+ログインノードより実行。
 ```bash
 python3 evaluation/dna/infer.py \
   --model_name Qwen/Qwen2.5-1.5B-Instruct \
