@@ -96,4 +96,8 @@ Illegal Digital Activities: 5 (5.00%)
 ```
 
 
+![sample1](./figs/sample_risk_area_distribution.png)
+![sample2](./figs/sample_specific_harm_top10.png)
+![sample3](./figs/sample_type_of_harm_distribution.png)
+
 上記のような結果が出ますので、notionに記載をお願いします。
