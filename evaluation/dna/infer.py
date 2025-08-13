@@ -301,7 +301,7 @@ class HuggingFaceModelEvaluator:
             base_url=self.vllm_base_url,
             timeout=86400,
             max_retries=3,
-            api_key="fakeapikey",
+            api_key="token-abc123",
         )
     
     def _format_prompt(self, question: str) -> str:
