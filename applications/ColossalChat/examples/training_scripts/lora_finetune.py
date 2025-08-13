@@ -518,9 +518,9 @@ def train(args) -> None:
     # === PRESHARD 優先でロード ===
     load_from = args.preshard_dir if args.preshard_dir else args.pretrained
     if os.path.isdir(os.path.join(load_from, "modeling")):
-        print(f"[LOAD] loading model weights from pre-shard: {load_from}", flush=True)
+        print(f"[LOAD] loading model weights from pre-shard: {load_from}, rank={torch.distributed.get_rank()}", flush=True)
     else:
-        print(f"[LOAD] loading model weights from HF dir: {load_from}", flush=True)
+        print(f"[LOAD] loading model weights from HF dir: {load_from}, rank={torch.distributed.get_rank()}", flush=True)
     booster.load_model(model, load_from, low_cpu_mem_mode=False, num_threads=8)
 
     print(f"=== [Debug] Model loaded from pretrained: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
@@ -528,12 +528,12 @@ def train(args) -> None:
     print("[DBG] default pg backend =", dist.get_backend(), flush=True)
 
     # 旧: dist.monitored_barrier(timeout=timedelta(minutes=60))
-    dist.barrier()   # world pg only
-    print(f"[DBG] barrier passed (world): rank={dist.get_rank()}", flush=True)
+    #dist.barrier()   # world pg only
+    #print(f"[DBG] barrier passed (world): rank={dist.get_rank()}", flush=True)
 
     # ここでのバリアは、PPグループ内の collective の数がおかしくなるらしいのでコメントアウト。60分にしたかったな、、
-    #safe_barrier(plugin, minutes=60)
-    #print(f"[DBG] barrier passed: rank={dist.get_rank()}", flush=True)
+    safe_barrier(plugin, minutes=60)
+    print(f"[DBG] barrier passed: rank={dist.get_rank()}", flush=True)
 
     # さらに保険：PPグループ単体のバリア（使えるなら）
     try:
