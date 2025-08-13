@@ -116,35 +116,19 @@ srun --ntasks=3 --ntasks-per-node=1 \
     source ~/miniconda3/etc/profile.d/conda.sh
     conda activate deepseeksft310
 
-    # ===== ★ 追加: NVMe 事前ステージング（最小変更） =====
-    NVME_MNT=\"/nvme56\"                       # チームで統一するNVMeマウント
+    NVME_MNT=\"/nvme56\"
     export HF_HOME=\"\$NVME_MNT/hf-cache-\$USER\"
     export HF_HUB_CACHE=\"\$HF_HOME/hub\"
-    export HF_HUB_ENABLE_HF_TRANSFER=1         # HF高速DL（初回のみ有効）
+    export HF_HUB_ENABLE_HF_TRANSFER=1
     export HF_HUB_DISABLE_PROGRESS_BARS=1
-    export HF_HUB_OFFLINE=1                    # 実行時は常にオフライン（キャッシュのみ利用）
+    export HF_HUB_OFFLINE=1
     unset TRANSFORMERS_CACHE
 
-    # /tmp 汚染防止（巨大テンポラリは NVMe へ）
     export TMPDIR=\"\$NVME_MNT/tmp/\$USER\"
     mkdir -p \"\$TMPDIR\" \"\$HF_HUB_CACHE\"
 
-    # 学習で使うチェックポイントを共有FS→NVMeへ（初回のみ）
-    SRC_MODEL=\"/home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16\"
-    LOCAL_MODEL=\"\$NVME_MNT/models/P02U006/DeepSeek-R1-0528-BF16\"
-    if [ ! -d \"\$LOCAL_MODEL\" ]; then
-      mkdir -p \"\$LOCAL_MODEL\"
-      rsync -a --info=progress2 \"\$SRC_MODEL\"/ \"\$LOCAL_MODEL\"/
-    fi
-
-    # 全ノードコピー完了を軽く待つ
-    touch \"$LOG_ROOT/stage_\$(hostname).ok\"
-    N_EXPECT=\$(scontrol show hostnames \"$SLURM_JOB_NODELIST\" | wc -l)
-    while [ \"\$(ls \"$LOG_ROOT\"/stage_*.ok 2>/dev/null | wc -l)\" -lt \"\$N_EXPECT\" ]; do sleep 5; done
-
-    # 以降はローカルから読む
-    PRETRAINED_PATH=\"\$LOCAL_MODEL\"
-    # ===== ★ 追加ここまで =====
+    PRETRAINED_PATH=\"/home/Competition2025/P02/shareP02/DeepSeek-R1-0528-BF16\"
+    PRESHARD_PATH=\"/nvme56/models/R1-0528-pre-sharded-pp3-ep8\"
 
     export GLOO_SOCKET_IFNAME=\"$GLOO_SOCKET_IFNAME\"
     export NCCL_SOCKET_IFNAME=\"$NCCL_SOCKET_IFNAME\"
@@ -152,11 +136,10 @@ srun --ntasks=3 --ntasks-per-node=1 \
     export MASTER_ADDR=$MASTER_ADDR
     export MASTER_PORT=$MASTER_PORT
 
-    # torchrun を呼ぶ前（同じ bash -c ブロック内）に入れる
     export OMP_NUM_THREADS=8
-    export MKL_NUM_THREADS=$OMP_NUM_THREADS
-    export OPENBLAS_NUM_THREADS=$OMP_NUM_THREADS
-    export NUMEXPR_NUM_THREADS=$OMP_NUM_THREADS
+    export MKL_NUM_THREADS=\$OMP_NUM_THREADS
+    export OPENBLAS_NUM_THREADS=\$OMP_NUM_THREADS
+    export NUMEXPR_NUM_THREADS=\$OMP_NUM_THREADS
 
     MON_LOG=\"${LOG_ROOT}/gpu_\$(hostname).log\"
     ( while true; do
@@ -174,6 +157,7 @@ srun --ntasks=3 --ntasks-per-node=1 \
       --master_port $MASTER_PORT \
       /home/Competition2025/P02/P02U006/ColossalAI/applications/ColossalChat/examples/training_scripts/lora_finetune.py \
         --pretrained \"\$PRETRAINED_PATH\" \
+        --preshard_dir \"\$PRESHARD_PATH\" \
         --dataset /home/Competition2025/P02/shareP02/hci_colossalai_deepseekr10528_lorasft.jsonl \
         --plugin moe \
         --pp 3 --ep 8 \

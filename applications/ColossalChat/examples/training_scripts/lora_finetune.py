@@ -515,7 +515,13 @@ def train(args) -> None:
     print(f"=== [Debug] Booster boost completed: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
 
     torch.set_default_dtype(torch.float)
-    booster.load_model(model, args.pretrained, low_cpu_mem_mode=False, num_threads=8)
+    # === PRESHARD 優先でロード ===
+    load_from = args.preshard_dir if args.preshard_dir else args.pretrained
+    if os.path.isdir(os.path.join(load_from, "modeling")):
+        print(f"[LOAD] loading model weights from pre-shard: {load_from}", flush=True)
+    else:
+        print(f"[LOAD] loading model weights from HF dir: {load_from}", flush=True)
+    booster.load_model(model, load_from, low_cpu_mem_mode=False, num_threads=8)
 
     print(f"=== [Debug] Model loaded from pretrained: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
     
@@ -657,22 +663,10 @@ def train(args) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # Basic training information.
-    parser.add_argument(
-        "-m",
-        "--pretrained",
-        type=str,
-        required=True,
-        help="Address of the pre-trained model",
-    )
+    parser.add_argument("-m", "--pretrained", type=str, required=True, help="Address of the pre-trained model")
+    parser.add_argument("--preshard_dir", type=str, default=None, help="Pre-sharded checkpoint root (…/R1-0528-pre-sharded-pp3-ep8). 指定があればこちらから重みを読む")
     parser.add_argument("-d", "--dataset", type=str, required=True, help="Raw Jonl dataset for training.")
-    parser.add_argument(
-        "-p",
-        "--plugin",
-        type=str,
-        default="zero2",
-        choices=["gemini", "gemini_auto", "zero2", "zero2_cpu", "3d", "ddp", "moe"],
-        help="Choose which plugin to use",
-    )
+    parser.add_argument("-p", "--plugin", type=str, default="zero2", choices=["gemini", "gemini_auto", "zero2", "zero2_cpu", "3d", "ddp", "moe"], help="Choose which plugin to use")
     parser.add_argument("--save_dir", type=str, default="checkpoint_dir", help="Checkpoint directory")
     parser.add_argument("--tensorboard_dir", type=str, default=None, help="Tensorboard directory")
     parser.add_argument("--config_file", type=str, default="training_config.json", help="Config file")
