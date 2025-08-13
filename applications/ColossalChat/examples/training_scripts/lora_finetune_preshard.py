@@ -215,6 +215,7 @@ print_rdzv_diagnostics()
 
 # ① 先頭の import 群の近くに追加
 from datetime import timedelta
+from datetime import datetime
 import torch.distributed as dist
 import torch.distributed.distributed_c10d as c10d
 import torch
@@ -516,19 +517,17 @@ def train(args) -> None:
 
     torch.set_default_dtype(torch.float)
     booster.load_model(model, args.pretrained, low_cpu_mem_mode=False, num_threads=8)
-    booster.save_model(model, os.path.join(args.save_dir, "modeling"), shard=True)
 
     print(f"=== [Debug] Model loaded from pretrained: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
-    
     print("[DBG] default pg backend =", dist.get_backend(), flush=True)
 
     # 旧: dist.monitored_barrier(timeout=timedelta(minutes=60))
-    dist.barrier()   # world pg only
-    print(f"[DBG] barrier passed (world): rank={dist.get_rank()}", flush=True)
+    #dist.barrier()   # world pg only
+    #print(f"[DBG] barrier passed (world): rank={dist.get_rank()}", flush=True)
 
     # ここでのバリアは、PPグループ内の collective の数がおかしくなるらしいのでコメントアウト。60分にしたかったな、、
-    #safe_barrier(plugin, minutes=60)
-    #print(f"[DBG] barrier passed: rank={dist.get_rank()}", flush=True)
+    safe_barrier(plugin, minutes=60)
+    print(f"[DBG] barrier passed: rank={dist.get_rank()}", flush=True)
 
     # さらに保険：PPグループ単体のバリア（使えるなら）
     try:
@@ -536,6 +535,16 @@ def train(args) -> None:
             dist.barrier(group=plugin.pp_group)
     except Exception:
         pass
+    
+    # ここで pre-shard を保存（全rankほぼ同時に入るので内部barrierでも落ちにくい）
+    out_dir = os.path.join(args.save_dir, "modeling")
+    os.makedirs(out_dir, exist_ok=True)
+    booster.save_model(model, out_dir, shard=True)
+    print("[Pre-shard] saved to:", out_dir, flush=True)
+
+    # pre-shard目的の1だけならここで終わる
+    if args.num_epochs == 1:
+        return
 
     print(
         f"[Debug] rank={dist.get_rank():02d}, host={socket.gethostname()}, "
