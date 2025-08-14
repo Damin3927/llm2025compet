@@ -6,16 +6,16 @@
 cd llm2025compet
 uv pip install -e .
 
-# サーバーを立ち上げる
+# サーバーを立ち上げる (複数サーバー立ち上げたい場合は、複数回実行)
 pushd inference
 ./vllm_sbatch.sh --model "qwen/Qwen3-235B-A22B" --nodes 3 --gpus 8 --nodelist osk-gpu[54,56,91] --timeout 03:00:00
 popd
 
 # クライアントを立ち上げる
-# 上記のノードを指定した場合は、osk-gpu54 が base_url になる
 pushd evaluation/hle
 python infer.py --help
 
+## 単一サーバーの場合
 python infer.py \
     --model "qwen/Qwen3-235B-A22B" \
     --base_url "http://osk-gpu54:8000" \
@@ -24,7 +24,19 @@ python infer.py \
     --dataset_name "neko-llm/eval-Qwen-Qwen3-235B-A22B" \
     --push_to_hub
 
-# これで vLLM サーバーが立ち上がるまで待ちながら、立ち上がったら推論が始まる
+## 複数サーバーの場合
+# --base_urls に各ノードのベースURLを指定し、--num_workers は「各ノードあたり」のワーカー数になります。
+# 例: 3ノード × 40ワーカー = 合計120並列
+python infer.py \
+    --model "qwen/Qwen3-235B-A22B" \
+    --base_urls http://osk-gpu54:8000,http://osk-gpu56:8000,http://osk-gpu91:8000 \
+    --num_nodes 3 \
+    --num_workers 40 \
+    --flush_every 60 \
+    --dataset_name "neko-llm/eval-Qwen-Qwen3-235B-A22B" \
+    --push_to_hub
+
+# 指定した vLLM サーバー(単一/複数)が立ち上がるまで待ち、立ち上がったら推論が始まる
 # 推論結果は predictions/hle_<モデル名ベース>.json に JSON 辞書形式 (id -> {model, response, usage}) で保存される
 # --flush_every で新規結果を書き出す頻度を制御 (デフォルト 20)。--push_to_hub と --dataset_name を指定した場合は、最後に HF Datasets にアップロードされる
 
