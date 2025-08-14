@@ -7,7 +7,7 @@ import json
 import asyncio
 from datasets import load_dataset, Dataset as HFDataset
 from tqdm import tqdm
-from inference import VLLMClient, wait_until_vllm_up
+from inference import wait_until_vllm_up, AsyncVLLMClient
 
 
 SYSTEM_EXACT_ANSWER = "Your response should be in the following format:\nExplanation: {your explanation for your final answer}\nExact Answer: {your succinct, final answer}\nConfidence: {your confidence score between 0% and 100% for your answer}"
@@ -42,13 +42,13 @@ def format_message(question: QuestionType):
 
 
 async def attempt_question(
-    client: VLLMClient, model: str, question: QuestionType, max_retries: int = 3
+    client: AsyncVLLMClient, model: str, question: QuestionType, max_retries: int = 3
 ):
     messages = format_message(question)
 
     for attempt in range(max_retries):
         try:
-            response = await asyncio.to_thread(client.generate_msg, model=model, messages=messages)
+            response = await client.generate_msg(model=model, messages=messages)
             content = response.choices[0].message.content
             if response.choices[0].finish_reason == "length":
                 print(
@@ -119,7 +119,7 @@ def save_predictions_json(path: str, predictions: Dict[str, Dict[str, Any]]):
 
 
 async def run_worker_pool_multi(
-    clients: Sequence[VLLMClient],
+    clients: Sequence[AsyncVLLMClient],
     model: str,
     questions: Sequence[QuestionType],
     num_workers_per_node: int,
@@ -148,7 +148,7 @@ async def run_worker_pool_multi(
     lock = asyncio.Lock()  # guard updates and saves
 
     with tqdm(total=len(questions), desc="Infer (multi-node)", unit="q") as pbar:
-        async def worker_with_client(client: VLLMClient, _idx: int):
+        async def worker_with_client(client: AsyncVLLMClient, _idx: int):
             nonlocal success_count
             nonlocal pending_writes
             while True:
@@ -291,7 +291,7 @@ def main():
             )
 
     # Create vLLM clients per base URL
-    clients: List[VLLMClient] = [VLLMClient(base_url=f"{u}/v1") for u in parsed_base_urls]
+    clients: List[AsyncVLLMClient] = [AsyncVLLMClient(base_url=f"{u}/v1") for u in parsed_base_urls]
 
     # Resolve predictions JSON path
     output_json = args.input_json or json_path_for_model(args.model)

@@ -1,6 +1,6 @@
 import time
-from typing import TypedDict, NotRequired
-from openai import OpenAI
+from typing import TypedDict, NotRequired, List
+from openai import OpenAI, AsyncOpenAI
 from openai.types.chat import ChatCompletionMessageParam, ChatCompletion
 import requests
 
@@ -84,4 +84,47 @@ class VLLMClient:
             },
         )
 
+        return completion
+
+
+class AsyncVLLMClient:
+    """Async version of VLLMClient for multi-node inference."""
+    
+    def __init__(self, base_url: str = "http://localhost:8000/v1"):
+        self.client = AsyncOpenAI(
+            api_key="token-abc123",
+            base_url=base_url,
+            timeout=86400,
+            max_retries=3,
+        )
+    
+    async def generate_msg(
+        self,
+        model: str,
+        messages: List[ChatCompletionMessageParam],
+        *,
+        temperature: float | None = None,
+        max_tokens: int | None = None
+    ) -> ChatCompletion:
+        default_param = DEFAULT_PARAMS.get(model, {
+            "temperature": 0.6,
+            "max_tokens": 32_768,
+        })
+        param: Param = {
+            "temperature": temperature or default_param["temperature"],
+            "max_tokens": max_tokens or default_param["max_tokens"],
+            "top_p": default_param.get("top_p", 0.95)
+        }
+        
+        completion = await self.client.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=param["temperature"],
+            max_completion_tokens=param["max_tokens"],
+            top_p=param.get("top_p"),
+            stream=False,
+            extra_body={
+                "enable_thinking": True,
+            },
+        )
         return completion
