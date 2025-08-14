@@ -1,7 +1,7 @@
 # ref: https://github.com/matsuolab/llm_bridge_prod/blob/master/eval_hle/hle_benchmark/vllm_predictions.py
 
 from argparse import ArgumentParser
-from typing import Sequence, TypedDict, Dict, Any, Optional, cast
+from typing import Sequence, TypedDict, Dict, Any, Optional, cast, List
 import os
 import json
 import asyncio
@@ -48,7 +48,7 @@ async def attempt_question(
 
     for attempt in range(max_retries):
         try:
-            response = client.generate_msg(model=model, messages=messages)
+            response = await asyncio.to_thread(client.generate_msg, model=model, messages=messages)
             content = response.choices[0].message.content
             if response.choices[0].finish_reason == "length":
                 print(
@@ -115,34 +115,40 @@ def save_predictions_json(path: str, predictions: Dict[str, Dict[str, Any]]):
     os.replace(tmp_path, path)
 
 
-async def run_worker_pool(
-    client: VLLMClient,
+# Single-node worker pool removed; unified on multi-node implementation below.
+
+
+async def run_worker_pool_multi(
+    clients: Sequence[VLLMClient],
     model: str,
     questions: Sequence[QuestionType],
-    num_workers: int,
+    num_workers_per_node: int,
     max_retries: int,
     predictions: Dict[str, Dict[str, Any]],
     save_path: str,
     flush_every: int,
 ) -> int:
-    """Run a fixed-size worker pool consuming questions from a queue.
+    """Run a multi-node worker pool.
+
+    Creates a shared queue and spawns `num_workers_per_node` workers per client.
+    Each worker pulls from the same queue and sends requests via its assigned client.
 
     Returns the number of successful inferences.
     """
+    total_workers = len(clients) * num_workers_per_node
     queue: asyncio.Queue[Optional[QuestionType]] = asyncio.Queue()
     for q in questions:
         await queue.put(q)
-    # Add sentinels for clean shutdown
-    for _ in range(num_workers):
+    # Add sentinels for clean shutdown (one per worker)
+    for _ in range(total_workers):
         await queue.put(None)
 
     success_count = 0
     pending_writes = 0
     lock = asyncio.Lock()  # guard updates and saves
 
-    # Progress bar for total items
-    with tqdm(total=len(questions), desc="Infer", unit="q") as pbar:
-        async def worker_with_pbar(_idx: int):
+    with tqdm(total=len(questions), desc="Infer (multi-node)", unit="q") as pbar:
+        async def worker_with_client(client: VLLMClient, _idx: int):
             nonlocal success_count
             nonlocal pending_writes
             while True:
@@ -167,7 +173,11 @@ async def run_worker_pool(
                 pbar.update(1)
                 queue.task_done()
 
-        tasks = [asyncio.create_task(worker_with_pbar(i)) for i in range(num_workers)]
+        tasks: List[asyncio.Task] = []
+        for client_idx, client in enumerate(clients):
+            for w in range(num_workers_per_node):
+                tasks.append(asyncio.create_task(worker_with_client(client, client_idx * num_workers_per_node + w)))
+
         await queue.join()
         await asyncio.gather(*tasks)
 
@@ -186,7 +196,29 @@ def main():
         help="Base URL for the vLLM API",
     )
     arg_parser.add_argument(
-        "--num_workers", type=int, default=4, help="Number of parallel workers"
+        "--base_urls",
+        type=str,
+        nargs="+",
+        default=None,
+        help=(
+            "Space- or comma-separated list of base URLs for multi-node vLLM servers. "
+            "Example: --base_urls http://node1:8000 http://node2:8000"
+        ),
+    )
+    arg_parser.add_argument(
+        "--num_nodes",
+        type=int,
+        default=None,
+        help=(
+            "Number of nodes. When --base_urls is provided, this must match its length. "
+            "If --base_urls is omitted, defaults to 1."
+        ),
+    )
+    arg_parser.add_argument(
+        "--num_workers",
+        type=int,
+        default=4,
+        help="Number of parallel workers (per node when using --base_urls)",
     )
     arg_parser.add_argument(
         "--max_samples",
@@ -238,7 +270,28 @@ def main():
 
     args = arg_parser.parse_args()
 
-    client = VLLMClient(base_url=f"{args.base_url}/v1")
+    # Parse base URLs for single- or multi-node
+    parsed_base_urls: List[str] = []
+    if args.base_urls:
+        # Flatten and split on commas if needed
+        for token in args.base_urls:
+            for part in str(token).split(","):
+                part = part.strip()
+                if part:
+                    parsed_base_urls.append(part)
+        if args.num_nodes is not None and args.num_nodes != len(parsed_base_urls):
+            raise ValueError(
+                f"--num_nodes ({args.num_nodes}) must match number of --base_urls ({len(parsed_base_urls)})."
+            )
+    else:
+        parsed_base_urls = [args.base_url]
+        if args.num_nodes not in (None, 1):
+            raise ValueError(
+                "--num_nodes > 1 requires --base_urls to specify each node's base URL."
+            )
+
+    # Create vLLM clients per base URL
+    clients: List[VLLMClient] = [VLLMClient(base_url=f"{u}/v1") for u in parsed_base_urls]
 
     # Resolve predictions JSON path
     output_json = args.input_json or json_path_for_model(args.model)
@@ -317,17 +370,26 @@ def main():
                 print(f"Failed to push to hub: {e}")
         return
 
-    # Wait until the vllm server is up
-    print("Waiting for vLLM Server to be up...")
-    wait_until_vllm_up(args.base_url)
+    # Wait until the vLLM server(s) are up
+    if len(parsed_base_urls) == 1:
+        print("Waiting for vLLM Server to be up...")
+        wait_until_vllm_up(parsed_base_urls[0])
+    else:
+        print(f"Waiting for {len(parsed_base_urls)} vLLM Servers to be up...")
+        for u in parsed_base_urls:
+            print(f" - {u}")
+            wait_until_vllm_up(u)
 
-    # Run a fixed-size worker pool so concurrency stays near the maximum
+    # Run multi-node worker pool (works for single-node as well)
+    print(
+        f"Running inference across {len(clients)} node(s) with {args.num_workers} workers per node"
+    )
     total_success = asyncio.run(
-        run_worker_pool(
-            client=client,
+        run_worker_pool_multi(
+            clients=clients,
             model=args.model,
             questions=questions,
-            num_workers=args.num_workers,
+            num_workers_per_node=args.num_workers,
             max_retries=args.max_retries,
             predictions=predictions,
             save_path=output_json,
