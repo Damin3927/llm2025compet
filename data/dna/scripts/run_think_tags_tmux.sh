@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# 現在のディレクトリを動的に取得
-PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# 現在のディレクトリを動的に取得（スクリプトの場所から3階層上）
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 SESSION="think_tags"
 WORKERS=5
 TOTAL=49027
