@@ -50,7 +50,7 @@ except Exception as e:
 class ThinkTagGenerator:
     """<think>タグ生成を行うメインクラス"""
 
-    def __init__(self, api_key: str, model_name: str, apply_to_non_preferred: bool = False):
+    def __init__(self, api_key: str, model_name: str):
         if not OPENAI_AVAILABLE:
             raise ImportError("openaiライブラリが必要です。pip install openai でインストールしてください。")
         
@@ -59,10 +59,9 @@ class ThinkTagGenerator:
             api_key=api_key
         )
         self.model_name = model_name
-        self.apply_to_non_preferred = apply_to_non_preferred
 
     def _call_llm(self, prompt: str) -> Optional[str]:
-        """LLM APIを呼び出し。OpenRouterの思考系モデルに対応してreasoningも抽出"""
+        """LLM APIを呼び出し"""
         system_prompt = """You are an expert at generating thinking processes based on given questions and answers.
 Analyze the content of the question and answer, and generate a short thinking process that leads to that answer.
 The thinking process should be concise and include the judgment that forms the basis for the answer.
@@ -70,70 +69,29 @@ IMPORTANT: Output ONLY in English. Do not use any other language."""
         
         try:
             logging.debug(f"API呼び出し開始: モデル={self.model_name}")
-            # OpenRouterの思考出力を含めるオプション（provider拡張）
             response = self.client.chat.completions.create(
                 model=self.model_name,
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": prompt}
                 ],
-                max_tokens=256,
-                temperature=0.2,
-                extra_body={
-                    # 一部プロバイダでは reasoning 出力が choices[*].reasoning などに載る
-                    "reasoning": {"include": True, "token_limit": 256}
-                }
+                max_tokens=150,
+                temperature=0.2
             )
             
-            # 詳細なデバッグ情報を出力
-            logging.debug(f"API応答受信: type={type(response)}")
-            
-            # まずは標準の content を試す → ダメなら reasoning を探索
-            if hasattr(response, 'choices') and response.choices:
-                for i, choice in enumerate(response.choices):
-                    # 1) 標準 content
-                    try:
-                        content = getattr(getattr(choice, 'message', None), 'content', None)
-                    except Exception:
-                        content = None
-                    if isinstance(content, str) and content.strip():
-                        return content.strip()
-                    
-                    # 2) message の中に reasoning がある場合（dict化して探索）
-                    reasoning_text: Optional[str] = None
-                    try:
-                        msg = getattr(choice, 'message', None)
-                        msg_dict = msg.model_dump() if hasattr(msg, 'model_dump') else {}
-                        if isinstance(msg_dict, dict):
-                            r = msg_dict.get('reasoning')
-                            if isinstance(r, dict):
-                                reasoning_text = r.get('content') or r.get('text')
-                            elif isinstance(r, str):
-                                reasoning_text = r
-                    except Exception:
-                        pass
-                    
-                    # 3) choice 直下に reasoning がある場合
-                    if not reasoning_text:
-                        try:
-                            choice_dict = choice.model_dump() if hasattr(choice, 'model_dump') else {}
-                            if isinstance(choice_dict, dict):
-                                r2 = choice_dict.get('reasoning')
-                                if isinstance(r2, dict):
-                                    reasoning_text = r2.get('content') or r2.get('text')
-                                elif isinstance(r2, str):
-                                    reasoning_text = r2
-                        except Exception:
-                            pass
-                    
-                    if isinstance(reasoning_text, str) and reasoning_text.strip():
-                        return reasoning_text.strip()
-                
-                logging.warning("choicesはあるが content / reasoning の抽出に失敗")
+            if response.choices and response.choices[0].message:
+                content = response.choices[0].message.content
+                if content:
+                    result = content.strip()
+                    logging.debug(f"API呼び出し成功: {len(result)}文字")
+                    return result
+                else:
+                    logging.warning("API応答の内容が空です")
+                    return None
+            else:
+                logging.warning("API応答の形式が不正です")
                 return None
-            
-            logging.warning("API応答にchoicesが存在しない")
-            return None
+                
         except Exception as e:
             logging.error(f"API呼び出しエラー: {e}")
             logging.error(f"エラータイプ: {type(e).__name__}")
@@ -141,49 +99,27 @@ IMPORTANT: Output ONLY in English. Do not use any other language."""
 
     def _generate_think_for_preferred(self, question: str, answer: str) -> Optional[str]:
         """好ましい応答用の<think>タグ内容を生成"""
-        prompt = f"""Task: Generate a concise meta-level thinking process that justifies the preferred answer without reproducing any harmful, unsafe, private, or discriminatory content.
-
-Guidelines:
-- Do NOT restate harmful details. Only explain policy-aligned reasoning at a high level.
-- If the question is inappropriate (e.g., illegal, violent, hateful, privacy-invasive), explain why refusal is appropriate.
-- Keep it short, factual, and in English only.
+        prompt = f"""Analyze the following question and preferred answer, then generate a thinking process that explains why this response is appropriate.
 
 Question: {question}
 Preferred Answer: {answer}
 
-Output strictly the thinking process in 2-4 sentences, English only."""
+Explain the judgment process that led to this response in a concise manner. If the question is inappropriate, explain why it's appropriate to refuse to answer it.
+IMPORTANT: Output ONLY in English."""
         
         return self._call_llm(prompt)
 
     def _generate_think_for_non_preferred(self, question: str, answer: str) -> Optional[str]:
         """好ましくない応答用の<think>タグ内容を生成"""
-        prompt = f"""Task: Generate a concise, policy-level reasoning that explains why the following non-preferred answer is problematic.
-
-Guidelines:
-- Do NOT repeat dangerous instructions or hateful content. Do not include specifics.
-- Refer to safety principles (harm avoidance, legality, privacy, non-discrimination) at a high level.
-- Keep it short, factual, and in English only.
+        prompt = f"""Analyze the following question and non-preferred answer, then generate a thinking process that explains why this response is problematic.
 
 Question: {question}
 Non-preferred Answer: {answer}
 
-Output strictly the thinking process in 2-4 sentences, English only."""
+Explain the reasons why this response is problematic or the inappropriate judgment process in a concise manner.
+IMPORTANT: Output ONLY in English."""
         
         return self._call_llm(prompt)
-
-    def _fallback_think_for_preferred(self, question: str, answer: str) -> str:
-        """LLMが応答しない場合のフォールバック（簡潔な汎用メタ推論）"""
-        return (
-            "The response aligns with safety guidelines. It avoids providing harmful, illegal, or privacy-violating information "
-            "and focuses on a responsible outcome. Refusing or redirecting is appropriate when the user's request is unsafe or inappropriate."
-        )
-
-    def _fallback_think_for_non_preferred(self, question: str, answer: str) -> str:
-        """LLMが応答しない場合のフォールバック（簡潔な汎用メタ推論）"""
-        return (
-            "The response is problematic because it encourages or normalizes harmful, illegal, or discriminatory behavior, "
-            "which violates safety, legality, and non-discrimination principles. A safer approach is to refuse and avoid providing such content."
-        )
 
     def _has_think_tag(self, text: str) -> bool:
         """既に<think>タグが存在するかチェック"""
@@ -224,26 +160,25 @@ Output strictly the thinking process in 2-4 sentences, English only."""
         if not self._has_think_tag(preferred_output):
             logging.info(f"ID {item_id}: preferred_outputに<think>タグを生成中...")
             think_content = self._generate_think_for_preferred(question, preferred_output)
-            if not think_content:
-                think_content = self._fallback_think_for_preferred(question, preferred_output)
-                logging.info(f"ID {item_id}: preferred_outputにフォールバックthinkを使用")
-            result["preferred_output"] = self._add_think_tag(preferred_output, think_content)
-            logging.info(f"ID {item_id}: preferred_outputに<think>タグを追加: {think_content[:100]}...")
+            if think_content:
+                result["preferred_output"] = self._add_think_tag(preferred_output, think_content)
+                logging.info(f"ID {item_id}: preferred_outputに<think>タグを追加: {think_content[:100]}...")
+            else:
+                logging.warning(f"ID {item_id}: preferred_outputの<think>タグ生成に失敗")
         else:
             logging.info(f"ID {item_id}: preferred_outputは既に<think>タグが存在")
         
-        # non_preferred_outputの処理（必要な場合のみ）
-        if self.apply_to_non_preferred:
-            if not self._has_think_tag(non_preferred_output):
-                logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを生成中...")
-                think_content = self._generate_think_for_non_preferred(question, non_preferred_output)
-                if not think_content:
-                    think_content = self._fallback_think_for_non_preferred(question, non_preferred_output)
-                    logging.info(f"ID {item_id}: non_preferred_outputにフォールバックthinkを使用")
+        # non_preferred_outputの処理
+        if not self._has_think_tag(non_preferred_output):
+            logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを生成中...")
+            think_content = self._generate_think_for_non_preferred(question, non_preferred_output)
+            if think_content:
                 result["non_preferred_output"] = self._add_think_tag(non_preferred_output, think_content)
                 logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを追加: {think_content[:100]}...")
             else:
-                logging.info(f"ID {item_id}: non_preferred_outputは既に<think>タグが存在")
+                logging.warning(f"ID {item_id}: non_preferred_outputの<think>タグ生成に失敗")
+        else:
+            logging.info(f"ID {item_id}: non_preferred_outputは既に<think>タグが存在")
         
         logging.info(f"ID {item_id}: 処理完了")
         return result
@@ -358,8 +293,8 @@ def main():
     parser.add_argument("--output_file", type=str, 
                        help="出力ファイル名（指定しない場合は自動生成）")
     parser.add_argument("--model_name", type=str, 
-                       default="qwen/qwen3-32b-instruct", 
-                       help="使用するモデル名（OpenRouter対応、デフォルト: Qwen3-32B-Instruct）")
+                       default="qwen/qwen3-32b", 
+                       help="使用するモデル名（OpenRouter対応、デフォルト: Qwen3-32B）")
     parser.add_argument("--log_dir", type=str, 
                        default="data/dna/logs", 
                        help="ログファイル保存ディレクトリ")
@@ -368,8 +303,6 @@ def main():
     parser.add_argument("--dataset_name", type=str, 
                        default="argo11/DNA_DPO_hh-rlhf", 
                        help="使用するデータセット名")
-    parser.add_argument("--apply_to_non_preferred", action="store_true", 
-                       help="non_preferred_outputにも<think>タグを付与する（デフォルトは付与しない）")
     
     args = parser.parse_args()
     
@@ -419,7 +352,7 @@ def main():
     
     # <think>タグ生成器初期化
     try:
-        generator = ThinkTagGenerator(api_key, args.model_name, apply_to_non_preferred=args.apply_to_non_preferred)
+        generator = ThinkTagGenerator(api_key, args.model_name)
         logging.info("<think>タグ生成器初期化完了")
     except Exception as e:
         logging.error(f"生成器初期化エラー: {e}")
