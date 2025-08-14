@@ -514,14 +514,36 @@ def train(args) -> None:
 
     print(f"=== [Debug] Booster boost completed: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
 
-    torch.set_default_dtype(torch.float)
     # === PRESHARD 優先でロード ===
-    load_from = args.preshard_dir if args.preshard_dir else args.pretrained
-    if os.path.isdir(os.path.join(load_from, "modeling")):
-        print(f"[LOAD] loading model weights from pre-shard: {load_from}, rank={torch.distributed.get_rank()}", flush=True)
-    else:
-        print(f"[LOAD] loading model weights from HF dir: {load_from}, rank={torch.distributed.get_rank()}", flush=True)
-    booster.load_model(model, load_from, low_cpu_mem_mode=False, num_threads=8)
+    torch.set_default_dtype(torch.float)
+
+    def _pick_load_dir(args):
+        # 1) --preshard_dir が指定されていて、その直下に "modeling" がある → そこを読む
+        if args.preshard_dir:
+            cand = os.path.join(args.preshard_dir, "modeling")
+            if os.path.isdir(cand):
+                return cand, "pre-shard(modeling)"
+            # 直下に shard .bin が直接あるケースにも対応
+            has_bins = any(fn.endswith(".bin") for fn in os.listdir(args.preshard_dir))
+            if has_bins:
+                return args.preshard_dir, "pre-shard(root)"
+        # 2) それ以外は HF の元ディレクトリ
+        return args.pretrained, "HF pretrained"
+
+    load_from, how = _pick_load_dir(args)
+    print(f"[LOAD] loading model weights from {how}: {load_from}, rank={torch.distributed.get_rank()}", flush=True)
+
+    # 失敗時に場所の中身をヒント表示（騒がしくない程度）
+    try:
+        booster.load_model(model, load_from, low_cpu_mem_mode=False, num_threads=8)
+    except Exception as e:
+        try:
+            ls = " | ".join(sorted(os.listdir(load_from))[:10])
+            print(f"[LOAD][debug] head of {load_from}: {ls}", flush=True)
+        except Exception:
+            pass
+        raise
+
 
     print(f"=== [Debug] Model loaded from pretrained: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
     
