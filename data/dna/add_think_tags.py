@@ -37,6 +37,14 @@ except ImportError:
     TQDM_AVAILABLE = False
     print("Warning: tqdmライブラリがインストールされていません。")
 
+# Weights & Biases（オプション）
+try:
+    import wandb
+    WANDB_AVAILABLE = True
+except ImportError:
+    WANDB_AVAILABLE = False
+    print("Warning: wandbライブラリがインストールされていません。")
+
 # .envファイルの読み込みを試行（エラーが発生しても続行）
 try:
     from dotenv import load_dotenv
@@ -60,6 +68,7 @@ class ThinkTagGenerator:
         )
         self.model_name = model_name
         self.apply_to_non_preferred = apply_to_non_preferred
+        self.last_metrics: Dict[str, Any] = {}
 
     def _call_llm(self, prompt: str) -> Optional[str]:
         """LLM APIを呼び出し"""
@@ -171,6 +180,14 @@ IMPORTANT: Output ONLY in English."""
         logging.info(f"ID {item_id}: 処理開始")
         logging.info(f"ID {item_id}: 質問: {question[:100]}...")
         
+        # メトリクス初期化
+        metrics = {
+            "added_preferred_think": False,
+            "used_fallback_preferred": False,
+            "added_non_preferred_think": False,
+            "used_fallback_non_preferred": False,
+        }
+
         # preferred_outputの処理（必ず<think>付与）
         if not self._has_think_tag(preferred_output):
             logging.info(f"ID {item_id}: preferred_outputに<think>タグを生成中...")
@@ -178,8 +195,10 @@ IMPORTANT: Output ONLY in English."""
             if not think_content:
                 think_content = self._fallback_think_for_preferred(question, preferred_output)
                 logging.info(f"ID {item_id}: preferred_outputにフォールバックthinkを使用")
+                metrics["used_fallback_preferred"] = True
             result["preferred_output"] = self._add_think_tag(preferred_output, think_content)
             logging.info(f"ID {item_id}: preferred_outputに<think>タグを追加: {think_content[:100]}...")
+            metrics["added_preferred_think"] = True
         else:
             logging.info(f"ID {item_id}: preferred_outputは既に<think>タグが存在")
         
@@ -191,14 +210,18 @@ IMPORTANT: Output ONLY in English."""
                 if not think_content:
                     think_content = self._fallback_think_for_non_preferred(question, non_preferred_output)
                     logging.info(f"ID {item_id}: non_preferred_outputにフォールバックthinkを使用")
+                    metrics["used_fallback_non_preferred"] = True
                 result["non_preferred_output"] = self._add_think_tag(non_preferred_output, think_content)
                 logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを追加: {think_content[:100]}...")
+                metrics["added_non_preferred_think"] = True
             else:
                 logging.info(f"ID {item_id}: non_preferred_outputは既に<think>タグが存在")
         else:
             logging.info(f"ID {item_id}: non_preferred_outputには<think>タグを付与しません（DPO最適化）")
         
         logging.info(f"ID {item_id}: 処理完了")
+        # 直近メトリクスを保持（外側でwandbログ用に利用）
+        self.last_metrics = metrics
         return result
 
 
@@ -323,6 +346,9 @@ def main():
                        help="使用するデータセット名")
     parser.add_argument("--apply_to_non_preferred", action="store_true",
                        help="non_preferred_outputにも<think>タグを付与するかどうか（デフォルト: True）")
+    parser.add_argument("--wandb", action="store_true", help="Weights & Biases にログを送信する")
+    parser.add_argument("--wandb_project", type=str, default="think-tags", help="wandbのプロジェクト名")
+    parser.add_argument("--wandb_run_name", type=str, help="wandbのラン名（省略可）")
     
     args = parser.parse_args()
     
@@ -379,6 +405,25 @@ def main():
         print(f"エラー: <think>タグ生成器の初期化に失敗しました: {e}")
         return 1
     
+    # wandb初期化
+    wandb_run = None
+    if args.wandb:
+        if not WANDB_AVAILABLE:
+            logging.warning("wandbがインストールされていないため、--wandbは無視されます")
+        else:
+            wandb_run = wandb.init(
+                project=args.wandb_project,
+                name=args.wandb_run_name or f"think_tags_{args.start_index}-{args.end_index-1}",
+                config={
+                    "start_index": args.start_index,
+                    "end_index": args.end_index,
+                    "model_name": args.model_name,
+                    "dataset_name": args.dataset_name,
+                    "output_file": args.output_file,
+                    "apply_to_non_preferred": args.apply_to_non_preferred,
+                },
+            )
+
     # 既存IDチェックとファイル上書き判定
     should_overwrite = should_overwrite_file(args.output_file, args.start_index)
     if should_overwrite:
@@ -411,11 +456,23 @@ def main():
             
             for i in iterator:
                 item = dataset[i]
-                item_id = item.get('id', f'index_{i}')
+                # datasetsのitemはdictのはずだが、型チェックの都合で安全に取り出す
+                try:
+                    item_id = item.get('id', f'index_{i}') if isinstance(item, dict) else f'index_{i}'
+                except Exception:
+                    item_id = f'index_{i}'
                 
                 # スキップチェック
                 if item_id in existing_ids:
                     skipped_count += 1
+                    if wandb_run:
+                        wandb.log({
+                            "skipped_count": skipped_count,
+                            "processed_count": processed_count,
+                            "error_count": error_count,
+                            "item_id": str(item_id),
+                            "status": "skipped",
+                        }, step=i)
                     continue
                 
                 logging.info(f"処理中 ID: {item_id}")
@@ -430,14 +487,41 @@ def main():
                     
                     processed_count += 1
                     logging.info(f"ID {item_id}: 処理完了")
+
+                    if wandb_run:
+                        lm = generator.last_metrics if isinstance(generator.last_metrics, dict) else {}
+                        wandb.log({
+                            "processed_count": processed_count,
+                            "error_count": error_count,
+                            "skipped_count": skipped_count,
+                            "item_id": str(item_id),
+                            "added_preferred_think": bool(lm.get("added_preferred_think", False)),
+                            "used_fallback_preferred": bool(lm.get("used_fallback_preferred", False)),
+                            "added_non_preferred_think": bool(lm.get("added_non_preferred_think", False)),
+                            "used_fallback_non_preferred": bool(lm.get("used_fallback_non_preferred", False)),
+                            "status": "done",
+                        }, step=i)
                     
                 except Exception as e:
                     logging.error(f"ID {item_id} 処理エラー: {e}")
                     error_count += 1
+                    if wandb_run:
+                        wandb.log({
+                            "processed_count": processed_count,
+                            "error_count": error_count,
+                            "skipped_count": skipped_count,
+                            "item_id": str(item_id),
+                            "status": "error",
+                        }, step=i)
                     
     except Exception as e:
         logging.error(f"ファイル出力エラー: {e}")
         print(f"エラー: ファイル出力に失敗しました: {e}")
+        if wandb_run:
+            wandb.summary["processed_count"] = processed_count
+            wandb.summary["error_count"] = error_count
+            wandb.summary["skipped_count"] = skipped_count
+            wandb.finish()
         return 1
     
     # 結果の表示
@@ -445,6 +529,11 @@ def main():
     logging.info(result_message)
     print(result_message)
     print(f"出力ファイル: {args.output_file}")
+    if wandb_run:
+        wandb.summary["processed_count"] = processed_count
+        wandb.summary["error_count"] = error_count
+        wandb.summary["skipped_count"] = skipped_count
+        wandb.finish()
     
     return 0
 
