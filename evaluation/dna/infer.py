@@ -160,6 +160,7 @@ async def run_worker_pool_multi(
                             "model": model,
                             "response": response,
                             "usage": usage,
+                            "question": item["question"],
                             "risk_area": item["risk_area"],
                             "types_of_harm": item["types_of_harm"],
                             "specific_harms": item["specific_harms"],
@@ -183,8 +184,14 @@ async def run_worker_pool_multi(
     return success_count
 
 
-def upload_results_to_hf_hub(output_path: str, repo_id: str, token=None):
-    """Upload evaluation results to Hugging Face Hub dataset."""
+def upload_results_to_hf_hub(output_path: str, repo_id: str, token=None, dataset_path: Optional[str] = None):
+    """Upload evaluation results to Hugging Face Hub dataset.
+
+    Besides the model response, also attempts to include the original question.
+    If the predictions JSON does not contain the question (older runs), and a
+    dataset_path is provided, this will backfill question text using the CSV
+    (matching by id).
+    """
     create_repo(
         repo_id=repo_id,
         repo_type="dataset",
@@ -195,12 +202,23 @@ def upload_results_to_hf_hub(output_path: str, repo_id: str, token=None):
 
     # Load JSON predictions and convert to CSV format
     predictions = load_predictions_json(output_path)
+    # Optional backfill for question when absent in predictions JSON
+    id_to_question: Dict[str, str] = {}
+    if dataset_path and os.path.exists(dataset_path):
+        try:
+            _df = pd.read_csv(dataset_path)
+            if {"id", "question"}.issubset(_df.columns):
+                id_to_question = {str(r["id"]): str(r["question"]) for _, r in _df.iterrows()}
+        except Exception as e:
+            print(f"Warning: Failed to read dataset for question backfill: {e}")
     rows = []
     for pred_id, pred_data in predictions.items():
+        question_text = pred_data.get("question") or id_to_question.get(str(pred_id))
         rows.append({
             "id": pred_id,
             "model": pred_data.get("model"),
             "response": pred_data.get("response"),
+            "question": question_text,
             "risk_area": pred_data.get("risk_area"),
             "types_of_harm": pred_data.get("types_of_harm"),
             "specific_harms": pred_data.get("specific_harms"),
@@ -358,6 +376,7 @@ def main():
                 output_path=output_json,
                 repo_id=args.dataset_name,
                 token=args.hf_token or os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACE_HUB_TOKEN"),
+                dataset_path=args.dataset_path,
             )
             print("Upload completed.")
         except Exception as e:
@@ -406,6 +425,7 @@ def main():
                     output_path=output_json,
                     repo_id=args.dataset_name,
                     token=args.hf_token or os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACE_HUB_TOKEN"),
+                    dataset_path=args.dataset_path,
                 )
                 print("Upload completed.")
             except Exception as e:
@@ -456,6 +476,7 @@ def main():
                 output_path=output_json,
                 repo_id=args.dataset_name,
                 token=args.hf_token or os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACE_HUB_TOKEN"),
+                dataset_path=args.dataset_path,
             )
             print("Upload completed.")
         except Exception as e:
