@@ -526,31 +526,41 @@ def train(args) -> None:
     # === PRESHARD/HF ロード判定 & ロード ===
     torch.set_default_dtype(torch.float)
 
-    def _dir_has_bins(path: str) -> bool:
-        try:
-            return any(n.endswith(".bin") for n in os.listdir(path))
-        except Exception:
-            return False
+    rank = dist.get_rank()
+    world = dist.get_world_size()
 
-    # 1) --preshard_dir があれば最優先（/.../modeling 配下に .bin 群がある想定）
     load_from = None
     if getattr(args, "preshard_dir", None):
+        # 想定1: .../preshard_dir/modeling/ に .bin が並んでいる
         cand1 = os.path.join(args.preshard_dir, "modeling")
         if os.path.isdir(cand1) and _dir_has_bins(cand1):
             load_from = cand1
+        # 想定2: .../preshard_dir 直下に .bin が並んでいる
         elif os.path.isdir(args.preshard_dir) and _dir_has_bins(args.preshard_dir):
             load_from = args.preshard_dir
 
     if load_from:
-        print(f"[LOAD] ColossalAI sharded loader で pre-shard を読み込み: {load_from}, "
-            f"rank={torch.distributed.get_rank()}", flush=True)
-        # ★ ここがポイント：unsharded ではなく “sharded” ローダーを使う
-        booster.checkpoint_io.load_sharded_model(model, load_from)
+        # index のパスを決める（bin と同じディレクトリ）
+        index_json = os.path.join(load_from, "pytorch_model.bin.index.json")
+        if rank == 0:
+            if not os.path.isfile(index_json):
+                print(f"[LOAD] index が無いので合成します → {index_json}", flush=True)
+                _synthesize_hf_index_from_bins(load_from, index_json)
+            else:
+                print(f"[LOAD] 既存 index を使用 → {index_json}", flush=True)
+        # 全ランク待ち合わせ（index を全員で読み始める前に）
+        try:
+            dist.monitored_barrier(timeout=timedelta(minutes=60))
+        except Exception:
+            dist.barrier()
+
+        print(f"[LOAD] ColossalAI sharded loader で pre-shard を読み込み: {index_json}, rank={rank}", flush=True)
+        # 重要：関数が “index ファイルへのパス” を受け取る前提（.name を参照する実装に合わせる）
+        booster.checkpoint_io.load_sharded_model(model, index_json)
     else:
-        # 2) 上記に当てはまらなければ HF ディレクトリから通常ロード
-        print(f"[LOAD] HF ディレクトリから読み込み: {args.pretrained}, "
-            f"rank={torch.distributed.get_rank()}", flush=True)
+        print(f"[LOAD] HF ディレクトリから読み込み: {args.pretrained}, rank={rank}", flush=True)
         booster.load_model(model, args.pretrained, low_cpu_mem_mode=False, num_threads=8)
+
 
     print(f"=== [Debug] Model loaded from pretrained: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
     
