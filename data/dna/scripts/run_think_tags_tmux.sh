@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJECT_ROOT="/home/argo/llm2025compet"
+# 現在のディレクトリを動的に取得
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SESSION="think_tags"
 WORKERS=5
 TOTAL=49027
