@@ -50,7 +50,7 @@ python infer.py \
 
 # JSON は eval.py と互換な形式なので、このまま判定にかけられる
 python eval.py \
-    --prediction_dataset "neko-llm/eval-Qwen-Qwen3-235B-A22B" \
+    --predictions_dataset "neko-llm/eval-Qwen-Qwen3-235B-A22B" \
     --num_workers 100 \
     --judge o3-mini-2025-01-31
 
