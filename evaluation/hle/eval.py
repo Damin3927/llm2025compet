@@ -7,11 +7,11 @@ import math
 import argparse
 import asyncio
 import numpy as np
-from typing import Literal
+from typing import Literal, Dict, Any, cast
 from pydantic import BaseModel
 from openai import AsyncOpenAI
 from tqdm.asyncio import tqdm_asyncio
-from datasets import load_dataset
+from datasets import load_dataset, Dataset as HFDataset
 
 client = AsyncOpenAI(timeout=300.0, max_retries=1)
 
@@ -161,22 +161,74 @@ def dump_metrics(predictions, n):
     print(f"Calibration Error: {calibration_error}")
 
 
+def load_predictions_from_hf(repo_id: str, split: str = "train") -> Dict[str, Dict[str, Any]]:
+    """Load predictions from a Hugging Face dataset and return a dict keyed by id.
+
+    Expected columns: id, response (required). model and usage (JSON or str) are optional.
+    """
+    ds = cast(HFDataset, load_dataset(repo_id, split=split))
+    predictions: Dict[str, Dict[str, Any]] = {}
+    for i in range(len(ds)):
+        row = cast(Dict[str, Any], ds[i])
+        uid = str(row.get("id")) if row.get("id") is not None else ""
+        if not uid:
+            continue
+        # Normalize usage to dict if provided as JSON string
+        usage = row.get("usage")
+        if isinstance(usage, str):
+            try:
+                usage = json.loads(usage)
+            except Exception:
+                pass
+        predictions[uid] = {
+            "model": row.get("model"),
+            "response": row.get("response"),
+            "usage": usage if isinstance(usage, dict) else (usage or {}),
+        }
+    return predictions
+
+
 def main(args):
     assert args.num_workers > 1, "num_workers must be 2 or greater"
 
-    output_filepath = f"judged_{os.path.basename(args.predictions)}.json"   
-    dataset = load_dataset(args.dataset, split="test").to_dict() 
+    # Ensure output directory exists
+    os.makedirs("judged", exist_ok=True)
+
+    # Build output file path under judged/
+    if args.predictions_dataset:
+        safe_name = args.predictions_dataset.replace('/', '__')
+        output_filepath = os.path.join("judged", f"judged_{safe_name}.json")
+    else:
+        base = os.path.splitext(os.path.basename(args.predictions))[0] if args.predictions else "predictions"
+        output_filepath = os.path.join("judged", f"judged_{base}.json")
+
+    ds_test = cast(HFDataset, load_dataset("cais/hle", split="test"))
     # convert to list of json for async parallelism
-    questions = [dict(zip(dataset.keys(), values)) for values in zip(*dataset.values())]
+    questions = []
+    for i in range(len(ds_test)):
+        item = cast(Dict[str, Any], ds_test[i])
+        questions.append({
+            "id": item.get("id"),
+            "question": item.get("question"),
+            "answer": item.get("answer"),
+            "image": item.get("image"),
+            "answer_type": item.get("answer_type"),
+        })
 
     total_questions = len(questions)
 
-    with open(args.predictions, "r") as f:
-        predictions = json.load(f)
+    # Load predictions from HF dataset if provided; otherwise from local JSON
+    if args.predictions_dataset:
+        predictions = load_predictions_from_hf(args.predictions_dataset, args.predictions_split)
+    else:
+        if not args.predictions:
+            raise ValueError("Provide --predictions_dataset or --predictions path")
+        with open(args.predictions, "r", encoding="utf-8") as f:
+            predictions = json.load(f)
     
     # load only unjudged responses
     if os.path.exists(output_filepath):
-        with open(output_filepath, "r") as f:
+        with open(output_filepath, "r", encoding="utf-8") as f:
             judged_predictions = json.load(f)
     else:
         judged_predictions = {}
@@ -191,15 +243,16 @@ def main(args):
             judged_predictions[unique_id] = predictions
 
     # cache judge output
-    with open(output_filepath, "w") as f:
+    with open(output_filepath, "w", encoding="utf-8") as f:
         json.dump(judged_predictions, f, indent=4)
 
     dump_metrics(judged_predictions, n = total_questions)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", type=str, help="HLE HF Dataset")
-    parser.add_argument("--predictions", type=str, help="Model Predictions")
+    parser.add_argument("--predictions", type=str, default=None, help="Model predictions JSON (fallback if --predictions_dataset not set)")
+    parser.add_argument("--predictions_dataset", type=str, default=None, help="Model predictions Hugging Face dataset repo id (e.g., user/eval-llama3-8b)")
+    parser.add_argument("--predictions_split", type=str, default="train", help="Split name for predictions dataset (default: train)")
     parser.add_argument("--num_workers", type=int, default=100, help="Async semaphore size. This depends on your rate limit.")
     parser.add_argument("--judge", type=str, default="o3-mini-2025-01-31", help="Judge model") # prev: "gpt-4o-2024-08-06"
     args = parser.parse_args()
