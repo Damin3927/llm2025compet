@@ -8,6 +8,11 @@ __pycache__/
 dna_hierarchy_count.json
 questions.json
 
+# 分類結果ファイル
+classified_*.jsonl
+test_*.jsonl
+
+# 一時的なスクリプトファイル
 analyze_dna_hierarchy.py
 convert_hh_rlhf.py
 fix_key.py
@@ -15,3 +20,27 @@ process_data.py
 dpo_dataset_converted.jsonl
 dpo_dataset_unified.jsonl
 debug_dataset.py
+
+# スクリプト関連（実行時に生成されるもの）
+scripts/
+*.sh
+*.sbatch
+
+# wandb関連
+wandb/
+
+# 環境変数ファイル
+.env
+
+# 一時的なデータファイル
+think_tagged_*.jsonl
+
+# バックアップファイル
+*.backup
+
+# 日本語ファイル名（一時的なもの）
+さくらDCサーバ利用手順書.md
+
+# その他の生成ファイル
+data/
+requirements-think.txt
