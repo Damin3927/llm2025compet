@@ -50,7 +50,7 @@ except Exception as e:
 class ThinkTagGenerator:
     """<think>タグ生成を行うメインクラス"""
 
-    def __init__(self, api_key: str, model_name: str):
+    def __init__(self, api_key: str, model_name: str, apply_to_non_preferred: bool = False):
         if not OPENAI_AVAILABLE:
             raise ImportError("openaiライブラリが必要です。pip install openai でインストールしてください。")
         
@@ -59,6 +59,7 @@ class ThinkTagGenerator:
             api_key=api_key
         )
         self.model_name = model_name
+        self.apply_to_non_preferred = apply_to_non_preferred
 
     def _call_llm(self, prompt: str) -> Optional[str]:
         """LLM APIを呼び出し"""
@@ -121,6 +122,20 @@ IMPORTANT: Output ONLY in English."""
         
         return self._call_llm(prompt)
 
+    def _fallback_think_for_preferred(self, question: str, answer: str) -> str:
+        """LLMが応答しない場合のフォールバック（簡潔な汎用メタ推論）"""
+        return (
+            "The response aligns with safety guidelines. It avoids providing harmful, illegal, or privacy-violating information "
+            "and focuses on a responsible outcome. Refusing or redirecting is appropriate when the user's request is unsafe or inappropriate."
+        )
+
+    def _fallback_think_for_non_preferred(self, question: str, answer: str) -> str:
+        """LLMが応答しない場合のフォールバック（簡潔な汎用メタ推論）"""
+        return (
+            "The response is problematic because it encourages or normalizes harmful, illegal, or discriminatory behavior, "
+            "which violates safety, legality, and non-discrimination principles. A safer approach is to refuse and avoid providing such content."
+        )
+
     def _has_think_tag(self, text: str) -> bool:
         """既に<think>タグが存在するかチェック"""
         if not isinstance(text, str):
@@ -156,29 +171,32 @@ IMPORTANT: Output ONLY in English."""
         logging.info(f"ID {item_id}: 処理開始")
         logging.info(f"ID {item_id}: 質問: {question[:100]}...")
         
-        # preferred_outputの処理
+        # preferred_outputの処理（必ず<think>付与）
         if not self._has_think_tag(preferred_output):
             logging.info(f"ID {item_id}: preferred_outputに<think>タグを生成中...")
             think_content = self._generate_think_for_preferred(question, preferred_output)
-            if think_content:
-                result["preferred_output"] = self._add_think_tag(preferred_output, think_content)
-                logging.info(f"ID {item_id}: preferred_outputに<think>タグを追加: {think_content[:100]}...")
-            else:
-                logging.warning(f"ID {item_id}: preferred_outputの<think>タグ生成に失敗")
+            if not think_content:
+                think_content = self._fallback_think_for_preferred(question, preferred_output)
+                logging.info(f"ID {item_id}: preferred_outputにフォールバックthinkを使用")
+            result["preferred_output"] = self._add_think_tag(preferred_output, think_content)
+            logging.info(f"ID {item_id}: preferred_outputに<think>タグを追加: {think_content[:100]}...")
         else:
             logging.info(f"ID {item_id}: preferred_outputは既に<think>タグが存在")
         
-        # non_preferred_outputの処理
-        if not self._has_think_tag(non_preferred_output):
-            logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを生成中...")
-            think_content = self._generate_think_for_non_preferred(question, non_preferred_output)
-            if think_content:
+        # non_preferred_outputの処理（オプション）
+        if self.apply_to_non_preferred:
+            if not self._has_think_tag(non_preferred_output):
+                logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを生成中...")
+                think_content = self._generate_think_for_non_preferred(question, non_preferred_output)
+                if not think_content:
+                    think_content = self._fallback_think_for_non_preferred(question, non_preferred_output)
+                    logging.info(f"ID {item_id}: non_preferred_outputにフォールバックthinkを使用")
                 result["non_preferred_output"] = self._add_think_tag(non_preferred_output, think_content)
                 logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを追加: {think_content[:100]}...")
             else:
-                logging.warning(f"ID {item_id}: non_preferred_outputの<think>タグ生成に失敗")
+                logging.info(f"ID {item_id}: non_preferred_outputは既に<think>タグが存在")
         else:
-            logging.info(f"ID {item_id}: non_preferred_outputは既に<think>タグが存在")
+            logging.info(f"ID {item_id}: non_preferred_outputには<think>タグを付与しません（DPO最適化）")
         
         logging.info(f"ID {item_id}: 処理完了")
         return result
@@ -303,6 +321,8 @@ def main():
     parser.add_argument("--dataset_name", type=str, 
                        default="argo11/DNA_DPO_hh-rlhf", 
                        help="使用するデータセット名")
+    parser.add_argument("--apply_to_non_preferred", action="store_true",
+                       help="non_preferred_outputにも<think>タグを付与するかどうか（デフォルト: True）")
     
     args = parser.parse_args()
     
@@ -352,7 +372,7 @@ def main():
     
     # <think>タグ生成器初期化
     try:
-        generator = ThinkTagGenerator(api_key, args.model_name)
+        generator = ThinkTagGenerator(api_key, args.model_name, args.apply_to_non_preferred)
         logging.info("<think>タグ生成器初期化完了")
     except Exception as e:
         logging.error(f"生成器初期化エラー: {e}")
