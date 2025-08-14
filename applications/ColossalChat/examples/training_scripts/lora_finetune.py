@@ -37,6 +37,7 @@ from colossalai.nn.optimizer import HybridAdam
 from colossalai.utils import get_current_device
 
 import socket # Added for debugging
+import torch.distributed.distributed_c10d as c10d # Added 
 
 import sys, os
 print("=== CONDA ENV CHECK ===")
