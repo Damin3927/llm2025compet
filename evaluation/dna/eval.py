@@ -8,15 +8,14 @@ import argparse
 import json
 import os
 import pandas as pd
-import time
 from datetime import datetime
+from tqdm.asyncio import tqdm_asyncio
 from tqdm import tqdm
 import wandb
-from typing import Dict, List, cast, Optional
+from typing import Dict, List, cast, Optional, Any
 import asyncio
-from openai import AsyncOpenAI, OpenAI
-from contextlib import contextmanager
-from huggingface_hub import HfApi, create_repo, upload_file
+from openai import AsyncOpenAI
+from huggingface_hub import create_repo, upload_file
 from datasets import Dataset, load_dataset
 
 # Import existing evaluation utilities
@@ -42,7 +41,7 @@ RUBRIC = construct_rubric("do_not_answer", annotation_aspects_en)
 def construct_messages(response_df: pd.DataFrame, disable_reasoning_eval: bool = False) -> List[List[Dict[str, str]]]:
     messages = []
 
-    for _, row in response_df.iterrows():
+    for _, row in tqdm(response_df.iterrows(), total=len(response_df), desc="Build prompts"):
         # Extract reasoning content
         reasoning_content = (
             extract_reasoning_content(row["response"])
@@ -87,7 +86,12 @@ def construct_messages(response_df: pd.DataFrame, disable_reasoning_eval: bool =
     return messages
 
 class HuggingFaceModelEvaluator:
-    def __init__(self, model_name: str, disable_reasoning_eval: bool = False):
+    def __init__(
+        self,
+        model_name: str,
+        disable_reasoning_eval: bool = False,
+        num_workers: Optional[int] = None,
+    ):
         """
         Initialize the evaluator with a Hugging Face model or VLLM.
 
@@ -99,6 +103,11 @@ class HuggingFaceModelEvaluator:
         self.model_name = model_name
         self.model_name_safe = self.model_name.replace('/', '_').replace('\\', '_')
         self.disable_reasoning_eval = disable_reasoning_eval
+        # concurrency: prefer CLI arg, then env var, then default 10
+        if num_workers is not None:
+            self.num_workers = int(num_workers)
+        else:
+            self.num_workers = int(os.getenv("DNA_EVAL_CONCURRENCY", "10"))
 
     def evaluate_responses(
         self,
@@ -149,18 +158,22 @@ class HuggingFaceModelEvaluator:
             return evaluation_results
 
         # Save evaluation results
-        results_file = os.path.join(output_dir, f"evaluation_{self.model_name_safe}.json")
-        with open(results_file, "w") as f:
+        results_file = os.path.join(
+            output_dir, f"evaluation_{self.model_name_safe}.json"
+        )
+        with open(results_file, "w", encoding="utf-8") as f:
             json.dump(evaluation_results, f, indent=2)
 
         evaluation_results["evaluation_file"] = results_file
         evaluation_results["results_jsonl_file"] = generate_results_jsonl(
             predictions_df,
-            evaluation_results["gpt4_evaluation"],
+            cast(Dict[str, Any], evaluation_results["gpt4_evaluation"]),
             output_dir,
             self.model_name,
         )
-        evaluation_results["summary_json_file"] = generate_summary_json(evaluation_results, output_dir)
+        evaluation_results["summary_json_file"] = generate_summary_json(
+            evaluation_results, output_dir
+        )
 
         return evaluation_results
 
@@ -179,20 +192,31 @@ class HuggingFaceModelEvaluator:
         )
         messages = construct_messages(response_df, disable_reasoning_eval)
 
-        gpt_responses = {}
-        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-        for i, message in enumerate(tqdm(messages, desc="GPT-4 evaluation")):
-            try:
-                resp = client.chat.completions.create(
-                    model="gpt-4o-mini",  # ← ここを固定（旧 gpt-4-0613 を使わない）
-                    messages=message,
-                )
-                response = resp.choices[0].message.content
-                gpt_responses[i] = response
-                time.sleep(1) # Rate limiting
-            except Exception as e:
-                print(f"Error in GPT evaluation for question {i}: {e}")
-                gpt_responses[i] = "Error"
+        # Async parallel GPT calls with semaphore (similar to hle/eval.py)
+        async def _run_gpt_eval_async():
+            concurrency = max(1, int(self.num_workers))
+            semaphore = asyncio.Semaphore(concurrency)
+            client = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"), timeout=300.0, max_retries=1)
+
+            async def _one_call(i: int, message):
+                async with semaphore:
+                    try:
+                        resp = await client.chat.completions.create(
+                            model="gpt-4o-mini",  # ← ここを固定（旧 gpt-4-0613 を使わない）
+                            messages=message,
+                        )
+                        content = resp.choices[0].message.content
+                        return i, content
+                    except Exception as e:
+                        print(f"Error in GPT evaluation for question {i}: {e}")
+                        return i, "Error"
+
+            tasks = [_one_call(i, m) for i, m in enumerate(messages)]
+            results = await tqdm_asyncio.gather(*tasks)
+            return {i: content for i, content in results}
+
+        # Run the async routine from sync context
+        gpt_responses = asyncio.run(_run_gpt_eval_async())
 
         # Parse labels for both response and reasoning
         gpt_response_list = [r for r in gpt_responses.values() if r != "Error"]
@@ -241,8 +265,7 @@ class HuggingFaceModelEvaluator:
                 "question": response_df["question"],
                 "response": response_df["response"],
                 "reasoning_content": [
-                    extract_reasoning_content(row["response"])
-                    for _, row in response_df.iterrows()
+                    extract_reasoning_content(row["response"]) for _, row in response_df.iterrows()
                 ],
                 "gpt4_label": labels,
                 "gpt4_reasoning_label": reasoning_labels,
@@ -513,7 +536,6 @@ def upload_results_to_hf_hub(evaluation_results, output_dir, repo_id, token=None
     """
     repo_type = "dataset"
 
-    api = HfApi(token=token)
     create_repo(
         repo_id=repo_id,
         repo_type=repo_type,
@@ -570,11 +592,23 @@ def upload_results_to_hf_hub(evaluation_results, output_dir, repo_id, token=None
 
 def load_predictions_from_hf(repo_id: str, split: str = "train") -> pd.DataFrame:
     ds = cast(Dataset, load_dataset(repo_id, split=split))
-    result = ds.to_pandas()
-    # Handle potential iterator case
-    if hasattr(result, '__next__'):  # It's an iterator
-        return next(result)
-    return cast(pd.DataFrame, result)
+    result_any = ds.to_pandas()
+    # Handle potential iterator/generator case defensively
+    if isinstance(result_any, pd.DataFrame):
+        return result_any
+    try:
+        it = iter(result_any)  # type: ignore[arg-type]
+        first = next(it)
+        if isinstance(first, pd.DataFrame):
+            return first
+        # Fallback: construct DataFrame from first element if dict-like/records
+        try:
+            return pd.DataFrame(first)
+        except Exception:
+            return pd.DataFrame()
+    except Exception:
+        # As a last resort, return empty DataFrame
+        return pd.DataFrame()
 
 
 def main():
@@ -615,6 +649,12 @@ def main():
         help="Hugging Face dataset ID for predictions (e.g., 'neko-llm/eval-Qwen3-32B')",
     )
     parser.add_argument("--model_name", required=True, help="Hugging Face model name")
+    parser.add_argument(
+        "--num_workers",
+        type=int,
+        default=100,
+        help="Async semaphore size for GPT judging (like HLE). Depends on your rate limit.",
+    )
 
     args = parser.parse_args()
 
@@ -634,7 +674,9 @@ def main():
 
     # Initialize evaluator
     evaluator = HuggingFaceModelEvaluator(
-        model_name=args.model_name, disable_reasoning_eval=args.disable_reasoning_eval
+        model_name=args.model_name,
+        disable_reasoning_eval=args.disable_reasoning_eval,
+        num_workers=args.num_workers,
     )
 
     # Run evaluation
