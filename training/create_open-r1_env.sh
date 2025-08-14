@@ -6,8 +6,11 @@ uv venv openr1 # venvの作成
 source openr1/bin/activate # venvの有効化
 uv pip install --upgrade pip # pipのアップグレード
 
+module load cuda/12.8
+
 # vllmのインストール
 uv pip install vllm==0.8.5.post1 
+
 # flash-attnのインストール
 uv pip install setuptools && uv pip install flash-attn --no-build-isolation 
 

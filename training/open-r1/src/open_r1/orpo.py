@@ -108,7 +108,12 @@ def main(script_args, training_args, model_args):
     dataset = dataset.map(make_conversation)
     """
     # Format into pariwise preference
-    def format_pref(example):
+    def format_pref(example, tokenizer=tokenizer):
+        prompt = tokenizer.apply_chat_template(
+            [{"role": "user", "content": example["instruction"]}],
+            tokenize=False,
+            add_generation_prompt=True,
+        )
         # todo: 本学習の際にはキーを "question" "preferred_output", "non_preferred_output" に書き換える
         """return {
             "prompt": example["question"],
@@ -116,9 +121,9 @@ def main(script_args, training_args, model_args):
             "rejected": example["non_preferred_output"]
         }"""
         return {
-            "prompt": example["instruction"],
-            "chosen": example["chosen_response"],
-            "rejected": example["rejected_response"]
+            "prompt": prompt,
+            "chosen": example["chosen_response"]+tokenizer.eos_token,
+            "rejected": example["rejected_response"]+tokenizer.eos_token
         }
     
     dataset["train"] = dataset["train"].map(format_pref, remove_columns=dataset["train"].column_names)
@@ -129,7 +134,7 @@ def main(script_args, training_args, model_args):
     #        dataset[split] = dataset[split].remove_columns("messages")
 
     #############################
-    # Initialize the DPO trainer
+    # Initialize the ORPO trainer
     #############################
     logger.info("*** Initialize DPO Trainer ***")
     trainer = ORPOTrainer(

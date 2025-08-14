@@ -12,6 +12,7 @@ dataset_test_split: test                                  # 評価用スプリ�
 model_name_or_path: Qwen/Qwen3-4B                         # モデル名
 model_revision: main                                     
 torch_dtype: bfloat16                                     # 数値の型
+attn_implementation: flash_attention_2
 
 # === LoRA/PEFT (get_peft_config) ===
 use_peft: true                                            # PEFT(LoRA) を使うかどうか

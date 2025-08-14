@@ -42,7 +42,6 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_ip \"$MASTER_ADDR\" \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
-        open_r1/dpo.py \
+        open_r1/orpo.py \
         --config ../../configs/Qwen3-14B/DPO/config_dpo.yaml \
-        
     "

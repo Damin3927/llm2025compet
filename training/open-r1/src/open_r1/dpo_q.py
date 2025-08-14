@@ -26,7 +26,6 @@ import datasets
 import transformers
 from transformers import set_seed
 from transformers.trainer_utils import get_last_checkpoint
-from peft import AutoPeftModelForCausalLM
 from transformers import BitsAndBytesConfig, AutoTokenizer
 
 from open_r1.utils import get_dataset, get_model, get_tokenizer
@@ -80,7 +79,6 @@ def main(script_args, training_args, model_args):
     logger.info("*** Loading dataset ***")
     logger.info(f"Loading dataset: {script_args.dataset_name}")
     dataset = datasets.load_dataset(script_args.dataset_name, script_args.dataset_config)
-    # dataset = get_dataset(script_args)
 
     ################
     # Load tokenizer
