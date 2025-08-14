@@ -157,13 +157,74 @@ IMPORTANT: Output ONLY in English."""
             return text
         return f"<think>{think_content}</think>{text}"
 
-    def process_item(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        """単一のデータアイテムを処理"""
+    def _validate_think_tags(self, item: Dict[str, Any]) -> Dict[str, bool]:
+        """<think>タグの検証結果を返す"""
+        validation = {
+            "preferred_has_think": False,
+            "non_preferred_has_think": False,
+            "preferred_think_valid": False,
+            "non_preferred_think_valid": False,
+            "needs_retry": False
+        }
+        
+        # preferred_outputの検証
+        preferred_output = item.get("preferred_output", "")
+        if self._has_think_tag(preferred_output):
+            validation["preferred_has_think"] = True
+            # <think>タグの内容が適切かチェック
+            think_content = self._extract_think_content(preferred_output)
+            if think_content and len(think_content.strip()) > 20:  # 最低20文字以上
+                validation["preferred_think_valid"] = True
+            else:
+                validation["needs_retry"] = True
+                logging.warning(f"ID {item.get('id', 'unknown')}: preferred_outputの<think>タグ内容が不十分")
+        else:
+            validation["needs_retry"] = True
+            logging.warning(f"ID {item.get('id', 'unknown')}: preferred_outputに<think>タグが不足")
+        
+        # non_preferred_outputの検証（オプション）
+        if self.apply_to_non_preferred:
+            non_preferred_output = item.get("non_preferred_output", "")
+            if self._has_think_tag(non_preferred_output):
+                validation["non_preferred_has_think"] = True
+                think_content = self._extract_think_content(non_preferred_output)
+                if think_content and len(think_content.strip()) > 20:
+                    validation["non_preferred_think_valid"] = True
+                else:
+                    validation["needs_retry"] = True
+                    logging.warning(f"ID {item.get('id', 'unknown')}: non_preferred_outputの<think>タグ内容が不十分")
+            else:
+                validation["needs_retry"] = True
+                logging.warning(f"ID {item.get('id', 'unknown')}: non_preferred_outputに<think>タグが不足")
+        
+        return validation
+
+    def _extract_think_content(self, text: str) -> Optional[str]:
+        """<think>タグの内容を抽出"""
+        if not isinstance(text, str):
+            return None
+        
+        start_tag = "<think>"
+        end_tag = "</think>"
+        
+        start_pos = text.find(start_tag)
+        if start_pos == -1:
+            return None
+        
+        end_pos = text.find(end_tag, start_pos)
+        if end_pos == -1:
+            return None
+        
+        return text[start_pos + len(start_tag):end_pos].strip()
+
+    def process_item(self, item: Dict[str, Any], max_retries: int = 3) -> Dict[str, Any]:
+        """単一のデータアイテムを処理（リトライ機能付き）"""
         if not isinstance(item, dict):
             logging.warning("Invalid item format: not a dictionary")
             return item
             
         result = item.copy()
+        item_id = item.get('id', 'unknown')
         
         # 必須フィールドの存在チェック
         required_fields = ["question", "preferred_output", "non_preferred_output"]
@@ -176,7 +237,6 @@ IMPORTANT: Output ONLY in English."""
         preferred_output = item["preferred_output"]
         non_preferred_output = item["non_preferred_output"]
         
-        item_id = item.get('id', 'unknown')
         logging.info(f"ID {item_id}: 処理開始")
         logging.info(f"ID {item_id}: 質問: {question[:100]}...")
         
@@ -186,40 +246,61 @@ IMPORTANT: Output ONLY in English."""
             "used_fallback_preferred": False,
             "added_non_preferred_think": False,
             "used_fallback_non_preferred": False,
+            "retry_count": 0,
         }
 
-        # preferred_outputの処理（必ず<think>付与）
-        if not self._has_think_tag(preferred_output):
-            logging.info(f"ID {item_id}: preferred_outputに<think>タグを生成中...")
-            think_content = self._generate_think_for_preferred(question, preferred_output)
-            if not think_content:
-                think_content = self._fallback_think_for_preferred(question, preferred_output)
-                logging.info(f"ID {item_id}: preferred_outputにフォールバックthinkを使用")
-                metrics["used_fallback_preferred"] = True
-            result["preferred_output"] = self._add_think_tag(preferred_output, think_content)
-            logging.info(f"ID {item_id}: preferred_outputに<think>タグを追加: {think_content[:100]}...")
-            metrics["added_preferred_think"] = True
-        else:
-            logging.info(f"ID {item_id}: preferred_outputは既に<think>タグが存在")
-        
-        # non_preferred_outputの処理（オプション）
-        if self.apply_to_non_preferred:
-            if not self._has_think_tag(non_preferred_output):
-                logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを生成中...")
-                think_content = self._generate_think_for_non_preferred(question, non_preferred_output)
+        # リトライループ
+        for attempt in range(max_retries):
+            if attempt > 0:
+                logging.info(f"ID {item_id}: リトライ {attempt + 1}/{max_retries}")
+                metrics["retry_count"] = attempt
+            
+            # preferred_outputの処理（必ず<think>付与）
+            if not self._has_think_tag(preferred_output):
+                logging.info(f"ID {item_id}: preferred_outputに<think>タグを生成中...")
+                think_content = self._generate_think_for_preferred(question, preferred_output)
                 if not think_content:
-                    think_content = self._fallback_think_for_non_preferred(question, non_preferred_output)
-                    logging.info(f"ID {item_id}: non_preferred_outputにフォールバックthinkを使用")
-                    metrics["used_fallback_non_preferred"] = True
-                result["non_preferred_output"] = self._add_think_tag(non_preferred_output, think_content)
-                logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを追加: {think_content[:100]}...")
-                metrics["added_non_preferred_think"] = True
+                    think_content = self._fallback_think_for_preferred(question, preferred_output)
+                    logging.info(f"ID {item_id}: preferred_outputにフォールバックthinkを使用")
+                    metrics["used_fallback_preferred"] = True
+                result["preferred_output"] = self._add_think_tag(preferred_output, think_content)
+                logging.info(f"ID {item_id}: preferred_outputに<think>タグを追加: {think_content[:100]}...")
+                metrics["added_preferred_think"] = True
             else:
-                logging.info(f"ID {item_id}: non_preferred_outputは既に<think>タグが存在")
-        else:
-            logging.info(f"ID {item_id}: non_preferred_outputには<think>タグを付与しません（DPO最適化）")
+                logging.info(f"ID {item_id}: preferred_outputは既に<think>タグが存在")
+            
+            # non_preferred_outputの処理（オプション）
+            if self.apply_to_non_preferred:
+                if not self._has_think_tag(non_preferred_output):
+                    logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを生成中...")
+                    think_content = self._generate_think_for_non_preferred(question, non_preferred_output)
+                    if not think_content:
+                        think_content = self._fallback_think_for_non_preferred(question, non_preferred_output)
+                        logging.info(f"ID {item_id}: non_preferred_outputにフォールバックthinkを使用")
+                        metrics["used_fallback_non_preferred"] = True
+                    result["non_preferred_output"] = self._add_think_tag(non_preferred_output, think_content)
+                    logging.info(f"ID {item_id}: non_preferred_outputに<think>タグを追加: {think_content[:100]}...")
+                    metrics["added_non_preferred_think"] = True
+                else:
+                    logging.info(f"ID {item_id}: non_preferred_outputは既に<think>タグが存在")
+            else:
+                logging.info(f"ID {item_id}: non_preferred_outputには<think>タグを付与しません（DPO最適化）")
+            
+            # 検証
+            validation = self._validate_think_tags(result)
+            if not validation["needs_retry"]:
+                logging.info(f"ID {item_id}: <think>タグ検証成功")
+                break
+            else:
+                logging.warning(f"ID {item_id}: <think>タグ検証失敗、リトライが必要")
+                if attempt < max_retries - 1:
+                    # 少し待機してからリトライ
+                    import time
+                    time.sleep(1)
+                else:
+                    logging.error(f"ID {item_id}: 最大リトライ回数に達しました")
         
-        logging.info(f"ID {item_id}: 処理完了")
+        logging.info(f"ID {item_id}: 処理完了（リトライ回数: {metrics['retry_count']}）")
         # 直近メトリクスを保持（外側でwandbログ用に利用）
         self.last_metrics = metrics
         return result
@@ -345,7 +426,9 @@ def main():
                        default="argo11/DNA_DPO_hh-rlhf", 
                        help="使用するデータセット名")
     parser.add_argument("--apply_to_non_preferred", action="store_true",
-                       help="non_preferred_outputにも<think>タグを付与するかどうか（デフォルト: True）")
+                       help="non_preferred_outputにも<think>タグを付与するかどうか（デフォルト: False）")
+    parser.add_argument("--max_retries", type=int, default=3,
+                       help="<think>タグ生成失敗時の最大リトライ回数（デフォルト: 3）")
     parser.add_argument("--wandb", action="store_true", help="Weights & Biases にログを送信する")
     parser.add_argument("--wandb_project", type=str, default="think-tags", help="wandbのプロジェクト名")
     parser.add_argument("--wandb_run_name", type=str, help="wandbのラン名（省略可）")
@@ -421,6 +504,7 @@ def main():
                     "dataset_name": args.dataset_name,
                     "output_file": args.output_file,
                     "apply_to_non_preferred": args.apply_to_non_preferred,
+                    "max_retries": args.max_retries,
                 },
             )
 
@@ -437,6 +521,8 @@ def main():
     processed_count = 0
     error_count = 0
     skipped_count = 0
+    retry_count = 0
+    validation_failed_count = 0
     
     output_path = Path(args.output_file)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -470,6 +556,8 @@ def main():
                             "skipped_count": skipped_count,
                             "processed_count": processed_count,
                             "error_count": error_count,
+                            "retry_count": retry_count,
+                            "validation_failed_count": validation_failed_count,
                             "item_id": str(item_id),
                             "status": "skipped",
                         }, step=i)
@@ -479,7 +567,17 @@ def main():
                 
                 try:
                     # <think>タグ埋め込み実行
-                    result = generator.process_item(item)
+                    result = generator.process_item(item, args.max_retries)
+                    
+                    # リトライ回数を取得
+                    item_retry_count = generator.last_metrics.get("retry_count", 0)
+                    retry_count += item_retry_count
+                    
+                    # 検証結果をチェック
+                    validation = generator._validate_think_tags(result)
+                    if validation["needs_retry"]:
+                        validation_failed_count += 1
+                        logging.warning(f"ID {item_id}: 最終検証で<think>タグが不十分")
                     
                     # ファイル出力
                     f.write(json.dumps(result, ensure_ascii=False) + '\n')
@@ -494,11 +592,15 @@ def main():
                             "processed_count": processed_count,
                             "error_count": error_count,
                             "skipped_count": skipped_count,
+                            "retry_count": retry_count,
+                            "validation_failed_count": validation_failed_count,
                             "item_id": str(item_id),
                             "added_preferred_think": bool(lm.get("added_preferred_think", False)),
                             "used_fallback_preferred": bool(lm.get("used_fallback_preferred", False)),
                             "added_non_preferred_think": bool(lm.get("added_non_preferred_think", False)),
                             "used_fallback_non_preferred": bool(lm.get("used_fallback_non_preferred", False)),
+                            "item_retry_count": item_retry_count,
+                            "validation_needs_retry": validation["needs_retry"],
                             "status": "done",
                         }, step=i)
                     
@@ -510,6 +612,8 @@ def main():
                             "processed_count": processed_count,
                             "error_count": error_count,
                             "skipped_count": skipped_count,
+                            "retry_count": retry_count,
+                            "validation_failed_count": validation_failed_count,
                             "item_id": str(item_id),
                             "status": "error",
                         }, step=i)
@@ -521,11 +625,13 @@ def main():
             wandb.summary["processed_count"] = processed_count
             wandb.summary["error_count"] = error_count
             wandb.summary["skipped_count"] = skipped_count
+            wandb.summary["retry_count"] = retry_count
+            wandb.summary["validation_failed_count"] = validation_failed_count
             wandb.finish()
         return 1
     
     # 結果の表示
-    result_message = f"処理完了 - 処理件数: {processed_count}, エラー件数: {error_count}, スキップ件数: {skipped_count}"
+    result_message = f"処理完了 - 処理件数: {processed_count}, エラー件数: {error_count}, スキップ件数: {skipped_count}, リトライ回数: {retry_count}, 検証失敗件数: {validation_failed_count}"
     logging.info(result_message)
     print(result_message)
     print(f"出力ファイル: {args.output_file}")
@@ -533,6 +639,8 @@ def main():
         wandb.summary["processed_count"] = processed_count
         wandb.summary["error_count"] = error_count
         wandb.summary["skipped_count"] = skipped_count
+        wandb.summary["retry_count"] = retry_count
+        wandb.summary["validation_failed_count"] = validation_failed_count
         wandb.finish()
     
     return 0

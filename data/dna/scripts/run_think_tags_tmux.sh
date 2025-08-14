@@ -11,6 +11,9 @@ TOTAL=49027
 WANDB_PROJECT="dpo-add-think-tags"
 WANDB_ENABLED=true
 
+# 処理設定
+MAX_RETRIES=${MAX_RETRIES:-3}  # <think>タグ生成失敗時の最大リトライ回数（環境変数で上書き可能）
+
 if ! command -v tmux >/dev/null 2>&1; then
   echo "tmux が見つかりません。sudo apt-get install -y tmux などでインストールしてください" >&2
   exit 1
@@ -48,6 +51,7 @@ python data/dna/add_think_tags.py \
   --start_index __START__ \
   --end_index __END__ \
   --output_file "data/dna/think_tagged___START_____END_MINUS_1__.jsonl" \
+  --max_retries __MAX_RETRIES__ \
   --wandb \
   --wandb_project __WANDB_PROJECT__ \
   --wandb_run_name "worker___WORKER_ID_____START_____END_MINUS_1__"
@@ -63,7 +67,8 @@ source "$PROJECT_ROOT/.venv/bin/activate"
 python data/dna/add_think_tags.py \
   --start_index __START__ \
   --end_index __END__ \
-  --output_file "data/dna/think_tagged___START_____END_MINUS_1__.jsonl"
+  --output_file "data/dna/think_tagged___START_____END_MINUS_1__.jsonl" \
+  --max_retries __MAX_RETRIES__
 '
 EOS
   fi
@@ -75,6 +80,7 @@ echo "セッション名: $SESSION"
 echo "ワーカー数: $WORKERS"
 echo "総件数: $TOTAL"
 echo "チャンクサイズ: $chunk_size"
+echo "最大リトライ回数: $MAX_RETRIES"
 echo "W&B有効: $WANDB_ENABLED"
 if [ "$WANDB_ENABLED" = true ]; then
   echo "W&Bプロジェクト: $WANDB_PROJECT"
@@ -111,6 +117,7 @@ for ((i=0; i<WORKERS; i++)); do
   cmd=${cmd/__END_MINUS_1__/$end_minus_1}
   cmd=${cmd/__WORKER_ID__/$i}
   cmd=${cmd/__WANDB_PROJECT__/$WANDB_PROJECT}
+  cmd=${cmd/__MAX_RETRIES__/$MAX_RETRIES}
   
   if [ "$created" = false ]; then
     echo "セッション '$SESSION' を作成中..."
@@ -118,7 +125,11 @@ for ((i=0; i<WORKERS; i++)); do
     created=true
   else
     echo "ペイン $i を追加中..."
-    tmux split-window -t "$SESSION":0 -v "$cmd"
+    # ペイン分割の方法を改善
+    if ! tmux split-window -t "$SESSION":0 -v "$cmd" 2>/dev/null; then
+      echo "Warning: ペイン $i の作成に失敗しました。新しいウィンドウを作成します..."
+      tmux new-window -t "$SESSION" "$cmd"
+    fi
   fi
 done
 
