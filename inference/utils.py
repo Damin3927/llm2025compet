@@ -104,6 +104,7 @@ class AsyncVLLMClient:
         messages: List[ChatCompletionMessageParam],
         *,
         temperature: float | None = None,
+        top_p: float | None = None,
         max_tokens: int | None = None
     ) -> ChatCompletion:
         default_param = DEFAULT_PARAMS.get(model, {
@@ -113,7 +114,7 @@ class AsyncVLLMClient:
         param: Param = {
             "temperature": temperature or default_param["temperature"],
             "max_tokens": max_tokens or default_param["max_tokens"],
-            "top_p": default_param.get("top_p", 0.95)
+            "top_p": top_p or default_param.get("top_p", 0.95)
         }
         
         completion = await self.client.chat.completions.create(
