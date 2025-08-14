@@ -164,6 +164,7 @@ async def run_worker_pool_multi(
                             "model": model,
                             "response": response,
                             "usage": usage,
+                            "question": item["question"],
                         }
                         success_count += 1
                         pending_writes += 1
@@ -182,6 +183,45 @@ async def run_worker_pool_multi(
         await asyncio.gather(*tasks)
 
     return success_count
+
+
+def upload_results_to_hf_hub_hle(output_path: str, repo_id: str, token: Optional[str] = None):
+    """Upload HLE predictions to Hugging Face Hub including the question text.
+
+    If the predictions JSON doesn't have the question (older runs), this will
+    backfill question text by loading the `cais/hle` test split and mapping id->question.
+    """
+    preds = load_predictions_json(output_path)
+
+    # Build id->question map from the upstream dataset for backfill
+    id_to_question: Dict[str, str] = {}
+    try:
+        ds = cast(HFDataset, load_dataset("cais/hle", split="test"))
+        ds = cast(HFDataset, ds.filter(lambda item: item["image"] == ""))
+        for i in range(len(ds)):
+            row = cast(Dict[str, Any], ds[i])
+            id_to_question[str(row["id"])] = str(row["question"])
+    except Exception as e:
+        print(f"Warning: Failed to load cais/hle for question backfill: {e}")
+
+    rows = {
+        "id": [],
+        "model": [],
+        "response": [],
+        "question": [],
+        "usage": [],
+    }
+
+    for k, v in preds.items():
+        rows["id"].append(k)
+        rows["model"].append(v.get("model"))
+        rows["response"].append(v.get("response"))
+        q_text = v.get("question") or id_to_question.get(str(k))
+        rows["question"].append(q_text)
+        rows["usage"].append(json.dumps(v.get("usage", {})))
+
+    ds_out: HFDataset = HFDataset.from_dict(rows)
+    ds_out.push_to_hub(repo_id, token=token)
 
 
 def main():
@@ -306,16 +346,11 @@ def main():
             f"Uploading predictions JSON '{output_json}' to HuggingFace Hub dataset '{args.dataset_name}'..."
         )
         try:
-            # Read JSON dict and convert to HF dataset rows
-            preds = load_predictions_json(output_json)
-            rows = {
-                "id": list(preds.keys()),
-                "model": [preds[k].get("model") for k in preds.keys()],
-                "response": [preds[k].get("response") for k in preds.keys()],
-                "usage": [json.dumps(preds[k].get("usage", {})) for k in preds.keys()],
-            }
-            ds: HFDataset = HFDataset.from_dict(rows)
-            ds.push_to_hub(args.dataset_name, token=args.hf_token)
+            upload_results_to_hf_hub_hle(
+                output_path=output_json,
+                repo_id=args.dataset_name,
+                token=args.hf_token,
+            )
             print("Upload completed.")
         except Exception as e:
             raise RuntimeError(f"Failed to upload dataset: {e}") from e
@@ -357,14 +392,11 @@ def main():
         if args.push_to_hub and args.dataset_name:
             print("Pushing existing predictions JSON to HuggingFace Hub...")
             try:
-                rows = {
-                    "id": list(predictions.keys()),
-                    "model": [predictions[k].get("model") for k in predictions.keys()],
-                    "response": [predictions[k].get("response") for k in predictions.keys()],
-                    "usage": [json.dumps(predictions[k].get("usage", {})) for k in predictions.keys()],
-                }
-                ds: HFDataset = HFDataset.from_dict(rows)
-                ds.push_to_hub(args.dataset_name, token=args.hf_token)
+                upload_results_to_hf_hub_hle(
+                    output_path=output_json,
+                    repo_id=args.dataset_name,
+                    token=args.hf_token,
+                )
                 print("Upload completed.")
             except Exception as e:
                 print(f"Failed to push to hub: {e}")
@@ -410,14 +442,11 @@ def main():
     if args.push_to_hub and args.dataset_name:
         print("Pushing results JSON to HuggingFace Hub...")
         try:
-            rows = {
-                "id": list(predictions.keys()),
-                "model": [predictions[k].get("model") for k in predictions.keys()],
-                "response": [predictions[k].get("response") for k in predictions.keys()],
-                "usage": [json.dumps(predictions[k].get("usage", {})) for k in predictions.keys()],
-            }
-            ds: HFDataset = HFDataset.from_dict(rows)
-            ds.push_to_hub(args.dataset_name, token=args.hf_token)
+            upload_results_to_hf_hub_hle(
+                output_path=output_json,
+                repo_id=args.dataset_name,
+                token=args.hf_token,
+            )
             print("Upload completed.")
         except Exception as e:
             print(f"Failed to push to hub: {e}")
