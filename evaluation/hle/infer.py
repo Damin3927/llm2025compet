@@ -1,12 +1,12 @@
 # ref: https://github.com/matsuolab/llm_bridge_prod/blob/master/eval_hle/hle_benchmark/vllm_predictions.py
 
 from argparse import ArgumentParser
-from typing import Sequence, TypedDict, Dict, Any, Optional
+from typing import Sequence, TypedDict, Dict, Any, Optional, cast
 import os
 import json
 import asyncio
-from datasets import load_dataset, Dataset
-from tqdm.asyncio import tqdm_asyncio
+from datasets import load_dataset, Dataset as HFDataset
+from tqdm import tqdm
 from inference import VLLMClient, wait_until_vllm_up
 
 
@@ -22,282 +22,343 @@ class QuestionType(TypedDict):
     answer_type: str
 
 
-
 def format_message(question: QuestionType):
-    answer_type = question['answer_type']
-    system_prompt = SYSTEM_EXACT_ANSWER if answer_type == 'exact_match' else SYSTEM_MC
-    question_text = question['question']
+    answer_type = question["answer_type"]
+    system_prompt = SYSTEM_EXACT_ANSWER if answer_type == "exact_match" else SYSTEM_MC
+    question_text = question["question"]
 
     text_content = dict(type="text", text=question_text)
-    if question['image']: # "" if not multi-modal
-        image_content = dict(type="image_url", image_url=dict(url=question['image']))
+    if question["image"]:  # "" if not multi-modal
+        image_content = dict(type="image_url", image_url=dict(url=question["image"]))
         content = [text_content, image_content]
     else:
         content = [text_content]
 
     messages = [
-        {"role": "system", "content": system_prompt}, 
-        {"role": "user", "content": content}
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": content},
     ]
     return messages
 
 
-async def attempt_question(client: VLLMClient, model: str, question: QuestionType, max_retries: int = 3):
+async def attempt_question(
+    client: VLLMClient, model: str, question: QuestionType, max_retries: int = 3
+):
     messages = format_message(question)
-    
+
     for attempt in range(max_retries):
         try:
             response = client.generate_msg(model=model, messages=messages)
             content = response.choices[0].message.content
             if response.choices[0].finish_reason == "length":
-                print(f"Warning: Response for question {question['id']} was truncated due to length")
+                print(
+                    f"Warning: Response for question {question['id']} was truncated due to length"
+                )
                 return None
-            
-            tokens = json.loads(response.usage.model_dump_json()) if response.usage else {}
+
+            tokens = (
+                json.loads(response.usage.model_dump_json()) if response.usage else {}
+            )
             # Handle reasoning_content if available
-            reasoning_content = getattr(response.choices[0].message, 'reasoning_content', None)
+            reasoning_content = getattr(
+                response.choices[0].message, "reasoning_content", None
+            )
             if reasoning_content:
                 tokens["reasoning_content"] = reasoning_content
-                
+
         except Exception as e:
             print(f"Error on attempt {attempt + 1} for question {question['id']}: {e}")
             if attempt == max_retries - 1:  # Last attempt
                 return None
             await asyncio.sleep(1)  # Brief delay before retry
             continue
-        
+
         if content is None:  # failed
             if attempt == max_retries - 1:
                 return None
             continue
-        
+
         return question["id"], content, tokens
-    
+
     return None
 
 
-def save_to_hf_dataset(predictions: Dict[str, Any], model_name: str, dataset_name: Optional[str] = None, 
-                      push_to_hub: bool = False, hf_token: Optional[str] = None) -> Dataset:
-    """
-    Save predictions to a HuggingFace Dataset.
-    
-    Args:
-        predictions: Dictionary of predictions
-        model_name: Name of the model used
-        dataset_name: Name for the dataset (if pushing to hub)
-        push_to_hub: Whether to push to HuggingFace Hub
-        hf_token: HuggingFace token for authentication
-    
-    Returns:
-        The created Dataset object
-    """
-    # Convert predictions dict to dataset format
-    data = {
-        'id': [],
-        'model': [],
-        'response': [],
-        'usage': []
-    }
-    
-    for question_id, pred in predictions.items():
-        data['id'].append(question_id)
-        data['model'].append(pred['model'])
-        data['response'].append(pred['response'])
-        data['usage'].append(json.dumps(pred['usage']))  # Store usage as JSON string
-    
-    # Create dataset
-    dataset = Dataset.from_dict(data)
-    
-    # Save locally first
-    local_path = f"predictions/hle_{os.path.basename(model_name)}_dataset"
+def json_path_for_model(model_name: str) -> str:
     os.makedirs("predictions", exist_ok=True)
-    dataset.save_to_disk(local_path)
-    print(f"Dataset saved locally to: {local_path}")
-    
-    # Optionally push to hub
-    if push_to_hub and dataset_name:
-        try:
-            dataset.push_to_hub(dataset_name, token=hf_token)
-            print(f"Dataset pushed to HuggingFace Hub: {dataset_name}")
-        except Exception as e:
-            print(f"Failed to push to hub: {e}")
-            print("Dataset is still saved locally.")
-    
-    return dataset
+    return f"predictions/hle_{os.path.basename(model_name)}.json"
 
 
-def load_existing_predictions(model_name: str) -> Dict[str, Any]:
+def load_predictions_json(path: str) -> Dict[str, Dict[str, Any]]:
+    """Load predictions JSON dict keyed by id. Returns empty dict if file missing."""
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, dict):
+            return {str(k): v for k, v in data.items()}
+        else:
+            print(f"Warning: Predictions file is not a dict: {path}. Ignoring.")
+            return {}
+    except Exception as e:
+        print(f"Warning: Failed to read predictions JSON '{path}': {e}")
+        return {}
+
+
+def save_predictions_json(path: str, predictions: Dict[str, Dict[str, Any]]):
+    """Write the entire predictions dict to a JSON file (pretty-printed)."""
+    tmp_path = path + ".tmp"
+    with open(tmp_path, "w", encoding="utf-8") as f:
+        json.dump(predictions, f, ensure_ascii=False, indent=2)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp_path, path)
+
+
+async def run_worker_pool(
+    client: VLLMClient,
+    model: str,
+    questions: Sequence[QuestionType],
+    num_workers: int,
+    max_retries: int,
+    predictions: Dict[str, Dict[str, Any]],
+    save_path: str,
+    flush_every: int,
+) -> int:
+    """Run a fixed-size worker pool consuming questions from a queue.
+
+    Returns the number of successful inferences.
     """
-    Load existing predictions from both JSON and HF Dataset formats.
-    """
-    predictions = {}
-    
-    # Try to load from JSON first (backward compatibility)
-    json_path = f"predictions/hle_{os.path.basename(model_name)}.json"
-    if os.path.exists(json_path):
-        with open(json_path, "r") as f:
-            predictions.update(json.load(f))
-        print(f"Loaded {len(predictions)} existing predictions from JSON")
-    
-    # Try to load from HF Dataset
-    dataset_path = f"predictions/hle_{os.path.basename(model_name)}_dataset"
-    if os.path.exists(dataset_path):
-        try:
-            existing_dataset = Dataset.load_from_disk(dataset_path)
-            for i in range(len(existing_dataset)):
-                row = existing_dataset[i]
-                predictions[row['id']] = {
-                    'model': row['model'],
-                    'response': row['response'],
-                    'usage': json.loads(row['usage'])
-                }
-            print(f"Loaded {len(existing_dataset)} existing predictions from HF Dataset")
-        except Exception as e:
-            print(f"Failed to load existing dataset: {e}")
-    
-    return predictions
+    queue: asyncio.Queue[Optional[QuestionType]] = asyncio.Queue()
+    for q in questions:
+        await queue.put(q)
+    # Add sentinels for clean shutdown
+    for _ in range(num_workers):
+        await queue.put(None)
 
+    success_count = 0
+    pending_writes = 0
+    lock = asyncio.Lock()  # guard updates and saves
 
-async def attempt_all(client: VLLMClient, model: str, num_workers: int, questions: Sequence[QuestionType]):
-    async def bound_func(question):
-        async with semaphore:
-            content = await attempt_question(client, model, question)
-            return content
-            
-    semaphore = asyncio.Semaphore(num_workers)
-    async with semaphore:
-        tasks = [bound_func(q) for q in questions]
-        results = await tqdm_asyncio.gather(*tasks)
-    return results
+    # Progress bar for total items
+    with tqdm(total=len(questions), desc="Infer", unit="q") as pbar:
+        async def worker_with_pbar(_idx: int):
+            nonlocal success_count
+            nonlocal pending_writes
+            while True:
+                item = await queue.get()
+                if item is None:
+                    queue.task_done()
+                    break
+                result = await attempt_question(client, model, item, max_retries)
+                if result is not None:
+                    unique_id, response, usage = result
+                    async with lock:
+                        predictions[unique_id] = {
+                            "model": model,
+                            "response": response,
+                            "usage": usage,
+                        }
+                        success_count += 1
+                        pending_writes += 1
+                        if pending_writes >= flush_every:
+                            save_predictions_json(save_path, predictions)
+                            pending_writes = 0
+                pbar.update(1)
+                queue.task_done()
+
+        tasks = [asyncio.create_task(worker_with_pbar(i)) for i in range(num_workers)]
+        await queue.join()
+        await asyncio.gather(*tasks)
+
+    return success_count
+
 
 def main():
     arg_parser = ArgumentParser(description="Run inference on HLE dataset")
-    arg_parser.add_argument("--model", type=str, required=True, help="Model name to use for inference")
-    arg_parser.add_argument("--base_url", type=str, default="http://localhost:8000", help="Base URL for the vLLM API")
-    arg_parser.add_argument("--num_workers", type=int, default=4, help="Number of parallel workers")
-    arg_parser.add_argument("--max_samples", type=int, default=None, help="Maximum number of samples to process")
-    arg_parser.add_argument("--max_retries", type=int, default=3, help="Maximum number of retries for failed API calls")
-    arg_parser.add_argument("--dataset_name", type=str, default=None, help="HuggingFace dataset name to push results")
-    arg_parser.add_argument("--push_to_hub", action="store_true", help="Push results to HuggingFace Hub")
-    arg_parser.add_argument("--hf_token", type=str, default=None, help="HuggingFace token for authentication")
-    arg_parser.add_argument("--batch_size", type=int, default=50, help="Batch size for saving intermediate results")
+    arg_parser.add_argument(
+        "--model", type=str, required=True, help="Model name to use for inference"
+    )
+    arg_parser.add_argument(
+        "--base_url",
+        type=str,
+        default="http://localhost:8000",
+        help="Base URL for the vLLM API",
+    )
+    arg_parser.add_argument(
+        "--num_workers", type=int, default=4, help="Number of parallel workers"
+    )
+    arg_parser.add_argument(
+        "--max_samples",
+        type=int,
+        default=None,
+        help="Maximum number of samples to process",
+    )
+    arg_parser.add_argument(
+        "--max_retries",
+        type=int,
+        default=3,
+        help="Maximum number of retries for failed API calls",
+    )
+    arg_parser.add_argument(
+        "--dataset_name",
+        type=str,
+        default=None,
+        help="HuggingFace dataset name to push results",
+    )
+    arg_parser.add_argument(
+        "--push_to_hub",
+        action="store_true",
+        help="Push results to HuggingFace Hub after inference",
+    )
+    arg_parser.add_argument(
+        "--hf_token",
+        type=str,
+        default=None,
+        help="HuggingFace token for authentication",
+    )
+    arg_parser.add_argument(
+        "--flush_every",
+        type=int,
+        default=20,
+        help="Flush predictions JSON to disk after this many new results (and at end)",
+    )
+    # Upload-only mode
+    arg_parser.add_argument(
+        "--upload_only",
+        action="store_true",
+    help="Only upload an existing predictions JSON file to the HuggingFace Hub; skip inference",
+    )
+    arg_parser.add_argument(
+        "--input_json",
+        type=str,
+        default=None,
+        help="Path to an existing predictions JSON to upload. Defaults to predictions/hle_<model>.json",
+    )
 
     args = arg_parser.parse_args()
 
     client = VLLMClient(base_url=f"{args.base_url}/v1")
 
-    # Load dataset
-    dataset = load_dataset("cais/hle", split="test")
-    dataset = dataset.filter(lambda item: item['image'] == "")
-    
-    # Convert to list of questions using the original approach but fixed
-    questions = []
-    for item in dataset:
-        question_dict = {
-            'id': item['id'],
-            'question': item['question'], 
-            'image': item['image'],
-            'answer_type': item['answer_type']
-        }
-        questions.append(question_dict)
-    
-    # If max_samples is set, limit the number of questions
-    if args.max_samples:
-        questions = questions[:args.max_samples]
-    
-    # Create predictions directory
-    os.makedirs("predictions", exist_ok=True)
+    # Resolve predictions JSON path
+    output_json = args.input_json or json_path_for_model(args.model)
 
-    # Load existing predictions (with fail-safe recovery)
-    predictions = load_existing_predictions(args.model)
-    
-    # Filter out questions that already have predictions
-    questions = [q for q in questions if q["id"] not in predictions]
-    print(f"Processing {len(questions)} new questions (skipping {len(predictions)} existing predictions)")
-
-    if not questions:
-        print("All questions already have predictions. Creating final dataset...")
-        save_to_hf_dataset(predictions, args.model, args.dataset_name, args.push_to_hub, args.hf_token)
+    # Upload-only mode
+    if args.upload_only:
+        if not args.dataset_name:
+            raise ValueError("--dataset_name is required in --upload_only mode")
+        if not os.path.exists(output_json):
+            raise FileNotFoundError(f"Input JSON not found: {output_json}")
+        print(
+            f"Uploading predictions JSON '{output_json}' to HuggingFace Hub dataset '{args.dataset_name}'..."
+        )
+        try:
+            # Read JSON dict and convert to HF dataset rows
+            preds = load_predictions_json(output_json)
+            rows = {
+                "id": list(preds.keys()),
+                "model": [preds[k].get("model") for k in preds.keys()],
+                "response": [preds[k].get("response") for k in preds.keys()],
+                "usage": [json.dumps(preds[k].get("usage", {})) for k in preds.keys()],
+            }
+            ds: HFDataset = HFDataset.from_dict(rows)
+            ds.push_to_hub(args.dataset_name, token=args.hf_token)
+            print("Upload completed.")
+        except Exception as e:
+            raise RuntimeError(f"Failed to upload dataset: {e}") from e
         return
 
-    # Process questions in batches for fail-safe intermediate saving
-    batch_size = args.batch_size
-    total_processed = 0
+    # Load dataset
+    dataset = cast(HFDataset, load_dataset("cais/hle", split="test"))
+    dataset = cast(HFDataset, dataset.filter(lambda item: item["image"] == ""))
+
+    # Convert to list of questions using the original approach but fixed
+    questions = []
+    for i in range(len(dataset)):
+        item = cast(Dict[str, Any], dataset[i])
+        question_dict = {
+            "id": item["id"],
+            "question": item["question"],
+            "image": item["image"],
+            "answer_type": item["answer_type"],
+        }
+        questions.append(question_dict)
+
+    # If max_samples is set, limit the number of questions
+    if args.max_samples:
+        questions = questions[: args.max_samples]
+
+    # Create predictions directory and load existing predictions JSON (for resume)
+    os.makedirs("predictions", exist_ok=True)
+    predictions: Dict[str, Dict[str, Any]] = load_predictions_json(output_json)
+    existing_ids = set(predictions.keys())
+
+    # Filter out questions that already have predictions based on JSONL IDs
+    questions = [q for q in questions if q["id"] not in existing_ids]
+    print(
+        f"Processing {len(questions)} new questions (skipping {len(existing_ids)} existing predictions)"
+    )
+
+    if not questions:
+        print("All questions already have predictions.")
+        if args.push_to_hub and args.dataset_name:
+            print("Pushing existing predictions JSON to HuggingFace Hub...")
+            try:
+                rows = {
+                    "id": list(predictions.keys()),
+                    "model": [predictions[k].get("model") for k in predictions.keys()],
+                    "response": [predictions[k].get("response") for k in predictions.keys()],
+                    "usage": [json.dumps(predictions[k].get("usage", {})) for k in predictions.keys()],
+                }
+                ds: HFDataset = HFDataset.from_dict(rows)
+                ds.push_to_hub(args.dataset_name, token=args.hf_token)
+                print("Upload completed.")
+            except Exception as e:
+                print(f"Failed to push to hub: {e}")
+        return
 
     # Wait until the vllm server is up
     print("Waiting for vLLM Server to be up...")
     wait_until_vllm_up(args.base_url)
-    
-    for i in range(0, len(questions), batch_size):
-        batch = questions[i:i + batch_size]
-        print(f"Processing batch {i//batch_size + 1}/{(len(questions) + batch_size - 1)//batch_size}")
-        
-        # Create a modified attempt_all function with retry logic
-        async def attempt_all_with_retries(client: VLLMClient, model: str, num_workers: int, questions: Sequence[QuestionType], max_retries: int):
-            async def bound_func(question):
-                async with semaphore:
-                    content = await attempt_question(client, model, question, max_retries)
-                    return content
-                    
-            semaphore = asyncio.Semaphore(num_workers)
-            async with semaphore:
-                tasks = [bound_func(q) for q in questions]
-                results = await tqdm_asyncio.gather(*tasks)
-            return results
-        
-        # Run inference on current batch
-        results = asyncio.run(attempt_all_with_retries(
-            client, 
-            model=args.model, 
-            num_workers=args.num_workers, 
-            questions=batch,
-            max_retries=args.max_retries
-        ))
 
-        # Process results and update predictions
-        batch_success = 0
-        for result in results:
-            if result is None:  # API call failed
-                continue
-            unique_id, response, usage = result
-            predictions[unique_id] = {
-                "model": args.model,
-                "response": response,
-                "usage": usage
-            }
-            batch_success += 1
-        
-        total_processed += batch_success
-        print(f"Batch completed: {batch_success}/{len(batch)} successful inferences")
-        
-        # Save intermediate results (fail-safe)
-        try:
-            save_to_hf_dataset(predictions, args.model, args.dataset_name, False, args.hf_token)
-            print(f"Intermediate results saved. Total: {len(predictions)} predictions")
-        except Exception as e:
-            print(f"Warning: Failed to save intermediate results: {e}")
-            # Fallback to JSON
-            try:
-                output_filepath = f"predictions/hle_{os.path.basename(args.model)}.json"
-                with open(output_filepath, "w") as f:
-                    json.dump(predictions, f, indent=4)
-                print(f"Fallback: Saved to JSON at {output_filepath}")
-            except Exception as json_e:
-                print(f"Critical: Failed to save even to JSON: {json_e}")
+    # Run a fixed-size worker pool so concurrency stays near the maximum
+    total_success = asyncio.run(
+        run_worker_pool(
+            client=client,
+            model=args.model,
+            questions=questions,
+            num_workers=args.num_workers,
+            max_retries=args.max_retries,
+            predictions=predictions,
+            save_path=output_json,
+            flush_every=args.flush_every,
+        )
+    )
 
-    print(f"Inference completed! Total successful: {total_processed}/{len(questions)}")
-    
-    # Final save with option to push to hub
+    print(f"Inference completed! Total successful: {total_success}/{len(questions)}")
+
+    # Final save to ensure all results are persisted
     try:
-        dataset_obj = save_to_hf_dataset(predictions, args.model, args.dataset_name, args.push_to_hub, args.hf_token)
-        print(f"Final dataset created with {len(dataset_obj)} records")
+        save_predictions_json(output_json, predictions)
+        print(f"Predictions saved to {output_json}")
     except Exception as e:
-        print(f"Error creating final dataset: {e}")
-        # Ensure we at least have a JSON backup
-        output_filepath = f"predictions/hle_{os.path.basename(args.model)}.json"
-        with open(output_filepath, "w") as f:
-            json.dump(predictions, f, indent=4)
-        print(f"Results saved to JSON backup: {output_filepath}")
+        print(f"Warning: failed to save predictions JSON: {e}")
+
+    # Final upload to the hub if requested
+    if args.push_to_hub and args.dataset_name:
+        print("Pushing results JSON to HuggingFace Hub...")
+        try:
+            rows = {
+                "id": list(predictions.keys()),
+                "model": [predictions[k].get("model") for k in predictions.keys()],
+                "response": [predictions[k].get("response") for k in predictions.keys()],
+                "usage": [json.dumps(predictions[k].get("usage", {})) for k in predictions.keys()],
+            }
+            ds: HFDataset = HFDataset.from_dict(rows)
+            ds.push_to_hub(args.dataset_name, token=args.hf_token)
+            print("Upload completed.")
+        except Exception as e:
+            print(f"Failed to push to hub: {e}")
 
 
 if __name__ == "__main__":
