@@ -212,39 +212,47 @@ def print_rdzv_diagnostics():
 print_rdzv_diagnostics()
 # === end diagnostics ===
 
-
-# ① 先頭の import 群の近くに追加
 from datetime import timedelta
-import torch.distributed as dist
-import torch.distributed.distributed_c10d as c10d
 import torch
+import torch.distributed as dist
+from colossalai.utils import get_current_device
 
 def safe_barrier(plugin=None, minutes=60):
     """
-    Glooなら monitored_barrier(timeout=...), NCCLなら NCCL 集団通信で同期。
-    plugin の並列グループがあればそれを使い、無ければ world barrier。
+    並列グループごとに順序固定でバリア。
+    monitored_barrier が使えない場合のみ、1要素 all_reduce にフォールバック。
     """
-    backend = dist.get_backend()
-    if backend == "gloo":
-        # Gloo は monitored_barrier でタイムアウトを明示指定
+    # 並列グループを“全 rank で同じ順序”で列挙（存在するものだけ）
+    groups = []
+    for name in ("pp_group", "tp_group", "ep_group", "dp_group"):
+        g = getattr(plugin, name, None) if plugin is not None else None
+        if g is not None:
+            groups.append(g)
+
+    # 重複除去（念のため）
+    seen = set()
+    ordered_groups = []
+    for g in groups:
+        if id(g) not in seen:
+            ordered_groups.append(g)
+            seen.add(id(g))
+
+    # 各 group に対して 1 回ずつ、同じ順序で barrier
+    for g in ordered_groups:
+        try:
+            dist.monitored_barrier(group=g, timeout=timedelta(minutes=minutes))
+        except Exception:
+            # backendやバージョン事情で monitored_barrier 不可のとき
+            buf = torch.ones(1, device=get_current_device())
+            dist.all_reduce(buf, group=g)
+            torch.cuda.synchronize()
+
+    # 最後に world（必要なときだけ。基本は無しでもOK）
+    try:
         dist.monitored_barrier(timeout=timedelta(minutes=minutes))
-    else:
-        # NCCL 経路：GPU上で軽いオールリデュース＝擬似バリア
-        dev = get_current_device()
-        buf = torch.ones(1, device=dev)
-        used = False
-        if plugin is not None:
-            for name in ("dp_group", "tp_group", "pp_group", "ep_group"):
-                g = getattr(plugin, name, None)
-                if g is not None:
-                    try:
-                        dist.all_reduce(buf, group=g)
-                        used = True
-                    except Exception:
-                        pass
-        if not used:
-            # 最低限 world PG で同期（この barrier は NCCL 実装でタイムアウトは c10d の設定に従う）
-            dist.barrier()
+    except Exception:
+        buf = torch.ones(1, device=get_current_device())
+        dist.all_reduce(buf)       # world PG
         torch.cuda.synchronize()
 
 
@@ -514,36 +522,34 @@ def train(args) -> None:
 
     print(f"=== [Debug] Booster boost completed: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
 
-    # === PRESHARD 優先でロード ===
+    # === PRESHARD/HF ロード判定 & ロード ===
     torch.set_default_dtype(torch.float)
 
-    def _pick_load_dir(args):
-        # 1) --preshard_dir が指定されていて、その直下に "modeling" がある → そこを読む
-        if args.preshard_dir:
-            cand = os.path.join(args.preshard_dir, "modeling")
-            if os.path.isdir(cand):
-                return cand, "pre-shard(modeling)"
-            # 直下に shard .bin が直接あるケースにも対応
-            has_bins = any(fn.endswith(".bin") for fn in os.listdir(args.preshard_dir))
-            if has_bins:
-                return args.preshard_dir, "pre-shard(root)"
-        # 2) それ以外は HF の元ディレクトリ
-        return args.pretrained, "HF pretrained"
-
-    load_from, how = _pick_load_dir(args)
-    print(f"[LOAD] loading model weights from {how}: {load_from}, rank={torch.distributed.get_rank()}", flush=True)
-
-    # 失敗時に場所の中身をヒント表示（騒がしくない程度）
-    try:
-        booster.load_model(model, load_from, low_cpu_mem_mode=False, num_threads=8)
-    except Exception as e:
+    def _dir_has_bins(path: str) -> bool:
         try:
-            ls = " | ".join(sorted(os.listdir(load_from))[:10])
-            print(f"[LOAD][debug] head of {load_from}: {ls}", flush=True)
+            return any(n.endswith(".bin") for n in os.listdir(path))
         except Exception:
-            pass
-        raise
+            return False
 
+    # 1) --preshard_dir があれば最優先（/.../modeling 配下に .bin 群がある想定）
+    load_from = None
+    if getattr(args, "preshard_dir", None):
+        cand1 = os.path.join(args.preshard_dir, "modeling")
+        if os.path.isdir(cand1) and _dir_has_bins(cand1):
+            load_from = cand1
+        elif os.path.isdir(args.preshard_dir) and _dir_has_bins(args.preshard_dir):
+            load_from = args.preshard_dir
+
+    if load_from:
+        print(f"[LOAD] ColossalAI sharded loader で pre-shard を読み込み: {load_from}, "
+            f"rank={torch.distributed.get_rank()}", flush=True)
+        # ★ ここがポイント：unsharded ではなく “sharded” ローダーを使う
+        booster.checkpoint_io.load_sharded_model(model, load_from)
+    else:
+        # 2) 上記に当てはまらなければ HF ディレクトリから通常ロード
+        print(f"[LOAD] HF ディレクトリから読み込み: {args.pretrained}, "
+            f"rank={torch.distributed.get_rank()}", flush=True)
+        booster.load_model(model, args.pretrained, low_cpu_mem_mode=False, num_threads=8)
 
     print(f"=== [Debug] Model loaded from pretrained: rank={torch.distributed.get_rank()} ===", flush=True) # Added for debugging
     
