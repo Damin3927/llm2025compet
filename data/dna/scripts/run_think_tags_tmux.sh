@@ -93,8 +93,11 @@ if tmux has-session -t "$SESSION" 2>/dev/null; then
   tmux kill-session -t "$SESSION"
 fi
 
-# 最初のペイン
-created=false
+# セッション作成とペイン分割
+echo "セッション '$SESSION' を作成中..."
+tmux new-session -d -s "$SESSION"
+
+# 各ワーカーを順次追加
 for ((i=0; i<WORKERS; i++)); do
   start=$(( i * chunk_size ))
   end=$(( start + chunk_size ))
@@ -119,18 +122,21 @@ for ((i=0; i<WORKERS; i++)); do
   cmd=${cmd/__WANDB_PROJECT__/$WANDB_PROJECT}
   cmd=${cmd/__MAX_RETRIES__/$MAX_RETRIES}
   
-  if [ "$created" = false ]; then
-    echo "セッション '$SESSION' を作成中..."
-    tmux new-session -d -s "$SESSION" "$cmd"
-    created=true
+  if [ "$i" -eq 0 ]; then
+    # 最初のペイン（セッション作成時に作成済み）
+    echo "ペイン 0 にコマンドを設定中..."
+    tmux send-keys -t "$SESSION":0 "$cmd" Enter
   else
+    # 新しいペインを作成
     echo "ペイン $i を追加中..."
-    # ペイン分割の方法を改善
     if ! tmux split-window -t "$SESSION":0 -v "$cmd" 2>/dev/null; then
       echo "Warning: ペイン $i の作成に失敗しました。新しいウィンドウを作成します..."
       tmux new-window -t "$SESSION" "$cmd"
     fi
   fi
+  
+  # 少し待機してから次のペインを作成
+  sleep 0.5
 done
 
 # レイアウト整形
