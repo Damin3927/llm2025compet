@@ -42,7 +42,7 @@ bf16: true # bf16を使う
 do_eval: false # 評価を行うかどうか
 eval_strategy: 'no' # 評価を行うタイミング ('no' or 'steps' or 'epoch')
 gradient_accumulation_steps: 8 # 勾配蓄積のステップ数
-gradient_checkpointing: false # 勾配チェックポイントを使うかどうか
+gradient_checkpointing: true # 勾配チェックポイントを使うかどうか
 gradient_checkpointing_kwargs:
   use_reentrant: false
 hub_model_id: neko-llm/Qwen3-30B-test # モデルをHuggingFace Hubにpushする際のモデルID
@@ -56,7 +56,7 @@ lr_scheduler_kwargs:
   min_lr_rate: 0.1
 packing: false
 max_grad_norm: 0.2
-max_length: 192 # 32768 # 最大シーケンス長
+max_length: 256 # 32768 # 最大シーケンス長
 max_steps: 3 # -1
 num_train_epochs: 5 # 学習エポック数
 output_dir: data/Qwen3-30B-test # 結果の出力ディレクトリ
