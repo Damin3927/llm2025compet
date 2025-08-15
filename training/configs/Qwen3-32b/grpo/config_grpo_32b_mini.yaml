@@ -1,0 +1,107 @@
+# ==========================================================
+#  Qwen/Qwen3-32B ── GRPO + vLLM‑colocate + ZeRO‑3 (accelerate)
+# ==========================================================
+
+# ----------------------------------------------------------
+# Model / Tokenizer
+# ----------------------------------------------------------
+model_name_or_path: Qwen/Qwen3-32B
+model_revision: main
+torch_dtype: bfloat16
+attn_implementation: sdpa
+trust_remote_code: true          # tokenizer.chat_template を正しく取得
+
+#ref_lora_path: /path/to/your/frozen/lora_adapter
+
+#load_in_4bit: true                     # ← QLoRA 用
+#bnb_4bit_compute_dtype: bfloat16
+#bnb_4bit_use_double_quant: true
+#bnb_4bit_quant_type: nf4
+
+# ----------------------------------------------------------
+# Data
+# ----------------------------------------------------------
+dataset_name: open-r1/OpenR1-Math-220k
+dataset_prompt_column: problem
+
+system_prompt: |
+  You are a helpful AI Assistant that provides well‑reasoned and detailed responses.
+  First think in <think>…</think>, then answer in <answer>…</answer>.
+
+# Qwen 既定の chat_template を使用（上書き不要）
+# chat_template: null
+#eos_token: <|im_end|>
+
+# ----------------------------------------------------------
+# GRPO Trainer
+# ----------------------------------------------------------
+# GPU 80 GB × 8 / ZeRO‑3:
+# Parameters that control generation
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 64
+per_device_eval_batch_size: 1
+# Parameters that control the data preprocessing
+num_generations: 8
+max_prompt_length: 6144
+max_completion_length: 768
+
+bf16: true
+gradient_checkpointing: true
+gradient_checkpointing_kwargs:
+  use_reentrant: false
+
+# Parameters that control the model and reference model
+disable_dropout: true
+
+# Parameters that control generation acceleration powered by vLLM
+use_vllm: true
+vllm_mode: server
+#vllm_gpu_memory_utilization: 0.65                 
+#vllm_server_base_url: "http://osk-gpu91:8000"
+#vllm_tensor_parallel_size: 8
+
+ds3_gather_for_generation: false
+
+# 学習ハイパーパラメータ
+learning_rate: 1.0e-4              # パラメータ数が少ないのでやや高めに設定
+warmup_ratio: 0.05
+lr_scheduler_type: cosine
+num_train_epochs: 1                # 例：1 epoch（ステップ指定なら max_steps へ）
+max_steps: -1
+
+# Parameters that control the training
+loss_type: bnpo
+beta: 0.1                         # KL divergence coefficient (デフォルト 0.0)
+epsilon: 0.2 
+epsilon_high: 0.28
+mask_truncated_completions: true
+#top_entropy_quantile: 0.2
+
+reward_funcs: [accuracy, format, tag_count]
+reward_weights: [1.0, 1.0, 1.0]
+
+# ----------------------------------------------------------
+# ロギング & 保存
+# ----------------------------------------------------------
+log_completions: false
+log_level: info
+logging_first_step: false
+logging_steps: 50
+logging_strategy: steps
+
+report_to:
+- wandb
+
+save_strategy: steps
+save_steps: 100
+save_total_limit: 2
+save_on_each_node: false
+save_safetensors: true
+output_dir: data/Qwen3-32B-Open-R1-GRPO
+overwrite_output_dir: true
+
+push_to_hub: true
+hub_model_id: neko-llm/Qwen3-32B-Open-R1-GRPO
+hub_strategy: end
+
+seed: 42 #  Tensor Parallelism Bug in vLLM ≥ 0.8.0.(https://huggingface.co/blog/vllm-colocate#:~:text=Training%20and%20inference%20take%20turns,dedicated%20devices%20or%20separate%20processes)
