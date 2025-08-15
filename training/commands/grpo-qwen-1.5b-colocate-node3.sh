@@ -45,6 +45,7 @@ srun --nodes=3 --ntasks=3 --nodelist="${NODELIST[*]}" \
        export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
        export NCCL_ASYNC_ERROR_HANDLING=1
        # 3ノード・24GPUでコロケートモードによるGRPOトレーニング
+       LOG_FILE=/home/Competition2025/P02/P02U025/llm2025compet/training/logs/grpo-\$HOSTNAME-rank\$SLURM_PROCID.log
        accelerate launch \\
          --config_file ../recipes/accelerate_configs/zero3.yaml \\
          --num_machines 3 \\
