@@ -42,6 +42,7 @@ srun --nodes=3 --ntasks=3 --nodelist="${NODELIST[*]}" \
      bash -c "
        source ~/openr1/bin/activate
        echo '[GRPO-Colo] on \$HOSTNAME  (rank \$SLURM_PROCID)'
+       export UNSLOTH_CACHE=~/unsloth_cache
        export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
        export NCCL_ASYNC_ERROR_HANDLING=1
        # 3ノード・24GPUでコロケートモードによるGRPOトレーニング
