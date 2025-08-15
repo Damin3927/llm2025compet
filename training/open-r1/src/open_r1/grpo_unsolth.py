@@ -50,8 +50,7 @@ class ModelArguments:
     bnb_4bit_use_double_quant: bool = field(default=True)
     bnb_4bit_compute_dtype: str = field(default="bfloat16")
 
-    # Flash Attention
-    attn_implementation: Optional[str] = field(default="flash_attention_2")
+    attn_implementation: Optional[str] = field(default="sdpa")
 
 def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args: ModelArguments):
     set_seed(training_args.seed)
