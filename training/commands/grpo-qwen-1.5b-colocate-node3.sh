@@ -19,7 +19,7 @@ export PATH=$CUDA_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 
 source ~/openr1/bin/activate
-
+export UNSLOTH_CACHE=~/unsloth_cache
 export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
 export NCCL_ASYNC_ERROR_HANDLING=1
 
