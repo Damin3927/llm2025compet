@@ -13,6 +13,29 @@
 
 # export WANDB_DISABLED="true"   # WANDBを一旦無効化
 
+### ====== デバッグ用情報出力 ======
+echo "=== [DEBUG] Job Start: $(date) ==="
+echo "SLURM_JOB_NODELIST: $SLURM_JOB_NODELIST"
+echo "HOSTNAME: $(hostname)"
+echo "WHOAMI: $(whoami)"
+echo "PWD: $(pwd)"
+echo
+echo "=== [DEBUG] Python & Pip 情報 ==="
+which python
+python --version
+which pip
+pip --version
+pip list | grep -E "torch|deepspeed|accelerate"
+echo
+echo "=== [DEBUG] PATH 確認 ==="
+echo $PATH | tr ':' '\n'
+echo
+echo "=== [DEBUG] GPU可視性確認 ==="
+nvidia-smi || echo "nvidia-smi コマンドが失敗しました"
+python -c "import torch; print('torch.cuda.is_available():', torch.cuda.is_available())"
+echo "=================================="
+### ===============================
+
 # Slurmで確保したノードリストの先頭をマスターノードのアドレスとして設定
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
 echo "MASTER_ADDR: $MASTER_ADDR"
