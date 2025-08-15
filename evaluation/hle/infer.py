@@ -1,39 +1,42 @@
-import argparse
+# ref: https://github.com/matsuolab/llm_bridge_prod/blob/master/eval_hle/hle_benchmark/vllm_predictions.py
+
+from argparse import ArgumentParser
+from typing import Sequence, TypedDict, Dict, Any, Optional, cast, List
 import os
-import pandas as pd
-from typing import List, Optional, Dict, Any, Sequence, TypedDict
-import asyncio
 import json
-from openai.types.chat import ChatCompletionMessageParam
-from huggingface_hub import create_repo
-from datasets import Dataset
+import asyncio
+from datasets import load_dataset, Dataset as HFDataset
 from tqdm import tqdm
 from inference import wait_until_vllm_up, AsyncVLLMClient
 
 
-SYSTEM_PROMPT = (
-    "You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe. "
-    "Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. "
-    "Please ensure that your responses are socially unbiased and positive in nature.\n\n"
-    "If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. "
-    "If you don't know the answer to a question, please don't share false information."
-)
+SYSTEM_EXACT_ANSWER = "Your response should be in the following format:\nExplanation: {your explanation for your final answer}\nExact Answer: {your succinct, final answer}\nConfidence: {your confidence score between 0% and 100% for your answer}"
+
+SYSTEM_MC = "Your response should be in the following format:\nExplanation: {your explanation for your answer choice}\nAnswer: {your chosen answer}\nConfidence: {your confidence score between 0% and 100% for your answer}"
 
 
 class QuestionType(TypedDict):
     id: str
     question: str
-    risk_area: str
-    types_of_harm: str
-    specific_harms: str
+    image: str  # "" if not multi-modal
+    answer_type: str
 
 
-def format_message(question: QuestionType) -> List[ChatCompletionMessageParam]:
-    """Format question into messages for the API."""
-    # Type ignore to handle the typing issue with OpenAI message format
-    messages: List[ChatCompletionMessageParam] = [
-        {"role": "system", "content": SYSTEM_PROMPT},  # type: ignore
-        {"role": "user", "content": question["question"]},  # type: ignore
+def format_message(question: QuestionType):
+    answer_type = question["answer_type"]
+    system_prompt = SYSTEM_EXACT_ANSWER if answer_type == "exact_match" else SYSTEM_MC
+    question_text = question["question"]
+
+    text_content = dict(type="text", text=question_text)
+    if question["image"]:  # "" if not multi-modal
+        image_content = dict(type="image_url", image_url=dict(url=question["image"]))
+        content = [text_content, image_content]
+    else:
+        content = [text_content]
+
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": content},
     ]
     return messages
 
@@ -41,12 +44,11 @@ def format_message(question: QuestionType) -> List[ChatCompletionMessageParam]:
 async def attempt_question(
     client: AsyncVLLMClient, model: str, question: QuestionType, max_retries: int = 3
 ):
-    """Attempt to get a response for a single question with retries."""
     messages = format_message(question)
 
     for attempt in range(max_retries):
         try:
-            response = await client.generate_msg(model=model, messages=messages, temperature=0.7, top_p=0.9)
+            response = await client.generate_msg(model=model, messages=messages)
             content = response.choices[0].message.content
             if response.choices[0].finish_reason == "length":
                 print(
@@ -82,9 +84,8 @@ async def attempt_question(
 
 
 def json_path_for_model(model_name: str) -> str:
-    """Get the JSON file path for storing predictions."""
     os.makedirs("predictions", exist_ok=True)
-    return f"predictions/dna_{os.path.basename(model_name)}.json"
+    return f"predictions/hle_{os.path.basename(model_name)}.json"
 
 
 def load_predictions_json(path: str) -> Dict[str, Dict[str, Any]]:
@@ -112,6 +113,9 @@ def save_predictions_json(path: str, predictions: Dict[str, Dict[str, Any]]):
         f.flush()
         os.fsync(f.fileno())
     os.replace(tmp_path, path)
+
+
+# Single-node worker pool removed; unified on multi-node implementation below.
 
 
 async def run_worker_pool_multi(
@@ -161,9 +165,6 @@ async def run_worker_pool_multi(
                             "response": response,
                             "usage": usage,
                             "question": item["question"],
-                            "risk_area": item["risk_area"],
-                            "types_of_harm": item["types_of_harm"],
-                            "specific_harms": item["specific_harms"],
                         }
                         success_count += 1
                         pending_writes += 1
@@ -184,84 +185,57 @@ async def run_worker_pool_multi(
     return success_count
 
 
-def upload_results_to_hf_hub(output_path: str, repo_id: str, token=None, dataset_path: Optional[str] = None):
-    """Upload evaluation results to Hugging Face Hub dataset.
+def upload_results_to_hf_hub_hle(output_path: str, repo_id: str, token: Optional[str] = None):
+    """Upload HLE predictions to Hugging Face Hub including the question text.
 
-    Besides the model response, also attempts to include the original question.
-    If the predictions JSON does not contain the question (older runs), and a
-    dataset_path is provided, this will backfill question text using the CSV
-    (matching by id).
+    If the predictions JSON doesn't have the question (older runs), this will
+    backfill question text by loading the `cais/hle` test split and mapping id->question.
     """
-    create_repo(
-        repo_id=repo_id,
-        repo_type="dataset",
-        token=token,
-        exist_ok=True,
-        private=False,
-    )
+    preds = load_predictions_json(output_path)
 
-    # Load JSON predictions and convert to CSV format
-    predictions = load_predictions_json(output_path)
-    # Optional backfill for question when absent in predictions JSON
+    # Build id->question map from the upstream dataset for backfill
     id_to_question: Dict[str, str] = {}
-    if dataset_path and os.path.exists(dataset_path):
-        try:
-            _df = pd.read_csv(dataset_path)
-            if {"id", "question"}.issubset(_df.columns):
-                id_to_question = {str(r["id"]): str(r["question"]) for _, r in _df.iterrows()}
-        except Exception as e:
-            print(f"Warning: Failed to read dataset for question backfill: {e}")
-    rows = []
-    for pred_id, pred_data in predictions.items():
-        question_text = pred_data.get("question") or id_to_question.get(str(pred_id))
-        rows.append({
-            "id": pred_id,
-            "model": pred_data.get("model"),
-            "response": pred_data.get("response"),
-            "question": question_text,
-            "risk_area": pred_data.get("risk_area"),
-            "types_of_harm": pred_data.get("types_of_harm"),
-            "specific_harms": pred_data.get("specific_harms"),
-            "usage": json.dumps(pred_data.get("usage", {})),
-        })
-    
-    df = pd.DataFrame(rows)
-    ds = Dataset.from_pandas(df)
-    ds.push_to_hub(
-        repo_id=repo_id,
-        token=token,
-    )
+    try:
+        ds = cast(HFDataset, load_dataset("cais/hle", split="test"))
+        ds = cast(HFDataset, ds.filter(lambda item: item["image"] == ""))
+        for i in range(len(ds)):
+            row = cast(Dict[str, Any], ds[i])
+            id_to_question[str(row["id"])] = str(row["question"])
+    except Exception as e:
+        print(f"Warning: Failed to load cais/hle for question backfill: {e}")
+
+    rows = {
+        "id": [],
+        "model": [],
+        "response": [],
+        "question": [],
+        "usage": [],
+    }
+
+    for k, v in preds.items():
+        rows["id"].append(k)
+        rows["model"].append(v.get("model"))
+        rows["response"].append(v.get("response"))
+        q_text = v.get("question") or id_to_question.get(str(k))
+        rows["question"].append(q_text)
+        rows["usage"].append(json.dumps(v.get("usage", {})))
+
+    ds_out: HFDataset = HFDataset.from_dict(rows)
+    ds_out.push_to_hub(repo_id, token=token)
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Evaluate Hugging Face models on Do-Not-Answer dataset"
+    arg_parser = ArgumentParser(description="Run inference on HLE dataset")
+    arg_parser.add_argument(
+        "--model", type=str, required=True, help="Model name to use for inference"
     )
-    parser.add_argument(
-        "--model", required=True, help="Hugging Face model name or path"
-    )
-    parser.add_argument(
-        "--dataset_path",
-        default="./datasets/Instruction/do_not_answer_en.csv",
-        help="Path to Do-Not-Answer dataset CSV file",
-    )
-    parser.add_argument(
-        "--output_dir",
-        default="./evaluation_results",
-        help="Directory to save evaluation results",
-    )
-    parser.add_argument(
-        "--max_questions",
-        type=int,
-        help="Maximum number of questions to evaluate (for testing)",
-    )
-    parser.add_argument(
+    arg_parser.add_argument(
         "--base_url",
         type=str,
         default="http://localhost:8000",
         help="Base URL for the vLLM API",
     )
-    parser.add_argument(
+    arg_parser.add_argument(
         "--base_urls",
         type=str,
         nargs="+",
@@ -271,7 +245,7 @@ def main():
             "Example: --base_urls http://node1:8000 http://node2:8000"
         ),
     )
-    parser.add_argument(
+    arg_parser.add_argument(
         "--num_nodes",
         type=int,
         default=None,
@@ -280,61 +254,61 @@ def main():
             "If --base_urls is omitted, defaults to 1."
         ),
     )
-    parser.add_argument(
+    arg_parser.add_argument(
         "--num_workers",
         type=int,
         default=4,
         help="Number of parallel workers (per node when using --base_urls)",
     )
-    parser.add_argument(
+    arg_parser.add_argument(
+        "--max_samples",
+        type=int,
+        default=None,
+        help="Maximum number of samples to process",
+    )
+    arg_parser.add_argument(
         "--max_retries",
         type=int,
         default=3,
         help="Maximum number of retries for failed API calls",
     )
-    parser.add_argument(
+    arg_parser.add_argument(
         "--dataset_name",
         type=str,
         default=None,
         help="HuggingFace dataset name to push results",
     )
-    parser.add_argument(
+    arg_parser.add_argument(
         "--push_to_hub",
         action="store_true",
         help="Push results to HuggingFace Hub after inference",
     )
-    parser.add_argument(
+    arg_parser.add_argument(
         "--hf_token",
         type=str,
         default=None,
         help="HuggingFace token for authentication",
     )
-    parser.add_argument(
+    arg_parser.add_argument(
         "--flush_every",
         type=int,
         default=20,
         help="Flush predictions JSON to disk after this many new results (and at end)",
     )
-    parser.add_argument(
+    # Upload-only mode
+    arg_parser.add_argument(
         "--upload_only",
         action="store_true",
-        help="Only upload an existing predictions JSON file to the HuggingFace Hub; skip inference",
+    help="Only upload an existing predictions JSON file to the HuggingFace Hub; skip inference",
     )
-    parser.add_argument(
+    arg_parser.add_argument(
         "--input_json",
         type=str,
         default=None,
-        help="Path to an existing predictions JSON to upload. Defaults to predictions/dna_<model>.json",
-    )
-    parser.add_argument(
-        "--hf_repo_id",
-        type=str,
-        default="neko-llm/dna-evals",
-        help="Hugging Face Hub repo ID in the format 'namespace/repo_name'. "
-        "Default: neko-llm/dna-evals",
+        help="Path to an existing predictions JSON to upload. Defaults to predictions/hle_<model>.json",
     )
 
-    args = parser.parse_args()
+    args = arg_parser.parse_args()
 
     # Parse base URLs for single- or multi-node
     parsed_base_urls: List[str] = []
@@ -372,11 +346,10 @@ def main():
             f"Uploading predictions JSON '{output_json}' to HuggingFace Hub dataset '{args.dataset_name}'..."
         )
         try:
-            upload_results_to_hf_hub(
+            upload_results_to_hf_hub_hle(
                 output_path=output_json,
                 repo_id=args.dataset_name,
-                token=args.hf_token or os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACE_HUB_TOKEN"),
-                dataset_path=args.dataset_path,
+                token=args.hf_token,
             )
             print("Upload completed.")
         except Exception as e:
@@ -384,33 +357,31 @@ def main():
         return
 
     # Load dataset
-    print(f"Loading dataset from: {args.dataset_path}")
-    questions_df = pd.read_csv(args.dataset_path)
+    dataset = cast(HFDataset, load_dataset("cais/hle", split="test"))
+    dataset = cast(HFDataset, dataset.filter(lambda item: item["image"] == ""))
 
-    if args.max_questions:
-        questions_df = questions_df.head(args.max_questions)
-        print(f"Limiting evaluation to {args.max_questions} questions")
-
-    print(f"Dataset loaded: {len(questions_df)} questions")
-
-    # Convert DataFrame to list of QuestionType
-    questions: List[QuestionType] = []
-    for _, row in questions_df.iterrows():
-        question_dict: QuestionType = {
-            "id": str(row["id"]),
-            "question": str(row["question"]),
-            "risk_area": str(row["risk_area"]),
-            "types_of_harm": str(row["types_of_harm"]),
-            "specific_harms": str(row["specific_harms"]),
+    # Convert to list of questions using the original approach but fixed
+    questions = []
+    for i in range(len(dataset)):
+        item = cast(Dict[str, Any], dataset[i])
+        question_dict = {
+            "id": item["id"],
+            "question": item["question"],
+            "image": item["image"],
+            "answer_type": item["answer_type"],
         }
         questions.append(question_dict)
+
+    # If max_samples is set, limit the number of questions
+    if args.max_samples:
+        questions = questions[: args.max_samples]
 
     # Create predictions directory and load existing predictions JSON (for resume)
     os.makedirs("predictions", exist_ok=True)
     predictions: Dict[str, Dict[str, Any]] = load_predictions_json(output_json)
     existing_ids = set(predictions.keys())
 
-    # Filter out questions that already have predictions
+    # Filter out questions that already have predictions based on JSONL IDs
     questions = [q for q in questions if q["id"] not in existing_ids]
     print(
         f"Processing {len(questions)} new questions (skipping {len(existing_ids)} existing predictions)"
@@ -421,11 +392,10 @@ def main():
         if args.push_to_hub and args.dataset_name:
             print("Pushing existing predictions JSON to HuggingFace Hub...")
             try:
-                upload_results_to_hf_hub(
+                upload_results_to_hf_hub_hle(
                     output_path=output_json,
                     repo_id=args.dataset_name,
-                    token=args.hf_token or os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACE_HUB_TOKEN"),
-                    dataset_path=args.dataset_path,
+                    token=args.hf_token,
                 )
                 print("Upload completed.")
             except Exception as e:
@@ -472,11 +442,10 @@ def main():
     if args.push_to_hub and args.dataset_name:
         print("Pushing results JSON to HuggingFace Hub...")
         try:
-            upload_results_to_hf_hub(
+            upload_results_to_hf_hub_hle(
                 output_path=output_json,
                 repo_id=args.dataset_name,
-                token=args.hf_token or os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACE_HUB_TOKEN"),
-                dataset_path=args.dataset_path,
+                token=args.hf_token,
             )
             print("Upload completed.")
         except Exception as e:

@@ -51,14 +51,14 @@ setup_environment() {
     # export NCCL_NET_GDR_LEVEL=SYS
     # export NCCL_P2P_LEVEL=SYS
 
-    export NCCL_DEBUG=TRACE
+    export NCCL_DEBUG=INFO
     export GPU_MAX_HW_QUEUES=2
     export TORCH_NCCL_HIGH_PRIORITY=1
     export NCCL_CHECKS_DISABLE=1
     export NCCL_IB_HCA=mlx5_0,mlx5_1,mlx5_2,mlx5_3,mlx5_4,mlx5_5,mlx5_8,mlx5_9
     export NCCL_IB_GID_INDEX=3
-    export NCCL_CROSS_NIC=0
-    export NCCL_PROTO=Simple
+    export NCCL_CROSS_NIC=1
+    # export NCCL_PROTO=Simple
     export RCCL_MSCCL_ENABLE=0
     export TOKENIZERS_PARALLELISM=false
     export HSA_NO_SCRATCH_RECLAIM=1
@@ -134,7 +134,7 @@ run_vllm() {
     vllm serve --dtype auto --api-key "$VLLM_API_KEY" \
         --tensor-parallel-size $NGPUS \
         --pipeline-parallel-size $NNODES \
-        --enable-prefix-caching \
+        --enable-expert-parallel \
         --distributed-executor-backend ray \
         --trust-remote-code \
         "${model_path}"
