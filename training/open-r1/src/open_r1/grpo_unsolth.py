@@ -1,4 +1,4 @@
-# Copyright 2025 The HuggingFace Team. All rights reserved.
+# Copyright 2025 The HuggingFace Team & UnslothAI. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,10 +21,12 @@ from typing import Optional
 import datasets
 import torch
 import transformers
-from peft import LoraConfig
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, set_seed
+from transformers import set_seed
 from transformers.trainer_utils import get_last_checkpoint
 from trl import GRPOTrainer, TrlParser
+
+# Unslothの導入
+from unsloth import FastLanguageModel
 
 from open_r1.configs import GRPOConfig, GRPOScriptArguments
 from open_r1.rewards import get_reward_funcs
@@ -37,24 +39,21 @@ logger = logging.getLogger(__name__)
 @dataclass
 class ModelArguments:
     """
-    Unsloth向け QLoRA/モデル読み込み用引数。
+    Unsloth向けに簡素化したモデル読み込み用引数。
     """
     model_name_or_path: str = field(metadata={"help": "モデルチェックポイント"})
     model_revision: str = field(default="main")
     trust_remote_code: bool = field(default=True)
-    torch_dtype: Optional[str] = field(default="auto")
+    # Unslothはdtypeを自動で最適化するため、引数をtorch_dtypeからuse_unsloth_dtypeに変更
+    use_unsloth_dtype: Optional[str] = field(default=None, metadata={"help": "Unsloth's dtype (e.g. 'bfloat16'). None for auto-detection."})
+    # UnslothはFlash Attentionを自動で適用するため、引数を削除
+    # attn_implementation: Optional[str] = field(default="sdpa")
 
-    # QLoRA/bitsandbytes
-    load_in_4bit: bool = field(default=True)
-    bnb_4bit_quant_type: str = field(default="nf4")
-    bnb_4bit_use_double_quant: bool = field(default=True)
-    bnb_4bit_compute_dtype: str = field(default="bfloat16")
-
-    attn_implementation: Optional[str] = field(default="sdpa")
 
 def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args: ModelArguments):
     set_seed(training_args.seed)
 
+    # --- 1. ログ設定 ---
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
@@ -68,44 +67,41 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
     if "wandb" in training_args.report_to:
         init_wandb_training(training_args)
 
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_args.model_name_or_path,
-        revision=model_args.model_revision,
+    # --- 2. Unslothによるモデルとトークナイザーの読み込み ---
+    # BitsAndBytesConfigやAutoModelForCausalLMの代わりにFastLanguageModelを使用
+    # 4bit量子化、dtype設定、Flash Attentionの適用が自動化される
+    unsloth_dtype = None
+    if model_args.use_unsloth_dtype:
+        unsloth_dtype = getattr(torch, model_args.use_unsloth_dtype)
+
+    model, tokenizer = FastLanguageModel.from_pretrained(
+        model_name=model_args.model_name_or_path,
+        max_seq_length=training_args.max_seq_length,
+        dtype=unsloth_dtype,
+        load_in_4bit=True, # 4bit量子化を有効化
         trust_remote_code=model_args.trust_remote_code,
+        revision=model_args.model_revision,
     )
+    
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    quantization_config = BitsAndBytesConfig(
-        load_in_4bit=model_args.load_in_4bit,
-        bnb_4bit_compute_dtype=torch.bfloat16 if model_args.bnb_4bit_compute_dtype=="bfloat16" else torch.float16,
-        bnb_4bit_use_double_quant=model_args.bnb_4bit_use_double_quant,
-        bnb_4bit_quant_type=model_args.bnb_4bit_quant_type,
-    )
-
-    model_torch_dtype = getattr(torch, model_args.torch_dtype) if model_args.torch_dtype not in [None, "auto"] else None
-
-    model = AutoModelForCausalLM.from_pretrained(
-        model_args.model_name_or_path,
-        revision=model_args.model_revision,
-        quantization_config=quantization_config,
-        torch_dtype=model_torch_dtype,
-        attn_implementation=model_args.attn_implementation,
-        trust_remote_code=model_args.trust_remote_code,
-    )
-
-    peft_config = LoraConfig(
+    # --- 3. PEFT (LoRA) の設定 ---
+    # Unslothのヘルパー関数を使い、LoRA設定を適用
+    model = FastLanguageModel.get_peft_model(
+        model,
         r=16,
         lora_alpha=16,
         lora_dropout=0,
         bias="none",
+        use_gradient_checkpointing=training_args.gradient_checkpointing,
+        random_state=training_args.seed,
+        # target_modulesの指定は不要。Unslothが自動で最適化します。
+        # target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
         task_type="CAUSAL_LM",
-        target_modules=[
-            "q_proj", "k_proj", "v_proj", "o_proj",
-            "gate_proj", "up_proj", "down_proj",
-        ],
     )
 
+    # --- 4. データセットと報酬関数の準備 ---
     dataset = get_dataset(script_args)
     reward_funcs = get_reward_funcs(script_args)
 
@@ -119,17 +115,19 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
     dataset = dataset.map(make_conversation)
     dataset = dataset.remove_columns([script_args.dataset_prompt_column])
 
+    # --- 5. GRPOTrainerの初期化 ---
+    # peft_configはモデルに適用済みのため、GRPOTrainerには渡さない
     trainer = GRPOTrainer(
         model=model,
         args=training_args,
         reward_funcs=reward_funcs,
-        peft_config=peft_config,
         train_dataset=dataset[script_args.dataset_train_split],
         eval_dataset=(dataset[script_args.dataset_test_split] if training_args.do_eval else None),
-        processing_class=tokenizer,
+        tokenizer=tokenizer, # processing_classの代わりにtokenizerを渡す
         callbacks=get_callbacks(training_args, model_args),
     )
 
+    # --- 6. 学習の実行 ---
     checkpoint = get_last_checkpoint(training_args.output_dir) if os.path.isdir(training_args.output_dir) else None
     train_result = trainer.train(resume_from_checkpoint=checkpoint)
     metrics = train_result.metrics
@@ -138,8 +136,10 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
     trainer.save_metrics("train", metrics)
     trainer.save_state()
 
+    # --- 7. モデルの保存 ---
     trainer.save_model(training_args.output_dir)
     if trainer.accelerator.is_main_process:
+        # Unslothはトークナイザーの保存を自動で行うため、手動保存は不要な場合があるが念のため残す
         tokenizer.save_pretrained(training_args.output_dir)
         trainer.create_model_card(dataset_name=script_args.dataset_name, tags=["unsloth"])
 
