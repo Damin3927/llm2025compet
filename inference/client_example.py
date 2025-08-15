@@ -1,4 +1,5 @@
 from openai import OpenAI
+from openai.types.chat import ChatCompletionMessageParam
 
 
 def create_client():
@@ -10,7 +11,7 @@ def create_client():
 def main():
     client = create_client()
 
-    messages = [
+    messages: list[ChatCompletionMessageParam] = [
         {"role": "user", "content": "What is the capital of France?"},
     ]
 

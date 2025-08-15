@@ -1,4 +1,5 @@
-# LLM Competition Evaluation with Do-Not-Answer
+# 推論スクリプトの利用方法
+
 
 以下ログインノード:
 ```bash
@@ -11,13 +12,12 @@ pushd inference
 popd
 
 # クライアントを立ち上げる
-pushd evaluation/dna
+pushd evaluation/hle
 python infer.py --help
 
 ## 単一サーバーの場合
 python infer.py \
     --model "qwen/Qwen3-235B-A22B" \
-    --dataset_path ./datasets/Instruction/do_not_answer_en.csv \
     --base_url "http://osk-gpu54:8000" \
     --num_workers 40 \
     --flush_every 40 \
@@ -29,7 +29,6 @@ python infer.py \
 # 例: 3ノード × 40ワーカー = 合計120並列
 python infer.py \
     --model "qwen/Qwen3-235B-A22B" \
-    --dataset_path ./datasets/Instruction/do_not_answer_en.csv \
     --base_urls http://osk-gpu54:8000,http://osk-gpu56:8000,http://osk-gpu91:8000 \
     --num_nodes 3 \
     --num_workers 40 \
@@ -38,22 +37,25 @@ python infer.py \
     --push_to_hub
 
 # 指定した vLLM サーバー(単一/複数)が立ち上がるまで待ち、立ち上がったら推論が始まる
+# 推論結果は predictions/hle_<モデル名ベース>.json に JSON 辞書形式 (id -> {model, response, usage}) で保存される
+# --flush_every で新規結果を書き出す頻度を制御 (デフォルト 20)。--push_to_hub と --dataset_name を指定した場合は、最後に HF Datasets にアップロードされる
 
 # 既存の JSON アップロードのみする場合
 # (推論は行わず、predictions/hle_*.json を Datasets として Hub に公開)
 python infer.py \
-    --model "qwen/Qwen3-235B-A22B" \
-    --dataset_path ./datasets/Instruction/do_not_answer_en.csv \
+    --model "Qwen/Qwen3-235B-A22B" \
+    --upload_only \
     --dataset_name "neko-llm/eval-Qwen-Qwen3-235B-A22B" \
-    --push_to_hub \
-    --upload_only
+    --input_json predictions/hle_Qwen-Qwen3-235B-A22B.json
 
 # JSON は eval.py と互換な形式なので、このまま判定にかけられる
 python eval.py \
-    --dataset_path ./datasets/Instruction/do_not_answer_en.csv \
     --predictions_dataset "neko-llm/eval-Qwen-Qwen3-235B-A22B" \
-    --wandb_project neko-llm-test \
-    --num_workers 10
+    --num_workers 100 \
+    --judge o3-mini-2025-01-31
+
+# 判定結果 (judged_*.json) を Hugging Face にアップロード
+python upload_eval_result.py \
+    --input_json judged_hle_Qwen-Qwen3-235B-A22B.json \
+    --dataset_name neko-llm/eval-judged-Qwen-Qwen3-235B-A22B
 ```
-
-
