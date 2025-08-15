@@ -9,7 +9,7 @@
 model_name_or_path: Qwen/Qwen3-235B-A22B # テスト用のため0.5bにしている
 model_revision: main
 torch_dtype: bfloat16 # bf16を使う
-attn_implementation: flash_attention_2 # flash-attnention_2は使えなかった。
+attn_implementation: flash_attention_2 # eager, flash-attnention_2
 
 # LoRA arguments https://github.com/huggingface/trl/blob/v0.19.1/trl/trainer/model_config.py#L19
 use_peft: true # PEFT (Lora) を使うかどうか

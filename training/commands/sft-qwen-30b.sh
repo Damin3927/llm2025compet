@@ -23,19 +23,6 @@ echo "MASTER_PORT: $MASTER_PORT"
 
 export NCCL_DEBUG=WARN
 export NCCL_DEBUG_SUBSYS=ALL
-
-export NCCL_P2P_DISABLE=1
-export NCCL_P2P_LEVEL=NVL
-export NCCL_IB_GID_INDEX=3
-# export NCCL_SOCKET_IFNAME=^lo,docker,virbr
-#export TORCH_DISTRIBUTED_DEBUG=DETAIL
-
-# export DEEPSPEED_TIMEOUT=7200
-# export GLOO_SOCKET_IFNAME=enp25s0np0
-# export NCCL_SOCKET_IFNAME=enp25s0np0
-# export NCCL_TIMEOUT=5400
-# export NCCL_SOCKET_IFNAME=bond0
-# export NCCL_SOCKET_IFNAME=^lo,docker,virbr
 #export TORCH_DISTRIBUTED_DEBUG=DETAIL
 
 module load cuda/12.8           # nvccを使うためにCUDAをロード
@@ -53,7 +40,7 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --num_machines 3 \
         --num_processes 24 \
         --main_process_ip \"$MASTER_ADDR\" \
-        --main_process_port \"$MASTER_PORT\" \  
+        --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
         open_r1/sft.py \
         --config ../../configs/Qwen3-30B-A3B/sft/config_test.yaml \
@@ -66,4 +53,4 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
 # /home/Competition2025/P02/shareP02/scripts/scancel.sh 287614
 
 # 実行コマンド
-# sbatch ./llm2025compet/training/commands/sft-qwen-30B-A3B.sh
+# sbatch ./llm2025compet/training/commands/sft-qwen-30b.sh

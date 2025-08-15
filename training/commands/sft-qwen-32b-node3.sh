@@ -43,7 +43,7 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
         open_r1/sft.py \
-        --config ../../configs/Qwen3-32b/sft/config_distill.yaml \
+        --config ../../configs/Qwen3-30B-A3B/sft/config_test_2.yaml \
         --dataconfig ../../configs/data_configs/example.yaml"
 
 # 実行方法
