@@ -163,12 +163,14 @@ run_ray_command() {
         # ヘッド起動直後は GCS が立ち上がり切るまで待つ
         echo "Waiting for GCS (port $RAY_HEAD_PORT) to be ready on $VLLM_HOST_IP ..."
         for i in $(seq 1 60); do
-          if python - <<'PY'
-import socket, sys
-s=socket.socket(); s.settimeout(1.0)
+          HOST="$VLLM_HOST_IP" PORT="$RAY_HEAD_PORT" python - <<'PY'
+import os, socket, sys
+host = os.environ["HOST"]
+port = int(os.environ["PORT"])
+s = socket.socket()
+s.settimeout(1.0)
 try:
-    s.connect(("'"$VLLM_HOST_IP"'", int("'"$RAY_HEAD_PORT"'")))
-    sys.exit(0)
+    s.connect((host, port)); sys.exit(0)
 except Exception:
     sys.exit(1)
 PY
@@ -186,12 +188,14 @@ PY
         echo "Waiting for head GCS at ${NODE0_IP}:$RAY_HEAD_PORT ..."
         for i in $(seq 1 90); do
           getent hosts "${NODE0_IP}" >/dev/null 2>&1 || { sleep 1; continue; }
-          if python - <<'PY'
-import socket, sys
-s=socket.socket(); s.settimeout(1.0)
+          HOST="${NODE0_IP}" PORT="$RAY_HEAD_PORT" python - <<'PY'
+import os, socket, sys
+host = os.environ["HOST"]
+port = int(os.environ["PORT"])
+s = socket.socket()
+s.settimeout(1.0)
 try:
-    s.connect(("'"$NODE0_IP"'", int("'"$RAY_HEAD_PORT"'")))
-    sys.exit(0)
+    s.connect((host, port)); sys.exit(0)
 except Exception:
     sys.exit(1)
 PY
