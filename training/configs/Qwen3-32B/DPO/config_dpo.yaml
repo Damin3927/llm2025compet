@@ -42,7 +42,7 @@ eval_strategy: "no"                                       # 評価タイミン�
 per_device_train_batch_size: 1                            # 1GPUあたりの学習バッチサイズ
 per_device_eval_batch_size: 1                             # 1GPUあたりの評価バッチサイズ
 gradient_accumulation_steps: 8                            # 勾配累積のステップ数
-gradient_checkpointing: false                             # 勾配累積チェックポイント
+gradient_checkpointing: true                             # 勾配累積チェックポイント
 learning_rate: 5.0e-6                                    # 学習率
 lr_scheduler_type: cosine_with_min_lr
 lr_scheduler_kwargs:
@@ -53,6 +53,7 @@ warmup_ratio: 0.03                                        # ウォームアッ�
 seed: 42                                                  # 乱数シード値
 beta: 0.1                                                 # DPO の beta パラメータ
 optim: adamw_torch
+max_steps: 5
 
 # === Save and Log ===
 output_dir: data/Qwen3-32B-DPO-test                        # 出力ディレクトリ
@@ -65,7 +66,7 @@ logging_strategy: steps                                   # ログの出力タ�
 log_level: info                                           # ログレベル
 
 # === HF Hub ===
-push_to_hub: false                                        # HF Hub へ push するかどうか
+push_to_hub: true                                        # HF Hub へ push するかどうか
 hub_model_id: Qwen3-32B-DPO-test                           # 登録するモデルID
 hub_strategy: every_save                                  # 保存時に毎回 push
 

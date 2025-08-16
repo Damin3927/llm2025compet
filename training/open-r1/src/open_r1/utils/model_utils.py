@@ -29,14 +29,21 @@ def get_model(model_args: ModelConfig, training_args: SFTConfig | DPOConfig) -> 
     torch_dtype = (
         model_args.torch_dtype if model_args.torch_dtype in ["auto", None] else getattr(torch, model_args.torch_dtype)
     )
-    quantization_config = get_quantization_config(model_args)
+    #quantization_config = get_quantization_config(model_args)
+    quantization_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_quant_type="nf4",
+        use_bnb_nested_quant=True
+    )
     model_kwargs = dict(
         revision=model_args.model_revision,
         trust_remote_code=model_args.trust_remote_code,
         attn_implementation=model_args.attn_implementation,
         torch_dtype=torch_dtype,
         use_cache=False if training_args.gradient_checkpointing else True,
-        device_map=get_kbit_device_map() if quantization_config is not None else None,
+        #device_map=get_kbit_device_map() if quantization_config is not None else None,
         quantization_config=quantization_config,
         low_cpu_mem_usage=True,
     )
@@ -45,25 +52,3 @@ def get_model(model_args: ModelConfig, training_args: SFTConfig | DPOConfig) -> 
         **model_kwargs,
     )
     return model
-
-"""
-    def get_unsloth_models(model_args: ModelConfig, training_args: DPOConfig):
-    #Unsloth上のモデルとトークナイザを読み込む関数
-    torch_dtype = (
-        model_args.torch_dtype if model_args.torch_dtype in ["auto", None] else getattr(torch, model_args.torch_dtype)
-    )
-    model, tokenizer = FastLanguageModel.from_pretrained(
-        model_name=model_args.model_name_or_path,
-        max_seq_length=model_args.max_length,
-        load_in_4bit=False,
-        load_in_8bit=False,
-        full_finetuning=False,
-    )
-    # LoRA
-    model = FastLanguageModel.get_peft_model(
-        model,
-        r=
-    )
-
-    return model, tokenizer
-"""
