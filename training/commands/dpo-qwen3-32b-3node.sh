@@ -6,8 +6,8 @@
 #SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
 #SBATCH --job-name dpo-32b     # ジョブの名前
 #SBATCH --time 1:00:00         # ジョブの最大実行時間
-#SBATCH --output dpo-32b.out   # 標準出力ファイル
-#SBATCH --error dpo-32b.err    # 標準エラーファイル
+#SBATCH --output orpo-32b.out   # 標準出力ファイル
+#SBATCH --error orpo-32b.err    # 標準エラーファイル
 #SBATCH --mem=0            # 各ノードのメモリサイズ
 #SBATCH --cpus-per-task=160         # number of cores per tasks
 
@@ -44,4 +44,5 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --rdzv_backend c10d \
         open_r1/orpo.py \
         --config ../../configs/Qwen3-32B/DPO/config_dpo.yaml \
+        --dataconfig ../../configs/data_configs/example.yaml"
     "

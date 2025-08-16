@@ -1,0 +1,9 @@
+neko_pref_datasets:
+  name: neko-llm/dna_dpo_hh-rlhf
+  config: default
+  split: train
+  instruction_field: question 
+  chosen_field: preferred_output 
+  rejected_field: non_preferred_output 
+  from_id: 0
+  to_id: 49026

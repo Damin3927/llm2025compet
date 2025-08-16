@@ -30,6 +30,7 @@ def get_model(model_args: ModelConfig, training_args: SFTConfig | DPOConfig) -> 
         model_args.torch_dtype if model_args.torch_dtype in ["auto", None] else getattr(torch, model_args.torch_dtype)
     )
     #quantization_config = get_quantization_config(model_args)
+    # フルファインチューニングでは量子化は使えない
     quantization_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_compute_dtype=torch.bfloat16,
@@ -44,7 +45,7 @@ def get_model(model_args: ModelConfig, training_args: SFTConfig | DPOConfig) -> 
         torch_dtype=torch_dtype,
         use_cache=False if training_args.gradient_checkpointing else True,
         #device_map=get_kbit_device_map() if quantization_config is not None else None,
-        quantization_config=quantization_config,
+        quantization_config=None,
         low_cpu_mem_usage=True,
     )
     model = AutoModelForCausalLM.from_pretrained(

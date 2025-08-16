@@ -22,6 +22,7 @@ import sys
 from dataclasses import dataclass, field
 import yaml
 import datetime
+import argparse
 
 import datasets
 import transformers
@@ -32,6 +33,7 @@ from open_r1.utils import get_dataset, get_model, get_tokenizer
 from open_r1.utils.callbacks import get_callbacks
 from open_r1.utils.wandb_logging import init_wandb_training
 from open_r1.get_data import get_data_from_config
+from open_r1.configs import DataConfig
 
 def load_config_from_yaml(file_path: str) -> DataConfig:
     """
@@ -96,16 +98,24 @@ def main(script_args, training_args, model_args, data_config):
     if last_checkpoint is not None and training_args.resume_from_checkpoint is None:
         logger.info(f"Checkpoint detected, resuming training at {last_checkpoint=}.")
 
-    if "wandb" in training_args.report_to:
-        init_wandb_training(training_args)
+    #if "wandb" in training_args.report_to:
+    #    init_wandb_training(training_args)
 
     ################
     # Load Dataset
     ################
     logger.info("*** Loading dataset ***")
+    def format_pref(example):
+        return {
+            "prompt": example["question"],
+            "chosen": example["preferred_output"],
+            "rejected": example["non_preferred_output"]
+        }
     if data_config is None:
         logger.info(f"Loading dataset: {script_args.dataset_name}")
         dataset = datasets.load_dataset(script_args.dataset_name, script_args.dataset_config)
+        # Format into pariwise preference
+        dataset["train"] = dataset["train"].map(format_pref, remove_columns=dataset["train"].column_names)
     else:
         dataset = get_data_from_config(data_config)
     # dataset = get_dataset(script_args)
@@ -122,21 +132,7 @@ def main(script_args, training_args, model_args, data_config):
     logger.info("*** Loading model ***")
     model = get_model(model_args, training_args)
 
-    # Format into pariwise preference
-    def format_pref(example, tokenizer=tokenizer):
-        # todo: 本学習の際にはキーを "question" "preferred_output", "non_preferred_output" に書き換える
-        return {
-            "prompt": example["question"],
-            "chosen": example["preferred_output"],
-            "rejected": example["non_preferred_output"]
-        }
-        """return {
-            "prompt": example["question"],
-            "chosen": example["chosen_response"]+tokenizer.eos_token,
-            "rejected": example["rejected_response"]+tokenizer.eos_token
-        }"""
     
-    dataset["train"] = dataset["train"].map(format_pref, remove_columns=dataset["train"].column_names)
 
     #############################
     # Initialize the ORPO trainer
@@ -147,7 +143,7 @@ def main(script_args, training_args, model_args, data_config):
         args=training_args,
         train_dataset=dataset[script_args.dataset_train_split],
         eval_dataset=(dataset[script_args.dataset_test_split] if training_args.eval_strategy != "no" else None),
-        peft_config=get_peft_config(model_args),
+        #peft_config=get_peft_config(model_args),
         #callbacks=get_callbacks(training_args, model_args),
         processing_class=tokenizer,
     )
@@ -212,6 +208,6 @@ def main(script_args, training_args, model_args, data_config):
 if __name__ == "__main__":
     parser = TrlParser((ScriptArguments, ORPOConfig, ModelConfig))
     script_args, training_args, model_args, _ = parser.parse_args_and_config(return_remaining_strings=True, fail_with_unknown_args=False)
-    data_config = get_dataconfig()
-    print(f"Data Configration loaded: {data_config}")
-    main(script_args, training_args, model_args, data_config)
+    #data_config = get_dataconfig()
+    #print(f"Data Configration loaded: {data_config}")
+    main(script_args, training_args, model_args, data_config=None)

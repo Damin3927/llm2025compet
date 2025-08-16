@@ -1,6 +1,6 @@
 import logging
 import datasets
-from datasets, import DatasetDict, concatenate_dataset
+from datasets import DatasetDict, concatenate_datasets
 import json
 
 from configs import DataConfig
@@ -20,9 +20,9 @@ def get_data_from_config(config: DataConfig, seed: int=42):
     """
     loaded_dataset = [] # 読み込んだデータセットをここに追加する
 
-    print("Start loading dataset...")
+    print("データセットのロードを開始...")
     for i, dataset_info in enumerate(config.datasets):
-        print(f"  ({i+1}/{len(config.datasets)}) Loading dataset name: {dataset_info.name} ({dataset_info.config})")
+        print(f"  ({i+1}/{len(config.datasets)}) データセット名: {dataset_info.name} ({dataset_info.config})")
         # 1. スライシングを指定してデータセットをロード
         # from_idとto_idが両方指定されているかチェック
         # if dataset_info.from_id is not None and dataset_info.to_id is not None:
