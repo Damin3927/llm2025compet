@@ -68,6 +68,13 @@ setup_environment() {
     echo "[vllm_start] RAY_TMPDIR=$RAY_TMPDIR"
     echo "[vllm_start] TORCH_COMPILE_CACHE_DIR=$TORCH_COMPILE_CACHE_DIR"
     
+    # Ray/GCS の待機時間を延長（登録待ちタイムアウトを回避）
+    # ノード登録が混み合うとデフォルトだと待ちきれないことがある
+    export RAY_raylet_start_wait_time_s="${RAY_raylet_start_wait_time_s:-90}"
+    # RPC タイムアウトも長めに
+    export RAY_gcs_rpc_server_request_timeout_seconds="${RAY_gcs_rpc_server_request_timeout_seconds:-60}"
+    export RAY_GCS_RPC_SERVER_REQUEST_TIMEOUT_SECONDS="${RAY_GCS_RPC_SERVER_REQUEST_TIMEOUT_SECONDS:-60}"
+
     # Configure NCCL for multi-node communication
     # export NCCL_NET_GDR_LEVEL=SYS
     # export NCCL_P2P_LEVEL=SYS
@@ -145,16 +152,49 @@ run_ray_command() {
     if [ "$NODE_RANK" == "0" ]; then
         echo "RANK: $NODE_RANK. Starting Ray head node..."
         RAY_DISABLE_DASHBOARD=1
-        ray start --disable-usage-stats --head --include-dashboard=false --port=$RAY_HEAD_PORT --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK --temp-dir "$RAY_TMPDIR"
-        echo "Ray head node started, waiting for worker nodes to connect..."
-        sleep 10
+        ray start --disable-usage-stats --head --include-dashboard=false \
+          --port=$RAY_HEAD_PORT \
+          --node-ip-address=$VLLM_HOST_IP \
+          --num-cpus=$SLURM_CPUS_PER_TASK \
+          --temp-dir "$RAY_TMPDIR"
+
+        # ヘッド起動直後は GCS が立ち上がり切るまで待つ
+        echo "Waiting for GCS (port $RAY_HEAD_PORT) to be ready on $VLLM_HOST_IP ..."
+        for i in $(seq 1 60); do
+          python - <<PY
+import socket, sys
+s=socket.socket(); s.settimeout(1.0)
+try: s.connect(("$VLLM_HOST_IP", $RAY_HEAD_PORT)); sys.exit(0)
+except Exception: sys.exit(1)
+PY
+          test \$? -eq 0 && break
+          sleep 1
+        done
+
         echo "Checking Ray cluster status..."
         ray status
         echo "Expected: ${NNODES} nodes with ${NGPUS} GPUs each (total: $TOTAL_GPUS GPUs)"
         echo "Ray cluster ready!"
     else
         echo "RANK: $NODE_RANK. Connecting to Ray head node"
-        ray start --disable-usage-stats --block --address="${NODE0_IP}:${RAY_HEAD_PORT}" --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK --temp-dir "$RAY_TMPDIR"
+        # ヘッドの GCS に到達できるまで待つ（DNS→GCS 6379）
+        echo "Waiting for head GCS at ${NODE0_IP}:$RAY_HEAD_PORT ..."
+        for i in $(seq 1 90); do
+          getent hosts "${NODE0_IP}" >/dev/null 2>&1 || { sleep 1; continue; }
+          python - <<PY
+import socket, sys
+s=socket.socket(); s.settimeout(1.0)
+try: s.connect(("${NODE0_IP}", $RAY_HEAD_PORT)); sys.exit(0)
+except Exception: sys.exit(1)
+PY
+          test \$? -eq 0 && break
+          sleep 1
+        done
+        ray start --disable-usage-stats --block \
+          --address="${NODE0_IP}:${RAY_HEAD_PORT}" \
+          --node-ip-address=$VLLM_HOST_IP \
+          --num-cpus=$SLURM_CPUS_PER_TASK \
+          --temp-dir "$RAY_TMPDIR"
         echo "Ray worker node connected to head node"
     fi
 }
