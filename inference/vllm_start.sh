@@ -382,8 +382,6 @@ main() {
         exit 1
     fi
     
-    export VLLM_API_KEY="$api_key"
-
     # Setup environment and cluster
     setup_environment
     check_gpu_availability
