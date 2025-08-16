@@ -44,10 +44,25 @@ setup_environment() {
     # Add custom bin directory to PATH
     export PATH="$HOME/.bin:$PATH"
     
-    # Set HuggingFace cache directory
-    export HF_HOME="${HF_HOME:-/tmp/$USER/huggingface}"
-    export TORCH_COMPILE_CACHE_DIR="${TORCH_COMPILE_CACHE_DIR:-/tmp/$USER/torch_compile}"
-    mkdir -p "$HF_HOME" "$TORCH_COMPILE_CACHE_DIR"
+    # Caches & tmp: move OFF /tmp to a larger FS
+    # Prefer $DATA_SCRATCH > $SCRATCH > $HOME (既に環境にあれば自動採用)
+    DATA_SCRATCH="${DATA_SCRATCH:-${SCRATCH:-$HOME}}"
+
+    # Hugging Face caches (both new & legacy envs)
+    export HF_HOME="${HF_HOME:-$DATA_SCRATCH/.cache/huggingface}"
+    export HF_HUB_CACHE="${HF_HUB_CACHE:-$HF_HOME}"
+
+    # Torch compile cache
+    export TORCH_COMPILE_CACHE_DIR="${TORCH_COMPILE_CACHE_DIR:-$DATA_SCRATCH/.cache/torch_compile}"
+
+    # Ray temp dir 
+    export RAY_TMPDIR="${RAY_TMPDIR:-$DATA_SCRATCH/.ray_tmp}"
+    export TMPDIR="$RAY_TMPDIR"
+
+    mkdir -p "$HF_HOME" "$TORCH_COMPILE_CACHE_DIR" "$RAY_TMPDIR"
+    chmod 700 "$RAY_TMPDIR"
+    echo "[vllm_start] HF_HOME=$HF_HOME"
+    echo "[vllm_start] RAY_TMPDIR=$RAY_TMPDIR  TMPDIR=$TMPDIR"
     
     # Configure NCCL for multi-node communication
     # export NCCL_NET_GDR_LEVEL=SYS
@@ -84,13 +99,6 @@ setup_environment() {
     #export HIP_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
     export NUMEXPR_MAX_THREADS=$SLURM_CPUS_PER_TASK
     unset ROCR_VISIBLE_DEVICES
-
-    # Ray temp dir をユーザー専用に固定
-    export RAY_TMPDIR="${RAY_TMPDIR:-/tmp/$USER/ray_tmp}"
-    export TMPDIR="$RAY_TMPDIR"
-    mkdir -p "$RAY_TMPDIR"    # 各ノードで生成
-    chmod 700 "$RAY_TMPDIR"
-    echo "[vllm_start] Using RAY_TMPDIR=$RAY_TMPDIR"
 
     ulimit -v unlimited
     ulimit -m unlimited
