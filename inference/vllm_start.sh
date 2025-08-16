@@ -123,7 +123,15 @@ get_cluster_info() {
     if ! [ "$NODE_RANK" == "0" ]; then
         HEAD_NODE_HOSTNAME=$(echo "$NODELIST" | head -n 1 | awk '{print $1}')
         echo head_node: $HEAD_NODE_HOSTNAME
+        # まずは <hostname>gw を解決、ダメなら素の hostname を解決
         NODE0_IP=$(getent hosts "${HEAD_NODE_HOSTNAME}gw" | awk '{print $1}')
+        if [[ -z "$NODE0_IP" ]]; then
+            NODE0_IP=$(getent hosts "$HEAD_NODE_HOSTNAME" | awk '{print $1}')
+        fi
+        if [[ -z "$NODE0_IP" ]]; then
+            echo "ERROR: failed to resolve head node IP for $HEAD_NODE_HOSTNAME" >&2
+            exit 1
+        fi
         echo node0-ip: $NODE0_IP
     fi
 }
@@ -136,7 +144,8 @@ run_ray_command() {
     
     if [ "$NODE_RANK" == "0" ]; then
         echo "RANK: $NODE_RANK. Starting Ray head node..."
-        ray start --disable-usage-stats --head --port=$RAY_HEAD_PORT --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK --temp-dir "$RAY_TMPDIR"
+        RAY_DISABLE_DASHBOARD=1
+        ray start --disable-usage-stats --head --include-dashboard=false --port=$RAY_HEAD_PORT --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK --temp-dir "$RAY_TMPDIR"
         echo "Ray head node started, waiting for worker nodes to connect..."
         sleep 10
         echo "Checking Ray cluster status..."
