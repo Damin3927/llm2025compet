@@ -57,7 +57,7 @@ setup_environment() {
     export TORCH_COMPILE_CACHE_DIR="${TORCH_COMPILE_CACHE_DIR:-$DATA_SCRATCH/.cache/torch_compile}"
 
     # Ray の一時領域も /tmp から退避
-    export RAY_TMPDIR="${RAY_TMPDIR:-/tmp/ray_$USER}"
+    export RAY_TMPDIR="${RAY_TMPDIR:-/tmp/ray-${SLURM_JOB_ID:-$USER}}"
     export TMPDIR="$RAY_TMPDIR"
 
     # Ray の初期化待ち時間を延長（デフォルトだと GCS 準備より先に問い合わせて失敗することがある）
@@ -251,7 +251,9 @@ run_vllm() {
     fi
 
     export RAY_ADDRESS=auto   # ← 追加：既存の Ray クラスタに接続
-    vllm serve "${lora_args[@]}" "${ep_args[@]}" --dtype auto --api-key "$VLLM_API_KEY" \
+    vllm serve "${lora_args[@]}" "${ep_args[@]}" \
+        --enable-lora --max-loras "${MAX_LORAS:-4}" --max-lora-rank "${MAX_LORA_RANK:-16}" \
+        --dtype auto --api-key "$VLLM_API_KEY" \
         --download-dir "$HF_HOME" \
         --tensor-parallel-size $NGPUS \
         --pipeline-parallel-size $NNODES \
@@ -380,6 +382,8 @@ main() {
         exit 1
     fi
     
+    export VLLM_API_KEY="$api_key"
+
     # Setup environment and cluster
     setup_environment
     check_gpu_availability
