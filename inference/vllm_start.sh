@@ -60,6 +60,9 @@ setup_environment() {
     export RAY_TMPDIR="${RAY_TMPDIR:-$DATA_SCRATCH/.ray_tmp}"
     export TMPDIR="$RAY_TMPDIR"
 
+    # Ray の初期化待ち時間を延長（デフォルトだと GCS 準備より先に問い合わせて失敗することがある）
+    export RAY_raylet_start_wait_time_s="${RAY_raylet_start_wait_time_s:-120}"
+
     # ディレクトリ作成
     mkdir -p "$HF_HOME" "$TORCH_COMPILE_CACHE_DIR" "$RAY_TMPDIR"
     chmod 700 "$RAY_TMPDIR" 2>/dev/null || true
@@ -157,11 +160,11 @@ run_ray_command() {
           --port="$RAY_HEAD_PORT" \
           --node-ip-address="$VLLM_HOST_IP" \
           --num-cpus="$SLURM_CPUS_PER_TASK" \
-          --num-gpus="$NGPUS" \
-          --temp-dir "$RAY_TMPDIR"
+          --num-gpus="$NGPUS"
 
-        echo "Waiting for GCS (port $RAY_HEAD_PORT) to be ready on $VLLM_HOST_IP ..."
-        for i in $(seq 1 60); do
+        # TCP 6379(LISTEN) を待つ
+        echo "Waiting for GCS TCP ($VLLM_HOST_IP:$RAY_HEAD_PORT) ..."
+        for i in $(seq 1 90); do
           if HOST="$VLLM_HOST_IP" PORT="$RAY_HEAD_PORT" python - <<'PY'
 import os, socket, sys
 host = os.environ["HOST"]; port = int(os.environ["PORT"])
@@ -175,14 +178,23 @@ PY
           sleep 1
         done
 
-        echo "Checking Ray cluster status..."
-        ray status
+        # GCS 自体の初期化完了を確認（ray status が成功するまで待機）
+        echo "Waiting for ray status to succeed ..."
+        for i in $(seq 1 60); do
+          if ray status >/dev/null 2>&1; then
+            break
+          fi
+          sleep 1
+        done
+
+        echo "Ray cluster status (head):"
+        ray status || true
         echo "Expected: ${NNODES} nodes with ${NGPUS} GPUs each (total: $TOTAL_GPUS GPUs)"
         echo "Ray cluster ready!"
     else
         echo "RANK: $NODE_RANK. Connecting to Ray head node"
-        echo "Waiting for head GCS at ${NODE0_IP}:$RAY_HEAD_PORT ..."
-        for i in $(seq 1 90); do
+        echo "Waiting for head GCS TCP at ${NODE0_IP}:$RAY_HEAD_PORT ..."
+        for i in $(seq 1 120); do
           getent hosts "${NODE0_IP}" >/dev/null 2>&1 || { sleep 1; continue; }
           if HOST="${NODE0_IP}" PORT="$RAY_HEAD_PORT" python - <<'PY'
 import os, socket, sys
@@ -196,13 +208,18 @@ PY
           fi
           sleep 1
         done
+ 
+        # ヘッドの ray status が通るまで少し余裕を見る
+        for i in $(seq 1 30); do
+          RAY_ADDRESS="${NODE0_IP}:${RAY_HEAD_PORT}" ray status >/dev/null 2>&1 && break
+          sleep 1
+        done
 
         ray start --disable-usage-stats --block \
           --address="${NODE0_IP}:${RAY_HEAD_PORT}" \
           --node-ip-address="$VLLM_HOST_IP" \
           --num-cpus="$SLURM_CPUS_PER_TASK" \
-          --num-gpus="$NGPUS" \
-          --temp-dir "$RAY_TMPDIR"
+          --num-gpus="$NGPUS"
         echo "Ray worker node connected to head node"
     fi
 }
