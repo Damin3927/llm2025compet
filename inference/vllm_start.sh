@@ -163,7 +163,8 @@ run_vllm() {
     if [[ "${ENABLE_EP:-0}" == "1" ]]; then
         ep_args+=( --enable-expert-parallel )
     fi
-export RAY_ADDRESS=auto   # ← 追加：既存の Ray クラスタに接続
+    
+    export RAY_ADDRESS=auto   # ← 追加：既存の Ray クラスタに接続
     vllm serve "${lora_args[@]}" "${ep_args[@]}" --dtype auto --api-key "$VLLM_API_KEY" \
         --tensor-parallel-size $NGPUS \
         --pipeline-parallel-size $NNODES \
