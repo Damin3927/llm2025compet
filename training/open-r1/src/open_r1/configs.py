@@ -329,3 +329,24 @@ class GRPOScriptArguments(ScriptArguments):
         default=4096,
         metadata={"help": "Minimum number of characters in completion."},
     )
+
+@dataclass
+class DatasetClass:
+    """
+    個々のデータセット設定を表すデータクラス
+    """
+    name: str = None
+    config: str = "default"
+    split: str = "train"
+    instruction_field: str = "question" # モデルに入力するテキスト
+    chosen_field: str = "preferred_output" # 正例のカラム名
+    rejected_field: str = "non_preferred_output" # 負例のカラム名
+    from_id: int = None # 学習に使うデータの最初のインデックス
+    to_id: int = None # 学習に使うデータの末尾のインデックス
+
+@dataclass
+class DataConfig:
+    """
+    データセット設定のリスト全体を保持するデータクラス
+    """
+    datasets: list[DatasetClass] = field(default_factory=list, metadata={"help": "List of dataset configurations."})
