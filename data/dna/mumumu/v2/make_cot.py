@@ -22,6 +22,9 @@ def main():
         script_dir = os.path.dirname(os.path.abspath(__file__))
         data_path = os.path.join(script_dir, "vanilla_harmful.jsonl")
         df_selected = pd.read_json(data_path, lines=True)
+        df_selected = df_selected.rename(columns={"question": "problem"})       
+        df_selected["output"] = ""  
+        
     except Exception as e:
         logger.error(f"Failed to load datasets: {e}")
         sys.exit(1)
