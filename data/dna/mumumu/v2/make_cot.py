@@ -1,16 +1,17 @@
+import torch.multiprocessing as mp
+import json
+import os
+from vllm import LLM, SamplingParams
+import sys
+import logging
+import pandas as pd
+import torch
+import multiprocessing as mp
+import numpy as np
+import torch
+    
 def main():
-    import json
-    import os
-    from vllm import LLM, SamplingParams
-    import sys
-    import logging
-    import pandas as pd
-    import torch
-    import multiprocessing as mp
-    import numpy as np
-    import torch
-    import torch.multiprocessing as mp
-
+   
     # ログ設定
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     logger = logging.getLogger(__name__)
