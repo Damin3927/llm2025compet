@@ -149,30 +149,25 @@ run_ray_command() {
     local api_key="$2"
     export TOTAL_GPUS=$((NGPUS * NNODES))
     echo "cpus_per_task: $SLURM_CPUS_PER_TASK"
-    
-    if [ "$NODE_RANK" == "0" ]; then
+
+    if [ "$NODE_RANK" = "0" ]; then
         echo "RANK: $NODE_RANK. Starting Ray head node..."
         RAY_DISABLE_DASHBOARD=1
         ray start --disable-usage-stats --head --include-dashboard=false \
-          --port=$RAY_HEAD_PORT \
-          --node-ip-address=$VLLM_HOST_IP \
-          --num-cpus=$SLURM_CPUS_PER_TASK \
-          --num-gpus=$NGPUS \
+          --port="$RAY_HEAD_PORT" \
+          --node-ip-address="$VLLM_HOST_IP" \
+          --num-cpus="$SLURM_CPUS_PER_TASK" \
+          --num-gpus="$NGPUS" \
           --temp-dir "$RAY_TMPDIR"
 
-        # ヘッド起動直後は GCS が立ち上がり切るまで待つ
         echo "Waiting for GCS (port $RAY_HEAD_PORT) to be ready on $VLLM_HOST_IP ..."
         for i in $(seq 1 60); do
-          HOST="$VLLM_HOST_IP" PORT="$RAY_HEAD_PORT" python - <<'PY'
+          if HOST="$VLLM_HOST_IP" PORT="$RAY_HEAD_PORT" python - <<'PY'
 import os, socket, sys
-host = os.environ["HOST"]
-port = int(os.environ["PORT"])
-s = socket.socket()
-s.settimeout(1.0)
-try:
-    s.connect((host, port)); sys.exit(0)
-except Exception:
-    sys.exit(1)
+host = os.environ["HOST"]; port = int(os.environ["PORT"])
+s = socket.socket(); s.settimeout(1.0)
+try: s.connect((host, port)); sys.exit(0)
+except Exception: sys.exit(1)
 PY
           then
             break
@@ -186,31 +181,27 @@ PY
         echo "Ray cluster ready!"
     else
         echo "RANK: $NODE_RANK. Connecting to Ray head node"
-        # ヘッドの GCS に到達できるまで待つ（DNS→GCS 6379）
         echo "Waiting for head GCS at ${NODE0_IP}:$RAY_HEAD_PORT ..."
         for i in $(seq 1 90); do
           getent hosts "${NODE0_IP}" >/dev/null 2>&1 || { sleep 1; continue; }
-          HOST="${NODE0_IP}" PORT="$RAY_HEAD_PORT" python - <<'PY'
+          if HOST="${NODE0_IP}" PORT="$RAY_HEAD_PORT" python - <<'PY'
 import os, socket, sys
-host = os.environ["HOST"]
-port = int(os.environ["PORT"])
-s = socket.socket()
-s.settimeout(1.0)
-try:
-    s.connect((host, port)); sys.exit(0)
-except Exception:
-    sys.exit(1)
+host = os.environ["HOST"]; port = int(os.environ["PORT"])
+s = socket.socket(); s.settimeout(1.0)
+try: s.connect((host, port)); sys.exit(0)
+except Exception: sys.exit(1)
 PY
           then
             break
           fi
           sleep 1
         done
+
         ray start --disable-usage-stats --block \
           --address="${NODE0_IP}:${RAY_HEAD_PORT}" \
-          --node-ip-address=$VLLM_HOST_IP \
-          --num-cpus=$SLURM_CPUS_PER_TASK \
-          --num-gpus=$NGPUS \
+          --node-ip-address="$VLLM_HOST_IP" \
+          --num-cpus="$SLURM_CPUS_PER_TASK" \
+          --num-gpus="$NGPUS" \
           --temp-dir "$RAY_TMPDIR"
         echo "Ray worker node connected to head node"
     fi
