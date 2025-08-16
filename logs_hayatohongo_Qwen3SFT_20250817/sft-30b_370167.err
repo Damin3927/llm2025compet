@@ -1,0 +1,131 @@
+W0817 05:00:23.699000 1137392 torch/distributed/run.py:784] master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+W0817 05:00:23.700000 1137392 torch/distributed/run.py:792] 
+W0817 05:00:23.700000 1137392 torch/distributed/run.py:792] *****************************************
+W0817 05:00:23.700000 1137392 torch/distributed/run.py:792] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0817 05:00:23.700000 1137392 torch/distributed/run.py:792] *****************************************
+Found cached dataset hle_sft_open_thoughts-114k (/home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605)
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8fff6bb52ea27ace_*_of_00001.arrow
+Loading cached shuffled indices for dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1eeda50561e2fa07.arrow
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 05:00:48,518 >> loading file vocab.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/vocab.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 05:00:48,518 >> loading file merges.txt from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/merges.txt
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 05:00:48,518 >> loading file tokenizer.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/tokenizer.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 05:00:48,518 >> loading file added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 05:00:48,518 >> loading file special_tokens_map.json from cache at None
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 05:00:48,518 >> loading file tokenizer_config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 05:00:48,518 >> loading file chat_template.jinja from cache at None
+[INFO|tokenization_utils_base.py:2280] 2025-08-17 05:00:48,808 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|configuration_utils.py:752] 2025-08-17 05:00:48,984 >> loading configuration file config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/config.json
+[INFO|configuration_utils.py:817] 2025-08-17 05:00:48,985 >> Model config Qwen3MoeConfig {
+  "architectures": [
+    "Qwen3MoeForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "decoder_sparse_step": 1,
+  "eos_token_id": 151645,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 2048,
+  "initializer_range": 0.02,
+  "intermediate_size": 6144,
+  "max_position_embeddings": 40960,
+  "max_window_layers": 48,
+  "mlp_only_layers": [],
+  "model_type": "qwen3_moe",
+  "moe_intermediate_size": 768,
+  "norm_topk_prob": true,
+  "num_attention_heads": 32,
+  "num_experts": 128,
+  "num_experts_per_tok": 8,
+  "num_hidden_layers": 48,
+  "num_key_value_heads": 4,
+  "output_router_logits": false,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": null,
+  "rope_theta": 1000000.0,
+  "router_aux_loss_coef": 0.001,
+  "sliding_window": null,
+  "tie_word_embeddings": false,
+  "torch_dtype": "bfloat16",
+  "transformers_version": "4.54.1",
+  "use_cache": true,
+  "use_sliding_window": false,
+  "vocab_size": 151936
+}
+
+[INFO|modeling_utils.py:1271] 2025-08-17 05:00:49,470 >> loading weights file model.safetensors from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/model.safetensors.index.json
+[INFO|modeling_utils.py:2374] 2025-08-17 05:00:49,482 >> Instantiating Qwen3MoeForCausalLM model under default dtype torch.bfloat16.
+[INFO|modeling_utils.py:4306] 2025-08-17 05:00:49,482 >> Detected DeepSpeed ZeRO-3: activating zero.init() for this model
+[INFO|configuration_utils.py:1103] 2025-08-17 05:00:49,492 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "eos_token_id": 151645
+}
+
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:30,  6.05s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:05<01:28,  5.92s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:05<01:28,  5.92s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:30,  6.06s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:05<01:29,  6.00s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:05<01:29,  5.94s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:30,  6.02s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:35,  6.34s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:10<01:15,  5.41s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:10<01:15,  5.41s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:11<01:16,  5.47s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:10<01:15,  5.42s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:11<01:16,  5.47s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:11<01:16,  5.45s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:11<01:16,  5.46s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:11<01:17,  5.53s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:17<01:19,  6.09s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:17<01:19,  6.09s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:18<01:19,  6.12s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:18<01:19,  6.12s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:17<01:19,  6.09s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:17<01:19,  6.11s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:17<01:19,  6.11s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:18<01:20,  6.19s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:24<01:17,  6.42s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:24<01:16,  6.41s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:24<01:16,  6.41s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:24<01:17,  6.42s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:24<01:16,  6.41s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:24<01:16,  6.42s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:24<01:17,  6.42s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:25<01:17,  6.45s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:31<01:12,  6.58s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:31<01:12,  6.58s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:31<01:12,  6.59s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:31<01:12,  6.58s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:31<01:12,  6.59s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:31<01:12,  6.58s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:31<01:12,  6.58s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:32<01:12,  6.61s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:37<01:02,  6.29s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:37<01:02,  6.29s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:37<01:02,  6.29s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:37<01:02,  6.28s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:37<01:02,  6.29s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:37<01:02,  6.30s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:37<01:02,  6.29s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:37<01:03,  6.31s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:44<00:58,  6.49s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:44<00:58,  6.50s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:44<00:58,  6.49s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:44<00:58,  6.49s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:44<00:58,  6.49s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:44<00:58,  6.49s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:44<00:58,  6.49s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:44<00:58,  6.50s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:49<00:49,  6.13s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:49<00:49,  6.13s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:49<00:49,  6.13s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:49<00:49,  6.13s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:49<00:49,  6.13s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:49<00:49,  6.13s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:49<00:49,  6.13s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:50<00:49,  6.15s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:55<00:42,  6.04s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:55<00:42,  6.04s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:55<00:42,  6.04s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:55<00:42,  6.04s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:55<00:42,  6.04s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:55<00:42,  6.04s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:55<00:42,  6.04s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:55<00:42,  6.04s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [01:02<00:37,  6.25s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [01:02<00:37,  6.25s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [01:02<00:37,  6.25s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [01:02<00:37,  6.25s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [01:02<00:37,  6.25s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [01:02<00:37,  6.25s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [01:02<00:37,  6.25s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [01:02<00:37,  6.26s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [01:09<00:32,  6.45s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [01:09<00:32,  6.45s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [01:09<00:32,  6.45s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [01:09<00:32,  6.45s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [01:09<00:32,  6.45s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [01:09<00:32,  6.45s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [01:09<00:32,  6.44s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [01:09<00:32,  6.45s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:14<00:24,  6.23s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:14<00:24,  6.23s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:14<00:24,  6.23s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:14<00:24,  6.23s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:14<00:24,  6.23s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:14<00:24,  6.23s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:14<00:24,  6.22s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:15<00:24,  6.22s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:21<00:18,  6.30s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:21<00:18,  6.30s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:21<00:18,  6.30s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:21<00:18,  6.30s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:21<00:18,  6.30s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:21<00:18,  6.30s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:21<00:18,  6.29s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:21<00:18,  6.31s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:27<00:12,  6.35s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:27<00:12,  6.35s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:27<00:12,  6.35s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:27<00:12,  6.35s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:27<00:12,  6.35s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:27<00:12,  6.34s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:27<00:12,  6.34s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:28<00:12,  6.35s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:34<00:06,  6.50s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:34<00:06,  6.50s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:34<00:06,  6.50s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:34<00:06,  6.49s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:34<00:06,  6.49s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:34<00:06,  6.49s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:34<00:06,  6.49s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:34<00:06,  6.50s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  4.79s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  4.79s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  4.79s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  4.79s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  4.79s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  5.96s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  5.97s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  4.79s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  5.96s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  5.96s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  4.79s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  5.97s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  5.97s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:35<00:00,  5.97s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:36<00:00,  4.89s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:36<00:00,  6.01s/it]
+[INFO|modeling_utils.py:5541] 2025-08-17 05:02:38,558 >> All model checkpoint weights were used when initializing Qwen3MoeForCausalLM.
+
+[INFO|modeling_utils.py:5549] 2025-08-17 05:02:38,559 >> All the weights of Qwen3MoeForCausalLM were initialized from the model checkpoint at Qwen/Qwen3-30B-A3B.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use Qwen3MoeForCausalLM for predictions without further training.
+[INFO|configuration_utils.py:1058] 2025-08-17 05:02:38,861 >> loading configuration file generation_config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/generation_config.json
+[INFO|configuration_utils.py:1103] 2025-08-17 05:02:38,861 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "do_sample": true,
+  "eos_token_id": [
+    151645,
+    151643
+  ],
+  "pad_token_id": 151643,
+  "temperature": 0.6,
+  "top_k": 20,
+  "top_p": 0.95
+}
+
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_*_of_00012.arrow
+Concatenating 12 shards
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-c5c2464556b718ef_*_of_00012.arrow
+Concatenating 12 shards
+[INFO|trainer.py:707] 2025-08-17 05:02:39,475 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:757] 2025-08-17 05:02:39,475 >> Using auto half precision backend
+[INFO|deepspeed.py:492] 2025-08-17 05:03:25,067 >> Attempting to resume from data/Qwen3-30B-test/checkpoint-3
+[INFO|trainer.py:2432] 2025-08-17 05:04:26,593 >> ***** Running training *****
+[INFO|trainer.py:2433] 2025-08-17 05:04:26,593 >>   Num examples = 6,000
+[INFO|trainer.py:2434] 2025-08-17 05:04:26,593 >>   Num Epochs = 1
+[INFO|trainer.py:2435] 2025-08-17 05:04:26,593 >>   Instantaneous batch size per device = 1
+[INFO|trainer.py:2438] 2025-08-17 05:04:26,593 >>   Total train batch size (w. parallel, distributed & accumulation) = 64
+[INFO|trainer.py:2439] 2025-08-17 05:04:26,593 >>   Gradient Accumulation steps = 8
+[INFO|trainer.py:2440] 2025-08-17 05:04:26,593 >>   Total optimization steps = 3
+[INFO|trainer.py:2441] 2025-08-17 05:04:26,652 >>   Number of trainable parameters = 30,532,122,624
+[INFO|trainer.py:2463] 2025-08-17 05:04:26,653 >>   Continuing training from checkpoint, will skip to saved global_step
+[INFO|trainer.py:2464] 2025-08-17 05:04:26,653 >>   Continuing training from epoch 0
+[INFO|trainer.py:2465] 2025-08-17 05:04:26,653 >>   Continuing training from global step 3
+[INFO|trainer.py:2467] 2025-08-17 05:04:26,653 >>   Will skip the first 0 epochs then the first 24 batches in the first epoch.
+  0%|          | 0/3 [00:00<?, ?it/s]4it [01:48, 27.17s/it]                                     4it [01:48, 27.17s/it][INFO|trainer.py:4069] 2025-08-17 05:06:55,794 >> Saving model checkpoint to data/Qwen3-30B-test/checkpoint-4
+[INFO|configuration_utils.py:478] 2025-08-17 05:06:55,798 >> Configuration saved in data/Qwen3-30B-test/checkpoint-4/config.json
+[INFO|configuration_utils.py:874] 2025-08-17 05:06:55,799 >> Configuration saved in data/Qwen3-30B-test/checkpoint-4/generation_config.json
+[INFO|modeling_utils.py:4123] 2025-08-17 05:07:42,088 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 13 checkpoint shards. You can find where each parameters has been saved in the index located at data/Qwen3-30B-test/checkpoint-4/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2337] 2025-08-17 05:07:42,098 >> chat template saved in data/Qwen3-30B-test/checkpoint-4/chat_template.jinja
+[INFO|tokenization_utils_base.py:2506] 2025-08-17 05:07:42,101 >> tokenizer config file saved in data/Qwen3-30B-test/checkpoint-4/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2515] 2025-08-17 05:07:42,103 >> Special tokens file saved in data/Qwen3-30B-test/checkpoint-4/special_tokens_map.json
+[INFO|trainer.py:4178] 2025-08-17 05:09:06,837 >> Deleting older checkpoint [data/Qwen3-30B-test/checkpoint-3] due to args.save_total_limit
+[INFO|trainer.py:2714] 2025-08-17 05:09:37,771 >> 
+
+Training completed. Do not forget to share your model on huggingface.co/models =)
+
+
+                      4it [05:11, 27.17s/it]4it [05:11, 77.77s/it]
+[INFO|trainer.py:4069] 2025-08-17 05:10:16,657 >> Saving model checkpoint to data/Qwen3-30B-test
+[INFO|configuration_utils.py:478] 2025-08-17 05:10:16,662 >> Configuration saved in data/Qwen3-30B-test/config.json
+[INFO|configuration_utils.py:874] 2025-08-17 05:10:16,663 >> Configuration saved in data/Qwen3-30B-test/generation_config.json
+[INFO|modeling_utils.py:4123] 2025-08-17 05:11:04,584 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 13 checkpoint shards. You can find where each parameters has been saved in the index located at data/Qwen3-30B-test/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2337] 2025-08-17 05:11:04,587 >> chat template saved in data/Qwen3-30B-test/chat_template.jinja
+[INFO|tokenization_utils_base.py:2506] 2025-08-17 05:11:04,589 >> tokenizer config file saved in data/Qwen3-30B-test/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2515] 2025-08-17 05:11:04,590 >> Special tokens file saved in data/Qwen3-30B-test/special_tokens_map.json
+[INFO|configuration_utils.py:478] 2025-08-17 05:11:05,159 >> Configuration saved in data/Qwen3-30B-test/config.json
