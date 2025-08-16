@@ -5,6 +5,7 @@
 # Supports model and container image downloading
 
 set -euo pipefail
+shopt -s lastpipe || true
 
 # =============================================================================
 # Configuration Variables
@@ -156,18 +157,22 @@ run_ray_command() {
           --port=$RAY_HEAD_PORT \
           --node-ip-address=$VLLM_HOST_IP \
           --num-cpus=$SLURM_CPUS_PER_TASK \
+          --num-gpus=$NGPUS \
           --temp-dir "$RAY_TMPDIR"
 
         # ヘッド起動直後は GCS が立ち上がり切るまで待つ
         echo "Waiting for GCS (port $RAY_HEAD_PORT) to be ready on $VLLM_HOST_IP ..."
         for i in $(seq 1 60); do
-          python - <<PY
+          if python - <<'PY'
 import socket, sys
 s=socket.socket(); s.settimeout(1.0)
-try: s.connect(("$VLLM_HOST_IP", $RAY_HEAD_PORT)); sys.exit(0)
-except Exception: sys.exit(1)
+try:
+    s.connect(("'"$VLLM_HOST_IP"'", int("'"$RAY_HEAD_PORT"'")))
+    sys.exit(0)
+except Exception:
+    sys.exit(1)
 PY
-          test \$? -eq 0 && break
+          then break; fi
           sleep 1
         done
 
@@ -181,19 +186,23 @@ PY
         echo "Waiting for head GCS at ${NODE0_IP}:$RAY_HEAD_PORT ..."
         for i in $(seq 1 90); do
           getent hosts "${NODE0_IP}" >/dev/null 2>&1 || { sleep 1; continue; }
-          python - <<PY
+          if python - <<'PY'
 import socket, sys
 s=socket.socket(); s.settimeout(1.0)
-try: s.connect(("${NODE0_IP}", $RAY_HEAD_PORT)); sys.exit(0)
-except Exception: sys.exit(1)
+try:
+    s.connect(("'"$NODE0_IP"'", int("'"$RAY_HEAD_PORT"'")))
+    sys.exit(0)
+except Exception:
+    sys.exit(1)
 PY
-          test \$? -eq 0 && break
+          then break; fi
           sleep 1
         done
         ray start --disable-usage-stats --block \
           --address="${NODE0_IP}:${RAY_HEAD_PORT}" \
           --node-ip-address=$VLLM_HOST_IP \
           --num-cpus=$SLURM_CPUS_PER_TASK \
+          --num-gpus=$NGPUS \
           --temp-dir "$RAY_TMPDIR"
         echo "Ray worker node connected to head node"
     fi
