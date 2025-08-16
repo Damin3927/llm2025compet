@@ -97,7 +97,10 @@ setup_environment() {
 }
 
 get_cluster_info() {
-    export VLLM_HOST_IP=$(ip -4 -o addr show bond0 | awk '{print $4}' | cut -d/ -f1)
+    export VLLM_HOST_IP=$(ip -4 -o addr show bond0 2>/dev/null | awk '{print $4}' | cut -d/ -f1)
+    if [[ -z "$VLLM_HOST_IP" ]]; then
+        VLLM_HOST_IP=$(hostname -I | awk '{print $1}')
+    fi
 
     # Get SLURM cluster information
     NODELIST=$(scontrol show hostnames "$SLURM_JOB_NODELIST")
@@ -160,11 +163,12 @@ run_vllm() {
     if [[ "${ENABLE_EP:-0}" == "1" ]]; then
         ep_args+=( --enable-expert-parallel )
     fi
-
+export RAY_ADDRESS=auto   # ← 追加：既存の Ray クラスタに接続
     vllm serve "${lora_args[@]}" "${ep_args[@]}" --dtype auto --api-key "$VLLM_API_KEY" \
         --tensor-parallel-size $NGPUS \
         --pipeline-parallel-size $NNODES \
         --distributed-executor-backend ray \
+        --ray-address auto \
         --trust-remote-code \
         "${model_path}"
 }
