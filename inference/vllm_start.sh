@@ -56,8 +56,8 @@ setup_environment() {
     # Torch compile cache
     export TORCH_COMPILE_CACHE_DIR="${TORCH_COMPILE_CACHE_DIR:-$DATA_SCRATCH/.cache/torch_compile}"
 
-    # Ray の一時領域も /tmp から退避（※ヘッドが定める temp-dir に整合）
-    export RAY_TMPDIR="${RAY_TMPDIR:-$DATA_SCRATCH/.ray_tmp}"
+    # Ray の一時領域も /tmp から退避
+    export RAY_TMPDIR="${RAY_TMPDIR:-/tmp/ray_$USER}"
     export TMPDIR="$RAY_TMPDIR"
 
     # Ray の初期化待ち時間を延長（デフォルトだと GCS 準備より先に問い合わせて失敗することがある）
