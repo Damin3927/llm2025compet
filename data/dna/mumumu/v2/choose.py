@@ -12,7 +12,7 @@ def main():
     logger = logging.getLogger(__name__)
     
     # ファイルパス
-    input_file = "../v1/vanilla_with_cot_vllm_cot_extracted.jsonl"
+    input_file = "../v2/vanilla_with_cot_vllm_cot_extracted.jsonl"
     output_file = "selected_cot_1200.jsonl"
     
     try:
