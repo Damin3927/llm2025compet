@@ -20,6 +20,8 @@ import logging
 import os
 import sys
 from dataclasses import dataclass, field
+import yaml
+import datetime
 
 import datasets
 import transformers
@@ -29,13 +31,37 @@ from transformers.trainer_utils import get_last_checkpoint
 from open_r1.utils import get_dataset, get_model, get_tokenizer
 from open_r1.utils.callbacks import get_callbacks
 from open_r1.utils.wandb_logging import init_wandb_training
+from open_r1.get_data import get_data_from_config
+
+def load_config_from_yaml(file_path: str) -> DataConfig:
+    """
+    Loads dataset configurations from a YAML file.
+    """
+    print(f"⚙️  Loading configuration from: {file_path}")
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = yaml.safe_load(f)
+
+    # Map the list of dicts from YAML to a list of DatasetClass dataclass instances
+    dataset_configs = [DatasetClass(**item) for item in data['neko_sft_datasets']]
+    return DataConfig(datasets=dataset_configs)
+
+def get_dataconfig():
+    parser = argparse.ArgumentParser(description="Load and combine datasets from a YAML configuration file.")
+    parser.add_argument(
+        "--dataconfig",
+        type=str,
+        required=True,
+        help="Path to the YAML data configuration file."
+    )
+    args, _ = parser.parse_known_args()
+    return load_config_from_yaml(args.dataconfig)
 
 # TRL の DPO 用ライブラリ
 from trl import ORPOConfig, ORPOTrainer, ModelConfig, TrlParser, ScriptArguments, get_peft_config
 
 logger = logging.getLogger(__name__)
 
-def main(script_args, training_args, model_args):
+def main(script_args, training_args, model_args, data_config):
     # Set seed for reproducibility
     set_seed(training_args.seed)
 
@@ -70,13 +96,18 @@ def main(script_args, training_args, model_args):
     if last_checkpoint is not None and training_args.resume_from_checkpoint is None:
         logger.info(f"Checkpoint detected, resuming training at {last_checkpoint=}.")
 
-    #if "wandb" in training_args.report_to:
-    #    init_wandb_training(training_args)
+    if "wandb" in training_args.report_to:
+        init_wandb_training(training_args)
 
-    # Load the dataset
+    ################
+    # Load Dataset
+    ################
     logger.info("*** Loading dataset ***")
-    logger.info(f"Loading dataset: {script_args.dataset_name}")
-    dataset = datasets.load_dataset(script_args.dataset_name, script_args.dataset_config)
+    if data_config is None:
+        logger.info(f"Loading dataset: {script_args.dataset_name}")
+        dataset = datasets.load_dataset(script_args.dataset_name, script_args.dataset_config)
+    else:
+        dataset = get_data_from_config(data_config)
     # dataset = get_dataset(script_args)
 
     ################
@@ -91,47 +122,21 @@ def main(script_args, training_args, model_args):
     logger.info("*** Loading model ***")
     model = get_model(model_args, training_args)
 
-    # Format into conversation 
-    """
-    def make_conversation(example, prompt_column: str = script_args.dataset_prompt_column):
-        prompt = []
-
-        if training_args.system_prompt is not None:
-            prompt.append({"role": "system", "content": training_args.system_prompt})
-
-        if prompt_column not in example:
-            raise ValueError(f"Dataset Question Field Error: {prompt_column} is not supported.")
-
-        prompt.append({"role": "user", "content": example[prompt_column]})
-        return {"prompt": prompt}
-
-    dataset = dataset.map(make_conversation)
-    """
     # Format into pariwise preference
     def format_pref(example, tokenizer=tokenizer):
-        prompt = tokenizer.apply_chat_template(
-            [{"role": "user", "content": example["instruction"]}],
-            tokenize=False,
-            add_generation_prompt=True,
-        )
         # todo: 本学習の際にはキーを "question" "preferred_output", "non_preferred_output" に書き換える
-        """return {
+        return {
             "prompt": example["question"],
             "chosen": example["preferred_output"],
             "rejected": example["non_preferred_output"]
-        }"""
-        return {
-            "prompt": prompt,
+        }
+        """return {
+            "prompt": example["question"],
             "chosen": example["chosen_response"]+tokenizer.eos_token,
             "rejected": example["rejected_response"]+tokenizer.eos_token
-        }
+        }"""
     
     dataset["train"] = dataset["train"].map(format_pref, remove_columns=dataset["train"].column_names)
-
-    # 下3行は必要ないと思われるので消してよい?
-    #for split in dataset:
-    #    if "messages" in dataset[split].column_names:
-    #        dataset[split] = dataset[split].remove_columns("messages")
 
     #############################
     # Initialize the ORPO trainer
@@ -198,12 +203,15 @@ def main(script_args, training_args, model_args):
     #############
     # push to hub
     #############
-    if training_args.push_to_hub:
-        logger.info("Pushing to hub...")
-        trainer.push_to_hub(**kwargs)
+    transformers.logging.set_verbosity_info()
+    #if training_args.push_to_hub:
+    logger.info("Pushing to hub...")
+    trainer.push_to_hub(**kwargs)
 
 
 if __name__ == "__main__":
     parser = TrlParser((ScriptArguments, ORPOConfig, ModelConfig))
-    script_args, training_args, model_args = parser.parse_args_and_config()
-    main(script_args, training_args, model_args)
+    script_args, training_args, model_args, _ = parser.parse_args_and_config(return_remaining_strings=True, fail_with_unknown_args=False)
+    data_config = get_dataconfig()
+    print(f"Data Configration loaded: {data_config}")
+    main(script_args, training_args, model_args, data_config)
