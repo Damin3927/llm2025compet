@@ -1,8 +1,8 @@
 import json
 
 # 入力ファイルと出力ファイルのパス
-input_path = "vanilla_with_cot_vllm.jsonl"
-output_path = "vanilla_with_cot_vllm_cot_extracted.jsonl"
+input_path = "selected_cot_1200.jsonl"
+output_path = "selected_cot_1200_extracted.jsonl"
 
 import json
 import re
@@ -47,15 +47,12 @@ def validate_json_file(filepath):
 
 
 def main():
-    # 入力ファイルと出力ファイルのパス
-    input_path = "vanilla_with_cot_vllm.jsonl"
-    output_path = "vanilla_with_cot_vllm_cot_extracted.jsonl"
     new_id = 0
     with open(input_path, "r", encoding="utf-8") as f_in, open(output_path, "w", encoding="utf-8") as f_out:
         for line in f_in:
             data = json.loads(line)
 
-            problem = data.get("problem", "")
+            question = data.get("question", "")
             output = data.get("output", "")
             answer = data.get("answer", "")
 
@@ -70,7 +67,7 @@ def main():
             # 加工後の新しい辞書を作成
             new_data = {
                 "id": new_id,
-                "question": problem, # problemではなくquestionに変更
+                "question": question,
                 "output": output,
                 "answer": answer,
             }
