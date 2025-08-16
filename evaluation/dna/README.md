@@ -5,12 +5,30 @@
 cd llm2025compet
 uv pip install -e .
 
-# サーバーを立ち上げる (複数サーバー立ち上げたい場合は、複数回実行)
+# サーバーを立ち上げる
 pushd inference
-./vllm_sbatch.sh --model "qwen/Qwen3-235B-A22B" --nodes 3 --gpus 8 --nodelist osk-gpu[54,56,91] --timeout 03:00:00
+./vllm_sbatch.sh \
+    --model "qwen/Qwen3-235B-A22B" \
+    --nodes 3 \
+    --gpus 8 \
+    --nodelist osk-gpu[54,56,91] \
+    --timeout 03:00:00 \
+    --expert-parallel
 popd
 
-# クライアントを立ち上げる
+# Dense + LoRA の例（Qwen3-32B）
+pushd inference
+./vllm_sbatch.sh \
+    --model "Qwen/Qwen3-32B" \
+    --nodes 3 \
+    --gpus 8 \
+    --nodelist osk-gpu[54,56,91] \
+    --timeout 03:00:00 \
+    --lora 'neko=neko-llm/Qwen3-32B-test-lora'
+popd
+
+# 指定した vLLM サーバー(単一/複数)が立ち上がるまで待ち、立ち上がったら推論が始まる
+
 pushd evaluation/dna
 python infer.py --help
 

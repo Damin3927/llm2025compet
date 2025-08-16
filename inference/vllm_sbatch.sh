@@ -32,6 +32,8 @@ Options:
     --timeout <time>        Job timeout in HH:MM:SS format (default: $DEFAULT_TIMEOUT)
     --partition <name>      SLURM partition (default: $DEFAULT_PARTITION)
     --api-key <key>         API key for vLLM server (optional)
+    --lora "<name>=<repo_or_path>[,<name2>=<...>]"  LoRA adapters (optional; passthrough)
+    --expert-parallel       Enable expert parallelism (passthrough)
     --help                  Show this help message
 
 Examples:
@@ -39,7 +41,7 @@ Examples:
     $0
     
     # Custom configuration
-    $0 --model "Qwen/Qwen3-32B" --nodes 2 --gpus 4 --timeout "04:00:00" --nodelist "osk-gpu54,osk-gpu55"
+    $0 --model "Qwen/Qwen3-32B" --nodes 2 --gpus 4 --timeout "04:00:00" --nodelist "osk-gpu54,osk-gpu55" --lora "neko=neko-llm/Qwen3-32B-test-lora"
 EOF
 }
 
@@ -81,6 +83,8 @@ generate_sbatch_script() {
     local timeout="$5"
     local partition="$6"
     local api_key="$7"
+    local lora_spec="${8:-}"
+    local expert_parallel="${9:-0}"
     
     local job_name
     job_name=$(generate_job_name "$model" "$nodes" "$gpus")
@@ -90,7 +94,13 @@ generate_sbatch_script() {
     if [[ -n "$api_key" ]]; then
         vllm_args+=" --api-key \"$api_key\""
     fi
-    
+    if [[ -n "$lora_spec" ]]; then
+        vllm_args+=" --lora \"$lora_spec\""
+    fi
+    if [[ "$expert_parallel" == "1" ]]; then
+        vllm_args+=" --expert-parallel"
+    fi
+
     # Generate the SBATCH script content
     # NOTE: cpus-per-task がシビア。2*2 gpus の場合は 32 でうまくいったが、他の構成は未検証
     cat << EOF
@@ -120,6 +130,8 @@ main() {
     local timeout="$DEFAULT_TIMEOUT"
     local partition="$DEFAULT_PARTITION"
     local api_key=""
+    local lora_spec=""
+    local expert_parallel=0
     
     # Parse command line arguments
     while [[ $# -gt 0 ]]; do
@@ -198,6 +210,18 @@ main() {
                     exit 1
                 fi
                 ;;
+            "--lora")
+                if [[ -n "${2:-}" ]]; then
+                    lora_spec="$2"
+                    shift 2
+                else
+                    echo "Error: --lora requires a spec like 'name=repo_or_path[,name2=...]'" >&2; exit 1
+                fi
+                ;;
+            "--expert-parallel")
+                expert_parallel=1
+                shift 1
+                ;;
             *)
                 echo "Unknown argument: $1" >&2
                 show_usage
@@ -229,7 +253,7 @@ main() {
     echo "Generating SBATCH script..."
     mkdir -p logs
     local sbatch_content
-    sbatch_content=$(generate_sbatch_script "$model" "$nodes" "$gpus" "$nodelist" "$timeout" "$partition" "$api_key")
+    sbatch_content=$(generate_sbatch_script "$model" "$nodes" "$gpus" "$nodelist" "$timeout" "$partition" "$api_key" "$lora_spec" "$expert_parallel")
     
     echo "Submitting job to SLURM..."
     echo "$sbatch_content" | sbatch

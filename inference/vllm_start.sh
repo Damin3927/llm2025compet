@@ -45,7 +45,9 @@ setup_environment() {
     export PATH="$HOME/.bin:$PATH"
     
     # Set HuggingFace cache directory
-    export HF_HOME="$HOME/.cache/huggingface"
+    export HF_HOME="${HF_HOME:-/tmp/$USER/huggingface}"
+    export TORCH_COMPILE_CACHE_DIR="${TORCH_COMPILE_CACHE_DIR:-/tmp/$USER/torch_compile}"
+    mkdir -p "$HF_HOME" "$TORCH_COMPILE_CACHE_DIR"
     
     # Configure NCCL for multi-node communication
     # export NCCL_NET_GDR_LEVEL=SYS
@@ -83,6 +85,13 @@ setup_environment() {
     export NUMEXPR_MAX_THREADS=$SLURM_CPUS_PER_TASK
     unset ROCR_VISIBLE_DEVICES
 
+    # Ray temp dir をユーザー専用に固定
+    export RAY_TMPDIR="${RAY_TMPDIR:-/tmp/$USER/ray_tmp}"
+    export TMPDIR="$RAY_TMPDIR"
+    mkdir -p "$RAY_TMPDIR"    # 各ノードで生成
+    chmod 700 "$RAY_TMPDIR"
+    echo "[vllm_start] Using RAY_TMPDIR=$RAY_TMPDIR"
+
     ulimit -v unlimited
     ulimit -m unlimited
 }
@@ -112,7 +121,7 @@ run_ray_command() {
     
     if [ "$NODE_RANK" == "0" ]; then
         echo "RANK: $NODE_RANK. Starting Ray head node..."
-        ray start --disable-usage-stats --head --port=$RAY_HEAD_PORT --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK
+        ray start --disable-usage-stats --head --port=$RAY_HEAD_PORT --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK --temp-dir "$RAY_TMPDIR"
         echo "Ray head node started, waiting for worker nodes to connect..."
         sleep 10
         echo "Checking Ray cluster status..."
@@ -121,7 +130,7 @@ run_ray_command() {
         echo "Ray cluster ready!"
     else
         echo "RANK: $NODE_RANK. Connecting to Ray head node"
-        ray start --disable-usage-stats --block --address="${NODE0_IP}:${RAY_HEAD_PORT}" --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK
+        ray start --disable-usage-stats --block --address="${NODE0_IP}:${RAY_HEAD_PORT}" --node-ip-address=$VLLM_HOST_IP --num-cpus=$SLURM_CPUS_PER_TASK --temp-dir "$RAY_TMPDIR"
         echo "Ray worker node connected to head node"
     fi
 }
@@ -131,10 +140,30 @@ run_vllm() {
 
     echo "Starting VLLM server with model: $model_path"
 
-    vllm serve --dtype auto --api-key "$VLLM_API_KEY" \
+    # Build LoRA args if specified
+    local lora_args=()
+    # main の local 変数を拾えない shell でも使えるよう fallback
+    if [[ -z "${lora_spec:-}" && -n "${_LORA_SPEC:-}" ]]; then lora_spec="$_LORA_SPEC"; fi
+    if [[ -n "${lora_spec:-}" ]]; then
+        case "${VLLM_LORA_ARGSTYLE:-lora-modules}" in
+            "adapter-map")
+                lora_args=( --adapter-map "$lora_spec" )
+                ;;
+            *)
+                # vLLM の最近の CLI（name=path[,name2=path2] 形式）
+                lora_args=( --lora-modules "$lora_spec" )
+                ;;
+        esac
+    fi
+    # Build EP args only when requested
+    local ep_args=()
+    if [[ "${ENABLE_EP:-0}" == "1" ]]; then
+        ep_args+=( --enable-expert-parallel )
+    fi
+
+    vllm serve "${lora_args[@]}" "${ep_args[@]}" --dtype auto --api-key "$VLLM_API_KEY" \
         --tensor-parallel-size $NGPUS \
         --pipeline-parallel-size $NNODES \
-        --enable-expert-parallel \
         --distributed-executor-backend ray \
         --trust-remote-code \
         "${model_path}"
@@ -153,6 +182,8 @@ Options:
     --ngpus <number>        Number of GPUs per node (required)
     --model <path>          Model path to serve (default: $MODEL_PATH)
     --api-key <key>         API key for authentication (default: $VLLM_API_KEY)
+    --lora "<name>=<repo_or_path>[,<name2>=...>]"   LoRA adapters (optional)
+    --expert-parallel       Enable expert parallelism (for MoE models only; default: off)
     --help                  Show this help message
 
 Examples:
@@ -175,6 +206,8 @@ main() {
     # Initialize variables from defaults
     local model_path="$MODEL_PATH"
     local api_key="$VLLM_API_KEY"
+    local lora_spec=""
+    local enable_ep=0
     
     # Parse command line arguments
     while [[ $# -gt 0 ]]; do
@@ -223,6 +256,18 @@ main() {
                     exit 1
                 fi
                 ;;
+            "--lora")
+                if [[ -n "${2:-}" ]]; then
+                    lora_spec="$2"
+                    shift 2
+                else
+                    echo "Error: --lora requires a spec like 'name=repo_or_path[,name2=...]'" >&2; exit 1
+                fi
+                ;;
+            "--expert-parallel")
+                enable_ep=1
+                shift 1
+                ;;
             *)
                 echo "Unknown argument: $1" >&2
                 show_usage
@@ -255,7 +300,7 @@ main() {
     
     if [[ "$NODE_RANK" == "0" ]]; then
         echo "RANK: 0. Starting VLLM server..."
-        run_vllm "$model_path"
+        ENABLE_EP="$enable_ep" _LORA_SPEC="$lora_spec" run_vllm "$model_path"
     fi
 }
 
