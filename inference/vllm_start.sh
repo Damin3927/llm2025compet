@@ -174,7 +174,9 @@ try:
 except Exception:
     sys.exit(1)
 PY
-          then break; fi
+          then
+            break
+          fi
           sleep 1
         done
 
@@ -199,7 +201,9 @@ try:
 except Exception:
     sys.exit(1)
 PY
-          then break; fi
+          then
+            break
+          fi
           sleep 1
         done
         ray start --disable-usage-stats --block \
