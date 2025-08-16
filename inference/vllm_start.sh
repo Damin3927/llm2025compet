@@ -48,21 +48,25 @@ setup_environment() {
     # Prefer $DATA_SCRATCH > $SCRATCH > $HOME (既に環境にあれば自動採用)
     DATA_SCRATCH="${DATA_SCRATCH:-${SCRATCH:-$HOME}}"
 
-    # Hugging Face caches (both new & legacy envs)
+    # Hugging Face のキャッシュ（新旧どちらの環境変数でも拾えるように）
     export HF_HOME="${HF_HOME:-$DATA_SCRATCH/.cache/huggingface}"
     export HF_HUB_CACHE="${HF_HUB_CACHE:-$HF_HOME}"
 
     # Torch compile cache
     export TORCH_COMPILE_CACHE_DIR="${TORCH_COMPILE_CACHE_DIR:-$DATA_SCRATCH/.cache/torch_compile}"
 
-    # Ray temp dir 
+    # Ray の一時領域も /tmp から退避（※ヘッドが定める temp-dir に整合）
     export RAY_TMPDIR="${RAY_TMPDIR:-$DATA_SCRATCH/.ray_tmp}"
     export TMPDIR="$RAY_TMPDIR"
 
+    # ディレクトリ作成
     mkdir -p "$HF_HOME" "$TORCH_COMPILE_CACHE_DIR" "$RAY_TMPDIR"
-    chmod 700 "$RAY_TMPDIR"
+    chmod 700 "$RAY_TMPDIR" 2>/dev/null || true
+
+    # ログ
     echo "[vllm_start] HF_HOME=$HF_HOME"
-    echo "[vllm_start] RAY_TMPDIR=$RAY_TMPDIR  TMPDIR=$TMPDIR"
+    echo "[vllm_start] RAY_TMPDIR=$RAY_TMPDIR"
+    echo "[vllm_start] TORCH_COMPILE_CACHE_DIR=$TORCH_COMPILE_CACHE_DIR"
     
     # Configure NCCL for multi-node communication
     # export NCCL_NET_GDR_LEVEL=SYS
@@ -174,6 +178,7 @@ run_vllm() {
 
     export RAY_ADDRESS=auto   # ← 追加：既存の Ray クラスタに接続
     vllm serve "${lora_args[@]}" "${ep_args[@]}" --dtype auto --api-key "$VLLM_API_KEY" \
+        --download-dir "$HF_HOME" \
         --tensor-parallel-size $NGPUS \
         --pipeline-parallel-size $NNODES \
         --distributed-executor-backend ray \
