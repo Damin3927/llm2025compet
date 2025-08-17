@@ -8,10 +8,27 @@ uv pip install -e .
 
 # サーバーを立ち上げる (複数サーバー立ち上げたい場合は、複数回実行)
 pushd inference
-./vllm_sbatch.sh --model "qwen/Qwen3-235B-A22B" --nodes 3 --gpus 8 --nodelist osk-gpu[54,56,91] --timeout 03:00:00
+./vllm_sbatch.sh \
+    --model "qwen/Qwen3-235B-A22B" \
+    --nodes 3 \
+    --gpus 8 \
+    --nodelist osk-gpu[54,56,91] \
+    --timeout 03:00:00 \
+    --expert-parallel
 popd
 
-# クライアントを立ち上げる
+# Dense + LoRA の例（Qwen3-32B）
+pushd inference
+./vllm_sbatch.sh \
+    --model "Qwen/Qwen3-32B" \
+    --nodes 3 \
+    --gpus 8 \
+    --nodelist osk-gpu[54,56,91] \
+    --timeout 03:00:00 \
+    --lora 'neko=neko-llm/Qwen3-32B-test-lora'
+popd
+
+# 指定した vLLM サーバー(単一/複数)が立ち上がるまで待ち、立ち上がったら推論が始まる
 pushd evaluation/hle
 python infer.py --help
 
@@ -35,10 +52,6 @@ python infer.py \
     --flush_every 60 \
     --dataset_name "neko-llm/eval-Qwen-Qwen3-235B-A22B" \
     --push_to_hub
-
-# 指定した vLLM サーバー(単一/複数)が立ち上がるまで待ち、立ち上がったら推論が始まる
-# 推論結果は predictions/hle_<モデル名ベース>.json に JSON 辞書形式 (id -> {model, response, usage}) で保存される
-# --flush_every で新規結果を書き出す頻度を制御 (デフォルト 20)。--push_to_hub と --dataset_name を指定した場合は、最後に HF Datasets にアップロードされる
 
 # 既存の JSON アップロードのみする場合
 # (推論は行わず、predictions/hle_*.json を Datasets として Hub に公開)
