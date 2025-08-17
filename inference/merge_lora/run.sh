@@ -107,8 +107,10 @@ echo "[INFO] OFFLOAD_DIR=$OFFLOAD_DIR"
 export HF_HUB_ENABLE_HF_TRANSFER=1
 export TRANSFORMERS_OFFLINE=0
 
-# Activate your Python env if needed (uv recommended in this repo)
-# module load cuda/12.4  # if needed in your cluster
+module purge
+module load cuda/12.4
+module load cudnn/9.6.0
+module load nccl/2.24.3
 
 CMD=("python" "main.py"
 	--base-model "$BASE_MODEL"
