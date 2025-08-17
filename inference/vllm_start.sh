@@ -14,6 +14,10 @@ readonly MODEL_PATH="Qwen/Qwen3-32B"
 readonly RAY_HEAD_PORT="6379"
 readonly VLLM_API_KEY="token-abc123"
 
+# Args holders (will be filled when options are given)
+declare -a lora_args=()
+declare -a ep_args=()
+
 # =============================================================================
 # Functions
 # =============================================================================
@@ -131,10 +135,14 @@ run_vllm() {
 
     echo "Starting VLLM server with model: $model_path"
 
-    vllm serve --dtype auto --api-key "$VLLM_API_KEY" \
+    vllm serve \
+        "${lora_args[@]}" \
+        "${ep_args[@]}" \
+        --enable-lora --max-loras "${MAX_LORAS:-4}" --max-lora-rank "${MAX_LORA_RANK:-16}" \
+        --dtype auto --api-key "$VLLM_API_KEY" \
+        --download-dir "$HF_HOME" \
         --tensor-parallel-size $NGPUS \
         --pipeline-parallel-size $NNODES \
-        --enable-expert-parallel \
         --distributed-executor-backend ray \
         --trust-remote-code \
         "${model_path}"
@@ -153,6 +161,8 @@ Options:
     --ngpus <number>        Number of GPUs per node (required)
     --model <path>          Model path to serve (default: $MODEL_PATH)
     --api-key <key>         API key for authentication (default: $VLLM_API_KEY)
+    --lora "<name>=<repo_or_path>[,<name2>=...>]"   LoRA adapters (optional)
+    --expert-parallel       Enable expert parallelism (for MoE models only; default: off)
     --help                  Show this help message
 
 Examples:
@@ -175,6 +185,8 @@ main() {
     # Initialize variables from defaults
     local model_path="$MODEL_PATH"
     local api_key="$VLLM_API_KEY"
+    local lora_spec=""
+    local enable_ep=0 # enable_ep is toggled by --expert-parallel
     
     # Parse command line arguments
     while [[ $# -gt 0 ]]; do
@@ -223,6 +235,21 @@ main() {
                     exit 1
                 fi
                 ;;
+            "--lora")
+                if [[ -n "${2:-}" ]]; then
+                    lora_spec="$2"
+                    shift 2
+                else
+                    echo "Error: --lora requires a spec like 'name=repo_or_path[,name2=...]'" >&2
+                    show_usage
+                    exit 1
+                fi
+                ;;
+            "--expert-parallel")
+                enable_ep=1
+                # actual flag will be appended to ep_args below
+                shift 1
+                ;;
             *)
                 echo "Unknown argument: $1" >&2
                 show_usage
@@ -244,6 +271,16 @@ main() {
         exit 1
     fi
     
+    # Build optional args for vLLM
+    if [[ -n "$lora_spec" ]]; then
+        # vLLM LoRA modules (comma-separated 'name=repo_or_path')
+        lora_args+=( --lora-modules "$lora_spec" )
+        # enable-lora and limits are added in run_vllm()
+    fi
+    if [[ "$enable_ep" -eq 1 ]]; then
+        ep_args+=( --enable-expert-parallel )
+    fi
+
     # Setup environment and cluster
     setup_environment
     check_gpu_availability
