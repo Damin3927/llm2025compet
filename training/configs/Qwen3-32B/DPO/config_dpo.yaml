@@ -9,8 +9,8 @@ dataset_test_split: test                                  # 評価用スプリ�
 #dataset_rejected_column: non_preferred_output             # 負例のカラム名
 
 # === ModelConfig ===
-#model_name_or_path: Qwen/Qwen3-32B                        # モデル名
-model_name_or_path: neko-llm/Qwen3-32B-DNA
+model_name_or_path: Qwen/Qwen3-32B                        # モデル名
+#model_name_or_path: neko-llm/Qwen3-32B-DNA
 model_revision: main                                     
 torch_dtype: bfloat16                                     # 数値の型
 #attn_implementation: flash_attention_2
@@ -43,17 +43,17 @@ per_device_train_batch_size: 1                            # 1GPUあたりの学�
 per_device_eval_batch_size: 1                             # 1GPUあたりの評価バッチサイズ
 gradient_accumulation_steps: 8                            # 勾配累積のステップ数
 gradient_checkpointing: true                             # 勾配累積チェックポイント
-learning_rate: 2.0e-4                                    # 学習率
+learning_rate: 2.0e-5                                    # 学習率
 lr_scheduler_type: cosine_with_min_lr
 lr_scheduler_kwargs:
   min_lr_rate: 0.1
-max_grad_norm: 0.1                                        # 勾配クリッピングの閾値
+max_grad_norm: 0.3                                        # 勾配クリッピングの閾値
 num_train_epochs: 1                                       # エポック数
 warmup_ratio: 0.03                                        # ウォームアップ比率
 seed: 42                                                  # 乱数シード値
 beta: 0.1                                                 # DPO の beta パラメータ
 optim: adamw_torch
-#max_steps: 5
+max_steps: 5
 
 # === Save and Log ===
 output_dir: data/Qwen3-32B-ORPO-test                        # 出力ディレクトリ
@@ -71,5 +71,5 @@ hub_model_id: Qwen3-32B-ORPO-test                           # 登録するモデ
 hub_strategy: every_save                                  # 保存時に毎回 push
 
 # === Other ===
-max_length: 1024                                         # トークンの最大系列長
+max_length: 32768                                         # トークンの最大系列長
 # 32768, 16284

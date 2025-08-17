@@ -57,14 +57,14 @@ def get_data_from_config(config: DataConfig, seed: int=42):
             tmp_rename_dict[dataset_info.chosen_field] = "preferred_output"
             print(f"データセット [{dataset_info.name}] の chosen_field [{dataset_info.chosen_field}] を 'preferred_output' に変更しました")
         else:
-            logger.warining(f"データセット [{dataset_info.name}] に指定された chosen_field: [{dataset_info.chosen_field}] がデータセットに存在しません")
+            logger.warning(f"データセット [{dataset_info.name}] に指定された chosen_field: [{dataset_info.chosen_field}] がデータセットに存在しません")
         # 元の non_preferred_output が存在する場合のみリネーム対象に追加
         # 存在しない場合は warining で知らせる
         if dataset_info.rejected_field in list(dataset.column_names.values())[0]:
             tmp_rename_dict[dataset_info.rejected_field] = "non_preferred_output"
             print(f"データセット [{dataset_info.name}] の rejected_field [{dataset_info.rejected_field}] を 'non_preferred_output' に変更しました")
         else:
-            logger.warining(f"データセット [{dataset_info.name}] に指定された rejected_field: [{dataset_info.rejected_field}] がデータセットに存在しません")
+            logger.warning(f"データセット [{dataset_info.name}] に指定された rejected_field: [{dataset_info.rejected_field}] がデータセットに存在しません")
         
         # リネームを実行
         dataset = dataset.rename_columns(tmp_rename_dict)
@@ -85,18 +85,18 @@ def get_data_from_config(config: DataConfig, seed: int=42):
 
         loaded_dataset.append(dataset)
     
-    if not loaded_datasets:
+    if not loaded_dataset:
         raise ValueError("ロードできるデータセットがありませんでした。")
     
     print("\n全データセットを結合中...")
     # すべてのDatasetDictからキーの集合を取得
-    all_keys = set(k for dd in loaded_datasets for k in dd.keys())
+    all_keys = set(k for dd in loaded_dataset for k in dd.keys())
     print(f"結合するキー: {all_keys}")
-    print(list(list(loaded_datasets[0].column_names.values())[0]))
+    print(list(list(loaded_dataset[0].column_names.values())[0]))
 
     # 辞書内包表記を使って各キーごとにデータセットを結合
     combined_dataset = DatasetDict({
-        "train" : concatenate_datasets([data["train"] for data in loaded_datasets]),
+        "train" : concatenate_datasets([data["train"] for data in loaded_dataset]),
     })
 
     print("結合が完了しました！")

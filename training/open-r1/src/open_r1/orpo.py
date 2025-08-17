@@ -33,7 +33,7 @@ from open_r1.utils import get_dataset, get_model, get_tokenizer
 from open_r1.utils.callbacks import get_callbacks
 from open_r1.utils.wandb_logging import init_wandb_training
 from open_r1.get_data import get_data_from_config
-from open_r1.configs import DataConfig
+from open_r1.configs import DataConfig, DatasetClass
 
 def load_config_from_yaml(file_path: str) -> DataConfig:
     """
@@ -44,7 +44,7 @@ def load_config_from_yaml(file_path: str) -> DataConfig:
         data = yaml.safe_load(f)
 
     # Map the list of dicts from YAML to a list of DatasetClass dataclass instances
-    dataset_configs = [DatasetClass(**item) for item in data['neko_sft_datasets']]
+    dataset_configs = [DatasetClass(**item) for item in data['neko_pref_datasets']]
     return DataConfig(datasets=dataset_configs)
 
 def get_dataconfig():
@@ -118,7 +118,6 @@ def main(script_args, training_args, model_args, data_config):
         dataset["train"] = dataset["train"].map(format_pref, remove_columns=dataset["train"].column_names)
     else:
         dataset = get_data_from_config(data_config)
-    # dataset = get_dataset(script_args)
 
     ################
     # Load tokenizer
@@ -208,6 +207,6 @@ def main(script_args, training_args, model_args, data_config):
 if __name__ == "__main__":
     parser = TrlParser((ScriptArguments, ORPOConfig, ModelConfig))
     script_args, training_args, model_args, _ = parser.parse_args_and_config(return_remaining_strings=True, fail_with_unknown_args=False)
-    #data_config = get_dataconfig()
-    #print(f"Data Configration loaded: {data_config}")
-    main(script_args, training_args, model_args, data_config=None)
+    data_config = get_dataconfig()
+    print(f"Data Configration loaded: {data_config}")
+    main(script_args, training_args, model_args, data_config)
