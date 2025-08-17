@@ -15,6 +15,14 @@ neko_pref_datasets:
   rejected_field: non_preferred_output
   from_id: 0
   to_id: 99
+- name: neko-llm/DNA_DPO_Adversarial_vanilla # ダメそう...
+  config: train
+  #split: train
+  instruction_field: question 
+  chosen_field: preffered_output 
+  rejected_field: non_preffered_output
+  from_id: 0
+  to_id: 1124
 - name: neko-llm/HLE_DPO_HarmfulQA # OK
   config: default
   split: train
