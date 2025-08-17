@@ -38,13 +38,14 @@ eos_token: <|im_end|> # シーケンスの終端トークン
 # SFT trainer config
 use_cpu: false # CPUを使うかどうか (GPUがない場合はtrueにする)
 data_seed: 42 # データセットの乱数シード
+ddp_find_unused_parameters: False
 bf16: true # bf16を使う
 do_eval: false # 評価を行うかどうか
 eval_strategy: 'no' # 評価を行うタイミング ('no' or 'steps' or 'epoch')
 gradient_accumulation_steps: 8 # 勾配蓄積のステップ数
-gradient_checkpointing: false # 勾配チェックポイントを使うかどうか
+gradient_checkpointing: true # 勾配チェックポイントを使うかどうか
 gradient_checkpointing_kwargs:
-  use_reentrant: false
+  use_reentrant: True
 hub_model_id: neko-llm/Qwen3-235B-test # モデルをHuggingFace Hubにpushする際のモデルID
 hub_strategy: every_save # モデルをHuggingFace Hubにpushするタイミング (every_save: 保存する時毎回, end: 最後の保存時)
 learning_rate: 4.0e-05 # 学習率
@@ -56,7 +57,7 @@ lr_scheduler_kwargs:
   min_lr_rate: 0.1
 packing: false
 max_grad_norm: 0.2
-max_length: 192 # 32768 # 最大シーケンス長
+max_length: 1024 # 32768 # 最大シーケンス長
 max_steps: 3 # -1
 num_train_epochs: 5 # 学習エポック数
 output_dir: data/Qwen3-235B-test # 結果の出力ディレクトリ
@@ -64,7 +65,7 @@ optim: adamw_torch # オプティマイザの種類  何があるかはhttps://g
 overwrite_output_dir: true
 per_device_eval_batch_size: 1 # 評価時の1GPUあたりのバッチサイズ
 per_device_train_batch_size: 1 # 学習時の1GPUあたりのバッチサイズ
-push_to_hub: false # trueにするとHuggingFace Hubにモデルをpushする ログインしている必要がある
+push_to_hub: true # trueにするとHuggingFace Hubにモデルをpushする ログインしている必要がある
 report_to: # wandbにログインしているならこれをオンにするとwandbにログが送られる
 - none
 save_strategy: steps # モデルをローカルに保存するタイミング ('no' or 'steps' or 'epoch')
