@@ -1,3 +1,4 @@
+# 2507 -> A33B
 #!/bin/bash
 #SBATCH --partition P02        # 利用するパーティション（キュー）
 #SBATCH --ntasks-per-node=1    # 1ノードあたりのタスク数
@@ -6,10 +7,10 @@
 #SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
 #SBATCH --job-name dpo-32b     # ジョブの名前
 #SBATCH --time 1:00:00         # ジョブの最大実行時間
-#SBATCH --output orpo-235b.out   # 標準出力ファイル
-#SBATCH --error orpo-235b.err    # 標準エラーファイル
-#SBATCH --mem=0            # 各ノードのメモリサイズ
-#SBATCH --cpus-per-task=20         # number of cores per tasks
+#SBATCH --output orpo-235b.out # 標準出力ファイル
+#SBATCH --error orpo-235b.err  # 標準エラーファイル
+#SBATCH --mem=0           　　 # 各ノードのメモリサイズ 0は無制限
+#SBATCH --cpus-per-task=20     # number of cores per tasks
 
 # export WANDB_DISABLED="true"   # WANDBを一旦無効化
 
@@ -21,6 +22,9 @@ echo "MASTER_ADDR: $MASTER_ADDR"
 export MASTER_PORT=29500
 echo "MASTER_PORT: $MASTER_PORT"
 
+export NCCL_P2P_DISABLE=1
+export NCCL_P2P_LEVEL=NVL
+export NCCL_IB_GID_INDEX=3
 #export NCCL_DEBUG=INFO
 #export NCCL_DEBUG_SUBSYS=ALL
 #export TORCH_DISTRIBUTED_DEBUG=DETAIL
@@ -43,5 +47,13 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
         open_r1/orpo.py \
-        --config ../../configs/Qwen3-235B/DPO/config_dpo.yaml \
+        --config ../../configs/Qwen3-235B/ORPO/config_dpo.yaml \
+        --dataconfig ../../configs/data_configs/example.yaml
     "
+
+# 実行方法
+# HOMEディレクトリで以下を実行
+# sbatch ./llm2025compet/training/commands/dpo-qwen3-235b-a22-3node.sh
+
+# 何かしらのジョブが入っている場合は以下でJOBIDを指定してキャンセル
+# /home/Competition2025/P02/shareP02/scripts/scancel.sh JOBID
