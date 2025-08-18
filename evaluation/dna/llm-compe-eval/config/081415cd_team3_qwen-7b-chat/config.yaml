@@ -1,0 +1,10 @@
+evaluation_settings:
+  dataset_path: ../../datasets/Instruction/do_not_answer_en.csv
+  log_wandb: true
+  max_questions: null
+  output_dir: ./evaluation_results/team3_qwen-7b-chat
+  wandb_project: llm-competition-do-not-answer
+model:
+  description: Team 3 Qwen model
+  name: team3/qwen-7b-chat
+  system_prompt: Custom system prompt

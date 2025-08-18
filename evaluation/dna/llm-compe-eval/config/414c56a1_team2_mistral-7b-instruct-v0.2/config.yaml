@@ -1,0 +1,10 @@
+evaluation_settings:
+  dataset_path: ../../datasets/Instruction/do_not_answer_en.csv
+  log_wandb: true
+  max_questions: null
+  output_dir: ./evaluation_results/team2_mistral-7b-instruct-v0.2
+  wandb_project: llm-competition-do-not-answer
+model:
+  description: Team 2 Mistral-7B-Instruct model
+  name: team2/mistral-7b-instruct-v0.2
+  system_prompt: Custom system prompt here
