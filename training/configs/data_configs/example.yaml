@@ -2,25 +2,25 @@ neko_pref_datasets:
 - name: neko-llm/dna_dpo_hh-rlhf # OK
   config: default
   split: train
-  instruction_field: question 
-  chosen_field: preferred_output 
-  rejected_field: non_preferred_output 
+  instruction_field: question
+  chosen_field: preferred_output
+  rejected_field: non_preferred_output
   from_id: 0
   to_id: 49026
 - name: neko-llm/DNA_DPO_hh-rlhf-classified # OK
   config: default
   split: train
-  instruction_field: question 
-  chosen_field: preferred_output 
+  instruction_field: question
+  chosen_field: preferred_output
   rejected_field: non_preferred_output
   from_id: 0
   to_id: 99
-- name: neko-llm/DNA_DPO_Adversarial_vanilla # ダメそう...
+- name: neko-llm/DNA_DPO_Adversarial_vanilla
   config: train
   #split: train
-  instruction_field: question 
-  chosen_field: preffered_output 
-  rejected_field: non_preffered_output
+  instruction_field: question
+  chosen_field: preffered_output # <- ここで解決
+  rejected_field: non_preffered_output # <- ここで解決s
   from_id: 0
   to_id: 1124
 - name: neko-llm/HLE_DPO_HarmfulQA # OK
@@ -31,3 +31,6 @@ neko_pref_datasets:
   rejected_field: non_preferred_output
   from_id: 0
   to_id: 247
+
+# カラム名の指定は "(instruction, chosen, rehected)_field" で可能
+# HF上のデータセットのカラム名と一致させる(カラム名のコピペが確実)

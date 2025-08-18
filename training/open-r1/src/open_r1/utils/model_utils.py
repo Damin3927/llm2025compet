@@ -45,7 +45,7 @@ def get_model(model_args: ModelConfig, training_args: SFTConfig | DPOConfig) -> 
         torch_dtype=torch_dtype,
         use_cache=False if training_args.gradient_checkpointing else True,
         #device_map=get_kbit_device_map() if quantization_config is not None else None,
-        quantization_config=None,
+        quantization_config=quantization_config,
         low_cpu_mem_usage=True,
     )
     model = AutoModelForCausalLM.from_pretrained(

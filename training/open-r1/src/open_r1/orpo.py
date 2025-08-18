@@ -35,6 +35,19 @@ from open_r1.utils.wandb_logging import init_wandb_training
 from open_r1.get_data import get_data_from_config
 from open_r1.configs import DataConfig, DatasetClass
 
+import deepspeed  # NEW: for set_z3_leaf_modules
+print(f"DeepSpeed version: {deepspeed.__version__}")
+
+# NEW: try to import the concrete Qwen3 MoE block class (falls back to name match)
+try:
+    from transformers.models.qwen3_moe.modeling_qwen3_moe import (
+        Qwen3MoeSparseMoeBlock as _QwenSparseMoeBlock,
+    )
+    print(f"Using Qwen3 Sparse MoE Block: {_QwenSparseMoeBlock.__name__}")
+except Exception:
+    _QwenSparseMoeBlock = None
+    print("Falling back to generic Sparse MoE Block.")
+
 def load_config_from_yaml(file_path: str) -> DataConfig:
     """
     Loads dataset configurations from a YAML file.
@@ -131,6 +144,30 @@ def main(script_args, training_args, model_args, data_config):
     logger.info("*** Loading model ***")
     model = get_model(model_args, training_args)
 
+    # NEW: MoE × ZeRO-3 安定化（leaf module 指定）
+    
+    if getattr(model.config, "model_type", "") == "qwen3_moe":
+        print("[MoE] Detected model_type='qwen3_moe'. Applying ZeRO-3 leaf module setting...")
+
+        # （任意）ルータのロジットを有効化したい場合はコメントアウトを外す
+        # if hasattr(model.config, "output_router_logits"):
+        #     model.config.output_router_logits = True
+        #     print("[MoE] Enabled output_router_logits=True")
+
+        if _QwenSparseMoeBlock is not None:
+            deepspeed.utils.set_z3_leaf_modules(model, [_QwenSparseMoeBlock])
+            print("[MoE] Set ZeRO-3 leaf module: Qwen3MoeSparseMoeBlock (direct import)")
+        else:
+            print("[MoE] Direct import of Qwen3MoeSparseMoeBlock failed; falling back to name scan...")
+            set_flag = False
+            for m in model.modules():
+                if "SparseMoeBlock" in m.__class__.__name__:
+                    deepspeed.utils.set_z3_leaf_modules(model, [m.__class__])
+                    print(f"[MoE] Set ZeRO-3 leaf module by name: {m.__class__.__name__}")
+                    set_flag = True
+                    break
+            if not set_flag:
+                print("[MoE][WARN] Could not find a SparseMoeBlock; ZeRO-3 leaf NOT set (collectives may hang).")
     
 
     #############################
@@ -142,7 +179,7 @@ def main(script_args, training_args, model_args, data_config):
         args=training_args,
         train_dataset=dataset[script_args.dataset_train_split],
         eval_dataset=(dataset[script_args.dataset_test_split] if training_args.eval_strategy != "no" else None),
-        #peft_config=get_peft_config(model_args),
+        peft_config=get_peft_config(model_args),
         #callbacks=get_callbacks(training_args, model_args),
         processing_class=tokenizer,
     )
