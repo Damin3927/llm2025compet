@@ -1,0 +1,127 @@
+neko_sft_datasets:
+  - name: neko-llm/HLE_SFT_OlymMATH # 数学系
+    config: default # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 37
+  - name: neko-llm/HLE_SFT_medical # 医学系
+    config: reasonmed # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 488
+  - name: neko-llm/HLE_SFT_PHYBench # 物理系
+    config: default # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 99  
+  - name: neko-llm/HLE_SFT_OlympiadBench # 数学系
+    config: default # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 802
+    to_id: 1,599
+  - name: neko-llm/HLE_SFT_biology # 生物学系
+    config: ToT_biology # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 513
+  - name: neko-llm/HLE_SFT_OpenMathReasoning # 数学系
+    config: cot
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: OpenMathReasoning_cot_1
+    to_id: OpenMathReasoning_cot_5170
+  - name: neko-llm/HLE_SFT_MixtureOfThoughts
+    config: MoT_science # STEM系
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 1027
+  - name: neko-llm/HLE_SFT_PhysReason # 物理系
+    config: default # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 202
+  - name: neko-llm/HLE_SFT_GPQA_Diamond # STEM系
+    config: default # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 2
+    to_id: 197
+  - name: neko-llm/HLE_SFT_OpenThoughts-114k # 数学系
+    config: default # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 5999
+  - name: neko-llm/HLE_SFT_general
+    config: medcal # 医学系, クロスドメイン
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: medcalc_1
+    to_id: medcalc_509
+  - name: neko-llm/HLE_RL_Olympiadbench-v2
+    config: default # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 1
+    to_id: 21
+  - name: neko-llm/HLE_SFT_LIMO # 数学系
+    config: default # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 816
+  - name: neko-llm/HLE_SFT_LIMO-v2 # 数学系
+    config: default # Subsetの設定なし。
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 799
+  - name: neko-llm/dna_vanilla_harmful_v2 #ストレートな有害な質問
+    config: default # Subset
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 1111
+  - name: neko-llm/wj-vanilla_benign_v2 #危険性もない、無害な質問
+    config: train # Subset
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 1
+    to_id: 1601
+  - name: neko-llm/wj-Adversarial_harmful_v2 #功名な手口を使った有害な質問
+    config: train # Subset
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 0
+    to_id: 1758
+  - name: neko-llm/wj-Adversarial_benign_v2 #功名な手口に見えるが、実は無害な質問
+    config: train # Subset
+    split: train
+    question_field: question
+    answer_field: output
+    from_id: 1
+    to_id: 1759
