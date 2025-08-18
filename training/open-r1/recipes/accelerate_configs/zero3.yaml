@@ -1,24 +1,35 @@
 compute_environment: LOCAL_MACHINE
 debug: true
-
 deepspeed_config:
-  deepspeed_multinode_launcher: standard #slurm # pdsh #standard
-  offload_optimizer_device: cpu # compatible with vllm colocate mode scaling
-  offload_param_device: none
+  zero_optimization:
+    stage: 3
+    offload_optimizer:
+      device: "nvme"
+      nvme_path: "/nvme12/deepspeed_offload/${SLURM_JOB_ID}"
+      pin_memory: true
+    offload_param:
+      device: "nvme"
+      nvme_path: "/nvme12/deepspeed_offload/${SLURM_JOB_ID}"
+      pin_memory: true
+    contiguous_gradients: true
+    overlap_comm: true
+    aio:
+      block_size: 1048576
+      queue_depth: 16
+      single_submit: false
+      overlap_events: true
+  deepspeed_multinode_launcher: standard
   zero3_init_flag: true
   zero3_save_16bit_model: true
-  zero_stage: 3
-  overlap_comm: true
-  contiguous_gradients: true
-  
 distributed_type: DEEPSPEED
+
 downcast_bf16: 'no'
 machine_rank: 0
 main_training_function: main
 mixed_precision: bf16
 num_machines: 3
 num_processes: 24
-rdzv_backend: static
+rdzv_backend: c10d
 same_network: true
 tpu_env: []
 tpu_use_cluster: false
