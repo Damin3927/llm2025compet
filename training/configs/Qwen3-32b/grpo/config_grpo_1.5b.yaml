@@ -8,14 +8,20 @@
 model_name_or_path: Qwen/Qwen2.5-1.5B-Instruct
 model_revision: main
 torch_dtype: bfloat16
-attn_implementation: flash_attention_2
+attn_implementation: sdpa
 trust_remote_code: true          # tokenizer.chat_template を正しく取得
 
 # ----------------------------------------------------------
 # Data
 # ----------------------------------------------------------
 dataset_name: open-r1/OpenR1-Math-220k
-dataset_prompt_column: problem
+# 余計なキーは入れない（特に dataset_solution_column は禁止）
+dataset_name: open-r1/OpenR1-Math-220k
+dataset_config: default
+dataset_train_split: train
+dataset_test_split: validation
+dataset_prompt_column: problem   # ← ここだけ列指定
+
 
 system_prompt: |
   You are a helpful AI Assistant that provides well‑reasoned and detailed responses.
