@@ -5,7 +5,7 @@
 #SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
 #SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
 #SBATCH --job-name sft-235b     # ジョブの名前
-#SBATCH --time 72:00:00         # ジョブの最大実行時間
+#SBATCH --time 1:30:00         # ジョブの最大実行時間
 #SBATCH --output sft-235b.out   # 標準出力ファイル
 #SBATCH --error sft-235b.err    # 標準エラーファイル
 #SBATCH --mem=0            # 各ノードのメモリサイズ
@@ -71,7 +71,7 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
         open_r1/sft.py \
-        --config ../../configs/Qwen3-235b/sft/config_main.yaml \
+        --config ../../configs/Qwen3-235b/sft/config_test_copy.yaml \
         --dataconfig ../../configs/data_configs/sft_ver3_0.yaml"
 
 # 実行方法
