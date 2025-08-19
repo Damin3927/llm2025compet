@@ -5,9 +5,9 @@
 #SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
 #SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
 #SBATCH --job-name sft-235b     # ジョブの名前
-#SBATCH --time 2:00:00         # ジョブの最大実行時間
-#SBATCH --output sft-235b.out   # 標準出力ファイル
-#SBATCH --error sft-235b.err    # 標準エラーファイル
+#SBATCH --time 1:00:00         # ジョブの最大実行時間
+#SBATCH --output sft-235b1.out   # 標準出力ファイル
+#SBATCH --error sft-235b1.err    # 標準エラーファイル
 #SBATCH --mem=0            # 各ノードのメモリサイズ
 #SBATCH --cpus-per-task=160         # number of cores per tasks
 
