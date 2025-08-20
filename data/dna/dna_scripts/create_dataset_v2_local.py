@@ -8,9 +8,9 @@ import threading
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
-# Local project paths only under data/dna
-BASE = "/home/argo/llm2025compet/data/dna"
-sys.path.append(os.path.join(BASE, "dna_scripts"))
+# Local project paths only under data/dna (dynamic, repo位置に依存しない)
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE)
 
 from datasets import load_dataset  # type: ignore
 
@@ -60,7 +60,8 @@ def generate_ideal_response(prompt_text: str, category: str, cfg: Dict[str, Any]
         seed=DEFAULT_SEED,
         api_key=api_key,
     )
-    text = sanitize_text(text)
+    # Preserve reasoning by default for the reasoning model dataset
+    text = sanitize_text(text, preserve_think=True, scrub_cot=True)
 
     # Guardrails
     req_map = {
@@ -83,7 +84,7 @@ def generate_ideal_response(prompt_text: str, category: str, cfg: Dict[str, Any]
             seed=DEFAULT_SEED,
             api_key=api_key,
         )
-        text = sanitize_text(text)
+        text = sanitize_text(text, preserve_think=True, scrub_cot=True)
 
     return text
 
@@ -118,12 +119,16 @@ def main() -> None:
         raise RuntimeError("preferred_output/ chosen field not found in dataset")
 
     # simple keyword categorizer (English-only input expected)
-    def categorize(q: str) -> str:
+    def categorize(q: str, ex: Dict[str, Any]) -> str:
         s=q.lower()
         if any(k in s for k in ["fever","dosage","diagnose","medication","symptom","treatment","cancer","psa","ekg","antibiotics"]): return "MEDICAL_ADVICE"
         if any(k in s for k in ["legal","contract","sue","lease","llc","non-compete","copyright","fair use","evict","small claims"]): return "LEGAL_ADVICE"
         if any(k in s for k in ["invest","stock","crypto","options","tax","ira","day trading","loan","pre-ipo"]): return "FINANCIAL_ADVICE"
         if any(k in s for k in ["address","phone","email","social media","ip address","ssn","gps","account name"]): return "PRIVACY_VIOLATION"
+        # escalate to refusal for specific risk areas/harm
+        risk = (ex.get("risk_area") or "").lower() + " " + (ex.get("type_of_harm") or "").lower()
+        if any(w in risk for w in ["privacy", "personal", "pii", "information hazard"]):
+            return "PRIVACY_VIOLATION"
         return "OTHER"
 
     # resume
@@ -170,25 +175,15 @@ def main() -> None:
         try:
             question = ex.get(question_key, "")
             old_pref = ex.get(preferred_key, "")
-            ex_id = ex.get("id") or sha256_hex16(question)
+            raw_id = ex.get("id")
+            ex_id = str(raw_id) if raw_id not in (None, "") else sha256_hex16(question)
             if args.resume and ex_id in processed_ids:
                 return ex_id, None, "skipped"
 
-            category = categorize(question)
+            category = categorize(question, ex)
 
-            if category == "OTHER":
-                # reuse if passes minimal guard (English-only)
-                req_map = {
-                    "MEDICAL_ADVICE": ["I am not a medical professional", "general information"],
-                    "LEGAL_ADVICE": ["I am not a lawyer", "general information"],
-                    "FINANCIAL_ADVICE": ["I am not a financial advisor", "general information"],
-                    "PRIVACY_VIOLATION": ["can’t help", "privacy"],
-                }
-                req = req_map.get(category, [])
-                ok = (len(old_pref) >= 60) and all(p in (old_pref or "") for p in req)
-                new_pref = sanitize_text(old_pref) if ok and old_pref else generate_ideal_response(question, category, {}, api_key=args.api_key)
-            else:
-                new_pref = generate_ideal_response(question, category, {}, api_key=args.api_key)
+            # Always regenerate for safety consistency (no reuse for OTHER)
+            new_pref = generate_ideal_response(question, category, {}, api_key=args.api_key)
 
             out_ex: Dict[str, Any] = dict(ex)
             out_ex["question"] = question

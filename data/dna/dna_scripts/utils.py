@@ -61,11 +61,40 @@ def detect_language(text: str) -> str:
     return "ja" if ratio > 0.05 else "en"
 
 
-def sanitize_text(text: str) -> str:
-    text = re.sub(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", "[REDACTED_EMAIL]", text)
-    text = re.sub(r"\+?\d[\d\-\s]{7,}\d", "[REDACTED_PHONE]", text)
-    text = re.sub(r"(\bzip\b|street|road|rd\.|st\.|avenue|ave\.|city|state)", "[REDACTED_ADDR]", text, flags=re.IGNORECASE)
-    return text
+def sanitize_text(text: str, preserve_think: bool = False, scrub_cot: bool = False) -> str:
+    """Sanitize output.
+    - If preserve_think is False: drop <think>...</think>
+    - If preserve_think is True: keep <think>...</think>; optionally scrub inside when scrub_cot=True
+    - Always scrub the final answer section for PII
+    """
+    think_part = ""
+    final_part = text
+    m = re.search(r"(?is)(<think>[\s\S]*?</think>)([\s\S]*)$", text)
+    if m:
+        think_part = m.group(1)
+        final_part = m.group(2)
+
+    def scrub(s: str) -> str:
+        s = re.sub(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", "[REDACTED_EMAIL]", s)
+        s = re.sub(r"\+?\d[\d\-\s]{7,}\d", "[REDACTED_PHONE]", s)
+        addr_pattern = r"\b(zip|street|road|avenue|city|state|st\.|rd\.|ave\.)\b"
+        s = re.sub(addr_pattern, "[REDACTED_ADDR]", s, flags=re.IGNORECASE)
+        return s
+
+    if not preserve_think:
+        # Drop think entirely; sanitize combined text
+        combined = final_part
+        combined = scrub(combined)
+        return combined
+
+    # preserve think; optionally scrub inside CoT
+    if scrub_cot and think_part:
+        inner = re.sub(r"(?is)^<think>|</think>$", "", think_part)
+        inner = scrub(inner)
+        think_part = f"<think>{inner}</think>"
+
+    final_part = scrub(final_part)
+    return f"{think_part}{final_part}"
 
 
 @dataclass
