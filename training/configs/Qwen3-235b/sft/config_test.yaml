@@ -45,7 +45,7 @@ gradient_accumulation_steps: 8 # 勾配蓄積のステップ数
 gradient_checkpointing: true # 勾配チェックポイントを使うかどうか
 gradient_checkpointing_kwargs:
   use_reentrant: True
-hub_model_id: neko-llm/Qwen3-235B-test5 # モデルをHuggingFace Hubにpushする際のモデルID
+hub_model_id: neko-llm/Qwen3-235B-test6 # モデルをHuggingFace Hubにpushする際のモデルID
 hub_strategy: every_save # モデルをHuggingFace Hubにpushするタイミング (every_save: 保存する時毎回, end: 最後の保存時)
 learning_rate: 4.0e-05 # 学習率
 log_level: info # ログレベル(ログの詳細度)
@@ -54,22 +54,22 @@ logging_strategy: steps # ログを出力するタイミング ('no' or 'steps' 
 lr_scheduler_type: cosine_with_min_lr # 学習率スケジューラのタイプ 
 lr_scheduler_kwargs:
   min_lr_rate: 0.1
-packing: false
+packing: true
 max_grad_norm: 0.2
 max_length: 32768 # 32768 # 最大シーケンス長
 max_steps: 3 # -1
 num_train_epochs: 5 # 学習エポック数
-output_dir: data/Qwen3-235B-test5 # 結果の出力ディレクトリ
+output_dir: data/Qwen3-235B-test6 # 結果の出力ディレクトリ
 optim: adamw_torch # オプティマイザの種類  何があるかはhttps://github.com/huggingface/transformers/blob/main/src/transformers/training_args.py
 overwrite_output_dir: true
 per_device_eval_batch_size: 1 # 評価時の1GPUあたりのバッチサイズ
 per_device_train_batch_size: 1 # 学習時の1GPUあたりのバッチサイズ
 push_to_hub: true # trueにするとHuggingFace Hubにモデルをpushする ログインしている必要がある
-report_to: # wandbにログインしているならこれをオンにするとwandbにログが送られる
-- wandb
+# report_to: # wandbにログインしているならこれをオンにするとwandbにログが送られる
+# - wandb
 save_strategy: steps # モデルをローカルに保存するタイミング ('no' or 'steps' or 'epoch')
-save_steps: 500 # モデルをローカルに保存するステップ数(間隔)
-save_total_limit: 1
+save_steps: 1 # モデルをローカルに保存するステップ数(間隔)
+save_total_limit: 5
 seed: 42 # 乱数シード
 use_liger_kernel: true # エラーが出たので一旦無効化
 warmup_ratio: 0.03
