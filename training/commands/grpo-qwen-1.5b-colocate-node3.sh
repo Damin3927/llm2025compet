@@ -1,7 +1,7 @@
 #!/bin/bash
 ################### Slurm 基本設定 ###################
 #SBATCH --partition=P02
-#SBATCH --nodes=3                        # ★全3ノードをすべてトレーニングに使用
+#SBATCH --nodes=3
 #SBATCH --gpus-per-node=8
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodelist=osk-gpu[54,56,91]
@@ -33,9 +33,6 @@ cd "$REPO_DIR" || exit 1
 NODELIST=($(scontrol show hostnames "$SLURM_JOB_NODELIST"))
 MAIN_IP="${NODELIST[0]}"
 
-################### vLLM（コロケートモード） ###################
-# ※別プロセスでのvLLMサーバ起動は不要（各Trainer内でvLLMエンジンを起動）
-
 ################### GRPO Trainer（コロケートモードで実行） ###################
 srun --nodes=3 --ntasks=3 --nodelist="${NODELIST[*]}" \
      --gres=gpu:8 --exclusive --chdir="$REPO_DIR" \
@@ -45,8 +42,12 @@ srun --nodes=3 --ntasks=3 --nodelist="${NODELIST[*]}" \
        export UNSLOTH_CACHE=~/unsloth_cache
        export TRL_UPDATE_NAMED_PARAM_CONCURRENCY=4
        export NCCL_ASYNC_ERROR_HANDLING=1
-       # 3ノード・24GPUでコロケートモードによるGRPOトレーニング
-       LOG_FILE=/home/Competition2025/P02/P02U025/llm2025compet/training/logs/grpo-\$HOSTNAME-rank\$SLURM_PROCID.log
+       
+       if [ \"\$ACCELERATE_PROCESS_ID\" -eq 0 ]; then
+         python /home/Competition2025/P02/P02U025/llm2025compet/training/open-r1/src/open_r1/warmup_unsloth.py
+       fi
+       sleep 15
+
        accelerate launch \\
          --config_file ../recipes/accelerate_configs/zero3.yaml \\
          --num_machines 3 \\
@@ -56,9 +57,7 @@ srun --nodes=3 --ntasks=3 --nodelist="${NODELIST[*]}" \
          --rdzv_backend c10d \\
          --machine_rank \$SLURM_PROCID \\
          /home/Competition2025/P02/P02U025/llm2025compet/training/open-r1/src/open_r1/grpo_unsolth.py \\
-         --config /home/Competition2025/P02/P02U025/llm2025compet/training/configs/Qwen3-32b/grpo/config_grpo_1.5b.yaml \\
-         --use_vllm true \\
-         --vllm_mode colocate   # vLLMを各プロセス内でコロケート実行
+         --config /home/Competition2025/P02/P02U025/llm2025compet/training/configs/Qwen3-32b/grpo/config_grpo_1.5b.yaml
      "
 
 wait
