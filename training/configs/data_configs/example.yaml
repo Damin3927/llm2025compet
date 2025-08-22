@@ -31,6 +31,14 @@ neko_pref_datasets:
   rejected_field: non_preferred_output
   from_id: 0
   to_id: 247
+- name: neko-llm/DPO_Adversarial_vanilla_ver2
+  config: train
+  #split: train
+  instruction_field: question 
+  chosen_field: preferred_output 
+  rejected_field: non_preferred_output
+  from_id: 0
+  to_id: 1799
 
 # カラム名の指定は "(instruction, chosen, rehected)_field" で可能
 # HF上のデータセットのカラム名と一致させる(カラム名のコピペが確実)

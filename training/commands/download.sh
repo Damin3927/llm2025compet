@@ -1,13 +1,13 @@
 #!/bin/bash
 #SBATCH --partition P02        # 利用するパーティション（キュー）
 #SBATCH --ntasks-per-node=1    # 1ノードあたりのタスク数
-#SBATCH --nodes=3              # 利用するノード数
+#SBATCH --nodes=1              # 利用するノード数
 #SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
-#SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
-#SBATCH --job-name orpo-235b     # ジョブの名前
+#SBATCH --nodelist osk-gpu[91] # 利用するノードのリスト
+#SBATCH --job-name dl-235b     # ジョブの名前
 #SBATCH --time 2:00:00         # ジョブの最大実行時間
-#SBATCH --output orpo-235b.out # 標準出力ファイル
-#SBATCH --error orpo-235b.err  # 標準エラーファイル
+#SBATCH --output dl-235b.out # 標準出力ファイル
+#SBATCH --error dl-235b.err  # 標準エラーファイル
 #SBATCH --mem=0                # 各ノードのメモリサイズ 0は無制限
 #SBATCH --cpus-per-task=160     # number of cores per tasks
 
@@ -43,26 +43,7 @@ ulimit -m unlimited
 
 cd llm2025compet/training/open-r1/src || exit 1
 
-#if [ "$SLURM_PROCID" == "0" ]; then
-#    echo "Downloading model to NVMe on the first node..."
-#    python3 open_r1/download_model.py --name Qwen/Qwen3-235B-A22B
-#fi
-
-srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
-    "accelerate launch \
-        --config_file ../recipes/accelerate_configs/zero3.yaml \
-        --num_machines 3 \
-        --num_processes 24 \
-        --main_process_ip \"$MASTER_ADDR\" \
-        --main_process_port \"$MASTER_PORT\" \
-        --rdzv_backend c10d \
-        open_r1/orpo.py \
-        --config ../../configs/Qwen3-235B/ORPO/config_dpo.yaml \
-        --dataconfig ../../configs/data_configs/example.yaml"
-
-# 実行方法
-# HOMEディレクトリで以下を実行
-# sbatch ./llm2025compet/training/commands/orpo-qwen3-235b-a22-3node.sh
-
-# 何かしらのジョブが入っている場合は以下でJOBIDを指定してキャンセル
-# /home/Competition2025/P02/shareP02/scripts/scancel.sh JOBID
+if [ "$SLURM_PROCID" == "0" ]; then
+    echo "Downloading model to NVMe on the first node..."
+    python3 open_r1/download_model.py --name Qwen/Qwen3-235B-A22B
+fi
