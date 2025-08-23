@@ -5,7 +5,7 @@
 # ----------------------------------------------------------
 # Model / Tokenizer
 # ----------------------------------------------------------
-model_name_or_path: Qwen/Qwen2.5-1.5B-Instruct
+model_name_or_path: Qwen/Qwen3-8B
 model_revision: main
 torch_dtype: bfloat16
 attn_implementation: sdpa
@@ -14,7 +14,6 @@ trust_remote_code: true          # tokenizer.chat_template を正しく取得
 # ----------------------------------------------------------
 # Data
 # ----------------------------------------------------------
-dataset_name: open-r1/OpenR1-Math-220k
 # 余計なキーは入れない（特に dataset_solution_column は禁止）
 dataset_name: open-r1/OpenR1-Math-220k
 dataset_config: default
@@ -36,18 +35,25 @@ system_prompt: |
 # ----------------------------------------------------------
 # GPU 80 GB × 8 / ZeRO‑3:
 # Parameters that control generation
-per_device_train_batch_size: 8      # モデルが小さいのでバッチを拡大
-gradient_accumulation_steps: 8     # global_batch ≈ 8×8×8*2 = 1024
-per_device_eval_batch_size: 16
+per_device_train_batch_size: 1      # モデルが小さいのでバッチを拡大
+gradient_accumulation_steps: 32     # global_batch ≈ 8×8×8*2 = 1024
+per_device_eval_batch_size: 1
 # Parameters that control the data preprocessing
-num_generations: 8
-max_prompt_length: 512
-max_completion_length: 512          # vLLM サーバ側 --max-model-len=4096 内
+num_generations: 4
+max_prompt_length: 1024
+max_completion_length: 1024         # vLLM サーバ側 --max-model-len=4096 内
+
+generation_kwargs:
+  stop:
+    - "</answer>"
 
 bf16: true
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: false
+
+ddp_find_unused_parameters: false   # ★未使用パラメータ探索を切る（GCと相性改善）
+ddp_broadcast_buffers: false        # ★GC時の既定に整合。通信を安定化
 
 # Parameters that control the model and reference model
 disable_dropout: true
@@ -58,22 +64,33 @@ disable_dropout: true
 #vllm_server_base_url: "http://osk-gpu91:8000"
 
 # 学習ハイパーパラメータ
-learning_rate: 2.0e-5              # パラメータ数が少ないのでやや高めに設定
-warmup_ratio: 0.05
-lr_scheduler_type: cosine
+learning_rate: 5.0e-6              # パラメータ数が少ないのでやや高めに設定
+warmup_ratio: 0.0
+lr_scheduler_type: constant
 num_train_epochs: 1                # 例：1 epoch（ステップ指定なら max_steps へ）
 max_steps: -1
+
+
+importance_sampling_level: token
+top_entropy_quantile: 1.0       # liger使用時、<1.0 は未対応（実装制約）
+
 
 # Parameters that control the training
 loss_type: bnpo
 # beta: 0.1                         # KL divergence coefficient (デフォルト 0.0)
 epsilon: 0.2 
 epsilon_high: 0.28
-mask_truncated_completions: true
-top_entropy_quantile: 0.2
+mask_truncated_completions: false
 
-reward_funcs: [accuracy, format, tag_count]
-reward_weights: [1.0, 1.0, 1.0]
+reward_funcs: [gated_accuracy, tag_count, soft_overlong_punishment, repetition_penalty]
+reward_weights: [10.0, 0.5, 0.8, 0.3]
+
+max_completion_len: 1024      # ← 報酬側（フィールド名が別なので両方入れる）
+soft_punish_cache: 128        #   末尾128トークンで線形に0→-1へ
+
+# ---- repetition_penalty のパラメータ ----
+repetition_n_grams: 3         # tri-gram 重複を嫌う
+repetition_max_penalty: -0.2  # 罰の最大値（負値）　-0.1〜-0.5 で調整
 
 # ----------------------------------------------------------
 # ロギング & 保存
@@ -86,13 +103,13 @@ logging_strategy: steps
 
 save_strategy: epoch
 save_total_limit: 1
-output_dir: data/Qwen2.5-1.5B-Open-R1-GRPO
+output_dir: data/Qwen3-8B-Open-R1-GRPO
 overwrite_output_dir: true
 
 push_to_hub: false
 # report_to:
 # - wandb
-hub_model_id: Qwen2.5-1.5B-Open-R1-GRPO
+hub_model_id: Qwen3-8B-Open-R1-GRPO
 hub_strategy: every_save
 
 seed: 42 #  Tensor Parallelism Bug in vLLM ≥ 0.8.0.(https://huggingface.co/blog/vllm-colocate#:~:text=Training%20and%20inference%20take%20turns,dedicated%20devices%20or%20separate%20processes)
