@@ -32,14 +32,15 @@ Options:
     --timeout <time>        Job timeout in HH:MM:SS format (default: $DEFAULT_TIMEOUT)
     --partition <name>      SLURM partition (default: $DEFAULT_PARTITION)
     --api-key <key>         API key for vLLM server (optional)
+    --enable-expert-parallel Enable expert parallel mode (default: false)
     --help                  Show this help message
 
 Examples:
     # Use defaults
     $0
     
-    # Custom configuration
-    $0 --model "Qwen/Qwen3-32B" --nodes 2 --gpus 4 --timeout "04:00:00" --nodelist "osk-gpu54,osk-gpu55"
+    # Custom configuration with expert parallel enabled
+    $0 --model "Qwen/Qwen3-32B" --nodes 2 --gpus 4 --timeout "04:00:00" --nodelist "osk-gpu54,osk-gpu55" --enable-expert-parallel
 EOF
 }
 
@@ -81,6 +82,7 @@ generate_sbatch_script() {
     local timeout="$5"
     local partition="$6"
     local api_key="$7"
+    local enable_expert_parallel="$8"
     
     local job_name
     job_name=$(generate_job_name "$model" "$nodes" "$gpus")
@@ -89,6 +91,9 @@ generate_sbatch_script() {
     local vllm_args="--nnodes $nodes --ngpus $gpus --model \"$model\""
     if [[ -n "$api_key" ]]; then
         vllm_args+=" --api-key \"$api_key\""
+    fi
+    if [[ "$enable_expert_parallel" == "true" ]]; then
+        vllm_args+=" --enable-expert-parallel"
     fi
     
     # Generate the SBATCH script content
@@ -120,6 +125,7 @@ main() {
     local timeout="$DEFAULT_TIMEOUT"
     local partition="$DEFAULT_PARTITION"
     local api_key=""
+    local enable_expert_parallel="false"
     
     # Parse command line arguments
     while [[ $# -gt 0 ]]; do
@@ -198,6 +204,10 @@ main() {
                     exit 1
                 fi
                 ;;
+            "--enable-expert-parallel")
+                enable_expert_parallel="true"
+                shift
+                ;;
             *)
                 echo "Unknown argument: $1" >&2
                 show_usage
@@ -209,7 +219,6 @@ main() {
     local head_node=$(scontrol show hostnames $nodelist | head -n 1)
     local head_node_ip=$(getent hosts "${head_node}gw" | awk '{print $1}')
     
-    # Generate and display the configuration
     echo "=== VLLM SLURM Job Configuration ==="
     echo "Model: $model"
     echo "Nodes: $nodes"
@@ -217,6 +226,7 @@ main() {
     echo "Nodelist: $nodelist"
     echo "Timeout: $timeout"
     echo "Partition: $partition"
+    echo "Expert parallel: $enable_expert_parallel"
     if [[ -n "$api_key" ]]; then
         echo "API Key: [REDACTED]"
     fi
@@ -229,7 +239,7 @@ main() {
     echo "Generating SBATCH script..."
     mkdir -p logs
     local sbatch_content
-    sbatch_content=$(generate_sbatch_script "$model" "$nodes" "$gpus" "$nodelist" "$timeout" "$partition" "$api_key")
+    sbatch_content=$(generate_sbatch_script "$model" "$nodes" "$gpus" "$nodelist" "$timeout" "$partition" "$api_key" "$enable_expert_parallel")
     
     echo "Submitting job to SLURM..."
     echo "$sbatch_content" | sbatch
