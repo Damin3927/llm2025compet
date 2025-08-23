@@ -6,6 +6,8 @@ import os
 import sys
 from typing import Optional
 
+import socket
+import torch
 import datasets
 import transformers
 from transformers import set_seed
@@ -18,7 +20,51 @@ from open_r1.utils.callbacks import get_callbacks
 from open_r1.utils.wandb_logging import init_wandb_training
 from trl import GRPOTrainer, ModelConfig, TrlParser, get_peft_config
 
+# DeepSpeed は任意: 無い環境でも動くようにガード
+try:
+    from deepspeed import DeepSpeedEngine  # type: ignore
+except Exception:
+    DeepSpeedEngine = None  # noqa: N816
+
 logger = logging.getLogger(__name__)
+
+# ---- distributed + cuda sanity (put BEFORE accelerate init) ----
+host = socket.gethostname()
+rank = os.environ.get("RANK")
+lrank = int(os.environ.get("LOCAL_RANK", "0"))
+wsize = os.environ.get("WORLD_SIZE")
+maddr = os.environ.get("MASTER_ADDR")
+mport = os.environ.get("MASTER_PORT")
+
+# env snapshot
+print(
+    "[Env@Worker]",
+    f"host={host}", f"RANK={rank}", f"LOCAL_RANK={lrank}",
+    f"WORLD_SIZE={wsize}", f"MASTER_ADDR={maddr}", f"MASTER_PORT={mport}",
+    file=sys.stderr,
+    flush=True,
+)
+
+# pin device early to silence NCCL warnings
+if torch.cuda.is_available():
+    torch.cuda.set_device(lrank)
+    cur_dev = torch.cuda.current_device()
+    dev_cnt = torch.cuda.device_count()
+    dev_name = torch.cuda.get_device_name(cur_dev)
+else:
+    cur_dev = None
+    dev_cnt = 0
+    dev_name = None
+
+print(
+    "[CudaSanity]",
+    f"host={host}", f"LOCAL_RANK={lrank}",
+    f"CUDA_VISIBLE_DEVICES={os.environ.get('CUDA_VISIBLE_DEVICES')}",
+    f"device_count={dev_cnt}", f"current_device={cur_dev}", f"device_name={dev_name}",
+    file=sys.stderr,
+    flush=True,
+)
+# ---------------------------------------------------------------
 
 
 def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args: ModelConfig):
@@ -108,6 +154,12 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
     logger.info("*** Loading model ***")
     model = get_model(model_args, training_args)
 
+    logger.info(
+        f"Tokenizer check: eos='{tokenizer.eos_token}'(id={tokenizer.eos_token_id}), "
+        f"pad='{tokenizer.pad_token}'(id={tokenizer.pad_token_id}), "
+        f"chat_template={'set' if getattr(tokenizer, 'chat_template', None) else 'none'}"
+    )
+
     # Rewards
     reward_funcs = get_reward_funcs(script_args)  # accuracy_reward は dataset['solution'] を参照できる
 
@@ -122,6 +174,29 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
         callbacks=get_callbacks(training_args, model_args),
         processing_class=tokenizer,
     )
+
+    # ---- DeepSpeed config snapshot (optional) ----
+    def debug_deepspeed_config(trainer_obj):
+        if DeepSpeedEngine is None:
+            print("[DS-DEBUG] deepspeed not available; skipping snapshot", flush=True)
+            return
+        eng = trainer_obj.model_wrapped
+        if not isinstance(eng, DeepSpeedEngine):
+            print("[DS-DEBUG] model_wrapped is not DeepSpeedEngine:", type(eng), flush=True)
+            return
+        cfg = eng.config
+        zc = getattr(cfg, "zero_config", {})
+        print("[DS-DEBUG] ---- DeepSpeed Config Snapshot ----", flush=True)
+        print("[DS-DEBUG] zero_enabled:", getattr(cfg, "zero_enabled", None), flush=True)
+        print("[DS-DEBUG] stage:", zc.get("stage"), flush=True)
+        print("[DS-DEBUG] offload_param:", zc.get("offload_param"), flush=True)
+        print("[DS-DEBUG] offload_optimizer:", zc.get("offload_optimizer"), flush=True)
+        print("[DS-DEBUG] nvme_path exists:", os.path.isdir(zc.get("offload_param", {}).get("nvme_path", "")), flush=True)
+        print("[DS-DEBUG] overlap_comm:", zc.get("overlap_comm"), flush=True)
+        print("[DS-DEBUG] contiguous_gradients:", zc.get("contiguous_gradients"), flush=True)
+        print("[DS-DEBUG] aio:", zc.get("aio"), flush=True)
+
+    debug_deepspeed_config(trainer)
 
     # Train
     logger.info("*** Train ***")
