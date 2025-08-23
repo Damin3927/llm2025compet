@@ -128,16 +128,21 @@ run_ray_command() {
 
 run_vllm() {
     local model_path="$1"
+    local enable_expert_parallel="${2:-false}"
 
     echo "Starting VLLM server with model: $model_path"
 
-    vllm serve --dtype auto --api-key "$VLLM_API_KEY" \
+    local vllm_args="--dtype auto --api-key $VLLM_API_KEY \
         --tensor-parallel-size $NGPUS \
         --pipeline-parallel-size $NNODES \
-        --enable-expert-parallel \
         --distributed-executor-backend ray \
-        --trust-remote-code \
-        "${model_path}"
+        --trust-remote-code"
+    
+    if [[ "$enable_expert_parallel" == "true" ]]; then
+        vllm_args="$vllm_args --enable-expert-parallel"
+    fi
+
+    vllm serve $vllm_args "${model_path}"
 }
 
 # =============================================================================
@@ -153,6 +158,7 @@ Options:
     --ngpus <number>        Number of GPUs per node (required)
     --model <path>          Model path to serve (default: $MODEL_PATH)
     --api-key <key>         API key for authentication (default: $VLLM_API_KEY)
+    --enable-expert-parallel Enable expert parallel mode (default: false)
     --help                  Show this help message
 
 Examples:
@@ -162,8 +168,8 @@ Examples:
     # Run with custom model and API key
     $0 --nnodes 1 --ngpus 2 --model "microsoft/DialoGPT-medium" --api-key "my-secret-key"
     
-    # Run multi-node inference
-    $0 --nnodes 2 --ngpus 4
+    # Run multi-node inference with expert parallel enabled
+    $0 --nnodes 2 --ngpus 4 --enable-expert-parallel
 
 Environment Variables:
     MODEL_PATH             Model to serve (default: $MODEL_PATH)
@@ -175,6 +181,7 @@ main() {
     # Initialize variables from defaults
     local model_path="$MODEL_PATH"
     local api_key="$VLLM_API_KEY"
+    local enable_expert_parallel="false"
     
     # Parse command line arguments
     while [[ $# -gt 0 ]]; do
@@ -223,6 +230,10 @@ main() {
                     exit 1
                 fi
                 ;;
+            "--enable-expert-parallel")
+                enable_expert_parallel="true"
+                shift
+                ;;
             *)
                 echo "Unknown argument: $1" >&2
                 show_usage
@@ -255,7 +266,7 @@ main() {
     
     if [[ "$NODE_RANK" == "0" ]]; then
         echo "RANK: 0. Starting VLLM server..."
-        run_vllm "$model_path"
+        run_vllm "$model_path" "$enable_expert_parallel"
     fi
 }
 
