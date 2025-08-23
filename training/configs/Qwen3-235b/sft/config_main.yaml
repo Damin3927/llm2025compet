@@ -57,7 +57,7 @@ lr_scheduler_kwargs:
 packing: true
 max_grad_norm: 0.2
 max_length: 32768 # 32768 # 最大シーケンス長
-max_steps: 2 # -1
+#max_steps: 2 # -1
 num_train_epochs: 1 # 学習エポック数
 output_dir: data/Qwen3-235B-main-sft # 結果の出力ディレクトリ
 optim: adamw_torch # オプティマイザの種類  何があるかはhttps://github.com/huggingface/transformers/blob/main/src/transformers/training_args.py
@@ -65,8 +65,8 @@ overwrite_output_dir: true
 per_device_eval_batch_size: 1 # 評価時の1GPUあたりのバッチサイズ
 per_device_train_batch_size: 1 # 学習時の1GPUあたりのバッチサイズ
 push_to_hub: true # trueにするとHuggingFace Hubにモデルをpushする ログインしている必要がある
-# report_to: # wandbにログインしているならこれをオンにするとwandbにログが送られる
-# - none
+report_to: # wandbにログインしているならこれをオンにするとwandbにログが送られる
+- none # wandbがあると、モデルが保存できない。
 save_strategy: epoch # モデルをローカルに保存するタイミング ('no' or 'steps' or 'epoch')
 save_steps: 500 # モデルをローカルに保存するステップ数(間隔)
 save_total_limit: 5
