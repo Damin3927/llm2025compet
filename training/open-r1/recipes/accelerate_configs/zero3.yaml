@@ -4,8 +4,7 @@ deepspeed_config:
   zero_optimization:
     stage: 3
     offload_optimizer:
-      device: "nvme"
-      nvme_path: "/nvme12/deepspeed_offload/${SLURM_JOB_ID}"
+      device: cpu
       pin_memory: true
     offload_param:
       device: "nvme"
@@ -14,8 +13,8 @@ deepspeed_config:
     contiguous_gradients: true
     overlap_comm: true
     aio:
-      block_size: 1048576
-      queue_depth: 16
+      block_size: 8388608
+      queue_depth: 128
       single_submit: false
       overlap_events: true
   deepspeed_multinode_launcher: standard
