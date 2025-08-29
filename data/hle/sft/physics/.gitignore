@@ -1,0 +1,6 @@
+*.json
+*.jsonl
+*.parquet
+*.jpg
+*.png
+*.zip
