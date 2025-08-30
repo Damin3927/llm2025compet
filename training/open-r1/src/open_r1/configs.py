@@ -331,7 +331,7 @@ class GRPOScriptArguments(ScriptArguments):
     )
 
 @dataclass
-class DatasetClass:
+class PrefDatasetClass:
     """
     個々のデータセット設定を表すデータクラス
     """
@@ -345,8 +345,8 @@ class DatasetClass:
     to_id: int = None # 学習に使うデータの末尾のインデックス
 
 @dataclass
-class DataConfig:
+class PrefDataConfig:
     """
     データセット設定のリスト全体を保持するデータクラス
     """
-    datasets: list[DatasetClass] = field(default_factory=list, metadata={"help": "List of dataset configurations."})
+    datasets: list[PrefDatasetClass] = field(default_factory=list, metadata={"help": "List of dataset configurations."})

@@ -77,7 +77,6 @@ def main(script_args, training_args, model_args):
     logger.info("*** Loading dataset ***")
     logger.info(f"Loading dataset: {script_args.dataset_name}")
     dataset = datasets.load_dataset(script_args.dataset_name, script_args.dataset_config)
-    # dataset = get_dataset(script_args)
 
     ################
     # Load tokenizer
@@ -90,43 +89,16 @@ def main(script_args, training_args, model_args):
     ##############
     logger.info("*** Loading model ***")
     model = get_model(model_args, training_args)
-
-    # Format into conversation 
-    """
-    def make_conversation(example, prompt_column: str = script_args.dataset_prompt_column):
-        prompt = []
-
-        if training_args.system_prompt is not None:
-            prompt.append({"role": "system", "content": training_args.system_prompt})
-
-        if prompt_column not in example:
-            raise ValueError(f"Dataset Question Field Error: {prompt_column} is not supported.")
-
-        prompt.append({"role": "user", "content": example[prompt_column]})
-        return {"prompt": prompt}
-
-    dataset = dataset.map(make_conversation)
-    """
     # Format into pariwise preference
     def format_pref(example):
         # todo: 本学習の際にはキーを "question" "preferred_output", "non_preferred_output" に書き換える
-        """return {
+        return {
             "prompt": example["question"],
             "chosen": example["preferred_output"],
             "rejected": example["non_preferred_output"]
-        }"""
-        return {
-            "prompt": example["instruction"],
-            "chosen": example["chosen_response"],
-            "rejected": example["rejected_response"]
         }
     
     dataset["train"] = dataset["train"].map(format_pref, remove_columns=dataset["train"].column_names)
-
-    # 下3行は必要ないと思われるので消してよい?
-    #for split in dataset:
-    #    if "messages" in dataset[split].column_names:
-    #        dataset[split] = dataset[split].remove_columns("messages")
 
     #############################
     # Initialize the DPO trainer
@@ -139,7 +111,6 @@ def main(script_args, training_args, model_args):
         train_dataset=dataset[script_args.dataset_train_split],
         eval_dataset=(dataset[script_args.dataset_test_split] if training_args.eval_strategy != "no" else None),
         peft_config=get_peft_config(model_args),
-        #callbacks=get_callbacks(training_args, model_args),
         processing_class=tokenizer,
     )
 

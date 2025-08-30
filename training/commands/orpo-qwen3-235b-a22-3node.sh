@@ -43,11 +43,6 @@ ulimit -m unlimited
 
 cd llm2025compet/training/open-r1/src || exit 1
 
-#if [ "$SLURM_PROCID" == "0" ]; then
-#    echo "Downloading model to NVMe on the first node..."
-#    python3 open_r1/download_model.py --name Qwen/Qwen3-235B-A22B
-#fi
-
 srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
     "accelerate launch \
         --config_file ../recipes/accelerate_configs/zero3.yaml \

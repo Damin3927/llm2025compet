@@ -13,7 +13,7 @@
 # limitations under the License.
 
 """
-grpo.py をベースに必要に応じて DPO の処理に書き換える形で実装
+grpo.py をベースに必要に応じて ORPO の処理に書き換える形で実装
 """
 
 import logging
@@ -33,7 +33,11 @@ from open_r1.utils import get_dataset, get_model, get_tokenizer
 from open_r1.utils.callbacks import get_callbacks
 from open_r1.utils.wandb_logging import init_wandb_training
 from open_r1.get_data import get_data_from_config
-from open_r1.configs import DataConfig, DatasetClass
+from open_r1.configs import PrefDataConfig, PrefDatasetClass
+
+# TRL の DPO 用ライブラリ
+from trl import ORPOConfig, ORPOTrainer, ModelConfig, TrlParser, ScriptArguments, get_peft_config
+
 
 import deepspeed  # NEW: for set_z3_leaf_modules
 print(f"DeepSpeed version: {deepspeed.__version__}")
@@ -48,7 +52,7 @@ except Exception:
     _QwenSparseMoeBlock = None
     print("Falling back to generic Sparse MoE Block.")
 
-def load_config_from_yaml(file_path: str) -> DataConfig:
+def load_config_from_yaml(file_path: str) -> PrefDataConfig:
     """
     Loads dataset configurations from a YAML file.
     """
@@ -57,8 +61,8 @@ def load_config_from_yaml(file_path: str) -> DataConfig:
         data = yaml.safe_load(f)
 
     # Map the list of dicts from YAML to a list of DatasetClass dataclass instances
-    dataset_configs = [DatasetClass(**item) for item in data['neko_pref_datasets']]
-    return DataConfig(datasets=dataset_configs)
+    dataset_configs = [PrefDatasetClass(**item) for item in data['neko_pref_datasets']]
+    return PrefDataConfig(datasets=dataset_configs)
 
 def get_dataconfig():
     parser = argparse.ArgumentParser(description="Load and combine datasets from a YAML configuration file.")
@@ -71,8 +75,6 @@ def get_dataconfig():
     args, _ = parser.parse_known_args()
     return load_config_from_yaml(args.dataconfig)
 
-# TRL の DPO 用ライブラリ
-from trl import ORPOConfig, ORPOTrainer, ModelConfig, TrlParser, ScriptArguments, get_peft_config
 
 logger = logging.getLogger(__name__)
 
@@ -180,7 +182,6 @@ def main(script_args, training_args, model_args, data_config):
         train_dataset=dataset[script_args.dataset_train_split],
         eval_dataset=(dataset[script_args.dataset_test_split] if training_args.eval_strategy != "no" else None),
         peft_config=get_peft_config(model_args),
-        #callbacks=get_callbacks(training_args, model_args),
         processing_class=tokenizer,
     )
 
