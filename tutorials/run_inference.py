@@ -3,7 +3,7 @@ from vllm import LLM, SamplingParams
 def main() -> None:
     # Initialize the LLM with the desired model
     # example: https://huggingface.co/collections/Qwen/qwen3-67dd247413f0e2e4f653967f
-    llm = LLM(model="Qwen/Qwen3-32B", tensor_parallel_size=4, trust_remote_code=True)
+    llm = LLM(model="Qwen/Qwen3-32B", tensor_parallel_size=1, trust_remote_code=True)
 
     # Run inference with a sample prompt
     # MATH-500 dataset example
@@ -14,8 +14,8 @@ def main() -> None:
 \[\sum_{j = 1}^\infty \sum_{k = 1}^\infty \frac{1}{(j + k)^3}\]in terms of $p$ and $q.$"""
 
     sampling_params = SamplingParams(
-        max_tokens=1024,
-        temperature=0.8,
+        max_tokens=32768,
+        temperature=0.6,
     )
 
     response = llm.generate(prompt, sampling_params=sampling_params)
