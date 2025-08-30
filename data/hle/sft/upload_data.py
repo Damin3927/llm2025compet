@@ -3,6 +3,7 @@ Upload generated data to Hugging Face
 
 This script processes JSON data files organized in subfolders, converts them to Parquet format,
 and uploads them as a structured dataset to Hugging Face Hub.
+it will make a dataset card for you, or if you have a file called original_README.log, it will use that as the dataset card.
 
 Structure:
 - Each subfolder in dataset_path becomes a dataset split
@@ -261,7 +262,7 @@ def upload_to_huggingface(dataset_path, repo_id, hf_token):
         
         # Create repository if it doesn't exist
         try:
-            api.create_repo(repo_id, repo_type="dataset", exist_ok=True)
+            api.create_repo(repo_id, repo_type="dataset", exist_ok=True, private=True)
             logger.info(f"Repository {repo_id} is ready")
         except Exception as e:
             logger.warning(f"Could not create/access repository: {e}")
