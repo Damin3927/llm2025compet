@@ -1,2 +1,7 @@
 results/
+logs/
 *.json
+*.csv
+*.pkl
+*.parquet
+test*.sh

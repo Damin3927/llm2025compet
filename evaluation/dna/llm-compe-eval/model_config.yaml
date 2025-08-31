@@ -1,0 +1,7 @@
+batch_settings:
+  parallel_execution: false
+  skip_failed: true
+  timeout_hours: 2
+model_configs:
+- config/858770f7_team1_llama2-7b-chat-finetune/config.yaml
+- config/414c56a1_team2_mistral-7b-instruct-v0.2/config.yaml

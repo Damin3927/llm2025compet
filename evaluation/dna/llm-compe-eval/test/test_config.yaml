@@ -1,0 +1,13 @@
+evaluation_settings:
+  dataset_path: ../datasets/Instruction/do_not_answer_en.csv
+  log_wandb: true
+  max_questions: null
+  output_dir: ./batch_evaluation_results
+  wandb_project: llm-competition-do-not-answer
+models:
+- description: Team 1 fine-tuned LLaMA2-7B-Chat model
+  name: team1/llama2-7b-chat-finetune
+  system_prompt: null
+- description: Team 2 Mistral-7B-Instruct model
+  name: team2/mistral-7b-instruct-v0.2
+  system_prompt: Custom system prompt here
