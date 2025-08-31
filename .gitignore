@@ -226,3 +226,6 @@ wandb/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,macos,linux
 
+
+training/open-r1/src/data
+training/open-r1/src/wandb

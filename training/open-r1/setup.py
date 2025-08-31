@@ -82,7 +82,13 @@ _deps = [
 # packaging: "packaging"
 #
 # some of the values are versioned whereas others aren't.
-deps = {b: a for a, b in (re.findall(r"^(([^!=<>~ \[\]]+)(?:\[[^\]]+\])?(?:[!=<>~ ].*)?$)", x)[0] for x in _deps)}
+deps = {
+    b: a
+    for a, b in (
+        re.findall(r"^(([^!=<>~ \[\]]+)(?:\[[^\]]+\])?(?:[!=<>~ ].*)?$)", x)[0]
+        for x in _deps
+    )
+}
 
 
 def deps_list(*pkgs):
@@ -93,7 +99,9 @@ extras = {}
 extras["tests"] = deps_list("pytest", "parameterized", "math-verify", "jieba")
 extras["torch"] = deps_list("torch")
 extras["quality"] = deps_list("ruff", "isort", "flake8")
-extras["code"] = deps_list("e2b-code-interpreter", "python-dotenv", "morphcloud", "jieba", "pandas", "aiofiles")
+extras["code"] = deps_list(
+    "e2b-code-interpreter", "python-dotenv", "morphcloud", "jieba", "pandas", "aiofiles"
+)
 extras["eval"] = deps_list("lighteval", "math-verify")
 extras["dev"] = extras["quality"] + extras["tests"] + extras["eval"] + extras["code"]
 

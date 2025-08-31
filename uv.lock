@@ -10,27 +10,6 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "accelerate"
-version = "1.9.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "huggingface-hub" },
-    { name = "numpy" },
-    { name = "packaging" },
-    { name = "psutil" },
-    { name = "pyyaml" },
-    { name = "safetensors" },
-    { name = "torch", version = "2.7.0", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'darwin'" },
-    { name = "torch", version = "2.7.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' and platform_machine != 'x86_64' and sys_platform == 'linux'" },
-    { name = "torch", version = "2.7.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
-    { name = "torch", version = "2.7.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c4/25/969456a95a90ed38f73f68d0f0915bdf1d76145d05054c59ad587b171150/accelerate-1.9.0.tar.gz", hash = "sha256:0e8c61f81af7bf37195b6175a545ed292617dd90563c88f49020aea5b6a0b47f", size = 383234, upload-time = "2025-07-16T16:24:54.526Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/9f/1c/a17fb513aeb684fb83bef5f395910f53103ab30308bbdd77fd66d6698c46/accelerate-1.9.0-py3-none-any.whl", hash = "sha256:c24739a97ade1d54af4549a65f8b6b046adc87e2b3e4d6c66516e32c53d5a8f1", size = 367073, upload-time = "2025-07-16T16:24:52.957Z" },
-]
-
-[[package]]
 name = "aiohappyeyeballs"
 version = "2.6.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1414,7 +1393,6 @@ dependencies = [
     { name = "torch", version = "2.7.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'aarch64' and platform_machine != 'x86_64' and sys_platform == 'linux'" },
     { name = "torch", version = "2.7.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
     { name = "torch", version = "2.7.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
-    { name = "trl" },
     { name = "vllm" },
     { name = "wandb" },
 ]
@@ -1431,7 +1409,6 @@ requires-dist = [
     { name = "torch", marker = "platform_machine == 'aarch64' or sys_platform != 'linux'", specifier = ">=2.7.0", index = "https://download.pytorch.org/whl/cpu" },
     { name = "torch", marker = "platform_machine != 'aarch64' and platform_machine != 'x86_64' and sys_platform == 'linux'", specifier = ">=2.7.0" },
     { name = "torch", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'", specifier = ">=2.7.0", index = "https://download.pytorch.org/whl/cu128" },
-    { name = "trl", specifier = ">=0.19.1" },
     { name = "vllm", specifier = "==0.9.2" },
     { name = "wandb", specifier = ">=0.21.0" },
 ]
@@ -3583,20 +3560,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/11/53/ce18470914ab6cfbec9384ee565d23c4d1c55f0548160b1c7b33000b11fd/triton-3.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b68c778f6c4218403a6bd01be7484f6dc9e20fe2083d22dd8aef33e3b87a10a3", size = 156504509, upload-time = "2025-04-09T20:27:40.413Z" },
     { url = "https://files.pythonhosted.org/packages/7d/74/4bf2702b65e93accaa20397b74da46fb7a0356452c1bb94dbabaf0582930/triton-3.3.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:47bc87ad66fa4ef17968299acacecaab71ce40a238890acc6ad197c3abe2b8f1", size = 156516468, upload-time = "2025-04-09T20:27:48.196Z" },
     { url = "https://files.pythonhosted.org/packages/0a/93/f28a696fa750b9b608baa236f8225dd3290e5aff27433b06143adc025961/triton-3.3.0-cp313-cp313t-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:ce4700fc14032af1e049005ae94ba908e71cd6c2df682239aed08e49bc71b742", size = 156580729, upload-time = "2025-04-09T20:27:55.424Z" },
-]
-
-[[package]]
-name = "trl"
-version = "0.19.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "accelerate" },
-    { name = "datasets" },
-    { name = "transformers" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/3d/69/303db8941a08edd646f658d18a0f00a5b83df523ae8967bbc6cce3a81466/trl-0.19.1.tar.gz", hash = "sha256:545592462ed985f4b77c9b1dbc0957efb17c43262648bb147abf3250ad3ff100", size = 397181, upload-time = "2025-07-08T00:48:40.359Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a2/19/42df113377d440f2a5a0a45ffa617db03c4a25b1e4cd171b018649845eb0/trl-0.19.1-py3-none-any.whl", hash = "sha256:8a2d4277b4ba7221eaab545a35ee89b6fbb8721fa3709ac01876a8c1bd7fd78a", size = 376159, upload-time = "2025-07-08T00:48:38.843Z" },
 ]
 
 [[package]]
