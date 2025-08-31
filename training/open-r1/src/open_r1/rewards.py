@@ -90,6 +90,33 @@ def format_reward(completions, **kwargs):
     return [1.0 if match else 0.0 for match in matches]
 
 
+def gated_verification_reward(format_scores, verification_scores):
+    """
+    Adds verification reward only if the format condition is satisfied.
+    If format is correct (==1.0) and verification is available, reward = 1.0 + v.
+    If format is correct but verification is unavailable (None), reward = 1.0.
+    If format is wrong:
+        ─ verification available → 0.0 
+        ─ verification None      → None
+    """
+    return [
+        f + v if f == 1.0 and v is not None
+        else f if f == 1.0
+        else 0.0 if v is not None
+        else None
+        for f, v in zip(format_scores, verification_scores)
+    ]
+
+
+def gated_accuracy_reward(completions, solution, **kwargs):
+    """
+    Composite reward: adds accuracy only if format condition is met, inspired by Open Instruct's GRPO design (https://allenai.github.io/open-instruct/algorithms/grpo/#grpo_fastpy)
+    """
+    format_scores = format_reward(completions, **kwargs)
+    verification_scores = accuracy_reward(completions, solution, **kwargs)
+    return gated_verification_reward(format_scores, verification_scores)
+
+
 def tag_count_reward(completions, **kwargs) -> list[float]:
     """Reward function that checks if we produce the desired number of think and answer tags associated with `format_reward()`.
 
@@ -700,6 +727,7 @@ def get_reward_funcs(script_args) -> list[Callable]:
             max_completion_len=script_args.max_completion_len,
             soft_punish_cache=script_args.soft_punish_cache,
         ),
+        "gated_accuracy": gated_accuracy_reward,
     }
     reward_funcs = [REWARD_FUNCS_REGISTRY[func] for func in script_args.reward_funcs]
 
