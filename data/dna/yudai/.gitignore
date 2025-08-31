@@ -1,0 +1,30 @@
+# logs and caches
+logs/
+__pycache__/
+*.log
+
+# datasets and large artifacts
+*.jsonl
+questions.json
+processed/
+wandb/
+cards/
+logs/
+data/
+
+# local env
+.env
+.env.*
+
+# backups and temp
+*.backup
+
+# tests and notebooks (if any)
+*.ipynb
+
+# keep scripts directory tracked but ignore outputs inside if any
+scripts/
+!scripts/*.sh
+
+# exclude internal doc
+さくらDCサーバ利用手順書.md

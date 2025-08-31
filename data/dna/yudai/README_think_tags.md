@@ -104,9 +104,9 @@ python data/dna/add_think_tags.py --start_index 1000 --end_index 2000
 ## 推奨モデル
 
 ### **最推奨モデル**
-- **`qwen/qwen3-32b`** （デフォルト）
-  - 思考モード対応（thinking/non-thinking切り替え）
-  - 32Kコンテキスト（最大131Kまで拡張可能）
+- **`qwen/qwen3-32b-instruct`** （デフォルト）
+  - Instruct系（Chat Completionsに最適）
+  - 思考出力は`message.content`が空の場合、`reasoning`に載ることがある
   - 複雑な推論と効率的な対話の両方に最適化
 
 ### **その他の推奨モデル**

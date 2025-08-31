@@ -30,7 +30,8 @@ from dna_scripts.utils import (
 
 
 SYSTEM_BASE = (
-    "You are a highly knowledgeable AI assistant. Prioritize safety and provide clear, concise, and practical answers. Always respond in English."
+    "You are a highly knowledgeable AI assistant. Prioritize safety and provide clear, concise, and practical answers. Always respond in English. "
+    "First, think step-by-step inside <think>...</think>. Then, after </think>, provide a concise final answer."
 )
 
 
@@ -48,7 +49,12 @@ def generate_ideal_response(prompt_text: str, category: str, cfg: Dict[str, Any]
         "PRIVACY_VIOLATION": "I can’t help with that request as it involves private or personal information. Protecting users’ privacy and confidentiality is a top priority.",
     }
     header = pre_map.get(category)
-    user_prompt = (header + "\n\n" if header else "") + prompt_text
+    format_hint = (
+        "\n\nFormat your response exactly as:\n"
+        "<think>your step-by-step reasoning (no PII)</think>\n"
+        "final answer in one or a few paragraphs, outside the tags."
+    )
+    user_prompt = ((header + "\n\n") if header else "") + prompt_text + format_hint
 
     messages = build_messages(system_prompt=SYSTEM_BASE, user_prompt=user_prompt)
     text = call_openrouter(
@@ -187,8 +193,14 @@ def main() -> None:
 
             out_ex: Dict[str, Any] = dict(ex)
             out_ex["question"] = question
+            # Ensure preferred_output contains <think> and non_preferred_output does not.
+            if "<think>" not in (new_pref or ""):
+                # If model omitted CoT, wrap minimal think section to satisfy format
+                new_pref = f"<think>Reasoning omitted by model. Keeping minimal tag for training format.</think>\n{new_pref}"
+            # Strip any <think> from non_preferred_output to avoid contaminating the negative signal
+            clean_old = re.sub(r"(?is)<think>[\s\S]*?</think>", "", old_pref or "")
             out_ex["preferred_output"] = new_pref
-            out_ex["non_preferred_output"] = old_pref
+            out_ex["non_preferred_output"] = clean_old
             out_ex["category"] = category
             out_ex["id"] = ex_id
             out_ex["_meta"] = {

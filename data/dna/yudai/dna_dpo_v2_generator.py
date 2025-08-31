@@ -44,7 +44,7 @@ class DPOV2Generator:
             raise ValueError("OPENROUTER_API_KEYが設定されていません。.envファイルを確認してください。")
         
         self.api_base = "https://openrouter.ai/api/v1"
-        self.model = "anthropic/claude-3.5-sonnet"  # 高品質な応答生成のため
+        self.model = "meta-llama/llama-3.1-8b-instruct"  # Llama 3.1 8B Instructモデル
         
         # 並列処理の設定
         self.max_workers = max_workers or min(cpu_count(), 8)  # 最大8プロセス
@@ -173,8 +173,11 @@ Inside the `<think>` tag, explain that the user's request violates a core safety
         data = {
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": 1000,
-            "temperature": 0.1
+            "max_tokens": 800,  # Llama 3.1 8B用に調整
+            "temperature": 0.2,  # Llama 3.1 8B用に調整
+            "top_p": 0.9,       # Llama 3.1 8B用に追加
+            "frequency_penalty": 0.1,  # Llama 3.1 8B用に追加
+            "presence_penalty": 0.1    # Llama 3.1 8B用に追加
         }
         
         for attempt in range(max_retries):
@@ -330,6 +333,9 @@ Inside the `<think>` tag, explain that the user's request violates a core safety
                 logger.warning("処理対象のデータが見つかりませんでした")
                 return
             
+            # リアルタイムファイルの初期化
+            self._initialize_realtime_file()
+            
             # 処理結果を格納
             processed_data = []
             successful_count = 0
@@ -345,6 +351,9 @@ Inside the `<think>` tag, explain that the user's request violates a core safety
                 if result:
                     processed_data.append(result)
                     successful_count += 1
+                    
+                    # 各結果をリアルタイムファイルに追加
+                    self._save_to_realtime_file(result, successful_count)
                     
                     if self.use_wandb:
                         wandb.log({
@@ -397,6 +406,9 @@ Inside the `<think>` tag, explain that the user's request violates a core safety
                 logger.warning("処理対象のデータが見つかりませんでした")
                 return
             
+            # リアルタイムファイルの初期化
+            self._initialize_realtime_file()
+            
             # 並列処理用のデータ形式に変換
             rows_data = [(idx, row.to_dict()) for idx, row in filtered_df.iterrows()]
             
@@ -412,39 +424,62 @@ Inside the `<think>` tag, explain that the user's request violates a core safety
             failed_count = 0
             
             # 並列処理の実行（ThreadPoolExecutorを使用）
+            logger.info(f"ThreadPoolExecutor開始: {self.max_workers}ワーカー")
+            
             with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
                 # バッチ処理を並列実行
+                logger.info("バッチ処理の並列実行を開始")
                 future_to_batch = {
                     executor.submit(self._process_batch_parallel, batch): batch 
                     for batch in batches
                 }
                 
+                logger.info(f"{len(future_to_batch)}個のバッチを並列実行中...")
+                
                 # 完了したバッチから結果を収集
+                completed_batches = 0
                 for future in tqdm(concurrent.futures.as_completed(future_to_batch), 
                                  total=len(batches), desc="並列処理中"):
                     batch = future_to_batch[future]
+                    completed_batches += 1
+                    
+                    logger.info(f"バッチ {completed_batches}/{len(batches)} の結果を受信")
+                    
                     try:
                         batch_results = future.result()
+                        logger.info(f"バッチ {completed_batches} の結果: {len(batch_results)}件")
                         
                         # 結果を処理
                         for result in batch_results:
                             if result:
                                 processed_data.append(result)
                                 successful_count += 1
+                                
+                                # 各結果をリアルタイムファイルに追加
+                                self._save_to_realtime_file(result, successful_count)
+                                logger.info(f"結果 {successful_count} をリアルタイムファイルに保存")
                             else:
                                 failed_count += 1
                         
-                        # 進捗ログ
+                        # バッチ完了ログ
+                        logger.info(f"バッチ {completed_batches}/{len(batches)} 完了: "
+                                  f"成功 {successful_count}, 失敗 {failed_count}")
+                        
+                        # 進捗ログ（より頻繁に出力）
                         current_progress = successful_count + failed_count
-                        if current_progress % 100 == 0:
+                        if current_progress % 10 == 0:  # 10件ごとにログ出力
                             logger.info(f"並列処理進捗: {current_progress}/{len(filtered_df)}行完了 "
                                       f"(成功: {successful_count}, 失敗: {failed_count})")
                         
-                        # 中間保存（200件ごと）
-                        if current_progress % 200 == 0:
+                        # 中間保存（50件ごと）
+                        if current_progress % 50 == 0:
                             self._save_intermediate_results(processed_data, current_progress)
                             if processed_data:
                                 self._display_sample_data(processed_data[-5:], current_progress)
+                        
+                        # リアルタイム進捗表示
+                        if current_progress % 5 == 0:  # 5件ごとに簡易ログ
+                            logger.info(f"✓ 処理中: {current_progress}/{len(filtered_df)} ({current_progress/len(filtered_df)*100:.1f}%)")
                         
                     except Exception as e:
                         logger.error(f"バッチ処理中にエラー: {e}")
@@ -462,34 +497,51 @@ Inside the `<think>` tag, explain that the user's request violates a core safety
     def _process_batch_parallel(self, batch_data: List[Tuple[int, Dict]]) -> List[Optional[Dict]]:
         """並列処理用のバッチ処理（ThreadPoolExecutor用）"""
         results = []
+        logger.info(f"バッチ処理開始: {len(batch_data)}件")
+        
         for idx, row_dict in batch_data:
             try:
                 question = row_dict['question']
                 type_of_harm = row_dict['type_of_harm']
                 original_preferred = row_dict['preferred_output']
                 
+                logger.info(f"行 {idx} の処理開始: {question[:50]}...")
+                
                 # 新しいchosen応答を生成
                 new_chosen = self.generate_chosen_response(question, type_of_harm)
                 
                 if new_chosen is None:
+                    logger.warning(f"行 {idx}: chosen応答の生成に失敗")
                     results.append(None)
                     continue
+                
+                logger.info(f"行 {idx}: chosen応答生成成功 ({len(new_chosen)}文字)")
                 
                 # 元のpreferred_outputをrejectedとして使用
                 new_rejected = original_preferred
                 
-                results.append({
+                result = {
                     'prompt': question,
                     'chosen': new_chosen,
                     'rejected': new_rejected,
                     'original_type_of_harm': type_of_harm,
                     'original_preferred': original_preferred
-                })
+                }
+                
+                results.append(result)
+                
+                # リアルタイムファイルに即座に保存（並列処理でも確実に保存）
+                try:
+                    self._save_to_realtime_file(result, len(results))
+                    logger.info(f"行 {idx}: リアルタイムファイルに保存完了")
+                except Exception as save_error:
+                    logger.error(f"行 {idx}: リアルタイムファイル保存エラー: {save_error}")
                 
             except Exception as e:
                 logger.error(f"並列処理で行 {idx}の処理中にエラー: {e}")
                 results.append(None)
         
+        logger.info(f"バッチ処理完了: {len(results)}件の結果を返却")
         return results
 
 
@@ -559,6 +611,66 @@ Inside the `<think>` tag, explain that the user's request violates a core safety
                 f.write(json.dumps(output_item, ensure_ascii=False) + '\n')
         
         logger.info(f"中間結果を保存しました: {intermediate_file}")
+
+    def _save_to_realtime_file(self, result: Dict, current_count: int):
+        """リアルタイムファイルに結果を追加"""
+        if not result:
+            return
+            
+        # リアルタイムファイル名
+        realtime_file = self.output_dir / "realtime_results.jsonl"
+        
+        # 結果を追加
+        output_item = {
+            'prompt': result['prompt'],
+            'chosen': result['chosen'],
+            'rejected': result['rejected'],
+            'type_of_harm': result['original_type_of_harm'],
+            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+            'sequence_number': current_count
+        }
+        
+        try:
+            # ファイルに書き込み（確実に保存）
+            with open(realtime_file, 'a', encoding='utf-8') as f:
+                f.write(json.dumps(output_item, ensure_ascii=False) + '\n')
+                f.flush()  # バッファを強制フラッシュ
+                os.fsync(f.fileno())  # ディスクに確実に書き込み
+            
+            # 最初の100件のみログ出力（ログの肥大化を防ぐ）
+            if current_count <= 100 or current_count % 100 == 0:
+                logger.info(f"リアルタイム保存: {current_count}件目 - {result['prompt'][:50]}...")
+                
+        except Exception as e:
+            logger.error(f"リアルタイムファイル保存エラー: {e}")
+            # エラーが発生した場合、代替ファイルに保存
+            backup_file = self.output_dir / f"backup_result_{current_count}.jsonl"
+            try:
+                with open(backup_file, 'w', encoding='utf-8') as f:
+                    f.write(json.dumps(output_item, ensure_ascii=False, indent=2))
+                logger.info(f"バックアップファイルに保存: {backup_file}")
+            except Exception as backup_e:
+                logger.error(f"バックアップ保存も失敗: {backup_e}")
+
+    def _initialize_realtime_file(self):
+        """リアルタイムファイルの初期化"""
+        realtime_file = self.output_dir / "realtime_results.jsonl"
+        
+        # ファイルが存在しない場合は作成
+        if not realtime_file.exists():
+            try:
+                with open(realtime_file, 'w', encoding='utf-8') as f:
+                    f.write("# DPOデータセットV2 リアルタイム結果\n")
+                    f.write(f"# 開始時刻: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
+                    f.write("# 形式: prompt, chosen, rejected, type_of_harm, timestamp, sequence_number\n")
+                    f.flush()
+                    os.fsync(f.fileno())
+                
+                logger.info(f"リアルタイムファイルを初期化しました: {realtime_file}")
+            except Exception as e:
+                logger.error(f"リアルタイムファイル初期化エラー: {e}")
+        else:
+            logger.info(f"リアルタイムファイルが既に存在します: {realtime_file}")
 
     def _display_sample_data(self, sample_data: List[Dict], current_progress: int, is_final: bool = False):
         """サンプルデータを表示"""
