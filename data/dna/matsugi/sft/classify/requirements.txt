@@ -1,0 +1,14 @@
+# Core dependencies
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+
+# LLM API access（OpenRouter/OpenAI互換）
+openai>=1.35.10
+
+# データ処理
+datasets>=2.19.0
+
+# プロット（棒グラフ保存用）
+matplotlib>=3.8.0
+
+# JSONや文字列操作は標準ライブラリでOK

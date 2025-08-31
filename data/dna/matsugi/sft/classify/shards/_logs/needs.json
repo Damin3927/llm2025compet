@@ -1,0 +1,634 @@
+[
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Adult Content",
+    "specific_harm": "Explicit Sexual Content",
+    "current": 1,
+    "need_to_min": 31,
+    "room_to_max": 33
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Adult Content",
+    "specific_harm": "Graphic Violence",
+    "current": 1,
+    "need_to_min": 31,
+    "room_to_max": 33
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Adult Content",
+    "specific_harm": "OTHER",
+    "current": 0,
+    "need_to_min": 32,
+    "room_to_max": 34
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Social stereotypes and unfair discrimination",
+    "specific_harm": "Body Shaming",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Social stereotypes and unfair discrimination",
+    "specific_harm": "Disability Discrimination",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Social stereotypes and unfair discrimination",
+    "specific_harm": "Gender/Sexual Discrimination",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Social stereotypes and unfair discrimination",
+    "specific_harm": "Location Discrimination",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Social stereotypes and unfair discrimination",
+    "specific_harm": "Other Forms of Discrimination",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Social stereotypes and unfair discrimination",
+    "specific_harm": "Racial/Ethnic Discrimination",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Social stereotypes and unfair discrimination",
+    "specific_harm": "Religious Discrimination",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Social stereotypes and unfair discrimination",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Toxic language (hate speech)",
+    "specific_harm": "Insult",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Toxic language (hate speech)",
+    "specific_harm": "Obscene",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Toxic language (hate speech)",
+    "specific_harm": "Other Severe Toxicity",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "Toxic language (hate speech)",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+    "type_of_harm": "OTHER",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Human-Chatbot Interaction Harms",
+    "type_of_harm": "Mental Health or Overreliance Crisis",
+    "specific_harm": "Advice of coping strategies",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Human-Chatbot Interaction Harms",
+    "type_of_harm": "Mental Health or Overreliance Crisis",
+    "specific_harm": "Consult advice on psychotic disorders",
+    "current": 4,
+    "need_to_min": 28,
+    "room_to_max": 30
+  },
+  {
+    "risk_area": "Human-Chatbot Interaction Harms",
+    "type_of_harm": "Mental Health or Overreliance Crisis",
+    "specific_harm": "Depression and Anxiety",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Human-Chatbot Interaction Harms",
+    "type_of_harm": "Mental Health or Overreliance Crisis",
+    "specific_harm": "Self-Harm",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Human-Chatbot Interaction Harms",
+    "type_of_harm": "Mental Health or Overreliance Crisis",
+    "specific_harm": "OTHER",
+    "current": 2,
+    "need_to_min": 30,
+    "room_to_max": 32
+  },
+  {
+    "risk_area": "Human-Chatbot Interaction Harms",
+    "type_of_harm": "Treat Chatbot as a Human",
+    "specific_harm": "Ask for personal information",
+    "current": 8,
+    "need_to_min": 24,
+    "room_to_max": 26
+  },
+  {
+    "risk_area": "Human-Chatbot Interaction Harms",
+    "type_of_harm": "Treat Chatbot as a Human",
+    "specific_harm": "places personal emotional reliance on a chatbot",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Human-Chatbot Interaction Harms",
+    "type_of_harm": "Treat Chatbot as a Human",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Human-Chatbot Interaction Harms",
+    "type_of_harm": "OTHER",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Compromise privacy by leaking or inferring private information (person/individual)",
+    "specific_harm": "Biometric Data",
+    "current": 0,
+    "need_to_min": 32,
+    "room_to_max": 34
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Compromise privacy by leaking or inferring private information (person/individual)",
+    "specific_harm": "Educational Information",
+    "current": 12,
+    "need_to_min": 20,
+    "room_to_max": 22
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Compromise privacy by leaking or inferring private information (person/individual)",
+    "specific_harm": "Financial Information",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Compromise privacy by leaking or inferring private information (person/individual)",
+    "specific_harm": "Medical Information",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Compromise privacy by leaking or inferring private information (person/individual)",
+    "specific_harm": "Personal Identification Information (PII)",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Compromise privacy by leaking or inferring private information (person/individual)",
+    "specific_harm": "Personal Life Information",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Compromise privacy by leaking or inferring private information (person/individual)",
+    "specific_harm": "OTHER",
+    "current": 3,
+    "need_to_min": 29,
+    "room_to_max": 31
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Risks from leaking or inferring sensitive information (organization/gov)",
+    "specific_harm": "Classified Information",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Risks from leaking or inferring sensitive information (organization/gov)",
+    "specific_harm": "Confidential Operations",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Risks from leaking or inferring sensitive information (organization/gov)",
+    "specific_harm": "Cybersecurity Vulnerabilities",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Risks from leaking or inferring sensitive information (organization/gov)",
+    "specific_harm": "Financial and Budgetary Information",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Risks from leaking or inferring sensitive information (organization/gov)",
+    "specific_harm": "Internal Communications",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Risks from leaking or inferring sensitive information (organization/gov)",
+    "specific_harm": "Internal Policies and Procedures",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Risks from leaking or inferring sensitive information (organization/gov)",
+    "specific_harm": "Legal Information",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Risks from leaking or inferring sensitive information (organization/gov)",
+    "specific_harm": "Sensitive Technological Details",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "Risks from leaking or inferring sensitive information (organization/gov)",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Information Hazards",
+    "type_of_harm": "OTHER",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Animal Abuse/Cruelty/Poaching",
+    "current": 0,
+    "need_to_min": 32,
+    "room_to_max": 34
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Copyright Infringement",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Financial Crimes",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Illegal Digital Activities",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Illegal Drugs and Substances",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Illegal Trade",
+    "current": 9,
+    "need_to_min": 23,
+    "room_to_max": 25
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Illegitimate surveillance and censorship",
+    "current": 10,
+    "need_to_min": 22,
+    "room_to_max": 24
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Sexual Exploitation and Pornography",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Substance Abuse",
+    "current": 0,
+    "need_to_min": 32,
+    "room_to_max": 34
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Terrorist Activities",
+    "current": 22,
+    "need_to_min": 10,
+    "room_to_max": 12
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Threats and Intimidation",
+    "current": 3,
+    "need_to_min": 29,
+    "room_to_max": 31
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "Violence and Physical Harm",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Assisting illegal activities",
+    "specific_harm": "OTHER",
+    "current": 4,
+    "need_to_min": 28,
+    "room_to_max": 30
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Nudging or advising users to perform unethical or unsafe actions",
+    "specific_harm": "Defamatory Content",
+    "current": 2,
+    "need_to_min": 30,
+    "room_to_max": 32
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Nudging or advising users to perform unethical or unsafe actions",
+    "specific_harm": "Endorsement of Cyberbullying or Online Harassment",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Nudging or advising users to perform unethical or unsafe actions",
+    "specific_harm": "Endorsement of Unsafe Health Practices",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Nudging or advising users to perform unethical or unsafe actions",
+    "specific_harm": "Guide for Risky Pranks, Unsafe Behaviors or Destructive Behavior, Substance Misuse",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Nudging or advising users to perform unethical or unsafe actions",
+    "specific_harm": "Trolling or Flame baiting",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Nudging or advising users to perform unethical or unsafe actions",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Reducing the cost of disinformation campaigns",
+    "specific_harm": "Disinformation",
+    "current": 4,
+    "need_to_min": 28,
+    "room_to_max": 30
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Reducing the cost of disinformation campaigns",
+    "specific_harm": "Malinformation",
+    "current": 5,
+    "need_to_min": 27,
+    "room_to_max": 29
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Reducing the cost of disinformation campaigns",
+    "specific_harm": "Spam Content",
+    "current": 1,
+    "need_to_min": 31,
+    "room_to_max": 33
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "Reducing the cost of disinformation campaigns",
+    "specific_harm": "OTHER",
+    "current": 0,
+    "need_to_min": 32,
+    "room_to_max": 34
+  },
+  {
+    "risk_area": "Malicious Uses",
+    "type_of_harm": "OTHER",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Causing material harm by disseminating misinformation e.g. in medicine or law",
+    "specific_harm": "Financial Advice",
+    "current": 0,
+    "need_to_min": 32,
+    "room_to_max": 34
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Causing material harm by disseminating misinformation e.g. in medicine or law",
+    "specific_harm": "Legal Advice",
+    "current": 0,
+    "need_to_min": 32,
+    "room_to_max": 34
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Causing material harm by disseminating misinformation e.g. in medicine or law",
+    "specific_harm": "Medical Advice",
+    "current": 0,
+    "need_to_min": 32,
+    "room_to_max": 34
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Causing material harm by disseminating misinformation e.g. in medicine or law",
+    "specific_harm": "Unreliable Experts",
+    "current": 4,
+    "need_to_min": 28,
+    "room_to_max": 30
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Causing material harm by disseminating misinformation e.g. in medicine or law",
+    "specific_harm": "OTHER",
+    "current": 2,
+    "need_to_min": 30,
+    "room_to_max": 32
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Disseminating false or misleading information",
+    "specific_harm": "False News",
+    "current": 20,
+    "need_to_min": 12,
+    "room_to_max": 14
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Disseminating false or misleading information",
+    "specific_harm": "Hazardous Activities",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Disseminating false or misleading information",
+    "specific_harm": "Misinterpretation or Wrong Context",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Disseminating false or misleading information",
+    "specific_harm": "Propaganda",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Disseminating false or misleading information",
+    "specific_harm": "Rumors",
+    "current": 30,
+    "need_to_min": 2,
+    "room_to_max": 4
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "Disseminating false or misleading information",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "Misinformation Harms",
+    "type_of_harm": "OTHER",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  },
+  {
+    "risk_area": "OTHER",
+    "type_of_harm": "OTHER",
+    "specific_harm": "OTHER",
+    "current": 34,
+    "need_to_min": 0,
+    "room_to_max": 0
+  }
+]

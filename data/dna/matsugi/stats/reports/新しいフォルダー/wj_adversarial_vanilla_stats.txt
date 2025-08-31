@@ -1,0 +1,33 @@
+=== 集計結果 ===
+総件数: 100
+参考: エラー/スキップ含む行(概算): 0 (0.00%)
+
+--- Risk Area 分布 ---
+Discrimination, Exclusion, Toxicity, Hateful, Offensive: 34 (34.00%)
+Information Hazards: 32 (32.00%)
+Malicious Uses: 14 (14.00%)
+Misinformation Harms: 14 (14.00%)
+OTHER: 6 (6.00%)
+
+--- Type of Harm 分布 ---
+OTHER: 18 (18.00%)
+Toxic language (hate speech): 16 (16.00%)
+Risks from leaking or inferring sensitive information (organization/gov): 15 (15.00%)
+Social stereotypes and unfair discrimination: 15 (15.00%)
+Disseminating false or misleading information: 14 (14.00%)
+Assisting illegal activities: 7 (7.00%)
+Compromise privacy by leaking or inferring private information (person/individual): 6 (6.00%)
+Nudging or advising users to perform unethical or unsafe actions: 6 (6.00%)
+Adult Content: 3 (3.00%)
+
+--- Specific Harm 上位10 ---
+OTHER: 22 (22.00%)
+Propaganda: 8 (8.00%)
+Other Severe Toxicity: 7 (7.00%)
+Gender/Sexual Discrimination: 5 (5.00%)
+Obscene: 4 (4.00%)
+Financial and Budgetary Information: 4 (4.00%)
+Insult: 4 (4.00%)
+Misinterpretation or Wrong Context: 4 (4.00%)
+Guide for Risky Pranks, Unsafe Behaviors or Destructive Behavior, Substance Misuse: 4 (4.00%)
+Illegal Digital Activities: 4 (4.00%)

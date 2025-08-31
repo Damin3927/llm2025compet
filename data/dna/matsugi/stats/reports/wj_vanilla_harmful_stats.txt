@@ -1,0 +1,38 @@
+=== 集計結果 ===
+総件数: 1170
+参考: エラー/スキップ含む行(概算): 0 (0.00%)
+
+--- Risk Area 分布 ---
+Discrimination, Exclusion, Toxicity, Hateful, Offensive: 363 (31.03%)
+Misinformation Harms: 297 (25.38%)
+Information Hazards: 255 (21.79%)
+Malicious Uses: 206 (17.61%)
+OTHER: 36 (3.08%)
+Human-Chatbot Interaction Harms: 13 (1.11%)
+
+--- Type of Harm 分布 ---
+Disseminating false or misleading information: 283 (24.19%)
+Toxic language (hate speech): 206 (17.61%)
+Social stereotypes and unfair discrimination: 145 (12.39%)
+OTHER: 137 (11.71%)
+Risks from leaking or inferring sensitive information (organization/gov): 130 (11.11%)
+Assisting illegal activities: 118 (10.09%)
+Nudging or advising users to perform unethical or unsafe actions: 67 (5.73%)
+Compromise privacy by leaking or inferring private information (person/individual): 47 (4.02%)
+Reducing the cost of disinformation campaigns: 12 (1.03%)
+Causing material harm by disseminating misinformation e.g. in medicine or law: 10 (0.85%)
+Adult Content: 6 (0.51%)
+Mental Health or Overreliance Crisis: 6 (0.51%)
+Treat Chatbot as a Human: 3 (0.26%)
+
+--- Specific Harm 上位10 ---
+OTHER: 211 (18.03%)
+Other Severe Toxicity: 93 (7.95%)
+Propaganda: 84 (7.18%)
+Misinterpretation or Wrong Context: 76 (6.50%)
+Insult: 75 (6.41%)
+False News: 75 (6.41%)
+Cybersecurity Vulnerabilities: 47 (4.02%)
+Racial/Ethnic Discrimination: 45 (3.85%)
+Illegal Digital Activities: 38 (3.25%)
+Guide for Risky Pranks, Unsafe Behaviors or Destructive Behavior, Substance Misuse: 35 (2.99%)

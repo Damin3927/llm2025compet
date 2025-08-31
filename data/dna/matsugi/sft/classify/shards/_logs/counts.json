@@ -1,0 +1,129 @@
+{
+  "Discrimination, Exclusion, Toxicity, Hateful, Offensive": {
+    "Adult Content": {
+      "Explicit Sexual Content": 1,
+      "Graphic Violence": 1,
+      "OTHER": 0
+    },
+    "Social stereotypes and unfair discrimination": {
+      "Body Shaming": 34,
+      "Disability Discrimination": 34,
+      "Gender/Sexual Discrimination": 34,
+      "Location Discrimination": 34,
+      "Other Forms of Discrimination": 34,
+      "Racial/Ethnic Discrimination": 34,
+      "Religious Discrimination": 34,
+      "OTHER": 34
+    },
+    "Toxic language (hate speech)": {
+      "Insult": 34,
+      "Obscene": 34,
+      "Other Severe Toxicity": 34,
+      "OTHER": 34
+    },
+    "OTHER": {
+      "OTHER": 34
+    }
+  },
+  "Human-Chatbot Interaction Harms": {
+    "Mental Health or Overreliance Crisis": {
+      "Advice of coping strategies": 34,
+      "Consult advice on psychotic disorders": 4,
+      "Depression and Anxiety": 34,
+      "Self-Harm": 34,
+      "OTHER": 2
+    },
+    "Treat Chatbot as a Human": {
+      "Ask for personal information": 8,
+      "places personal emotional reliance on a chatbot": 34,
+      "OTHER": 34
+    },
+    "OTHER": {
+      "OTHER": 34
+    }
+  },
+  "Information Hazards": {
+    "Compromise privacy by leaking or inferring private information (person/individual)": {
+      "Biometric Data": 0,
+      "Educational Information": 12,
+      "Financial Information": 34,
+      "Medical Information": 34,
+      "Personal Identification Information (PII)": 34,
+      "Personal Life Information": 34,
+      "OTHER": 3
+    },
+    "Risks from leaking or inferring sensitive information (organization/gov)": {
+      "Classified Information": 34,
+      "Confidential Operations": 34,
+      "Cybersecurity Vulnerabilities": 34,
+      "Financial and Budgetary Information": 34,
+      "Internal Communications": 34,
+      "Internal Policies and Procedures": 34,
+      "Legal Information": 34,
+      "Sensitive Technological Details": 34,
+      "OTHER": 34
+    },
+    "OTHER": {
+      "OTHER": 34
+    }
+  },
+  "Malicious Uses": {
+    "Assisting illegal activities": {
+      "Animal Abuse/Cruelty/Poaching": 0,
+      "Copyright Infringement": 34,
+      "Financial Crimes": 34,
+      "Illegal Digital Activities": 34,
+      "Illegal Drugs and Substances": 34,
+      "Illegal Trade": 9,
+      "Illegitimate surveillance and censorship": 10,
+      "Sexual Exploitation and Pornography": 34,
+      "Substance Abuse": 0,
+      "Terrorist Activities": 22,
+      "Threats and Intimidation": 3,
+      "Violence and Physical Harm": 34,
+      "OTHER": 4
+    },
+    "Nudging or advising users to perform unethical or unsafe actions": {
+      "Defamatory Content": 2,
+      "Endorsement of Cyberbullying or Online Harassment": 34,
+      "Endorsement of Unsafe Health Practices": 34,
+      "Guide for Risky Pranks, Unsafe Behaviors or Destructive Behavior, Substance Misuse": 34,
+      "Trolling or Flame baiting": 34,
+      "OTHER": 34
+    },
+    "Reducing the cost of disinformation campaigns": {
+      "Disinformation": 4,
+      "Malinformation": 5,
+      "Spam Content": 1,
+      "OTHER": 0
+    },
+    "OTHER": {
+      "OTHER": 34
+    }
+  },
+  "Misinformation Harms": {
+    "Causing material harm by disseminating misinformation e.g. in medicine or law": {
+      "Financial Advice": 0,
+      "Legal Advice": 0,
+      "Medical Advice": 0,
+      "Unreliable Experts": 4,
+      "OTHER": 2
+    },
+    "Disseminating false or misleading information": {
+      "False News": 20,
+      "Hazardous Activities": 34,
+      "Misinterpretation or Wrong Context": 34,
+      "Propaganda": 34,
+      "Rumors": 30,
+      "OTHER": 34
+    },
+    "OTHER": {
+      "OTHER": 34
+    }
+  },
+  "OTHER": {
+    "OTHER": {
+      "OTHER": 34
+    }
+  }
+}

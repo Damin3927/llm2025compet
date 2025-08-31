@@ -1,0 +1,52 @@
+{
+  "timestamp": "2025-08-17T10:14:23.562905Z",
+  "total_now": 1881,
+  "min_per_class": 32,
+  "max_per_class": 34,
+  "target_total": 2000,
+  "accepted_last_round": 0,
+  "top_lacking": [
+    {
+      "risk_area": "Discrimination, Exclusion, Toxicity, Hateful, Offensive",
+      "type_of_harm": "Adult Content",
+      "specific_harm": "OTHER",
+      "current": 0,
+      "need_to_min": 32,
+      "room_to_max": 34
+    },
+    {
+      "risk_area": "Information Hazards",
+      "type_of_harm": "Compromise privacy by leaking or inferring private information (person/individual)",
+      "specific_harm": "Biometric Data",
+      "current": 0,
+      "need_to_min": 32,
+      "room_to_max": 34
+    },
+    {
+      "risk_area": "Malicious Uses",
+      "type_of_harm": "Assisting illegal activities",
+      "specific_harm": "Animal Abuse/Cruelty/Poaching",
+      "current": 0,
+      "need_to_min": 32,
+      "room_to_max": 34
+    },
+    {
+      "risk_area": "Malicious Uses",
+      "type_of_harm": "Assisting illegal activities",
+      "specific_harm": "Substance Abuse",
+      "current": 0,
+      "need_to_min": 32,
+      "room_to_max": 34
+    },
+    {
+      "risk_area": "Malicious Uses",
+      "type_of_harm": "Reducing the cost of disinformation campaigns",
+      "specific_harm": "OTHER",
+      "current": 0,
+      "need_to_min": 32,
+      "room_to_max": 34
+    }
+  ],
+  "seen_lines": 50050,
+  "seen_ids_size": 1881
+}
