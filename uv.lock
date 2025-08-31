@@ -2094,6 +2094,14 @@ dependencies = [
     { name = "zstandard" },
 ]
 
+[package.optional-dependencies]
+learn = [
+    { name = "accelerate" },
+    { name = "deepspeed" },
+    { name = "peft" },
+    { name = "trl", extra = ["vllm"] },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "accelerate", specifier = ">=1.9.0" },
@@ -2129,6 +2137,13 @@ requires-dist = [
     { name = "optree", specifier = ">=0.13.0" },
     { name = "packaging", specifier = ">=25.0" },
     { name = "pandas", specifier = ">=2.3.1" },
+    { name = "peft", marker = "extra == 'learn'", specifier = ">=0.14.0" },
+    { name = "pydantic", specifier = ">=2.11.7" },
+    { name = "torch", marker = "platform_machine == 'aarch64' or sys_platform != 'linux'", specifier = ">=2.7.0", index = "https://download.pytorch.org/whl/cpu" },
+    { name = "torch", marker = "platform_machine != 'aarch64' and platform_machine != 'x86_64' and sys_platform == 'linux'", specifier = ">=2.7.0" },
+    { name = "torch", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'", specifier = ">=2.7.0", index = "https://download.pytorch.org/whl/cu128" },
+    { name = "trl", extras = ["vllm"], marker = "extra == 'learn'", specifier = ">=0.19.1" },
+    { name = "vllm", specifier = "==0.9.2" },
     { name = "peft", specifier = ">=0.16.0" },
     { name = "protobuf", specifier = ">=4.25.8" },
     { name = "pyarrow", specifier = ">=17.0.0" },
@@ -2161,6 +2176,7 @@ requires-dist = [
     { name = "zarr", specifier = ">=3.1.0" },
     { name = "zstandard", specifier = ">=0.23.0" },
 ]
+provides-extras = ["learn"]
 
 [[package]]
 name = "llvmlite"
@@ -5123,6 +5139,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/3d/69/303db8941a08edd646f658d18a0f00a5b83df523ae8967bbc6cce3a81466/trl-0.19.1.tar.gz", hash = "sha256:545592462ed985f4b77c9b1dbc0957efb17c43262648bb147abf3250ad3ff100", size = 397181, upload-time = "2025-07-08T00:48:40.359Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a2/19/42df113377d440f2a5a0a45ffa617db03c4a25b1e4cd171b018649845eb0/trl-0.19.1-py3-none-any.whl", hash = "sha256:8a2d4277b4ba7221eaab545a35ee89b6fbb8721fa3709ac01876a8c1bd7fd78a", size = 376159, upload-time = "2025-07-08T00:48:38.843Z" },
+]
+
+[package.optional-dependencies]
+vllm = [
+    { name = "fastapi", marker = "python_full_version < '3.13'" },
+    { name = "pydantic", marker = "python_full_version < '3.13'" },
+    { name = "requests", marker = "python_full_version < '3.13'" },
+    { name = "uvicorn", marker = "python_full_version < '3.13'" },
+    { name = "vllm", marker = "python_full_version < '3.13'" },
 ]
 
 [[package]]
