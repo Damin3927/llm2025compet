@@ -1,0 +1,35 @@
+# Requirements for LLM Competition Evaluation Scripts
+# These are additional requirements for the competition evaluation scripts
+
+# Core ML libraries
+torch>=2.0.0
+transformers>=4.30.0
+accelerate>=0.20.0
+
+# Data processing
+pandas>=1.5.0
+numpy>=1.21.0
+
+# Progress tracking
+tqdm>=4.64.0
+
+# Logging and experiment tracking
+wandb>=0.15.0
+
+# Configuration
+PyYAML>=6.0
+
+# OpenAI API (for GPT-4 evaluation)
+openai>=0.27.0
+
+# Google Gemini API (for Gemini evaluation and cost comparison)
+google-generativeai>=0.3.0
+
+# Anthropic API (if using Claude evaluation)
+anthropic>=0.3.0
+
+# Hugging Face Hub
+huggingface-hub>=0.16.0
+
+# Other utilities
+python-dateutil>=2.8.0

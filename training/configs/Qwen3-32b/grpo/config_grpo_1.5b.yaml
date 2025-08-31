@@ -21,7 +21,6 @@ dataset_train_split: train
 dataset_test_split: validation
 dataset_prompt_column: problem   # ← ここだけ列指定
 
-
 system_prompt: |
   You are a helpful AI Assistant that provides well‑reasoned and detailed responses.
   First think in <think>…</think>, then answer in <answer>…</answer>.
@@ -54,7 +53,6 @@ gradient_checkpointing_kwargs:
 
 ddp_find_unused_parameters: false   # ★未使用パラメータ探索を切る（GCと相性改善）
 ddp_broadcast_buffers: false        # ★GC時の既定に整合。通信を安定化
-
 # Parameters that control the model and reference model
 disable_dropout: true
 
@@ -74,12 +72,12 @@ max_steps: -1
 importance_sampling_level: token
 top_entropy_quantile: 1.0       # liger使用時、<1.0 は未対応（実装制約）
 
-
 # Parameters that control the training
 loss_type: bnpo
 # beta: 0.1                         # KL divergence coefficient (デフォルト 0.0)
 epsilon: 0.2 
 epsilon_high: 0.28
+
 mask_truncated_completions: false
 
 reward_funcs: [gated_accuracy, tag_count, soft_overlong_punishment, repetition_penalty]
@@ -103,13 +101,17 @@ logging_strategy: steps
 
 save_strategy: epoch
 save_total_limit: 1
+
 output_dir: data/Qwen3-8B-Open-R1-GRPO
+
 overwrite_output_dir: true
 
 push_to_hub: false
 # report_to:
 # - wandb
+
 hub_model_id: Qwen3-8B-Open-R1-GRPO
+
 hub_strategy: every_save
 
 seed: 42 #  Tensor Parallelism Bug in vLLM ≥ 0.8.0.(https://huggingface.co/blog/vllm-colocate#:~:text=Training%20and%20inference%20take%20turns,dedicated%20devices%20or%20separate%20processes)

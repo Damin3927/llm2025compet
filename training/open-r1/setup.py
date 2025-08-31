@@ -41,7 +41,7 @@ if stale_egg_info.exists():
 # IMPORTANT: all dependencies should be listed here with their version requirements, if any.
 #   * If a dependency is fast-moving (e.g. trl), pin to the exact version
 _deps = [
-    "accelerate==1.4.0",
+    "accelerate>=1.4.0, <2.0.0",
     "bitsandbytes>=0.43.0",
     "datasets>=3.2.0",
     "deepspeed==0.16.8",
@@ -70,6 +70,7 @@ _deps = [
     "torch==2.6.0",
     "transformers==4.54.1",
     "trl[vllm]==0.19.0",
+
     "wandb>=0.19.1",
     "async-lru>=2.0.5",
     "aiofiles>=24.1.0",

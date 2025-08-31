@@ -83,7 +83,6 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
     transformers.utils.logging.set_verbosity(log_level)
     transformers.utils.logging.enable_default_handler()
     transformers.utils.logging.enable_explicit_format()
-
     logger.warning(
         f"Process rank: {training_args.local_rank}, device: {training_args.device}, n_gpu: {training_args.n_gpu}"
         + f" distributed training: {bool(training_args.local_rank != -1)}, 16-bits training: {training_args.fp16}"
@@ -98,7 +97,7 @@ def main(script_args: GRPOScriptArguments, training_args: GRPOConfig, model_args
         last_checkpoint = get_last_checkpoint(training_args.output_dir)
     if last_checkpoint is not None and training_args.resume_from_checkpoint is None:
         logger.info(f"Checkpoint detected, resuming training at {last_checkpoint=}.")
-
+        
     # W&B
     if "wandb" in (training_args.report_to or []):
         init_wandb_training(training_args)
