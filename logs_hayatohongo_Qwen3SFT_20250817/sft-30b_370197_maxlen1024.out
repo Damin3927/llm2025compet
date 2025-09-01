@@ -1,0 +1,839 @@
+MASTER_ADDR: osk-gpu91
+MASTER_PORT: 29500
+[2025-08-17 05:20:06,394] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-08-17 05:20:25,453] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-08-17 05:20:25,456] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-08-17 05:20:25,456] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-08-17 05:20:25,460] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-08-17 05:20:25,557] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-08-17 05:20:25,704] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-08-17 05:20:25,712] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-08-17 05:20:26,086] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+DeepSpeed version: 0.16.8
+DeepSpeed version: 0.16.8
+DeepSpeed version: 0.16.8
+Using Qwen3 Sparse MoE Block: Qwen3MoeSparseMoeBlock
+Last modified time is 2025-0817-0500-JST
+Using Qwen3 Sparse MoE Block: Qwen3MoeSparseMoeBlock
+Last modified time is 2025-0817-0500-JST
+DeepSpeed version: 0.16.8
+Using Qwen3 Sparse MoE Block: Qwen3MoeSparseMoeBlock
+Last modified time is 2025-0817-0500-JST
+Using Qwen3 Sparse MoE Block: Qwen3MoeSparseMoeBlock
+Last modified time is 2025-0817-0500-JST
+[2025-08-17 05:20:27,007] [INFO] [comm.py:669:init_distributed] cdb=None
+[2025-08-17 05:20:27,007] [INFO] [comm.py:700:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[2025-08-17 05:20:27,007] [INFO] [comm.py:669:init_distributed] cdb=None
+[2025-08-17 05:20:27,010] [INFO] [comm.py:669:init_distributed] cdb=None
+[2025-08-17 05:20:27,014] [INFO] [comm.py:669:init_distributed] cdb=None
+DeepSpeed version: 0.16.8
+Using Qwen3 Sparse MoE Block: Qwen3MoeSparseMoeBlock
+Last modified time is 2025-0817-0500-JST
+[2025-08-17 05:20:27,132] [INFO] [comm.py:669:init_distributed] cdb=None
+DeepSpeed version: 0.16.8
+Using Qwen3 Sparse MoE Block: Qwen3MoeSparseMoeBlock
+Last modified time is 2025-0817-0500-JST
+[2025-08-17 05:20:27,198] [INFO] [comm.py:669:init_distributed] cdb=None
+DeepSpeed version: 0.16.8
+Using Qwen3 Sparse MoE Block: Qwen3MoeSparseMoeBlock
+Last modified time is 2025-0817-0500-JST
+[2025-08-17 05:20:27,257] [INFO] [comm.py:669:init_distributed] cdb=None
+⚙️  Loading configuration from: ../../configs/data_configs/example.yaml
+Data configuration loaded: DataConfig(datasets=[DatasetClass(name='neko-llm/HLE_SFT_OpenThoughts-114k', config='default', split='train', question_field='question', answer_field='output', from_id=1, to_id=1000)])
+2025-08-17 05:20:27 - INFO - __main__ - Model parameters ModelConfig(model_name_or_path='Qwen/Qwen3-30B-A3B', model_revision='main', torch_dtype='bfloat16', trust_remote_code=False, attn_implementation='flash_attention_2', use_peft=False, lora_r=16, lora_alpha=32, lora_dropout=0.05, lora_target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj'], lora_modules_to_save=None, lora_task_type='CAUSAL_LM', use_rslora=False, use_dora=False, load_in_8bit=False, load_in_4bit=False, bnb_4bit_quant_type='nf4', use_bnb_nested_quant=False)
+2025-08-17 05:20:27 - INFO - __main__ - Script parameters ScriptArguments(dataset_name='openai/gsm8k', dataset_config='main', dataset_train_split='train', dataset_test_split='test', dataset_streaming=False, gradient_checkpointing_use_reentrant=False, ignore_bias_buffers=False, dataset_mixture=None)
+2025-08-17 05:20:27 - INFO - __main__ - Training parameters SFTConfig(
+_n_gpu=1,
+accelerator_config={'split_batches': False, 'dispatch_batches': None, 'even_batches': True, 'use_seedable_sampler': True, 'non_blocking': False, 'gradient_accumulation_kwargs': None, 'use_configured_state': False},
+activation_offloading=False,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+assistant_only_loss=False,
+auto_find_batch_size=False,
+average_tokens_across_devices=True,
+batch_eval_metrics=False,
+benchmarks=[],
+bf16=True,
+bf16_full_eval=False,
+callbacks=[],
+chat_template={%- if tools %}
+    {{- '<|im_start|>system\n' }}
+    {%- if messages[0]['role'] == 'system' %}
+        {{- messages[0]['content'] }}
+    {%- else %}
+        {{- 'You are Open-R1, a language model trained by Hugging Face to help users. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracing, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think> Thought section </think> Solution section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion. Now, try to solve the following question through the above guidelines.' }}
+    {%- endif %}
+    {{- "\n\n# Tools\n\nYou may call one or more functions to assist with the user query.\n\nYou are provided with function signatures within <tools></tools> XML tags:\n<tools>" }}
+    {%- for tool in tools %}
+        {{- "\n" }}
+        {{- tool | tojson }}
+    {%- endfor %}
+    {{- "\n</tools>\n\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\n<tool_call>\n{\"name\": <function-name>, \"arguments\": <args-json-object>}\n</tool_call><|im_end|>\n" }}
+{%- else %}
+    {%- if messages[0]['role'] == 'system' %}
+        {{- '<|im_start|>system\n' + messages[0]['content'] + '<|im_end|>\n' }}
+    {%- else %}
+        {{- '<|im_start|>system\nYou are Open-R1, a language model trained by Hugging Face to help users. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracing, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think> Thought section </think> Solution section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion. Now, try to solve the following question through the above guidelines.<|im_end|>\n' }}
+    {%- endif %}
+{%- endif %}
+{%- for message in messages %}
+    {%- if (message.role == "user") or (message.role == "system" and not loop.first) or (message.role == "assistant" and not message.tool_calls) %}
+        {{- '<|im_start|>' + message.role + '\n' + message.content + '<|im_end|>' + '\n' }}
+    {%- elif message.role == "assistant" %}
+        {{- '<|im_start|>' + message.role }}
+        {%- if message.content %}
+            {{- '\n' + message.content }}
+        {%- endif %}
+        {%- for tool_call in message.tool_calls %}
+            {%- if tool_call.function is defined %}
+                {%- set tool_call = tool_call.function %}
+            {%- endif %}
+            {{- '\n<tool_call>\n{"name": "' }}
+            {{- tool_call.name }}
+            {{- '", "arguments": ' }}
+            {{- tool_call.arguments | tojson }}
+            {{- '}\n</tool_call>' }}
+        {%- endfor %}
+        {{- '<|im_end|>\n' }}
+    {%- elif message.role == "tool" %}
+        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != "tool") %}
+            {{- '<|im_start|>user' }}
+        {%- endif %}
+        {{- '\n<tool_response>\n' }}
+        {{- message.content }}
+        {{- '\n</tool_response>' }}
+        {%- if loop.last or (messages[loop.index0 + 1].role != "tool") %}
+            {{- '<|im_end|>\n' }}
+        {%- endif %}
+    {%- endif %}
+{%- endfor %}
+{%- if add_generation_prompt %}
+    {{- '<|im_start|>assistant\n' }}
+{%- endif %}
+,
+chat_template_path=None,
+completion_only_loss=None,
+data_seed=42,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_persistent_workers=False,
+dataloader_pin_memory=True,
+dataloader_prefetch_factor=None,
+dataset_kwargs=None,
+dataset_num_proc=12,
+dataset_text_field=answer,
+ddp_backend=None,
+ddp_broadcast_buffers=None,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+ddp_timeout=1800,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+do_eval=False,
+do_predict=False,
+do_train=False,
+eos_token=<EOS_TOKEN>,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_do_concat_batches=True,
+eval_on_start=False,
+eval_packing=None,
+eval_steps=None,
+eval_strategy=IntervalStrategy.NO,
+eval_use_gather_object=False,
+fp16=False,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+fsdp=[],
+fsdp_config={'min_num_params': 0, 'xla': False, 'xla_fsdp_v2': False, 'xla_fsdp_grad_ckpt': False},
+fsdp_min_num_params=0,
+fsdp_transformer_layer_cls_to_wrap=None,
+full_determinism=False,
+gradient_accumulation_steps=8,
+gradient_checkpointing=False,
+gradient_checkpointing_kwargs={'use_reentrant': False},
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=auto,
+hub_always_push=False,
+hub_model_id=neko-llm/Qwen3-30B-test,
+hub_model_revision=main,
+hub_private_repo=None,
+hub_revision=None,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_for_metrics=[],
+include_inputs_for_metrics=False,
+include_num_input_tokens_seen=False,
+include_tokens_per_second=False,
+jit_mode_eval=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=4e-05,
+length_column_name=length,
+liger_kernel_config=None,
+load_best_model_at_end=False,
+local_rank=0,
+log_level=info,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=data/Qwen3-30B-test/runs/Aug17_05-20-27_osk-gpu91,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=1,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_kwargs={'min_lr_rate': 0.1},
+lr_scheduler_type=SchedulerType.COSINE_WITH_MIN_LR,
+max_grad_norm=0.2,
+max_length=1024,
+max_seq_length=None,
+max_steps=3,
+metric_for_best_model=None,
+model_init_kwargs=None,
+mp_parameters=,
+neftune_noise_alpha=None,
+no_cuda=False,
+num_train_epochs=5,
+optim=OptimizerNames.ADAMW_TORCH,
+optim_args=None,
+optim_target_modules=None,
+output_dir=data/Qwen3-30B-test,
+overwrite_hub_revision=False,
+overwrite_output_dir=True,
+packing=False,
+packing_strategy=ffd,
+pad_to_multiple_of=None,
+pad_token=<PAD_TOKEN>,
+padding_free=False,
+past_index=-1,
+per_device_eval_batch_size=1,
+per_device_train_batch_size=1,
+prediction_loss_only=False,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_revision=False,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+ray_scope=last,
+remove_unused_columns=True,
+report_to=[],
+restore_callback_states_from_checkpoint=False,
+resume_from_checkpoint=None,
+run_name=data/Qwen3-30B-test,
+save_on_each_node=False,
+save_only_model=False,
+save_safetensors=True,
+save_steps=500,
+save_strategy=SaveStrategy.STEPS,
+save_total_limit=1,
+seed=42,
+skip_memory_metrics=True,
+system_prompt=None,
+tf32=None,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torch_empty_cache_steps=None,
+torchdynamo=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_cpu=False,
+use_ipex=False,
+use_legacy_prediction_loop=False,
+use_liger_kernel=True,
+use_mps_device=False,
+wandb_entity=None,
+wandb_project=None,
+wandb_run_group=None,
+warmup_ratio=0.03,
+warmup_steps=0,
+weight_decay=0.0,
+)
+2025-08-17 05:20:27 - INFO - __main__ - Data configuration: DataConfig(datasets=[DatasetClass(name='neko-llm/HLE_SFT_OpenThoughts-114k', config='default', split='train', question_field='question', answer_field='output', from_id=1, to_id=1000)])
+2025-08-17 05:20:27 - INFO - __main__ - Checkpoint detected, resuming training at last_checkpoint='data/Qwen3-30B-test/checkpoint-4'.
+データセットのロードを開始します...
+  (1/1) ロード中: neko-llm/HLE_SFT_OpenThoughts-114k (default)
+DeepSpeed version: 0.16.8
+Using Qwen3 Sparse MoE Block: Qwen3MoeSparseMoeBlock
+Last modified time is 2025-0817-0500-JST
+[2025-08-17 05:20:27,652] [INFO] [comm.py:669:init_distributed] cdb=None
+⚙️  Loading configuration from: ../../configs/data_configs/example.yaml
+Data configuration loaded: DataConfig(datasets=[DatasetClass(name='neko-llm/HLE_SFT_OpenThoughts-114k', config='default', split='train', question_field='question', answer_field='output', from_id=1, to_id=1000)])
+⚙️  Loading configuration from: ../../configs/data_configs/example.yaml
+Data configuration loaded: DataConfig(datasets=[DatasetClass(name='neko-llm/HLE_SFT_OpenThoughts-114k', config='default', split='train', question_field='question', answer_field='output', from_id=1, to_id=1000)])
+データセットのロードを開始します...
+  (1/1) ロード中: neko-llm/HLE_SFT_OpenThoughts-114k (default)
+データセットのロードを開始します...
+  (1/1) ロード中: neko-llm/HLE_SFT_OpenThoughts-114k (default)
+⚙️  Loading configuration from: ../../configs/data_configs/example.yaml
+Data configuration loaded: DataConfig(datasets=[DatasetClass(name='neko-llm/HLE_SFT_OpenThoughts-114k', config='default', split='train', question_field='question', answer_field='output', from_id=1, to_id=1000)])
+⚙️  Loading configuration from: ../../configs/data_configs/example.yaml
+⚙️  Loading configuration from: ../../configs/data_configs/example.yaml
+Data configuration loaded: DataConfig(datasets=[DatasetClass(name='neko-llm/HLE_SFT_OpenThoughts-114k', config='default', split='train', question_field='question', answer_field='output', from_id=1, to_id=1000)])
+Data configuration loaded: DataConfig(datasets=[DatasetClass(name='neko-llm/HLE_SFT_OpenThoughts-114k', config='default', split='train', question_field='question', answer_field='output', from_id=1, to_id=1000)])
+⚙️  Loading configuration from: ../../configs/data_configs/example.yaml
+データセットのロードを開始します...
+  (1/1) ロード中: neko-llm/HLE_SFT_OpenThoughts-114k (default)
+Data configuration loaded: DataConfig(datasets=[DatasetClass(name='neko-llm/HLE_SFT_OpenThoughts-114k', config='default', split='train', question_field='question', answer_field='output', from_id=1, to_id=1000)])
+データセットのロードを開始します...
+  (1/1) ロード中: neko-llm/HLE_SFT_OpenThoughts-114k (default)
+データセットのロードを開始します...
+  (1/1) ロード中: neko-llm/HLE_SFT_OpenThoughts-114k (default)
+データセットのロードを開始します...
+  (1/1) ロード中: neko-llm/HLE_SFT_OpenThoughts-114k (default)
+⚙️  Loading configuration from: ../../configs/data_configs/example.yaml
+Data configuration loaded: DataConfig(datasets=[DatasetClass(name='neko-llm/HLE_SFT_OpenThoughts-114k', config='default', split='train', question_field='question', answer_field='output', from_id=1, to_id=1000)])
+データセットのロードを開始します...
+  (1/1) ロード中: neko-llm/HLE_SFT_OpenThoughts-114k (default)
+2025-08-17 05:20:30 - INFO - datasets.builder - Found cached dataset hle_sft_open_thoughts-114k (/home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605)
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' の分割: ['train']
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['id', 'question', 'output', 'answer']]
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のサンプル数: 6000 (train)
+  question_field 'question' を 'prompt' にリネームしました。
+  answer_field 'output' を 'completion' にリネームしました。
+2025-08-17 05:20:30 - INFO - datasets.arrow_dataset - Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8fff6bb52ea27ace_*_of_00001.arrow
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['messages']]
+
+全データセットを結合中...
+結合するキー: {'train'}
+['messages']
+結合が完了しました！
+
+データセットをシャッフル中...
+2025-08-17 05:20:30 - INFO - datasets.arrow_dataset - Loading cached shuffled indices for dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1eeda50561e2fa07.arrow
+シャッフルが完了しました！ (シード: 42)
+最終的なデータセットの情報:
+DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+Dataset({
+    features: ['messages'],
+    num_rows: 6000
+})
+  最初のサンプルの文字数: 35471
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' の分割: ['train']
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['id', 'question', 'output', 'answer']]
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のサンプル数: 6000 (train)
+  question_field 'question' を 'prompt' にリネームしました。
+  answer_field 'output' を 'completion' にリネームしました。
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['messages']]
+
+全データセットを結合中...
+結合するキー: {'train'}
+['messages']
+結合が完了しました！
+
+データセットをシャッフル中...
+シャッフルが完了しました！ (シード: 42)
+最終的なデータセットの情報:
+DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+Dataset({
+    features: ['messages'],
+    num_rows: 6000
+})
+  最初のサンプルの文字数: 35471
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' の分割: ['train']
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['id', 'question', 'output', 'answer']]
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のサンプル数: 6000 (train)
+  question_field 'question' を 'prompt' にリネームしました。
+  answer_field 'output' を 'completion' にリネームしました。
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['messages']]
+
+全データセットを結合中...
+結合するキー: {'train'}
+['messages']
+結合が完了しました！
+
+データセットをシャッフル中...
+シャッフルが完了しました！ (シード: 42)
+最終的なデータセットの情報:
+DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+Dataset({
+    features: ['messages'],
+    num_rows: 6000
+})
+  最初のサンプルの文字数: 35471
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' の分割: ['train']
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['id', 'question', 'output', 'answer']]
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のサンプル数: 6000 (train)
+  question_field 'question' を 'prompt' にリネームしました。
+  answer_field 'output' を 'completion' にリネームしました。
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['messages']]
+
+全データセットを結合中...
+結合するキー: {'train'}
+['messages']
+結合が完了しました！
+
+データセットをシャッフル中...
+シャッフルが完了しました！ (シード: 42)
+最終的なデータセットの情報:
+DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+Dataset({
+    features: ['messages'],
+    num_rows: 6000
+})
+  最初のサンプルの文字数: 35471
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' の分割: ['train']
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['id', 'question', 'output', 'answer']]
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のサンプル数: 6000 (train)
+  question_field 'question' を 'prompt' にリネームしました。
+  answer_field 'output' を 'completion' にリネームしました。
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['messages']]
+
+全データセットを結合中...
+結合するキー: {'train'}
+['messages']
+結合が完了しました！
+
+データセットをシャッフル中...
+シャッフルが完了しました！ (シード: 42)
+最終的なデータセットの情報:
+DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+Dataset({
+    features: ['messages'],
+    num_rows: 6000
+})
+  最初のサンプルの文字数: 35471
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' の分割: ['train']
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['id', 'question', 'output', 'answer']]
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のサンプル数: 6000 (train)
+  question_field 'question' を 'prompt' にリネームしました。
+  answer_field 'output' を 'completion' にリネームしました。
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['messages']]
+
+全データセットを結合中...
+結合するキー: {'train'}
+['messages']
+結合が完了しました！
+
+データセットをシャッフル中...
+シャッフルが完了しました！ (シード: 42)
+最終的なデータセットの情報:
+DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+Dataset({
+    features: ['messages'],
+    num_rows: 6000
+})
+  最初のサンプルの文字数: 35471
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' の分割: ['train']
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['id', 'question', 'output', 'answer']]
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のサンプル数: 6000 (train)
+  question_field 'question' を 'prompt' にリネームしました。
+  answer_field 'output' を 'completion' にリネームしました。
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['messages']]
+
+全データセットを結合中...
+結合するキー: {'train'}
+['messages']
+結合が完了しました！
+
+データセットをシャッフル中...
+シャッフルが完了しました！ (シード: 42)
+最終的なデータセットの情報:
+DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+Dataset({
+    features: ['messages'],
+    num_rows: 6000
+})
+  最初のサンプルの文字数: 35471
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' の分割: ['train']
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['id', 'question', 'output', 'answer']]
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のサンプル数: 6000 (train)
+  question_field 'question' を 'prompt' にリネームしました。
+  answer_field 'output' を 'completion' にリネームしました。
+  データセット 'neko-llm/HLE_SFT_OpenThoughts-114k' のカラム: [['messages']]
+
+全データセットを結合中...
+結合するキー: {'train'}
+['messages']
+結合が完了しました！
+
+データセットをシャッフル中...
+シャッフルが完了しました！ (シード: 42)
+最終的なデータセットの情報:
+DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+Dataset({
+    features: ['messages'],
+    num_rows: 6000
+})
+  最初のサンプルの文字数: 35471
+  文字数の平均:  文字数の平均:    文字数の平均:  文字数の平均:40733.3756666666740733.37566666667
+  文字数の平均:
+  文字数の平均:  40733.3756666666740733.37566666667
+
+  40733.37566666667  文字数の平均:40733.37566666667
+
+ 40733.37566666667
+  文字数の平均: 40733.37566666667
+  文字数の最大値: 138303
+  文字数の最大値: 138303
+  文字数の最大値: 138303
+  文字数の最大値: 138303
+  文字数の最大値: 138303
+  文字数の最大値: 138303
+  文字数の最大値: 138303
+  文字数の最大値: 138303
+  文字数の最小値:  文字数の最小値:  18321832
+
+  サンプル数:  サンプル数:  60006000
+
+Loaded dataset: DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})Loaded dataset: DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+
+  文字数の最小値: 1832
+  サンプル数: 6000
+Loaded dataset: DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+  文字数の最小値: 1832
+  サンプル数: 6000
+Loaded dataset: DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+  文字数の最小値: 1832
+  サンプル数: 6000
+Loaded dataset: DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+  文字数の最小値: 1832
+  サンプル数: 6000
+Loaded dataset: DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+  文字数の最小値: 1832
+  サンプル数: 6000
+Loaded dataset: DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+  文字数の最小値: 1832
+  サンプル数: 6000
+Loaded dataset: DatasetDict({
+    train: Dataset({
+        features: ['messages'],
+        num_rows: 6000
+    })
+})
+[2025-08-17 05:20:40,665] [INFO] [config.py:735:__init__] Config mesh_device None world_size = 8
+[2025-08-17 05:20:40,665] [INFO] [config.py:735:__init__] Config mesh_device None world_size = 8
+[2025-08-17 05:20:40,963] [INFO] [config.py:735:__init__] Config mesh_device None world_size = 8
+NCCL version 2.21.5+cuda12.4
+[2025-08-17 05:20:41,234] [INFO] [config.py:735:__init__] Config mesh_device None world_size = 8
+[2025-08-17 05:20:41,246] [INFO] [config.py:735:__init__] Config mesh_device None world_size = 8
+[2025-08-17 05:20:41,250] [INFO] [config.py:735:__init__] Config mesh_device None world_size = 8
+[2025-08-17 05:20:41,255] [INFO] [config.py:735:__init__] Config mesh_device None world_size = 8
+[2025-08-17 05:20:41,255] [INFO] [config.py:735:__init__] Config mesh_device None world_size = 8
+[2025-08-17 05:20:52,917] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 18867, num_elems = 30.53B
+[MoE] Detected model_type='qwen3_moe'. Applying ZeRO-3 leaf module setting...
+[MoE] Detected model_type='qwen3_moe'. Applying ZeRO-3 leaf module setting...
+[MoE] Detected model_type='qwen3_moe'. Applying ZeRO-3 leaf module setting...
+[MoE] Detected model_type='qwen3_moe'. Applying ZeRO-3 leaf module setting...
+[MoE] Detected model_type='qwen3_moe'. Applying ZeRO-3 leaf module setting...
+[MoE] Detected model_type='qwen3_moe'. Applying ZeRO-3 leaf module setting...
+[MoE] Detected model_type='qwen3_moe'. Applying ZeRO-3 leaf module setting...
+[MoE] Set ZeRO-3 leaf module: Qwen3MoeSparseMoeBlock (direct import)
+[MoE] Set ZeRO-3 leaf module: Qwen3MoeSparseMoeBlock (direct import)
+[MoE] Set ZeRO-3 leaf module: Qwen3MoeSparseMoeBlock (direct import)
+[MoE] Set ZeRO-3 leaf module: Qwen3MoeSparseMoeBlock (direct import)
+[MoE] Set ZeRO-3 leaf module: Qwen3MoeSparseMoeBlock (direct import)
+[MoE] Set ZeRO-3 leaf module: Qwen3MoeSparseMoeBlock (direct import)
+[MoE] Set ZeRO-3 leaf module: Qwen3MoeSparseMoeBlock (direct import)
+[MoE] Detected model_type='qwen3_moe'. Applying ZeRO-3 leaf module setting...
+[MoE] Set ZeRO-3 leaf module: Qwen3MoeSparseMoeBlock (direct import)
+2025-08-17 05:22:40 - INFO - datasets.arrow_dataset - Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_*_of_00012.arrow
+2025-08-17 05:22:40 - INFO - datasets.arrow_dataset - Concatenating 12 shards
+2025-08-17 05:22:40 - INFO - datasets.arrow_dataset - Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-9cfac388ffdb81bd_*_of_00012.arrow
+2025-08-17 05:22:40 - INFO - datasets.arrow_dataset - Concatenating 12 shards
+2025-08-17 05:22:40 - INFO - __main__ - *** Train ***
+[2025-08-17 05:22:44,337] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed info: version=0.16.8, git-hash=unknown, git-branch=unknown
+[2025-08-17 05:22:44,338] [INFO] [config.py:735:__init__] Config mesh_device None world_size = 8
+[2025-08-17 05:22:44,617] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2025-08-17 05:22:44,648] [INFO] [logging.py:107:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[2025-08-17 05:22:44,648] [INFO] [logging.py:107:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
+[2025-08-17 05:23:07,712] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Basic Optimizer = AdamW
+[2025-08-17 05:23:07,713] [INFO] [utils.py:59:is_zero_supported_optimizer] Checking ZeRO support for optimizer=AdamW type=<class 'torch.optim.adamw.AdamW'>
+[2025-08-17 05:23:07,713] [INFO] [logging.py:107:log_dist] [Rank 0] Creating fp16 ZeRO stage 3 optimizer, MiCS is enabled False, Hierarchical params gather False
+[2025-08-17 05:23:07,713] [INFO] [logging.py:107:log_dist] [Rank 0] Creating torch.bfloat16 ZeRO stage 3 optimizer
+[2025-08-17 05:23:08,104] [INFO] [utils.py:781:see_memory_usage] Stage 3 initialize beginning
+[2025-08-17 05:23:08,105] [INFO] [utils.py:782:see_memory_usage] MA 7.11 GB         Max_MA 8.27 GB         CA 7.88 GB         Max_CA 9 GB 
+[2025-08-17 05:23:08,105] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 136.38 GB, percent = 9.0%
+[2025-08-17 05:23:08,146] [INFO] [stage3.py:170:__init__] Reduce bucket size 500000000
+[2025-08-17 05:23:08,146] [INFO] [stage3.py:171:__init__] Prefetch bucket size 50000000
+[2025-08-17 05:23:08,470] [INFO] [utils.py:781:see_memory_usage] DeepSpeedZeRoOffload initialize [begin]
+[2025-08-17 05:23:08,470] [INFO] [utils.py:782:see_memory_usage] MA 7.11 GB         Max_MA 7.11 GB         CA 7.88 GB         Max_CA 8 GB 
+[2025-08-17 05:23:08,471] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 136.47 GB, percent = 9.0%
+Parameter Offload: Total persistent parameters: 210944 in 193 params
+[2025-08-17 05:23:09,394] [INFO] [utils.py:781:see_memory_usage] DeepSpeedZeRoOffload initialize [end]
+[2025-08-17 05:23:09,394] [INFO] [utils.py:782:see_memory_usage] MA 7.11 GB         Max_MA 7.11 GB         CA 7.88 GB         Max_CA 8 GB 
+[2025-08-17 05:23:09,394] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 136.64 GB, percent = 9.0%
+[2025-08-17 05:23:09,758] [INFO] [utils.py:781:see_memory_usage] Before creating fp16 partitions
+[2025-08-17 05:23:09,758] [INFO] [utils.py:782:see_memory_usage] MA 7.11 GB         Max_MA 7.11 GB         CA 7.88 GB         Max_CA 8 GB 
+[2025-08-17 05:23:09,758] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 136.64 GB, percent = 9.0%
+[2025-08-17 05:23:18,545] [INFO] [utils.py:781:see_memory_usage] After creating fp16 partitions: 5
+[2025-08-17 05:23:18,553] [INFO] [utils.py:782:see_memory_usage] MA 7.11 GB         Max_MA 7.11 GB         CA 7.11 GB         Max_CA 8 GB 
+[2025-08-17 05:23:18,553] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 178.79 GB, percent = 11.8%
+[2025-08-17 05:23:18,953] [INFO] [utils.py:781:see_memory_usage] Before creating fp32 partitions
+[2025-08-17 05:23:18,953] [INFO] [utils.py:782:see_memory_usage] MA 7.11 GB         Max_MA 7.11 GB         CA 7.11 GB         Max_CA 7 GB 
+[2025-08-17 05:23:18,954] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 174.29 GB, percent = 11.5%
+[2025-08-17 05:23:19,334] [INFO] [utils.py:781:see_memory_usage] After creating fp32 partitions
+[2025-08-17 05:23:19,335] [INFO] [utils.py:782:see_memory_usage] MA 21.33 GB         Max_MA 22.85 GB         CA 25.06 GB         Max_CA 25 GB 
+[2025-08-17 05:23:19,335] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 160.23 GB, percent = 10.6%
+[2025-08-17 05:23:20,333] [INFO] [utils.py:781:see_memory_usage] Before initializing optimizer states
+[2025-08-17 05:23:20,333] [INFO] [utils.py:782:see_memory_usage] MA 21.33 GB         Max_MA 21.33 GB         CA 25.06 GB         Max_CA 25 GB 
+[2025-08-17 05:23:20,333] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 136.04 GB, percent = 9.0%
+[2025-08-17 05:23:20,694] [INFO] [utils.py:781:see_memory_usage] After initializing optimizer states
+[2025-08-17 05:23:20,695] [INFO] [utils.py:782:see_memory_usage] MA 21.33 GB         Max_MA 25.06 GB         CA 28.79 GB         Max_CA 29 GB 
+[2025-08-17 05:23:20,695] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 136.04 GB, percent = 9.0%
+[2025-08-17 05:23:20,695] [INFO] [stage3.py:534:_setup_for_real_optimizer] optimizer state initialized
+[2025-08-17 05:23:25,519] [INFO] [utils.py:781:see_memory_usage] After initializing ZeRO optimizer
+[2025-08-17 05:23:25,520] [INFO] [utils.py:782:see_memory_usage] MA 29.37 GB         Max_MA 30.53 GB         CA 35.9 GB         Max_CA 36 GB 
+[2025-08-17 05:23:25,520] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 136.27 GB, percent = 9.0%
+[2025-08-17 05:23:25,520] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Final Optimizer = DeepSpeedZeroOptimizer_Stage3
+[2025-08-17 05:23:25,520] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed using configured LR scheduler = None
+[2025-08-17 05:23:25,520] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed LR Scheduler = None
+[2025-08-17 05:23:25,520] [INFO] [logging.py:107:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0, 0.0], mom=[(0.9, 0.999), (0.9, 0.999)]
+[2025-08-17 05:23:25,571] [INFO] [config.py:1003:print] DeepSpeedEngine configuration:
+[2025-08-17 05:23:25,571] [INFO] [config.py:1007:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2025-08-17 05:23:25,571] [INFO] [config.py:1007:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'intra_op_parallelism': 1, 'single_submit': False, 'overlap_events': True, 'use_gds': False}
+[2025-08-17 05:23:25,571] [INFO] [config.py:1007:print]   amp_enabled .................. False
+[2025-08-17 05:23:25,571] [INFO] [config.py:1007:print]   amp_params ................... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   bfloat16_enabled ............. True
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   bfloat16_immediate_grad_update  True
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   checkpoint_parallel_write_pipeline  False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   checkpoint_tag_validation_enabled  True
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   checkpoint_tag_validation_fail  False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x14fa279ab5c0>
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   communication_data_type ...... None
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   compile_config ............... deepcompile=False free_activation=False offload_activation=False offload_opt_states=False double_buffer=True symmetric_memory=False debug_log=False offload_parameters=False sync_before_reduce=False sync_after_reduce=False sync_before_allgather=False sync_after_allgather=False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   curriculum_enabled_legacy .... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   curriculum_params_legacy ..... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'pin_memory': False, 'curriculum_learning': {'enabled': False}, 'dynamic_batching': {'enabled': False, 'lr_scaling_method': 'linear', 'min_batch_size': 1, 'max_batch_size': None, 'sequence_picking_order': 'dataloader', 'verbose': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   data_efficiency_enabled ...... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   dataloader_drop_last ......... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   disable_allgather ............ False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   dump_state ................... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   dynamic_loss_scale_args ...... None
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   eigenvalue_enabled ........... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   eigenvalue_gas_boundary_resolution  1
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   eigenvalue_layer_num ......... 0
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   eigenvalue_max_iter .......... 100
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   eigenvalue_stability ......... 1e-06
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   eigenvalue_tol ............... 0.01
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   eigenvalue_verbose ........... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   elasticity_enabled ........... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   fp16_auto_cast ............... None
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   fp16_enabled ................. False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   fp16_master_weights_and_gradients  False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   global_rank .................. 0
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   grad_accum_dtype ............. None
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   gradient_accumulation_steps .. 8
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   gradient_clipping ............ 0.2
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   gradient_predivide_factor .... 1.0
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   graph_harvesting ............. False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   initial_dynamic_scale ........ 1
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   load_universal_checkpoint .... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   loss_scale ................... 1.0
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   memory_breakdown ............. False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   mics_hierarchial_params_gather  False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   mics_shard_size .............. -1
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName')
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   optimizer_legacy_fusion ...... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   optimizer_name ............... None
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   optimizer_params ............. None
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   pld_enabled .................. False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   pld_params ................... False
+[2025-08-17 05:23:25,572] [INFO] [config.py:1007:print]   prescale_gradients ........... False
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   scheduler_name ............... None
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   scheduler_params ............. None
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   seq_parallel_communication_data_type  torch.float32
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   sparse_attention ............. None
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   sparse_gradients_enabled ..... False
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   steps_per_print .............. inf
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   tensor_parallel_config ....... dtype=torch.float16 autotp_size=0 tp_overlap_comm=False tensor_parallel=TPConfig(tp_size=1, tp_grain_size=1, mpu=None, tp_group=None) injection_policy_tuple=None keep_module_on_host=False replace_with_kernel_inject=False
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   timers_config ................ enabled=True synchronized=True
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   train_batch_size ............. 64
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   train_micro_batch_size_per_gpu  1
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   use_data_before_expert_parallel_  False
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   use_node_local_storage ....... False
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   wall_clock_breakdown ......... False
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   weight_quantization_config ... None
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   world_size ................... 8
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   zero_allow_untested_optimizer  True
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   zero_config .................. stage=3 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500000000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500000000 overlap_comm=True load_from_fp32_weights=True elastic_checkpoint=False offload_param=DeepSpeedZeroOffloadParamConfig(device='none', nvme_path=None, buffer_count=5, buffer_size=100000000, max_in_cpu=1000000000, pin_memory=False) offload_optimizer=DeepSpeedZeroOffloadOptimizerConfig(device='none', nvme_path=None, buffer_count=4, pin_memory=False, pipeline_read=False, pipeline_write=False, fast_init=False, ratio=1.0) sub_group_size=1000000000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50000000 param_persistence_threshold=100000 model_persistence_threshold=9223372036854775807 max_live_parameters=1000000000 max_reuse_distance=1000000000 gather_16bit_weights_on_model_save=True module_granularity_threshold=0 use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False zeropp_loco_param=None mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True log_trace_cache_warnings=False
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   zero_enabled ................. True
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   zero_force_ds_cpu_optimizer .. True
+[2025-08-17 05:23:25,573] [INFO] [config.py:1007:print]   zero_optimization_stage ...... 3
+[2025-08-17 05:23:25,573] [INFO] [config.py:993:print_user_config]   json = {
+    "train_batch_size": 64, 
+    "train_micro_batch_size_per_gpu": 1, 
+    "gradient_accumulation_steps": 8, 
+    "zero_optimization": {
+        "stage": 3, 
+        "offload_optimizer": {
+            "device": "none", 
+            "nvme_path": null
+        }, 
+        "offload_param": {
+            "device": "none", 
+            "nvme_path": null
+        }, 
+        "stage3_gather_16bit_weights_on_model_save": true
+    }, 
+    "gradient_clipping": 0.2, 
+    "steps_per_print": inf, 
+    "bf16": {
+        "enabled": true
+    }, 
+    "fp16": {
+        "enabled": false
+    }, 
+    "zero_allow_untested_optimizer": true
+}
+[2025-08-17 05:23:25,734] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from data/Qwen3-30B-test/checkpoint-4/global_step4/zero_pp_rank_0_mp_rank_00_model_states.pt...
+[2025-08-17 05:23:26,094] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from data/Qwen3-30B-test/checkpoint-4/global_step4/zero_pp_rank_0_mp_rank_00_model_states.pt.
+[2025-08-17 05:23:26,109] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from data/Qwen3-30B-test/checkpoint-4/global_step4/zero_pp_rank_0_mp_rank_00_model_states.pt...
+[2025-08-17 05:23:26,438] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from data/Qwen3-30B-test/checkpoint-4/global_step4/zero_pp_rank_0_mp_rank_00_model_states.pt.
+[2025-08-17 05:23:26,966] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from data/Qwen3-30B-test/checkpoint-4/global_step4/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt...
+[2025-08-17 05:24:36,814] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from data/Qwen3-30B-test/checkpoint-4/global_step4/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt.
+[2025-08-17 05:24:36,814] [INFO] [engine.py:3241:_get_all_zero_checkpoint_state_dicts] successfully read 8 ZeRO state_dicts for rank 0
+[2025-08-17 05:24:41,983] [INFO] [engine.py:3191:_load_zero_checkpoint] loading 8 zero partition checkpoints for rank 0
+[2025-08-17 05:28:28,721] [WARNING] [stage3.py:2135:step] 4 pytorch allocator cache flushes since last step. this happens when there is high memory pressure and is detrimental to performance. if this is happening frequently consider adjusting settings to reduce memory consumption. If you are unable to make the cache flushes go away consider adding get_accelerator().empty_cache() calls in your training loop to ensure that all ranks flush their caches at the same time
+{'loss': 0.8817, 'grad_norm': 5.453530009146217, 'learning_rate': 2.2e-05, 'num_tokens': 65536.0, 'epoch': 0.05}
+[2025-08-17 05:30:01,709] [INFO] [logging.py:107:log_dist] [Rank 0] [Torch] Checkpoint global_step5 is about to be saved!
+[2025-08-17 05:30:01,986] [INFO] [logging.py:107:log_dist] [Rank 0] Saving model checkpoint: data/Qwen3-30B-test/checkpoint-5/global_step5/zero_pp_rank_0_mp_rank_00_model_states.pt
+[2025-08-17 05:30:01,986] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving data/Qwen3-30B-test/checkpoint-5/global_step5/zero_pp_rank_0_mp_rank_00_model_states.pt...
+[2025-08-17 05:30:02,617] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved data/Qwen3-30B-test/checkpoint-5/global_step5/zero_pp_rank_0_mp_rank_00_model_states.pt.
+[2025-08-17 05:30:02,699] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving data/Qwen3-30B-test/checkpoint-5/global_step5/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt...
+[2025-08-17 05:31:45,892] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved data/Qwen3-30B-test/checkpoint-5/global_step5/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt.
+[2025-08-17 05:31:45,897] [INFO] [engine.py:3701:_save_zero_checkpoint] zero checkpoint saved data/Qwen3-30B-test/checkpoint-5/global_step5/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt
+[2025-08-17 05:31:49,457] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step5 is ready now!
+{'train_runtime': 425.5808, 'train_samples_per_second': 0.451, 'train_steps_per_second': 0.007, 'train_loss': 0.17633434534072875, 'epoch': 0.05}
+***** train metrics *****
+  total_flos               =   162135GF
+  train_loss               =     0.1763
+  train_runtime            = 0:07:05.58
+  train_samples            =       6000
+  train_samples_per_second =      0.451
+  train_steps_per_second   =      0.007
+2025-08-17 05:31:49 - INFO - __main__ - *** Save model ***
+2025-08-17 05:33:23 - INFO - __main__ - Model saved to data/Qwen3-30B-test

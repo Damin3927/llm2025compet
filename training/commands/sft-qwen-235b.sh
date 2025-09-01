@@ -5,13 +5,36 @@
 #SBATCH --gpus-per-node=8      # 1ノードあたりのGPU数
 #SBATCH --nodelist osk-gpu[54,56,91] # 利用するノードのリスト
 #SBATCH --job-name sft-235b     # ジョブの名前
-#SBATCH --time 1:00:00         # ジョブの最大実行時間
-#SBATCH --output sft-235b.out   # 標準出力ファイル
-#SBATCH --error sft-235b.err    # 標準エラーファイル
+#SBATCH --time 72:00:00         # ジョブの最大実行時間
+#SBATCH --output sft-235b1.out   # 標準出力ファイル
+#SBATCH --error sft-235b1.err    # 標準エラーファイル
 #SBATCH --mem=0            # 各ノードのメモリサイズ
 #SBATCH --cpus-per-task=160         # number of cores per tasks
 
 # export WANDB_DISABLED="true"   # WANDBを一旦無効化
+
+### ====== デバッグ用情報出力 ======
+echo "=== [DEBUG] Job Start: $(date) ==="
+echo "SLURM_JOB_NODELIST: $SLURM_JOB_NODELIST"
+echo "HOSTNAME: $(hostname)"
+echo "WHOAMI: $(whoami)"
+echo "PWD: $(pwd)"
+echo
+echo "=== [DEBUG] Python & Pip 情報 ==="
+which python
+python --version
+which pip
+pip --version
+pip list | grep -E "torch|deepspeed|accelerate"
+echo
+echo "=== [DEBUG] PATH 確認 ==="
+echo $PATH | tr ':' '\n'
+echo
+echo "=== [DEBUG] GPU可視性確認 ==="
+nvidia-smi || echo "nvidia-smi コマンドが失敗しました"
+python -c "import torch; print('torch.cuda.is_available():', torch.cuda.is_available())"
+echo "=================================="
+### ===============================
 
 # Slurmで確保したノードリストの先頭をマスターノードのアドレスとして設定
 export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
@@ -48,7 +71,8 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
         --main_process_port \"$MASTER_PORT\" \
         --rdzv_backend c10d \
         open_r1/sft.py \
-        --config ../../configs/Qwen3-235b/sft/config_distill.yaml"
+        --config ../../configs/Qwen3-235b/sft/config_test.yaml \
+        --dataconfig ../../configs/data_configs/sft_ver3_0.yaml"
 
 # 実行方法
 # HOMEで以下を実行する。自動でopen-r1のソースコードディレクトリに移動することに注意
@@ -57,4 +81,4 @@ srun --jobid $SLURM_JOB_ID --mem=0 bash -c \
 # /home/Competition2025/P02/shareP02/scripts/scancel.sh 287614
 
 # 実行コマンド
-# sbatch ./llm2025compet/training/commands/sft-qwen-32b-node3.sh
+# sbatch ./llm2025compet/training/commands/sft-qwen-235b.sh

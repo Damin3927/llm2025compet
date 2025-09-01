@@ -52,8 +52,27 @@ from open_r1.get_datas import get_datas_from_config
 
 import argparse
 import yaml
+import torch
+import datetime
+
+
+import deepspeed  # NEW: for set_z3_leaf_modules
+print(f"DeepSpeed version: {deepspeed.__version__}")
+
+# NEW: try to import the concrete Qwen3 MoE block class (falls back to name match)
+try:
+    from transformers.models.qwen3_moe.modeling_qwen3_moe import (
+        Qwen3MoeSparseMoeBlock as _QwenSparseMoeBlock,
+    )
+    print(f"Using Qwen3 Sparse MoE Block: {_QwenSparseMoeBlock.__name__}")
+except Exception:
+    _QwenSparseMoeBlock = None
+    print("Falling back to generic Sparse MoE Block.")
+
+
 
 logger = logging.getLogger(__name__)
+print(f"Last modified time is 2025-0817-0500-JST")
 
 def load_config_from_yaml(file_path: str) -> DataConfig:
     """Loads dataset configurations from a YAML file."""
@@ -122,6 +141,30 @@ def main(script_args, training_args, model_args, data_config: DataConfig):
     tokenizer = get_tokenizer(model_args, training_args)
     model = get_model(model_args, training_args)
 
+    # NEW: MoE × ZeRO-3 安定化（leaf module 指定）
+    if getattr(model.config, "model_type", "") == "qwen3_moe":
+        print("[MoE] Detected model_type='qwen3_moe'. Applying ZeRO-3 leaf module setting...")
+
+        # （任意）ルータのロジットを有効化したい場合はコメントアウトを外す
+        # if hasattr(model.config, "output_router_logits"):
+        #     model.config.output_router_logits = True
+        #     print("[MoE] Enabled output_router_logits=True")
+
+        if _QwenSparseMoeBlock is not None:
+            deepspeed.utils.set_z3_leaf_modules(model, [_QwenSparseMoeBlock])
+            print("[MoE] Set ZeRO-3 leaf module: Qwen3MoeSparseMoeBlock (direct import)")
+        else:
+            print("[MoE] Direct import of Qwen3MoeSparseMoeBlock failed; falling back to name scan...")
+            set_flag = False
+            for m in model.modules():
+                if "SparseMoeBlock" in m.__class__.__name__:
+                    deepspeed.utils.set_z3_leaf_modules(model, [m.__class__])
+                    print(f"[MoE] Set ZeRO-3 leaf module by name: {m.__class__.__name__}")
+                    set_flag = True
+                    break
+            if not set_flag:
+                print("[MoE][WARN] Could not find a SparseMoeBlock; ZeRO-3 leaf NOT set (collectives may hang).")
+
     if tokenizer.chat_template is None:
         logger.info("No chat template provided, defaulting to ChatML.")
         model, tokenizer = setup_chat_format(model, tokenizer, format="chatml")
@@ -170,6 +213,9 @@ def main(script_args, training_args, model_args, data_config: DataConfig):
         "dataset_name": script_args.dataset_name,
         "tags": ["open-r1"],
     }
+    if data_config is not None:
+        kwargs["dataset_name"] = [dataset.name for dataset in data_config.datasets]
+    
     if trainer.accelerator.is_main_process:
         trainer.create_model_card(**kwargs)
         # Restore k,v cache for fast inference
@@ -189,12 +235,14 @@ def main(script_args, training_args, model_args, data_config: DataConfig):
     #############
     # push to hub
     #############
+    transformers.logging.set_verbosity_info()
     if training_args.push_to_hub:
         logger.info("Pushing to hub...")
         trainer.push_to_hub(**kwargs)
 
 
 if __name__ == "__main__":
+    # torch.distributed.init_process_group(backend="nccl", timeout=datetime.timedelta(seconds=7200))
     parser = TrlParser((ScriptArguments, SFTConfig, ModelConfig))
     script_args, training_args, model_args, unknown_args = parser.parse_args_and_config(return_remaining_strings = True, fail_with_unknown_args = False)
     data_config = get_dataconfig()

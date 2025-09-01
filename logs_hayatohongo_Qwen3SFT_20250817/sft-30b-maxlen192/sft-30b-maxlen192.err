@@ -1,0 +1,905 @@
+W0816 19:17:14.509000 3670626 torch/distributed/run.py:792] 
+W0816 19:17:14.509000 3670626 torch/distributed/run.py:792] *****************************************
+W0816 19:17:14.509000 3670626 torch/distributed/run.py:792] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0816 19:17:14.509000 3670626 torch/distributed/run.py:792] *****************************************
+W0816 19:17:15.661000 1016243 torch/distributed/run.py:792] 
+W0816 19:17:15.661000 1016243 torch/distributed/run.py:792] *****************************************
+W0816 19:17:15.661000 1016243 torch/distributed/run.py:792] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0816 19:17:15.661000 1016243 torch/distributed/run.py:792] *****************************************
+W0816 19:17:15.766000 323433 torch/distributed/run.py:792] 
+W0816 19:17:15.766000 323433 torch/distributed/run.py:792] *****************************************
+W0816 19:17:15.766000 323433 torch/distributed/run.py:792] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0816 19:17:15.766000 323433 torch/distributed/run.py:792] *****************************************
+Found cached dataset hle_sft_open_thoughts-114k (/home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605)
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8fff6bb52ea27ace_*_of_00001.arrow
+Loading cached shuffled indices for dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1eeda50561e2fa07.arrow
+Found cached dataset hle_sft_open_thoughts-114k (/home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605)
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8fff6bb52ea27ace_*_of_00001.arrow
+Loading cached shuffled indices for dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1eeda50561e2fa07.arrow
+Found cached dataset hle_sft_open_thoughts-114k (/home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605)
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8fff6bb52ea27ace_*_of_00001.arrow
+Loading cached shuffled indices for dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1eeda50561e2fa07.arrow
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:37,629 >> loading file vocab.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/vocab.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:37,629 >> loading file merges.txt from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/merges.txt
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:37,629 >> loading file tokenizer.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/tokenizer.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:37,629 >> loading file added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:37,629 >> loading file special_tokens_map.json from cache at None
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:37,630 >> loading file tokenizer_config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:37,630 >> loading file chat_template.jinja from cache at None
+[INFO|tokenization_utils_base.py:2280] 2025-08-16 19:17:37,952 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|configuration_utils.py:752] 2025-08-16 19:17:38,136 >> loading configuration file config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/config.json
+[INFO|configuration_utils.py:817] 2025-08-16 19:17:38,142 >> Model config Qwen3MoeConfig {
+  "architectures": [
+    "Qwen3MoeForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "decoder_sparse_step": 1,
+  "eos_token_id": 151645,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 2048,
+  "initializer_range": 0.02,
+  "intermediate_size": 6144,
+  "max_position_embeddings": 40960,
+  "max_window_layers": 48,
+  "mlp_only_layers": [],
+  "model_type": "qwen3_moe",
+  "moe_intermediate_size": 768,
+  "norm_topk_prob": true,
+  "num_attention_heads": 32,
+  "num_experts": 128,
+  "num_experts_per_tok": 8,
+  "num_hidden_layers": 48,
+  "num_key_value_heads": 4,
+  "output_router_logits": false,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": null,
+  "rope_theta": 1000000.0,
+  "router_aux_loss_coef": 0.001,
+  "sliding_window": null,
+  "tie_word_embeddings": false,
+  "torch_dtype": "bfloat16",
+  "transformers_version": "4.54.1",
+  "use_cache": true,
+  "use_sliding_window": false,
+  "vocab_size": 151936
+}
+
+[INFO|modeling_utils.py:1271] 2025-08-16 19:17:38,646 >> loading weights file model.safetensors from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/model.safetensors.index.json
+[INFO|modeling_utils.py:2374] 2025-08-16 19:17:38,674 >> Instantiating Qwen3MoeForCausalLM model under default dtype torch.bfloat16.
+[INFO|modeling_utils.py:4306] 2025-08-16 19:17:38,674 >> Detected DeepSpeed ZeRO-3: activating zero.init() for this model
+[INFO|configuration_utils.py:1103] 2025-08-16 19:17:38,683 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "eos_token_id": 151645
+}
+
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:39,210 >> loading file vocab.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/vocab.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:39,210 >> loading file merges.txt from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/merges.txt
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:39,210 >> loading file tokenizer.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/tokenizer.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:39,210 >> loading file added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:39,210 >> loading file special_tokens_map.json from cache at None
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:39,210 >> loading file tokenizer_config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:39,210 >> loading file chat_template.jinja from cache at None
+[INFO|tokenization_utils_base.py:2280] 2025-08-16 19:17:39,509 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|configuration_utils.py:752] 2025-08-16 19:17:39,698 >> loading configuration file config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/config.json
+[INFO|configuration_utils.py:817] 2025-08-16 19:17:39,711 >> Model config Qwen3MoeConfig {
+  "architectures": [
+    "Qwen3MoeForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "decoder_sparse_step": 1,
+  "eos_token_id": 151645,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 2048,
+  "initializer_range": 0.02,
+  "intermediate_size": 6144,
+  "max_position_embeddings": 40960,
+  "max_window_layers": 48,
+  "mlp_only_layers": [],
+  "model_type": "qwen3_moe",
+  "moe_intermediate_size": 768,
+  "norm_topk_prob": true,
+  "num_attention_heads": 32,
+  "num_experts": 128,
+  "num_experts_per_tok": 8,
+  "num_hidden_layers": 48,
+  "num_key_value_heads": 4,
+  "output_router_logits": false,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": null,
+  "rope_theta": 1000000.0,
+  "router_aux_loss_coef": 0.001,
+  "sliding_window": null,
+  "tie_word_embeddings": false,
+  "torch_dtype": "bfloat16",
+  "transformers_version": "4.54.1",
+  "use_cache": true,
+  "use_sliding_window": false,
+  "vocab_size": 151936
+}
+
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:40,089 >> loading file vocab.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/vocab.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:40,090 >> loading file merges.txt from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/merges.txt
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:40,090 >> loading file tokenizer.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/tokenizer.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:40,090 >> loading file added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:40,090 >> loading file special_tokens_map.json from cache at None
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:40,090 >> loading file tokenizer_config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-16 19:17:40,090 >> loading file chat_template.jinja from cache at None
+[INFO|modeling_utils.py:1271] 2025-08-16 19:17:40,211 >> loading weights file model.safetensors from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/model.safetensors.index.json
+[INFO|modeling_utils.py:2374] 2025-08-16 19:17:40,225 >> Instantiating Qwen3MoeForCausalLM model under default dtype torch.bfloat16.
+[INFO|modeling_utils.py:4306] 2025-08-16 19:17:40,225 >> Detected DeepSpeed ZeRO-3: activating zero.init() for this model
+[INFO|configuration_utils.py:1103] 2025-08-16 19:17:40,233 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "eos_token_id": 151645
+}
+
+[INFO|tokenization_utils_base.py:2280] 2025-08-16 19:17:40,396 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|configuration_utils.py:752] 2025-08-16 19:17:40,578 >> loading configuration file config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/config.json
+[INFO|configuration_utils.py:817] 2025-08-16 19:17:40,582 >> Model config Qwen3MoeConfig {
+  "architectures": [
+    "Qwen3MoeForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "decoder_sparse_step": 1,
+  "eos_token_id": 151645,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 2048,
+  "initializer_range": 0.02,
+  "intermediate_size": 6144,
+  "max_position_embeddings": 40960,
+  "max_window_layers": 48,
+  "mlp_only_layers": [],
+  "model_type": "qwen3_moe",
+  "moe_intermediate_size": 768,
+  "norm_topk_prob": true,
+  "num_attention_heads": 32,
+  "num_experts": 128,
+  "num_experts_per_tok": 8,
+  "num_hidden_layers": 48,
+  "num_key_value_heads": 4,
+  "output_router_logits": false,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": null,
+  "rope_theta": 1000000.0,
+  "router_aux_loss_coef": 0.001,
+  "sliding_window": null,
+  "tie_word_embeddings": false,
+  "torch_dtype": "bfloat16",
+  "transformers_version": "4.54.1",
+  "use_cache": true,
+  "use_sliding_window": false,
+  "vocab_size": 151936
+}
+
+[INFO|modeling_utils.py:1271] 2025-08-16 19:17:41,059 >> loading weights file model.safetensors from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/model.safetensors.index.json
+[INFO|modeling_utils.py:2374] 2025-08-16 19:17:41,071 >> Instantiating Qwen3MoeForCausalLM model under default dtype torch.bfloat16.
+[INFO|modeling_utils.py:4306] 2025-08-16 19:17:41,071 >> Detected DeepSpeed ZeRO-3: activating zero.init() for this model
+[INFO|configuration_utils.py:1103] 2025-08-16 19:17:41,079 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "eos_token_id": 151645
+}
+
+
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:34,  6.32s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:36,  6.46s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:35,  6.39s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:34,  6.33s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:37,  6.51s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:36,  6.44s/it]
+Loading checkpoint shards:   6%|▋    
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:35,  6.36s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:36,  6.44s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:36,  6.40s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:37,  6.50s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:35,  6.36s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:37,  6.49s/it]
+Loading checkpoint shards:   6%|▋    
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:34,  6.33s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:34,  6.33s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:35,  6.40s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:35,  6.37s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:35,  6.38s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:36,  6.41s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:35,  6.35s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:34,  6.32s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:35,  6.86s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.92s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.86s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.89s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.91s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:37,  6.94s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:35,  6.86s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.88s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.00s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.02s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.04s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16      | 1/16 [00:06<01:36,  6.40s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:39,  6.61s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.86s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.89s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.86s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.89s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.88s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.88s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.90s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:37,  6.97s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.01s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.02s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.01s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16      | 1/16 [00:06<01:35,  6.34s/it]
+Loading checkpoint shards:   6%|▋         | 1/16 [00:06<01:35,  6.34s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.88s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.91s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:37,  6.93s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.90s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.92s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.88s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.87s/it]
+Loading checkpoint shards:  12%|█▎        | 2/16 [00:13<01:36,  6.87s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.01s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.03s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.04s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.01s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.04s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.03s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.01s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.01s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.07s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:28<01:24,  7.08s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.08s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:28<01:25,  7.09s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:28<01:25,  7.09s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.07s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.06s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.07s/it]
+Loading checkpoint shards:  31%|███▏   [00:20<01:31,  7.02s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.02s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.02s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.02s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:21<01:31,  7.07s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.08s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.07s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.07s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.08s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.07s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.08s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.08s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:28<01:25,  7.10s/it]
+Loading checkpoint shards:  31%|███▏   [00:20<01:31,  7.01s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.05s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.00s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.03s/it]
+Loading checkpoint shards:  19%|█▉        | 3/16 [00:20<01:31,  7.01s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.07s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:28<01:24,  7.08s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.07s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.08s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:28<01:25,  7.09s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:28<01:24,  7.08s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.07s/it]
+Loading checkpoint shards:  25%|██▌       | 4/16 [00:27<01:24,  7.07s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.13s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.13s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loadi   | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.12s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.12s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.12s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.13s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loadi   | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.12s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.12s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.12s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  31%|███▏      | 5/16 [00:35<01:18,  7.11s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.13s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.13s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.13s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.13s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.15s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.18s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards: ng checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.13s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.13s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.16s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards: ng checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.14s/it]
+Loading checkpoint shards:  38%|███▊      | 6/16 [00:42<01:11,  7.13s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.16s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  44%|████▍     | 7/16 [00:49<01:04,  7.17s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:57<00:57,  7.20s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|� 50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:04<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:04<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|� 50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  50%|█████     | 8/16 [00:56<00:57,  7.19s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:04<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.17s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:04<00:50,  7.18s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:36,  7.20s/it��████▋    | 9/16 [01:03<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.17s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.17s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:36,  7.20s/it��████▋    | 9/16 [01:03<00:50,  7.17s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:04<00:50,  7.18s/it]
+Loading checkpoint shards:  56%|█████▋    | 9/16 [01:03<00:50,  7.17s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.19s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  62%|██████▎   | 10/16 [01:11<00:43,  7.18s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:36,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:36,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:36,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:36,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.21s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.21s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.21s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|█]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:36,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:36,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.21s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|█]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:36,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:36,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  69%|██████▉   | 11/16 [01:18<00:35,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|██████████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|██████████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  75%|███████▌  | 12/16 [01:25<00:28,  7.20s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  81%|████████▏ | 13/16 [01:33<00:21,  7.21s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:40<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.19s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:40<00:14,  7.20s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.20s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.20s/it]
+Loading checkpoint shards:  94%|███████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:40<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:40<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.19s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:40<00:14,  7.20s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.20s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.20s/it]
+Loading checkpoint shards:  94%|███████▏ | 13/16 [01:32<00:21,  7.21s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:40<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:40<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:40<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  88%|████████▊ | 14/16 [01:39<00:14,  7.20s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.20s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.20s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint s██████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.20s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.31s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.31s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint s██████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards:  94%|█████████▍| 15/16 [01:47<00:07,  7.19s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+hards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+hards: 100%|██████████| 16/16 [01:47<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:47<00:00,  6.75s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+
+[INFO|modeling_utils.py:5541] 2025-08-16 19:19:39,930 >> All model checkpoint weights were used when initializing Qwen3MoeForCausalLM.
+
+[INFO|modeling_utils.py:5541] 2025-08-16 19:19:39,930 >> All model checkpoint weights were used when initializing Qwen3MoeForCausalLM.
+
+[INFO|modeling_utils.py:5549] 2025-08-16 19:19:39,930 >> All the weights of Qwen3MoeForCausalLM were initialized from the model checkpoint at Qwen/Qwen3-30B-A3B.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use Qwen3MoeForCausalLM for predictions without further training.
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it][INFO|modeling_utils.py:5549] 2025-08-16 19:19:39,930 >> All the weights of Qwen3MoeForCausalLM were initialized from the model checkpoint at Qwen/Qwen3-30B-A3B.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use Qwen3MoeForCausalLM for predictions without further training.
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.75s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.30s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.76s/it]
+[INFO|configuration_utils.py:1058] 2025-08-16 19:19:40,221 >> loading configuration file generation_config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/generation_config.json
+[INFO|configuration_utils.py:1103] 2025-08-16 19:19:40,221 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "do_sample": true,
+  "eos_token_id": [
+    151645,
+    151643
+  ],
+  "pad_token_id": 151643,
+  "temperature": 0.6,
+  "top_k": 20,
+  "top_p": 0.95
+}
+
+[INFO|configuration_utils.py:1058] 2025-08-16 19:19:40,224 >> loading configuration file generation_config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/generation_config.json
+[INFO|configuration_utils.py:1103] 2025-08-16 19:19:40,224 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "do_sample": true,
+  "eos_token_id": [
+    151645,
+    151643
+  ],
+  "pad_token_id": 151643,
+  "temperature": 0.6,
+  "top_k": 20,
+  "top_p": 0.95
+}
+
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  5.39s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:48<00:00,  6.79s/it]
+[INFO|modeling_utils.py:5541] 2025-08-16 19:19:40,391 >> All model checkpoint weights were used when initializing Qwen3MoeForCausalLM.
+
+[INFO|modeling_utils.py:5549] 2025-08-16 19:19:40,391 >> All the weights of Qwen3MoeForCausalLM were initialized from the model checkpoint at Qwen/Qwen3-30B-A3B.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use Qwen3MoeForCausalLM for predictions without further training.
+[INFO|configuration_utils.py:1058] 2025-08-16 19:19:40,695 >> loading configuration file generation_config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/generation_config.json
+[INFO|configuration_utils.py:1103] 2025-08-16 19:19:40,695 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "do_sample": true,
+  "eos_token_id": [
+    151645,
+    151643
+  ],
+  "pad_token_id": 151643,
+  "temperature": 0.6,
+  "top_k": 20,
+  "top_p": 0.95
+}
+
+Process #1 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00000_of_00012.arrow
+Process #2 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00001_of_00012.arrow
+Process #3 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00002_of_00012.arrow
+Process #4 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00003_of_00012.arrow
+Process #5 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00004_of_00012.arrow
+Process #6 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00005_of_00012.arrow
+Process #7 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00006_of_00012.arrow
+Process #8 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00007_of_00012.arrow
+Process #9 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00008_of_00012.arrow
+Process #10 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00009_of_00012.arrow
+Process #11 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00010_of_00012.arrow
+Process #12 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00011_of_00012.arrow
+
+Tokenizing train dataset (num_proc=12):   0%|          | 0/6000 [00:00<?, ? examples/s]Spawning 12 processes
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00000_of_00012.arrow
+
+Tokenizing train dataset (num_proc=12):   0%|          | 2/6000 [00:00<37:57,  2.63 examples/s]Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00001_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00002_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00003_of_00012.arrow
+
+Tokenizing train dataset (num_proc=12):   0%|          | 13/6000 [00:00<05:41, 17.51 examples/s]Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00004_of_00012.arrow
+
+Tokenizing train dataset (num_proc=12):   1%|          | 44/6000 [00:01<01:36, 61.71 examples/s]Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00005_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00006_of_00012.arrow
+
+Tokenizing train dataset (num_proc=12):   1%|▏         | 82/6000 [00:01<00:49, 118.94 examples/s]Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00007_of_00012.arrow
+
+Tokenizing train dataset (num_proc=12):   2%|▏         | 115/6000 [00:01<00:36, 160.83 examples/s]Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00008_of_00012.arrow
+
+Tokenizing train dataset (num_proc=12):   3%|▎         | 152/6000 [00:01<00:28, 203.76 examples/s]Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00010_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00009_of_00012.arrow
+
+Tokenizing train dataset (num_proc=12):   3%|▎         | 194/6000 [00:01<00:22, 253.36 examples/s]Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_00011_of_00012.arrow
+
+Tokenizing train dataset (num_proc=12):   4%|▍         | 248/6000 [00:01<00:17, 324.32 examples/s]
+Tokenizing train dataset (num_proc=12):   5%|▍         | 298/6000 [00:01<00:15, 365.60 examples/s]
+Tokenizing train dataset (num_proc=12):   6%|▌         | 358/6000 [00:01<00:13, 422.24 examples/s]
+Tokenizing train dataset (num_proc=12):   7%|▋         | 417/6000 [00:01<00:11, 467.88 examples/s]
+Tokenizing train dataset (num_proc=12):   8%|▊         | 471/6000 [00:02<00:11, 487.89 examples/s]
+Tokenizing train dataset (num_proc=12):   9%|▉         | 525/6000 [00:02<00:10, 501.46 examples/s]
+Tokenizing train dataset (num_proc=12):  10%|▉         | 577/6000 [00:02<00:10, 497.63 examples/s]
+Tokenizing train dataset (num_proc=12):  11%|█         | 633/6000 [00:02<00:10, 504.43 examples/s]
+Tokenizing train dataset (num_proc=12):  11%|█▏        | 686/6000 [00:02<00:10, 493.29 examples/s]
+Tokenizing train dataset (num_proc=12):  12%|█▏        | 743/6000 [00:02<00:10, 508.87 examples/s]
+Tokenizing train dataset (num_proc=12):  13%|█▎        | 799/6000 [00:02<00:10, 516.30 examples/s]
+Tokenizing train dataset (num_proc=12):  14%|█▍        | 853/6000 [00:02<00:09, 519.87 examples/s]
+Tokenizing train dataset (num_proc=12):  15%|█▌        | 907/6000 [00:02<00:09, 512.89 examples/s]
+Tokenizing train dataset (num_proc=12):  16%|█▌        | 965/6000 [00:02<00:09, 531.60 examples/s]
+Tokenizing train dataset (num_proc=12):  17%|█▋        | 1031/6000 [00:03<00:09, 543.95 examples/s]
+Tokenizing train dataset (num_proc=12):  18%|█▊        | 1089/6000 [00:03<00:08, 547.57 examples/s]
+Tokenizing train dataset (num_proc=12):  19%|█▉        | 1146/6000 [00:03<00:09, 531.12 examples/s]
+Tokenizing train dataset (num_proc=12):  20%|██        | 1202/6000 [00:03<00:08, 538.01 examples/s]
+Tokenizing train dataset (num_proc=12):  21%|██        | 1257/6000 [00:03<00:08, 538.30 examples/s]
+Tokenizing train dataset (num_proc=12):  22%|██▏       | 1313/6000 [00:03<00:09, 514.21 examples/s]
+Tokenizing train dataset (num_proc=12):  23%|██▎       | 1372/6000 [00:03<00:08, 534.13 examples/s]
+Tokenizing train dataset (num_proc=12):  24%|██▍       | 1427/6000 [00:03<00:08, 523.74 examples/s]
+Tokenizing train dataset (num_proc=12):  25%|██▍       | 1488/6000 [00:03<00:08, 534.36 examples/s]
+Tokenizing train dataset (num_proc=12):  26%|██▌       | 1556/6000 [00:04<00:08, 547.62 examples/s]
+Tokenizing train dataset (num_proc=12):  27%|██▋       | 1615/6000 [00:04<00:08, 541.24 examples/s]
+Tokenizing train dataset (num_proc=12):  28%|██▊       | 1680/6000 [00:04<00:07, 568.81 examples/s]
+Tokenizing train dataset (num_proc=12):  29%|██▉       | 1739/6000 [00:04<00:07, 550.06 examples/s]
+Tokenizing train dataset (num_proc=12):  30%|██▉       | 1798/6000 [00:04<00:07, 559.95 examples/s]
+Tokenizing train dataset (num_proc=12):  31%|███       | 1868/6000 [00:04<00:07, 566.82 examples/s]
+Tokenizing train dataset (num_proc=12):  32%|███▏      | 1925/6000 [00:04<00:07, 564.16 examples/s]
+Tokenizing train dataset (num_proc=12):  33%|███▎      | 1983/6000 [00:04<00:07, 557.76 examples/s]
+Tokenizing train dataset (num_proc=12):  34%|███▍      | 2048/6000 [00:04<00:07, 545.88 examples/s]
+Tokenizing train dataset (num_proc=12):  35%|███▌      | 2111/6000 [00:05<00:07, 553.82 examples/s]
+Tokenizing train dataset (num_proc=12):  36%|███▌      | 2167/6000 [00:05<00:06, 553.44 examples/s]
+Tokenizing train dataset (num_proc=12):  37%|███▋      | 2230/6000 [00:05<00:06, 560.20 examples/s]
+Tokenizing train dataset (num_proc=12):  38%|███▊      | 2289/6000 [00:05<00:06, 565.39 examples/s]
+Tokenizing train dataset (num_proc=12):  39%|███▉      | 2346/6000 [00:05<00:06, 561.41 examples/s]
+Tokenizing train dataset (num_proc=12):  40%|████      | 2405/6000 [00:05<00:06, 545.03 examples/s]
+Tokenizing train dataset (num_proc=12):  41%|████      | 2461/6000 [00:05<00:06, 532.14 examples/s]
+Tokenizing train dataset (num_proc=12):  42%|████▏     | 2523/6000 [00:05<00:06, 538.39 examples/s]
+Tokenizing train dataset (num_proc=12):  43%|████▎     | 2590/6000 [00:05<00:05, 572.27 examples/s]
+Tokenizing train dataset (num_proc=12):  44%|████▍     | 2650/6000 [00:06<00:06, 556.27 examples/s]
+Tokenizing train dataset (num_proc=12):  45%|████▌     | 2713/6000 [00:06<00:05, 568.07 examples/s]
+Tokenizing train dataset (num_proc=12):  46%|████▌     | 2771/6000 [00:06<00:05, 543.84 examples/s]
+Tokenizing train dataset (num_proc=12):  47%|████▋     | 2828/6000 [00:06<00:05, 529.49 examples/s]
+Tokenizing train dataset (num_proc=12):  48%|████▊     | 2893/6000 [00:06<00:05, 557.70 examples/s]
+Tokenizing train dataset (num_proc=12):  49%|████▉     | 2951/6000 [00:06<00:05, 553.53 examples/s]
+Tokenizing train dataset (num_proc=12):  50%|█████     | 3008/6000 [00:06<00:05, 550.46 examples/s]
+Tokenizing train dataset (num_proc=12):  51%|█████     | 3065/6000 [00:06<00:05, 539.41 examples/s]
+Tokenizing train dataset (num_proc=12):  52%|█████▏    | 3122/6000 [00:06<00:05, 541.90 examples/s]
+Tokenizing train dataset (num_proc=12):  53%|█████▎    | 3180/6000 [00:06<00:05, 549.31 examples/s]
+Tokenizing train dataset (num_proc=12):  54%|█████▍    | 3238/6000 [00:07<00:05, 531.52 examples/s]
+Tokenizing train dataset (num_proc=12):  55%|█████▍    | 3296/6000 [00:07<00:05, 534.27 examples/s]
+Tokenizing train dataset (num_proc=12):  56%|█████▌    | 3354/6000 [00:07<00:04, 542.37 examples/s]
+Tokenizing train dataset (num_proc=12):  57%|█████▋    | 3409/6000 [00:07<00:04, 538.90 examples/s]
+Tokenizing train dataset (num_proc=12):  58%|█████▊    | 3463/6000 [00:07<00:04, 513.88 examples/s]
+Tokenizing train dataset (num_proc=12):  59%|█████▊    | 3522/6000 [00:07<00:04, 534.36 examples/s]
+Tokenizing train dataset (num_proc=12):  60%|█████▉    | 3581/6000 [00:07<00:04, 547.47 examples/s]
+Tokenizing train dataset (num_proc=12):  61%|██████    | 3636/6000 [00:07<00:04, 525.33 examples/s]
+Tokenizing train dataset (num_proc=12):  62%|██████▏   | 3695/6000 [00:07<00:04, 526.93 examples/s]
+Tokenizing train dataset (num_proc=12):  63%|██████▎   | 3758/6000 [00:08<00:04, 551.70 examples/s]
+Tokenizing train dataset (num_proc=12):  64%|██████▎   | 3815/6000 [00:08<00:04, 544.52 examples/s]
+Tokenizing train dataset (num_proc=12):  65%|██████▍   | 3871/6000 [00:08<00:03, 545.60 examples/s]
+Tokenizing train dataset (num_proc=12):  65%|██████▌   | 3928/6000 [00:08<00:03, 540.97 examples/s]
+Tokenizing train dataset (num_proc=12):  66%|██████▋   | 3989/6000 [00:08<00:03, 537.25 examples/s]
+Tokenizing train dataset (num_proc=12):  68%|██████▊   | 4051/6000 [00:08<00:03, 531.89 examples/s]
+Tokenizing train dataset (num_proc=12):  68%|██████▊   | 4105/6000 [00:08<00:03, 531.62 examples/s]
+Tokenizing train dataset (num_proc=12):  69%|██████▉   | 4168/6000 [00:08<00:03, 554.80 examples/s]
+Tokenizing train dataset (num_proc=12):  70%|███████   | 4224/6000 [00:08<00:03, 536.44 examples/s]
+Tokenizing train dataset (num_proc=12):  71%|███████▏  | 4280/6000 [00:09<00:03, 540.59 examples/s]
+Tokenizing train dataset (num_proc=12):  72%|███████▏  | 4335/6000 [00:09<00:03, 533.07 examples/s]
+Tokenizing train dataset (num_proc=12):  73%|███████▎  | 4393/6000 [00:09<00:03, 535.55 examples/s]
+Tokenizing train dataset (num_proc=12):  74%|███████▍  | 4459/6000 [00:09<00:02, 567.92 examples/s]
+Tokenizing train dataset (num_proc=12):  75%|███████▌  | 4517/6000 [00:09<00:02, 552.41 examples/s]
+Tokenizing train dataset (num_proc=12):  76%|███████▌  | 4573/6000 [00:09<00:02, 543.24 examples/s]
+Tokenizing train dataset (num_proc=12):  77%|███████▋  | 4629/6000 [00:09<00:02, 522.69 examples/s]
+Tokenizing train dataset (num_proc=12):  78%|███████▊  | 4685/6000 [00:09<00:02, 527.77 examples/s]
+Tokenizing train dataset (num_proc=12):  79%|███████▉  | 4751/6000 [00:09<00:02, 562.17 examples/s]
+Tokenizing train dataset (num_proc=12):  80%|████████  | 4810/6000 [00:10<00:02, 550.46 examples/s]
+Tokenizing train dataset (num_proc=12):  81%|████████  | 4866/6000 [00:10<00:02, 535.68 examples/s]
+Tokenizing train dataset (num_proc=12):  82%|████████▏ | 4920/6000 [00:10<00:02, 511.74 examples/s]
+Tokenizing train dataset (num_proc=12):  83%|████████▎ | 4993/6000 [00:10<00:01, 556.24 examples/s]
+Tokenizing train dataset (num_proc=12):  84%|████████▍ | 5049/6000 [00:10<00:01, 555.90 examples/s]
+Tokenizing train dataset (num_proc=12):  85%|████████▌ | 5107/6000 [00:10<00:01, 529.83 examples/s]
+Tokenizing train dataset (num_proc=12):  86%|████████▌ | 5164/6000 [00:10<00:01, 528.00 examples/s]
+Tokenizing train dataset (num_proc=12):  87%|████████▋ | 5220/6000 [00:10<00:01, 514.09 examples/s]
+Tokenizing train dataset (num_proc=12):  88%|████████▊ | 5280/6000 [00:10<00:01, 523.09 examples/s]
+Tokenizing train dataset (num_proc=12):  89%|████████▉ | 5335/6000 [00:11<00:01, 519.70 examples/s]
+Tokenizing train dataset (num_proc=12):  90%|████████▉ | 5390/6000 [00:11<00:01, 516.05 examples/s]
+Tokenizing train dataset (num_proc=12):  91%|█████████ | 5442/6000 [00:11<00:01, 515.22 examples/s]
+Tokenizing train dataset (num_proc=12):  92%|█████████▏| 5501/6000 [00:11<00:00, 529.91 examples/s]
+Tokenizing train dataset (num_proc=12):  93%|█████████▎| 5557/6000 [00:11<00:00, 529.92 examples/s]
+Tokenizing train dataset (num_proc=12):  94%|█████████▎| 5612/6000 [00:11<00:00, 505.39 examples/s]
+Tokenizing train dataset (num_proc=12):  94%|█████████▍| 5664/6000 [00:11<00:00, 486.30 examples/s]
+Tokenizing train dataset (num_proc=12):  95%|█████████▌| 5714/6000 [00:11<00:00, 470.91 examples/s]
+Tokenizing train dataset (num_proc=12):  96%|█████████▌| 5762/6000 [00:11<00:00, 431.06 examples/s]
+Tokenizing train dataset (num_proc=12):  97%|█████████▋| 5806/6000 [00:12<00:00, 397.28 examples/s]
+Tokenizing train dataset (num_proc=12):  98%|█████████▊| 5850/6000 [00:12<00:00, 333.13 examples/s]
+Tokenizing train dataset (num_proc=12):  98%|█████████▊| 5886/6000 [00:12<00:00, 318.56 examples/s]
+Tokenizing train dataset (num_proc=12):  99%|█████████▊| 5920/6000 [00:12<00:00, 301.92 examples/s]
+Tokenizing train dataset (num_proc=12):  99%|█████████▉| 5952/6000 [00:12<00:00, 291.50 examples/s]
+Tokenizing train dataset (num_proc=12): 100%|█████████▉| 5982/6000 [00:13<00:00, 138.38 examples/s]
+Tokenizing train dataset (num_proc=12): 100%|██████████| 6000/6000 [00:14<00:00, 418.99 examples/s]
+Concatenating 12 shards
+Process #1 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00000_of_00012.arrow
+Process #2 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00001_of_00012.arrow
+Process #3 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00002_of_00012.arrow
+Process #4 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00003_of_00012.arrow
+Process #5 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00004_of_00012.arrow
+Process #6 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00005_of_00012.arrow
+Process #7 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00006_of_00012.arrow
+Process #8 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00007_of_00012.arrow
+Process #9 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00008_of_00012.arrow
+Process #10 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00009_of_00012.arrow
+Process #11 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00010_of_00012.arrow
+Process #12 will write at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00011_of_00012.arrow
+
+Truncating train dataset (num_proc=12):   0%|          | 0/6000 [00:00<?, ? examples/s]Spawning 12 processes
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00001_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00000_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00002_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00003_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00004_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00005_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00006_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00008_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00007_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00009_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00011_of_00012.arrow
+Caching processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_00010_of_00012.arrow
+
+Truncating train dataset (num_proc=12):   8%|▊         | 500/6000 [00:00<00:03, 1589.43 examples/s]
+Truncating train dataset (num_proc=12): 100%|██████████| 6000/6000 [00:00<00:00, 12715.74 examples/s]
+Concatenating 12 shards
+[INFO|trainer.py:707] 2025-08-16 19:19:56,123 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:757] 2025-08-16 19:19:56,123 >> Using auto half precision backend
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_*_of_00012.arrow
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_*_of_00012.arrow
+Concatenating 12 shards
+Concatenating 12 shards
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_*_of_00012.arrow
+Concatenating 12 shards
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1f54b45dcf693245_*_of_00012.arrow
+Concatenating 12 shards
+[INFO|trainer.py:707] 2025-08-16 19:19:56,606 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:757] 2025-08-16 19:19:56,606 >> Using auto half precision backend
+[INFO|trainer.py:707] 2025-08-16 19:19:56,607 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:757] 2025-08-16 19:19:56,607 >> Using auto half precision backend
+[INFO|trainer.py:2432] 2025-08-16 19:20:52,902 >> ***** Running training *****
+[INFO|trainer.py:2433] 2025-08-16 19:20:52,902 >>   Num examples = 6,000
+[INFO|trainer.py:2434] 2025-08-16 19:20:52,902 >>   Num Epochs = 1
+[INFO|trainer.py:2435] 2025-08-16 19:20:52,902 >>   Instantaneous batch size per device = 1
+[INFO|trainer.py:2438] 2025-08-16 19:20:52,902 >>   Total train batch size (w. parallel, distributed & accumulation) = 192
+[INFO|trainer.py:2439] 2025-08-16 19:20:52,903 >>   Gradient Accumulation steps = 8
+[INFO|trainer.py:2440] 2025-08-16 19:20:52,903 >>   Total optimization steps = 3
+[INFO|trainer.py:2432] 2025-08-16 19:20:52,918 >> ***** Running training *****
+[INFO|trainer.py:2433] 2025-08-16 19:20:52,918 >>   Num examples = 6,000
+[INFO|trainer.py:2434] 2025-08-16 19:20:52,918 >>   Num Epochs = 1
+[INFO|trainer.py:2435] 2025-08-16 19:20:52,918 >>   Instantaneous batch size per device = 1
+[INFO|trainer.py:2438] 2025-08-16 19:20:52,918 >>   Total train batch size (w. parallel, distributed & accumulation) = 192
+[INFO|trainer.py:2439] 2025-08-16 19:20:52,918 >>   Gradient Accumulation steps = 8
+[INFO|trainer.py:2440] 2025-08-16 19:20:52,918 >>   Total optimization steps = 3
+[INFO|trainer.py:2441] 2025-08-16 19:20:52,947 >>   Number of trainable parameters = 30,532,122,624
+[INFO|trainer.py:2441] 2025-08-16 19:20:52,970 >>   Number of trainable parameters = 30,532,122,624
+[INFO|trainer.py:2432] 2025-08-16 19:20:54,204 >> ***** Running training *****
+[INFO|trainer.py:2433] 2025-08-16 19:20:54,205 >>   Num examples = 6,000
+[INFO|trainer.py:2434] 2025-08-16 19:20:54,205 >>   Num Epochs = 1
+[INFO|trainer.py:2435] 2025-08-16 19:20:54,205 >>   Instantaneous batch size per device = 1
+[INFO|trainer.py:2438] 2025-08-16 19:20:54,205 >>   Total train batch size (w. parallel, distributed & accumulation) = 192
+[INFO|trainer.py:2439] 2025-08-16 19:20:54,205 >>   Gradient Accumulation steps = 8
+[INFO|trainer.py:2440] 2025-08-16 19:20:54,205 >>   Total optimization steps = 3
+[INFO|trainer.py:2441] 2025-08-16 19:20:54,252 >>   Number of trainable parameters = 30,532,122,624

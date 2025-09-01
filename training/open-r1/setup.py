@@ -68,8 +68,9 @@ _deps = [
     "safetensors>=0.3.3",
     "sentencepiece>=0.1.99",
     "torch==2.6.0",
-    "transformers<4.54.0",
-    "trl[vllm]==0.20.0",
+    "transformers==4.54.1",
+    "trl[vllm]==0.19.0",
+
     "wandb>=0.19.1",
     "async-lru>=2.0.5",
     "aiofiles>=24.1.0",
@@ -82,7 +83,13 @@ _deps = [
 # packaging: "packaging"
 #
 # some of the values are versioned whereas others aren't.
-deps = {b: a for a, b in (re.findall(r"^(([^!=<>~ \[\]]+)(?:\[[^\]]+\])?(?:[!=<>~ ].*)?$)", x)[0] for x in _deps)}
+deps = {
+    b: a
+    for a, b in (
+        re.findall(r"^(([^!=<>~ \[\]]+)(?:\[[^\]]+\])?(?:[!=<>~ ].*)?$)", x)[0]
+        for x in _deps
+    )
+}
 
 
 def deps_list(*pkgs):
@@ -93,7 +100,9 @@ extras = {}
 extras["tests"] = deps_list("pytest", "parameterized", "math-verify", "jieba")
 extras["torch"] = deps_list("torch")
 extras["quality"] = deps_list("ruff", "isort", "flake8")
-extras["code"] = deps_list("e2b-code-interpreter", "python-dotenv", "morphcloud", "jieba", "pandas", "aiofiles")
+extras["code"] = deps_list(
+    "e2b-code-interpreter", "python-dotenv", "morphcloud", "jieba", "pandas", "aiofiles"
+)
 extras["eval"] = deps_list("lighteval", "math-verify")
 extras["dev"] = extras["quality"] + extras["tests"] + extras["eval"] + extras["code"]
 

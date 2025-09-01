@@ -1,0 +1,205 @@
+W0817 03:37:04.411000 1127481 torch/distributed/run.py:784] master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+W0817 03:37:04.411000 1127481 torch/distributed/run.py:792] 
+W0817 03:37:04.411000 1127481 torch/distributed/run.py:792] *****************************************
+W0817 03:37:04.411000 1127481 torch/distributed/run.py:792] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0817 03:37:04.411000 1127481 torch/distributed/run.py:792] *****************************************
+Found cached dataset hle_sft_open_thoughts-114k (/home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605)
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8fff6bb52ea27ace_*_of_00001.arrow
+Loading cached shuffled indices for dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-1eeda50561e2fa07.arrow
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 03:37:27,831 >> loading file vocab.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/vocab.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 03:37:27,831 >> loading file merges.txt from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/merges.txt
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 03:37:27,831 >> loading file tokenizer.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/tokenizer.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 03:37:27,831 >> loading file added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 03:37:27,831 >> loading file special_tokens_map.json from cache at None
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 03:37:27,831 >> loading file tokenizer_config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2011] 2025-08-17 03:37:27,832 >> loading file chat_template.jinja from cache at None
+[INFO|tokenization_utils_base.py:2280] 2025-08-17 03:37:28,144 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|configuration_utils.py:752] 2025-08-17 03:37:28,319 >> loading configuration file config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/config.json
+[INFO|configuration_utils.py:817] 2025-08-17 03:37:28,324 >> Model config Qwen3MoeConfig {
+  "architectures": [
+    "Qwen3MoeForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "decoder_sparse_step": 1,
+  "eos_token_id": 151645,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 2048,
+  "initializer_range": 0.02,
+  "intermediate_size": 6144,
+  "max_position_embeddings": 40960,
+  "max_window_layers": 48,
+  "mlp_only_layers": [],
+  "model_type": "qwen3_moe",
+  "moe_intermediate_size": 768,
+  "norm_topk_prob": true,
+  "num_attention_heads": 32,
+  "num_experts": 128,
+  "num_experts_per_tok": 8,
+  "num_hidden_layers": 48,
+  "num_key_value_heads": 4,
+  "output_router_logits": false,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": null,
+  "rope_theta": 1000000.0,
+  "router_aux_loss_coef": 0.001,
+  "sliding_window": null,
+  "tie_word_embeddings": false,
+  "torch_dtype": "bfloat16",
+  "transformers_version": "4.54.1",
+  "use_cache": true,
+  "use_sliding_window": false,
+  "vocab_size": 151936
+}
+
+[INFO|modeling_utils.py:1271] 2025-08-17 03:37:28,854 >> loading weights file model.safetensors from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/model.safetensors.index.json
+[INFO|modeling_utils.py:2374] 2025-08-17 03:37:28,867 >> Instantiating Qwen3MoeForCausalLM model under default dtype torch.bfloat16.
+[INFO|modeling_utils.py:4306] 2025-08-17 03:37:28,867 >> Detected DeepSpeed ZeRO-3: activating zero.init() for this model
+[INFO|configuration_utils.py:1103] 2025-08-17 03:37:28,874 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "eos_token_id": 151645
+}
+
+Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/16 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▋         | 1/16 [00:04<01:02,  4.16s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:04<01:01,  4.07s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:04<01:00,  4.06s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:03<00:59,  3.99s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:04<01:00,  4.02s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:04<01:00,  4.03s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:04<01:00,  4.02s/it]Loading checkpoint shards:   6%|▋         | 1/16 [00:04<01:08,  4.54s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:10<01:18,  5.64s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:10<01:18,  5.60s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:10<01:18,  5.60s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:10<01:18,  5.58s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:10<01:18,  5.59s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:10<01:18,  5.59s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:10<01:17,  5.57s/it]Loading checkpoint shards:  12%|█▎        | 2/16 [00:11<01:21,  5.81s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:15<01:07,  5.20s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:15<01:07,  5.18s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:15<01:07,  5.18s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:15<01:07,  5.17s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:15<01:07,  5.17s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:15<01:07,  5.18s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:15<01:07,  5.16s/it]Loading checkpoint shards:  19%|█▉        | 3/16 [00:15<01:08,  5.29s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:20<00:59,  5.00s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:20<00:59,  4.98s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:20<00:59,  4.98s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:20<00:59,  4.97s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:20<00:59,  4.98s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:20<00:59,  4.98s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:20<00:59,  4.98s/it]Loading checkpoint shards:  25%|██▌       | 4/16 [00:20<01:00,  5.03s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:24<00:53,  4.87s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:24<00:53,  4.86s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:24<00:53,  4.86s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:24<00:53,  4.86s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:24<00:53,  4.86s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:24<00:53,  4.86s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:24<00:53,  4.85s/it]Loading checkpoint shards:  31%|███▏      | 5/16 [00:25<00:53,  4.89s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:30<00:52,  5.21s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:30<00:52,  5.20s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:30<00:52,  5.20s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:30<00:51,  5.20s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:30<00:51,  5.20s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:30<00:51,  5.20s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:30<00:51,  5.19s/it]Loading checkpoint shards:  38%|███▊      | 6/16 [00:31<00:52,  5.22s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:35<00:45,  5.02s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:35<00:45,  5.02s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:35<00:45,  5.02s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:35<00:45,  5.01s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:35<00:45,  5.01s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:35<00:45,  5.01s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:35<00:45,  5.01s/it]Loading checkpoint shards:  44%|████▍     | 7/16 [00:35<00:45,  5.03s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:41<00:43,  5.40s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:41<00:43,  5.40s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:41<00:43,  5.39s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:41<00:43,  5.39s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:41<00:43,  5.39s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:41<00:43,  5.39s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:41<00:43,  5.39s/it]Loading checkpoint shards:  50%|█████     | 8/16 [00:41<00:43,  5.41s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:47<00:38,  5.54s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:47<00:38,  5.54s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:47<00:38,  5.53s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:47<00:38,  5.53s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:47<00:38,  5.53s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:47<00:38,  5.53s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:47<00:38,  5.53s/it]Loading checkpoint shards:  56%|█████▋    | 9/16 [00:47<00:38,  5.54s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [00:52<00:31,  5.31s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [00:52<00:31,  5.31s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [00:52<00:31,  5.30s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [00:52<00:31,  5.30s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [00:52<00:31,  5.30s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [00:52<00:31,  5.30s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [00:51<00:31,  5.30s/it]Loading checkpoint shards:  62%|██████▎   | 10/16 [00:52<00:31,  5.30s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [00:56<00:25,  5.10s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [00:56<00:25,  5.10s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [00:56<00:25,  5.10s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [00:56<00:25,  5.10s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [00:56<00:25,  5.10s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [00:56<00:25,  5.10s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [00:56<00:25,  5.10s/it]Loading checkpoint shards:  69%|██████▉   | 11/16 [00:57<00:25,  5.10s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:02<00:21,  5.34s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:02<00:21,  5.34s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:02<00:21,  5.34s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:02<00:21,  5.34s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:02<00:21,  5.34s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:02<00:21,  5.34s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:02<00:21,  5.34s/it]Loading checkpoint shards:  75%|███████▌  | 12/16 [01:03<00:21,  5.36s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:07<00:15,  5.27s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:07<00:15,  5.27s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:07<00:15,  5.27s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:07<00:15,  5.27s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:07<00:15,  5.27s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:07<00:15,  5.27s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:07<00:15,  5.27s/it]Loading checkpoint shards:  81%|████████▏ | 13/16 [01:08<00:15,  5.26s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:12<00:10,  5.19s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:12<00:10,  5.20s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:12<00:10,  5.19s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:12<00:10,  5.19s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:12<00:10,  5.19s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:12<00:10,  5.19s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:12<00:10,  5.19s/it]Loading checkpoint shards:  88%|████████▊ | 14/16 [01:13<00:10,  5.19s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:19<00:05,  5.68s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:19<00:05,  5.68s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:19<00:05,  5.68s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:19<00:05,  5.68s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:19<00:05,  5.68s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:19<00:05,  5.68s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:19<00:05,  5.68s/it]Loading checkpoint shards:  94%|█████████▍| 15/16 [01:20<00:05,  5.71s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  4.20s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  4.19s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  4.19s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  4.19s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  4.19s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  4.19s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  5.02s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  5.01s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  5.01s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  5.02s/it]
+
+Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  4.20s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  5.01s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  5.01s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  5.03s/it]
+Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  4.23s/it]Loading checkpoint shards: 100%|██████████| 16/16 [01:20<00:00,  5.05s/it]
+[INFO|modeling_utils.py:5541] 2025-08-17 03:39:02,923 >> All model checkpoint weights were used when initializing Qwen3MoeForCausalLM.
+
+[INFO|modeling_utils.py:5549] 2025-08-17 03:39:02,923 >> All the weights of Qwen3MoeForCausalLM were initialized from the model checkpoint at Qwen/Qwen3-30B-A3B.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use Qwen3MoeForCausalLM for predictions without further training.
+[INFO|configuration_utils.py:1058] 2025-08-17 03:39:03,210 >> loading configuration file generation_config.json from cache at /home/Competition2025/P02/P02U006/.cache/huggingface/hub/models--Qwen--Qwen3-30B-A3B/snapshots/ad44e777bcd18fa416d9da3bd8f70d33ebb85d39/generation_config.json
+[INFO|configuration_utils.py:1103] 2025-08-17 03:39:03,211 >> Generate config GenerationConfig {
+  "bos_token_id": 151643,
+  "do_sample": true,
+  "eos_token_id": [
+    151645,
+    151643
+  ],
+  "pad_token_id": 151643,
+  "temperature": 0.6,
+  "top_k": 20,
+  "top_p": 0.95
+}
+
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-8766f1740da88d20_*_of_00012.arrow
+Concatenating 12 shards
+Loading cached processed dataset at /home/Competition2025/P02/P02U006/.cache/huggingface/datasets/neko-llm___hle_sft_open_thoughts-114k/default/0.0.0/95b7ec559aefd67116876c6fe0c205c412188605/cache-c5c2464556b718ef_*_of_00012.arrow
+Concatenating 12 shards
+[INFO|trainer.py:707] 2025-08-17 03:39:03,672 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:757] 2025-08-17 03:39:03,673 >> Using auto half precision backend
+[INFO|deepspeed.py:492] 2025-08-17 03:40:00,815 >> Attempting to resume from data/Qwen3-30B-test/checkpoint-3
+[INFO|trainer.py:2432] 2025-08-17 03:40:53,965 >> ***** Running training *****
+[INFO|trainer.py:2433] 2025-08-17 03:40:53,965 >>   Num examples = 6,000
+[INFO|trainer.py:2434] 2025-08-17 03:40:53,965 >>   Num Epochs = 1
+[INFO|trainer.py:2435] 2025-08-17 03:40:53,965 >>   Instantaneous batch size per device = 1
+[INFO|trainer.py:2438] 2025-08-17 03:40:53,965 >>   Total train batch size (w. parallel, distributed & accumulation) = 64
+[INFO|trainer.py:2439] 2025-08-17 03:40:53,965 >>   Gradient Accumulation steps = 8
+[INFO|trainer.py:2440] 2025-08-17 03:40:53,965 >>   Total optimization steps = 3
+[INFO|trainer.py:2441] 2025-08-17 03:40:54,020 >>   Number of trainable parameters = 30,532,122,624
+[INFO|trainer.py:2463] 2025-08-17 03:40:54,021 >>   Continuing training from checkpoint, will skip to saved global_step
+[INFO|trainer.py:2464] 2025-08-17 03:40:54,021 >>   Continuing training from epoch 0
+[INFO|trainer.py:2465] 2025-08-17 03:40:54,021 >>   Continuing training from global step 3
+[INFO|trainer.py:2467] 2025-08-17 03:40:54,021 >>   Will skip the first 0 epochs then the first 24 batches in the first epoch.
+  0%|          | 0/3 [00:00<?, ?it/s][rank4]:[E817 04:10:55.448446536 ProcessGroupNCCL.cpp:629] [Rank 4] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=76009, OpType=_ALLGATHER_BASE, NumelIn=1048576, NumelOut=8388608, Timeout(ms)=1800000) ran for 1800002 milliseconds before timing out.
+[rank0]:[E817 04:10:55.451143720 ProcessGroupNCCL.cpp:629] [Rank 0] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=76009, OpType=_ALLGATHER_BASE, NumelIn=196608, NumelOut=1572864, Timeout(ms)=1800000) ran for 1800005 milliseconds before timing out.
+[rank0]:[E817 04:10:55.466468181 ProcessGroupNCCL.cpp:2168] [PG ID 0 PG GUID 0(default_pg) Rank 0]  failure detected by watchdog at work sequence id: 76009 PG status: last enqueued work: 76011, last completed work: 76008
+[rank4]:[E817 04:10:55.466465778 ProcessGroupNCCL.cpp:2168] [PG ID 0 PG GUID 0(default_pg) Rank 4]  failure detected by watchdog at work sequence id: 76009 PG status: last enqueued work: 76011, last completed work: 76008
+[rank0]:[E817 04:10:55.466487417 ProcessGroupNCCL.cpp:667] Stack trace of the failed collective not found, potentially because FlightRecorder is disabled. You can enable it by setting TORCH_NCCL_TRACE_BUFFER_SIZE to a non-zero value.
+[rank4]:[E817 04:10:55.466490450 ProcessGroupNCCL.cpp:667] Stack trace of the failed collective not found, potentially because FlightRecorder is disabled. You can enable it by setting TORCH_NCCL_TRACE_BUFFER_SIZE to a non-zero value.
+[rank1]:[E817 04:10:55.473792504 ProcessGroupNCCL.cpp:629] [Rank 1] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=76009, OpType=_ALLGATHER_BASE, NumelIn=196608, NumelOut=1572864, Timeout(ms)=1800000) ran for 1800028 milliseconds before timing out.
+[rank1]:[E817 04:10:55.473976301 ProcessGroupNCCL.cpp:2168] [PG ID 0 PG GUID 0(default_pg) Rank 1]  failure detected by watchdog at work sequence id: 76009 PG status: last enqueued work: 76011, last completed work: 76008
+[rank1]:[E817 04:10:55.473986534 ProcessGroupNCCL.cpp:667] Stack trace of the failed collective not found, potentially because FlightRecorder is disabled. You can enable it by setting TORCH_NCCL_TRACE_BUFFER_SIZE to a non-zero value.
+[rank7]:[E817 04:10:55.482292641 ProcessGroupNCCL.cpp:629] [Rank 7] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=76009, OpType=_ALLGATHER_BASE, NumelIn=196608, NumelOut=1572864, Timeout(ms)=1800000) ran for 1800037 milliseconds before timing out.
+[rank7]:[E817 04:10:55.482536243 ProcessGroupNCCL.cpp:2168] [PG ID 0 PG GUID 0(default_pg) Rank 7]  failure detected by watchdog at work sequence id: 76009 PG status: last enqueued work: 76011, last completed work: 76008
+[rank7]:[E817 04:10:55.482548170 ProcessGroupNCCL.cpp:667] Stack trace of the failed collective not found, potentially because FlightRecorder is disabled. You can enable it by setting TORCH_NCCL_TRACE_BUFFER_SIZE to a non-zero value.
+[rank5]:[E817 04:10:55.512635409 ProcessGroupNCCL.cpp:629] [Rank 5] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=76009, OpType=_ALLGATHER_BASE, NumelIn=196608, NumelOut=1572864, Timeout(ms)=1800000) ran for 1800067 milliseconds before timing out.
+[rank5]:[E817 04:10:55.512877814 ProcessGroupNCCL.cpp:2168] [PG ID 0 PG GUID 0(default_pg) Rank 5]  failure detected by watchdog at work sequence id: 76009 PG status: last enqueued work: 76011, last completed work: 76008
+[rank5]:[E817 04:10:55.512888616 ProcessGroupNCCL.cpp:667] Stack trace of the failed collective not found, potentially because FlightRecorder is disabled. You can enable it by setting TORCH_NCCL_TRACE_BUFFER_SIZE to a non-zero value.
+[rank2]:[E817 04:10:55.516985748 ProcessGroupNCCL.cpp:629] [Rank 2] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=76009, OpType=_ALLGATHER_BASE, NumelIn=196608, NumelOut=1572864, Timeout(ms)=1800000) ran for 1800071 milliseconds before timing out.
+[rank2]:[E817 04:10:55.517203766 ProcessGroupNCCL.cpp:2168] [PG ID 0 PG GUID 0(default_pg) Rank 2]  failure detected by watchdog at work sequence id: 76009 PG status: last enqueued work: 76011, last completed work: 76008
+[rank2]:[E817 04:10:55.517214427 ProcessGroupNCCL.cpp:667] Stack trace of the failed collective not found, potentially because FlightRecorder is disabled. You can enable it by setting TORCH_NCCL_TRACE_BUFFER_SIZE to a non-zero value.
+[rank3]:[E817 04:10:55.520545901 ProcessGroupNCCL.cpp:629] [Rank 3] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=76009, OpType=_ALLGATHER_BASE, NumelIn=196608, NumelOut=1572864, Timeout(ms)=1800000) ran for 1800075 milliseconds before timing out.
+[rank3]:[E817 04:10:55.520752704 ProcessGroupNCCL.cpp:2168] [PG ID 0 PG GUID 0(default_pg) Rank 3]  failure detected by watchdog at work sequence id: 76009 PG status: last enqueued work: 76011, last completed work: 76008
+[rank3]:[E817 04:10:55.520762913 ProcessGroupNCCL.cpp:667] Stack trace of the failed collective not found, potentially because FlightRecorder is disabled. You can enable it by setting TORCH_NCCL_TRACE_BUFFER_SIZE to a non-zero value.
+[rank6]:[E817 04:10:55.536139287 ProcessGroupNCCL.cpp:629] [Rank 6] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=76009, OpType=_ALLGATHER_BASE, NumelIn=196608, NumelOut=1572864, Timeout(ms)=1800000) ran for 1800091 milliseconds before timing out.
+[rank6]:[E817 04:10:55.536336341 ProcessGroupNCCL.cpp:2168] [PG ID 0 PG GUID 0(default_pg) Rank 6]  failure detected by watchdog at work sequence id: 76009 PG status: last enqueued work: 76011, last completed work: 76008
+[rank6]:[E817 04:10:55.536348792 ProcessGroupNCCL.cpp:667] Stack trace of the failed collective not found, potentially because FlightRecorder is disabled. You can enable it by setting TORCH_NCCL_TRACE_BUFFER_SIZE to a non-zero value.
+[rank4]:[E817 04:10:56.014670138 ProcessGroupNCCL.cpp:681] [Rank 4] Some NCCL operations have failed or timed out. Due to the asynchronous nature of CUDA kernels, subsequent GPU operations might run on corrupted/incomplete data.
+[rank4]:[E817 04:10:56.014681652 ProcessGroupNCCL.cpp:695] [Rank 4] To avoid data inconsistency, we are taking the entire process down.
+[rank4]:[E817 04:10:56.017193898 ProcessGroupNCCL.cpp:1895] [PG ID 0 PG GUID 0(default_pg) Rank 4] Process group watchdog thread terminated with exception: [Rank 4] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=76009, OpType=_ALLGATHER_BASE, NumelIn=1048576, NumelOut=8388608, Timeout(ms)=1800000) ran for 1800002 milliseconds before timing out.
+Exception raised from checkTimeout at /pytorch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:632 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x150ef3e131b6 in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libc10.so)
+frame #1: c10d::ProcessGroupNCCL::WorkNCCL::checkTimeout(std::optional<std::chrono::duration<long, std::ratio<1l, 1000l> > >) + 0x2b4 (0x150ef515cc74 in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libtorch_cuda.so)
+frame #2: c10d::ProcessGroupNCCL::watchdogHandler() + 0x890 (0x150ef515e7d0 in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libtorch_cuda.so)
+frame #3: c10d::ProcessGroupNCCL::ncclCommWatchdog() + 0x14d (0x150ef515f6ed in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0x145c0 (0x150f3e1e25c0 in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libtorch.so)
+frame #5: <unknown function> + 0x897fa (0x150f598897fa in /lib64/libc.so.6)
+frame #6: <unknown function> + 0x10e820 (0x150f5990e820 in /lib64/libc.so.6)
+
+terminate called after throwing an instance of 'c10::DistBackendError'
+  what():  [PG ID 0 PG GUID 0(default_pg) Rank 4] Process group watchdog thread terminated with exception: [Rank 4] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=76009, OpType=_ALLGATHER_BASE, NumelIn=1048576, NumelOut=8388608, Timeout(ms)=1800000) ran for 1800002 milliseconds before timing out.
+Exception raised from checkTimeout at /pytorch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:632 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x150ef3e131b6 in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libc10.so)
+frame #1: c10d::ProcessGroupNCCL::WorkNCCL::checkTimeout(std::optional<std::chrono::duration<long, std::ratio<1l, 1000l> > >) + 0x2b4 (0x150ef515cc74 in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libtorch_cuda.so)
+frame #2: c10d::ProcessGroupNCCL::watchdogHandler() + 0x890 (0x150ef515e7d0 in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libtorch_cuda.so)
+frame #3: c10d::ProcessGroupNCCL::ncclCommWatchdog() + 0x14d (0x150ef515f6ed in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libtorch_cuda.so)
+frame #4: <unknown function> + 0x145c0 (0x150f3e1e25c0 in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libtorch.so)
+frame #5: <unknown function> + 0x897fa (0x150f598897fa in /lib64/libc.so.6)
+frame #6: <unknown function> + 0x10e820 (0x150f5990e820 in /lib64/libc.so.6)
+
+Exception raised from ncclCommWatchdog at /pytorch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:1901 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::string) + 0x96 (0x150ef3e131b6 in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0xe5c6fc (0x150ef4dba6fc in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libtorch_cuda.so)
+frame #2: <unknown function> + 0x145c0 (0x150f3e1e25c0 in /home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/lib/libtorch.so)
+frame #3: <unknown function> + 0x897fa (0x150f598897fa in /lib64/libc.so.6)
+frame #4: <unknown function> + 0x10e820 (0x150f5990e820 in /lib64/libc.so.6)
+
+W0817 04:10:56.813000 1127481 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1127760 closing signal SIGTERM
+W0817 04:10:56.817000 1127481 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1127761 closing signal SIGTERM
+W0817 04:10:56.820000 1127481 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1127762 closing signal SIGTERM
+W0817 04:10:56.824000 1127481 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1127763 closing signal SIGTERM
+W0817 04:10:56.827000 1127481 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1127765 closing signal SIGTERM
+W0817 04:10:56.831000 1127481 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1127766 closing signal SIGTERM
+W0817 04:10:56.833000 1127481 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1127767 closing signal SIGTERM
+E0817 04:10:57.667000 1127481 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: -6) local_rank: 4 (pid: 1127764) of binary: /home/Competition2025/P02/P02U006/llm2025compet/openr1/bin/python3
+Traceback (most recent call last):
+  File "/home/Competition2025/P02/P02U006/llm2025compet/openr1/bin/accelerate", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/accelerate/commands/accelerate_cli.py", line 48, in main
+    args.func(args)
+  File "/home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/accelerate/commands/launch.py", line 1182, in launch_command
+    deepspeed_launcher(args)
+  File "/home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/accelerate/commands/launch.py", line 861, in deepspeed_launcher
+    distrib_run.run(args)
+  File "/home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Competition2025/P02/P02U006/llm2025compet/openr1/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+========================================================
+open_r1/sft.py FAILED
+--------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+--------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-08-17_04:10:56
+  host      : osk-gpu56
+  rank      : 4 (local_rank: 4)
+  exitcode  : -6 (pid: 1127764)
+  error_file: <N/A>
+  traceback : Signal 6 (SIGABRT) received by PID 1127764
+========================================================
+srun: error: osk-gpu56: task 0: Exited with exit code 1
