@@ -107,7 +107,7 @@ ruff==0.12.8
 python-dotenv==1.1.1
 starlette==0.47.2
 importlib_metadata==8.0.0
-xgrammar==0.1.18
+xgrammar==0.1.21
 colorama==0.4.6
 astor==0.8.1
 msgspec==0.19.0
