@@ -1,0 +1,30 @@
+# ログとキャッシュ
+logs/
+__pycache__/
+*.log
+
+# データファイル（生成物）
+*.jsonl
+dataset*.jsonl
+classified_*.jsonl
+think_tagged_*.jsonl
+questions.json
+
+# 処理済みデータ
+processed/
+data/
+cards/
+
+# 一時ファイル
+*.backup
+test_*.jsonl
+
+# 環境設定
+.env
+.env.*
+
+# 内部文書
+さくらDCサーバ利用手順書.md
+
+# wandb関連
+wandb/
