@@ -63,7 +63,7 @@ opencv-python-headless==4.11.0.86
 ray==2.48.0
 airportsdata==20250706
 googleapis-common-protos==1.70.0
-pip==25.1.1
+pip==25.2
 nltk==3.9.1
 pydantic-settings==2.10.1
 typer==0.16.0
